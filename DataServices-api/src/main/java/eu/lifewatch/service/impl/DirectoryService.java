@@ -474,15 +474,13 @@ public class DirectoryService implements Service {
                     struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
                 }
                 structsMap.put(struct.getDatasetURI(), struct);
-            } else {
+            }else{
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-
-                if (result.getValue("contributorURI") != null) {
+                if(result.getValue("contributorURI") != null) {
                     String contributorURI = result.getValue("contributorURI").stringValue();
                     String contributorName = result.getValue("contributorName").stringValue();
                     struct.withContributor(contributorURI, contributorName);
                 }
-
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
