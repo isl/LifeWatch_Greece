@@ -1,0 +1,38 @@
+SELECT distinct ?place ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+{
+ 
+	?event <http://www.cidoc-crm.org/cidoc-crm/P39_measured>  ?place.
+	?place <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E53_Place> .
+	?event <http://www.cidoc-crm.org/cidoc-crm/P40_observed_dimension>   ?DimensionURI .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?dimension .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+        ?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	FILTER regex(?dimension,<[!TEMPLATE_1!]>).
+}  
+
+
+
+UNION
+
+{
+ 
+	?event <http://www.cidoc-crm.org/cidoc-crm/P39_measured>  ?place.
+	?place <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC14_Ecosystem_Environment> .
+	?event <http://www.cidoc-crm.org/cidoc-crm/P40_observed_dimension>   ?DimensionURI .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?dimension .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+        ?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	FILTER regex(?dimension,<[!TEMPLATE_1!]>).
+}  
+
+
+}

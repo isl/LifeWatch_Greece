@@ -1,0 +1,24 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+
+{
+ 
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?event1 .
+	?event1 <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+	FILTER regex(?thing,<[!TEMPLATE_1!]>).
+}
+
+
+MINUS
+
+{
+	
+	?datasets <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P4_has_timespan> ?timespan .
+
+}
+}

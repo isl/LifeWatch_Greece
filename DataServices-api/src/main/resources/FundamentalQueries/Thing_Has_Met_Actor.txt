@@ -1,0 +1,11 @@
+SELECT distinct ?thing ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100> 
+WHERE{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?OccurrenceEventURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?actor,<[!TEMPLATE_1!]>)
+}

@@ -1,0 +1,31 @@
+SELECT distinct ?event
+FROM <http://Metadata_Repository_Test> 
+FROM <http://Directory_Test> 
+WHERE{
+    {
+        ?event <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#E16_Measurement> .
+        ?event <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P39_measured> ?thing .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#E54_Dimension> .
+        ?DimensionTypeURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#BC_Dimension_Type> .
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P90_has_value> ?value .
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P91_has_unit> ?Unit .   
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#BC35_Specimen> .
+        ?thing <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P1_is_identified_by> ?thingName .  
+        FILTER REGEX(?value, "[!TEMPLATE_1!]", "i"). 
+    }
+    UNION
+    {
+        ?event<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#E13_Attribute_Assignment> .
+        ?event <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P140_assigned_attribute_to> ?thing .
+        ?event<http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P37_assigned> ?DimensionURI .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#E54_Dimension> .
+        ?DimensionTypeURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#BC_Dimension_Type> .
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P90_has_value> ?value .
+        ?DimensionURI <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P91_has_unit> ?Unit .   
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#BC35_Specimen> .
+        ?thing <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P1_is_identified_by> ?thingName .  
+        FILTER REGEX(?value, "[!TEMPLATE_1!]", "i"). 
+    }
+}	   

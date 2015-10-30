@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<rdf:RDF xmlns:sch="http://www.lifewatch.eu/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+	
+	<sch:type1 rdf:about="http://www.lifewatch.eu/data11"
+		sch:hasName="data11"/>
+	<sch:type1 rdf:about="http://www.lifewatch.eu/data12"
+		sch:hasName="data12"/>
+	<sch:type2 rdf:about="http://www.lifewatch.eu/data21"
+		sch:hasName="data21"/>
+	<sch:type2 rdf:about="http://www.lifewatch.eu/data22"
+		sch:hasName="data22"/>
+</rdf:RDF>

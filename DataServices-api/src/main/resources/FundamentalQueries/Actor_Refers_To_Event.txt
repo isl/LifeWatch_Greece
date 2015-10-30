@@ -1,0 +1,13 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+
+{
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?event1 .
+	?event1 <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+        FILTER regex(?event,<[!TEMPLATE_1!]>).
+}
+
+}

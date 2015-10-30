@@ -1,0 +1,9 @@
+# NOT YET IMPLEMENTED 
+#
+SELECT distinct ?actor
+FROM <http://Metadata_Repository_Test> 
+FROM <http://Directory_Test> 
+WHERE{
+    ?actor <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#E21_Person> . 
+    FILTER (?timespan = <[!TEMPLATE_1!]>).       
+}

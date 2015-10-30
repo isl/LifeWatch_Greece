@@ -1,0 +1,7 @@
+SELECT distinct ?place
+FROM <http://Metadata_Repository_Test> 
+FROM <http://Directory_Test> 
+WHERE{
+    ?location <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P106_falls_within> ?place .
+    FILTER (?location = <[!TEMPLATE_1!]>). 
+}

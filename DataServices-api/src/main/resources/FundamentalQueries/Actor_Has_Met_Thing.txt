@@ -1,0 +1,28 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100> 
+WHERE
+{
+
+{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+?OccurrenceEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?OccurrenceEventURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?thing,<[!TEMPLATE_1!]>)
+}
+
+UNION 
+
+{  
+?IdentificationEventIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment> .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?IdentificationEventIDURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?thing,<[!TEMPLATE_1!]>)
+}
+
+
+}

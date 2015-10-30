@@ -1,0 +1,51 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100> 
+WHERE
+{
+
+{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?locality .
+?OccurrenceEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?OccurrenceEventURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?locality,<[!TEMPLATE_1!]>)
+}
+
+UNION
+
+{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?locality .
+?OccurrenceEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?locality <http://www.cidoc-crm.org/cidoc-crm/P106_falls_within> ?locality2 .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?OccurrenceEventURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?locality2,<[!TEMPLATE_1!]>)
+}
+
+UNION 
+
+{  
+?IdentificationEventIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment> .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?locality .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .  
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?IdentificationEventIDURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?locality,<[!TEMPLATE_1!]>)
+}
+
+UNION 
+
+{  
+?IdentificationEventIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment> .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?locality .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?locality <http://www.cidoc-crm.org/cidoc-crm/P106_falls_within> ?locality2 .
+?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?IdentificationEventIDURI .
+?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+FILTER regex(?locality2,<[!TEMPLATE_1!]>)
+}
+
+}

@@ -1,0 +1,12 @@
+SELECT distinct ?event ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+    {
+	?event <http://www.cidoc-crm.org/cidoc-crm/P4_has_timespan> ?timespan .
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event.
+        ?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	FILTER regex(?timespan,<[!TEMPLATE_1!]>).
+    }  
+
+}

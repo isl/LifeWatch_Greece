@@ -1,0 +1,4 @@
+<http://www.lifewatch.eu/data21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.lifewatch.eu/type2> .
+<http://www.lifewatch.eu/data21> <http://www.lifewatch.eu/hasName> "data21" .
+<http://www.lifewatch.eu/data22> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.lifewatch.eu/type2> .
+<http://www.lifewatch.eu/data22> <http://www.lifewatch.eu/hasName> "data22" .

@@ -1,0 +1,127 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100> 
+
+WHERE
+{
+{
+        ?ScientificNameAssignmentEventURI <http://www.cidoc-crm.org/cidoc-crm/P140_assigned_attribute_to> ?thing .
+ 	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?ScientificNameAssignmentEventURI .
+        ?ScientificNameAssignmentEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+
+	FILTER regex(?thing, <[!TEMPLATE_1!]>).               
+}
+
+UNION
+
+{
+          
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner> ?actor .
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+     
+        FILTER regex(?thing, <[!TEMPLATE_1!]>).
+} 
+
+UNION
+
+{
+          
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner> ?actor . 
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+   
+}
+
+UNION
+
+{
+             
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P49_has_current_keeper> ?actor .
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+   
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+} 
+
+UNION
+
+{
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?thingName .            
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P49_has_current_keeper> ?actor .
+        ?actor <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?actorName . 
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+   
+}
+
+UNION
+
+{
+ 
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to> ?rights .             
+        ?rights <http://www.cidoc-crm.org/cidoc-crm/P105_rights_held_by> ?actor .
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+} 
+
+UNION
+
+{
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?thingName .
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to> ?rights .            
+        ?rights <http://www.cidoc-crm.org/cidoc-crm/P105_rights_held_by> ?actor .
+        ?actor <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?actorName . 
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+   
+}
+
+UNION
+
+{
+      
+	?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?creationEvent .
+        ?creationEvent  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+    
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+} 
+
+
+UNION
+
+{
+   
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P123_resulted_in> ?thing .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        ?event  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+       
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+} 
+
+UNION
+
+{
+     
+        ?thing <http://www.ics.forth.gr/isl/ontology/MarineTLO/P_was_provided_by> ?actor .
+       
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+} 
+
+UNION
+
+{
+     
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L22F_created_derivative> ?thing .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        ?event  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+        FILTER regex(?thing,<[!TEMPLATE_1!]>).
+ 
+} 
+
+}

@@ -1,0 +1,31 @@
+SELECT distinct ?actor ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+    {
+        ?MeasurementIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E16_Measurement> .
+	?MeasurementIDURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?MeasurementIDURI .
+        ?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	FILTER regex(?DimensionTypeURI,<[!TEMPLATE_1!]>).
+    }  
+
+UNION
+
+{
+        ?AttributeAssignmentIDURI <http://www.cidoc-crm.org/cidoc-crm/P37_assigned> ?DimensionURI .
+	?AttributeAssignmentIDURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+        ?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?AttributeAssignmentIDURI .
+        ?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	FILTER regex(?DimensionTypeURI,<[!TEMPLATE_1!]>).
+    } 
+
+}

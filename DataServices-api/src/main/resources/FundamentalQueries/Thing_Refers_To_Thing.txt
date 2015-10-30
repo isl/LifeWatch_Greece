@@ -1,0 +1,24 @@
+SELECT distinct ?thing ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100>
+WHERE{
+
+{
+
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?thingName . 
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing1 .
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing1 .
+        FILTER regex(?thing1,<[!TEMPLATE_1!]>).
+}
+
+MINUS
+
+{
+	
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing1 .
+	?thing1 <http://www.cidoc-crm.org/cidoc-crm/P4_has_timespan> ?timespan .
+
+}
+
+}

@@ -1,0 +1,17 @@
+SELECT distinct ?thing ?dataset
+FROM <http://Metadata_100> 
+FROM <http://Directory_100> 
+
+WHERE
+{
+
+{
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?thingName .
+	?event  <http://www.ics.forth.gr/isl/CRMsci/O5_removed> ?thing .
+	?event <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?place .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+	?dataset <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+        FILTER regex(?place,<[!TEMPLATE_1!]>).
+} 
+
+}
