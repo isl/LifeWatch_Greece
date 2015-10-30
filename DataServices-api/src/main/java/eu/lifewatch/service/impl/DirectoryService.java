@@ -109,6 +109,18 @@ public class DirectoryService implements Service {
         }
     }
 
+    /** This method is responsible for searching datasets in the directory with respect
+     * to given parameters. The results are returned as particular structs containing various information
+     * about Directory records.
+     * 
+     * @param datasetName the name of the dataset
+     * @param ownerName the name of the owner of the dataset 
+     * @param datasetURI the URI (identifier) of the dataset
+     * @param datasetType the type of the dataset
+     * @param repositoryGraph he graphspace that will be searched
+     * @return a list containing structs. Each struct represents a dataset with various metadata information.
+     * @throws QueryExecutionException  for any error that might occur during the execution.
+     */
     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
@@ -285,7 +297,21 @@ public class DirectoryService implements Service {
         return new ArrayList<>(structsMap.values());
     }
 
-     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    /** This method is responsible for searching datasets in the directory with respect
+     * to given parameters. The results are returned as particular structs containing various information
+     * about Directory records.
+     * 
+     * @param datasetName the name of the dataset
+     * @param ownerName the name of the owner of the dataset 
+     * @param datasetURI the URI (identifier) of the dataset
+     * @param datasetType the type of the dataset
+     * @param limit the total number of datasets that will be searched for (SPARQL specific parameter)
+     * @param offset an index describing the first dataset that will be searched for (SPARQL specific parameter)
+     * @param repositoryGraph he graphspace that will be searched
+     * @return a list containing structs. Each struct represents a dataset with various metadata information.
+     * @throws QueryExecutionException  for any error that might occur during the execution.
+     */
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName "
