@@ -18,4 +18,4 @@ The data services are composed of two main components:
 
 ## Contacts
 Main Contacts: Martin Doerr &lt;martin@ics.forth.gr&gt;, Chryssoula Bekiari &lt;bekiari@ics.forth.gr&gt;
-Main Developers: Minadakis Nikos &lt;minadakn@ics.forth.gr&gt;, Marketakis Yannis &lt;marketak@ics.forth.gr&gt;
+Main Developers: Nikos Minadakis &lt;minadakn@ics.forth.gr&gt;, Yannis Marketakis &lt;marketak@ics.forth.gr&gt;
