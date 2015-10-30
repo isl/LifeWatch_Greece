@@ -174,7 +174,6 @@ public class DirectoryService implements Service {
                 + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
                 + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}";
 
-        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -353,7 +352,6 @@ public class DirectoryService implements Service {
                 + " LIMIT " + limit
                 + " OFFSET " + offset;
 
-        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
