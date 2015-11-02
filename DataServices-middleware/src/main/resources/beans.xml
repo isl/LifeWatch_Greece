@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+">
+    <!-- =====================Virtuoso Repository Manager resources====================================== -->
+    <bean id="virtuosoRepoManager" class="eu.lifewatch.core.impl.VirtuosoRepositoryManager">
+        <constructor-arg value="http://62.217.127.124/" type="java.lang.String"/>
+        <constructor-arg value="1111" type="java.lang.String"/>
+        <constructor-arg value="dba" type="java.lang.String"/>
+        <constructor-arg value="ofi" type="java.lang.String"/>
+    </bean>
+</beans>
