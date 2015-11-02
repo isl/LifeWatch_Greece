@@ -238,10 +238,6 @@ public class DirectoryStruct {
         return datasetType;
     }
 
-    public String accessMethodURI() {
-        return accessMethodURI;
-    }
-
     public String getPublicationEventURI() {
         return publicationEventURI;
     }
@@ -384,6 +380,10 @@ public class DirectoryStruct {
 
     public void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
+    }
+    
+    public void setPublicationEventURI(String publicationEventURI){
+        this.publicationEventURI=publicationEventURI;
     }
 
     public void setAttributeAssignmentEventURI(String attributeAssignmentEventURI) {
