@@ -71,9 +71,45 @@ public class UsageExample {
                     .withRightsHolderName("rights holders 1")
                     .withContactPoint("contact point 1")
                     .withDescription("description 1");
+        DirectoryStruct struct2=new DirectoryStruct().withDatasetURI(NAMESPACE_PREFIX+"dataset2")
+                    .withDatasetName("dataset 2")
+                    .withDatasetID("dataset ID 2")
+                    .withLocationURL(NAMESPACE_PREFIX+"location_URL_2")
+                    .withImageURI(NAMESPACE_PREFIX+"image2")
+                    .withImageTitle("image 2")
+                    .withDatasetType("dataset type 2")
+                    .withAccessMethod("access method 2")
+                    .withAccessMethodURI(NAMESPACE_PREFIX+"access_method2")
+                    .withParentDatasetURI(NAMESPACE_PREFIX+"parent_dataset_2")
+                    .withParentDatasetName("parent dataset 2")
+                    .withContributor(NAMESPACE_PREFIX+"contributor2_1", "contributor 2_1")
+                    .withCuratorURI(NAMESPACE_PREFIX+"curator2")
+                    .withCuratorName("curator 2")
+                    .withOwnerURI(NAMESPACE_PREFIX+"owner2")
+                    .withOwnerName("owner 2")
+                    .withPublicationEventURI(NAMESPACE_PREFIX+"publication_event2")
+                    .withPublicationDate("publication date 2")
+                    .withPublisherURI(NAMESPACE_PREFIX+"publisher2")
+                    .withPublisherName("publisher 2")
+                    .withCreationEventURI(NAMESPACE_PREFIX+"creationEvent2")
+                    .withCreationDate("creation date 2")
+                    .withCreatorURI(NAMESPACE_PREFIX+"creator2")
+                    .withCreatorName("creator 2")
+                    .withAttributeAssignmentEventURI(NAMESPACE_PREFIX+"attribute_assignment2")
+                    .withEmbargoPeriod("embargo period 2")
+                    .withEmbargoState("embargo state 2")
+                    .withKeeperURI(NAMESPACE_PREFIX+"keeper2")
+                    .withKeeperName("keeper 2") 
+                    .withAccessRightsURI(NAMESPACE_PREFIX+"accessRightsUri2")
+                    .withAccessRights("access rights 2")
+                    .withRightsHolderURI(NAMESPACE_PREFIX+"rightsHolder2")
+                    .withRightsHolderName("rights holders 2")
+                    .withContactPoint("contact point 2")
+                    .withDescription("description 2");
            try{
             System.out.println("Inserting some data");
             this.dsManager.insertStruct(struct1,DEFAULT_GRAPHSPACE);
+            this.dsManager.insertStruct(struct2,DEFAULT_GRAPHSPACE);
         }catch(QueryExecutionException | URIValidationException ex){
             System.err.println(ex);
         }
