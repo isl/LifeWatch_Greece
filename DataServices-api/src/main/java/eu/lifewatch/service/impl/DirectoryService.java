@@ -109,6 +109,18 @@ public class DirectoryService implements Service {
         }
     }
 
+    /** This method is responsible for searching datasets in the directory with respect
+     * to given parameters. The results are returned as particular structs containing various information
+     * about Directory records.
+     * 
+     * @param datasetName the name of the dataset
+     * @param ownerName the name of the owner of the dataset 
+     * @param datasetURI the URI (identifier) of the dataset
+     * @param datasetType the type of the dataset
+     * @param repositoryGraph he graphspace that will be searched
+     * @return a list containing structs. Each struct represents a dataset with various metadata information.
+     * @throws QueryExecutionException  for any error that might occur during the execution.
+     */
     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
@@ -174,7 +186,6 @@ public class DirectoryService implements Service {
                 + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
                 + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}";
 
-        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -286,7 +297,21 @@ public class DirectoryService implements Service {
         return new ArrayList<>(structsMap.values());
     }
 
-     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    /** This method is responsible for searching datasets in the directory with respect
+     * to given parameters. The results are returned as particular structs containing various information
+     * about Directory records.
+     * 
+     * @param datasetName the name of the dataset
+     * @param ownerName the name of the owner of the dataset 
+     * @param datasetURI the URI (identifier) of the dataset
+     * @param datasetType the type of the dataset
+     * @param limit the total number of datasets that will be searched for (SPARQL specific parameter)
+     * @param offset an index describing the first dataset that will be searched for (SPARQL specific parameter)
+     * @param repositoryGraph he graphspace that will be searched
+     * @return a list containing structs. Each struct represents a dataset with various metadata information.
+     * @throws QueryExecutionException  for any error that might occur during the execution.
+     */
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName "
@@ -353,7 +378,6 @@ public class DirectoryService implements Service {
                 + " LIMIT " + limit
                 + " OFFSET " + offset;
 
-        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -450,92 +474,19 @@ public class DirectoryService implements Service {
                     struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
                 }
                 structsMap.put(struct.getDatasetURI(), struct);
-            } else {
+            }else{
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-
-                if (result.getValue("contributorURI") != null) {
+                if(result.getValue("contributorURI") != null) {
                     String contributorURI = result.getValue("contributorURI").stringValue();
                     String contributorName = result.getValue("contributorName").stringValue();
                     struct.withContributor(contributorURI, contributorName);
                 }
-
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
         return new ArrayList<>(structsMap.values());
     }
     
-    
-//     public List<Struct> searchDataset(DirectoryStruct structName, String repositoryGraph) throws QueryExecutionException{
-//        String queryString="SELECT DISTINCT ?d_uri ?d_name ?k_uri ?k_name ?o_uri ?o_name ?c_uri ?c_name ?contact_point ?acc_method ?license_owner ?license ?note ?located ?p_uri "
-//                          +"FROM <"+repositoryGraph+"> "
-//                          +"WHERE{ "
-//                          +"?d_uri <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> . "
-//                          +"?d_uri  <"+Resources.isIdentifiedBy+"> ?d_name . "
-//                          +"?d_uri <"+Resources.hasCurrentOwner+"> ?o_uri . "
-//                          +"?o_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-//                          +"?o_uri <"+Resources.isIdentifiedBy+"> ?o_name . "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurrentKeeper+"> ?k_uri }. "
-//                          +"OPTIONAL{ ?k_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
-//                          +"OPTIONAL{ ?k_uri <"+Resources.isIdentifiedBy+"> ?k_name}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurator+"> ?c_uri }. "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.isIdentifiedBy+"> ?c_name}.  "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.hasContactPoint+"> ?contact_point}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasAccessMethod+"> ?acc_method}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.rightsHeldBy+"> ?license_owner}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.isSubjectTo+"> ?license}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasNote+"> ?note}. "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.isLocatedAt+"> ?located}. "
-//                          +"OPTIONAL{ ?p_uri <"+Resources.isComposedOf+"> ?d_uri}. "
-//                          +"FILTER regex(?k_name,'"+structName.getKeeperName()+"',\"i\") "
-//                          +"FILTER regex(?d_name,'"+structName.getDatasetName()+"',\"i\")}";
-//        logger.debug("Submitting the query: \""+queryString+"\"");
-//        List<BindingSet> sparqlresults=this.repoManager.query(queryString);
-//        logger.debug("The result returned "+sparqlresults.size()+" results");
-//        List<Struct> results=new ArrayList<>();
-//        for(BindingSet result : sparqlresults){
-//            DirectoryStruct struct=new DirectoryStruct().withDatasetURI(result.getValue("d_uri").stringValue())
-//                                      .withDatasetName(result.getValue("d_name").stringValue())
-//                                      .withOwnerURI(result.getValue("o_uri").stringValue())
-//                                      .withOwnerName(result.getValue("o_name").stringValue());
-//            if(result.getValue("k_uri")!=null){
-//                struct.withOwnerURI(result.getValue("k_uri").stringValue());
-//            }      
-//            if(result.getValue("k_name")!=null){
-//                struct.withOwnerName(result.getValue("k_name").stringValue());
-//            }
-//            if(result.getValue("c_uri")!=null){
-//                struct.withCuratorURI(result.getValue("c_uri").stringValue());
-//            }      
-//            if(result.getValue("c_name")!=null){
-//                struct.withCuratorName(result.getValue("c_name").stringValue());
-//            }
-//            if(result.getValue("contact_point")!=null){
-//                struct.withContactPoint(result.getValue("contact_point").stringValue());
-//            }
-//            if(result.getValue("acc_method")!=null){
-//                struct.withAccessMethod(result.getValue("acc_method").stringValue());
-//            }
-//            if(result.getValue("license_owner")!=null){
-//                struct.withRightsHolderURI(result.getValue("license_owner").stringValue());
-//            }
-//            if(result.getValue("license")!=null){
-//                struct.withAccessRightsURI(result.getValue("license").stringValue());
-//            }
-//            if(result.getValue("note")!=null){
-//                struct.withNote(result.getValue("note").stringValue());
-//            }
-//            if(result.getValue("located")!=null){
-//                struct.withLocation(result.getValue("located").stringValue());
-//            }
-//            if(result.getValue("p_uri")!=null){
-//                struct.withParentDatasetURI(result.getValue("p_uri").stringValue());
-//            }            
-//            results.add(struct);
-//        }
-//        return results;
-//    }
     /**
      * Searches for triples containing the given resource. In particular it
      * searches the repository, under the given graphspace, for triples
