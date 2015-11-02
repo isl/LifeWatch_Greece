@@ -27,7 +27,6 @@ public class UsageExample {
     public UsageExample createDSManager(){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         this.dsManager=context.getBean(DirectoryService.class);
-        /*BUG(YM) for some weird reason this causes virtuoso to crash*/
         try{
             this.dsManager.deleteTriples(null, null, null, DEFAULT_GRAPHSPACE);  //remove everything
         }catch(QueryExecutionException ex){
