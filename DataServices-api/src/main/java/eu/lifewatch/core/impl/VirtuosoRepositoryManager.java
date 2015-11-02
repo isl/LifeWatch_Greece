@@ -16,6 +16,7 @@ import eu.lifewatch.exception.RepositoryConnectionException;
 import java.io.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
 import org.openrdf.model.URI;
+import org.openrdf.model.impl.URIImpl;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -141,6 +142,17 @@ public class VirtuosoRepositoryManager implements RepositoryManager{
             repoConn.close();
         }catch(RepositoryException | MalformedQueryException | UpdateExecutionException ex){
             throw new QueryExecutionException("An error occured while executing update SPARQL query",ex);
+        }
+    }
+    
+    @Override
+    public void clearGraph(String graphspace) throws QueryExecutionException{
+        try{
+            RepositoryConnection repoConn=this.repo.getConnection();
+            repoConn.clear(new URIImpl(graphspace));
+            repoConn.close();
+        }catch(RepositoryException ex){
+            throw new QueryExecutionException("An error occured while droping the contents of the graphspace \""+graphspace+"\"",ex);
         }
     }
 }

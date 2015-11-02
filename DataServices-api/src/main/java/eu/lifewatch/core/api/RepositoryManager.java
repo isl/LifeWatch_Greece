@@ -60,4 +60,10 @@ public interface RepositoryManager{
      * @param sparqlQuery the update SPARQL query
      * @throws QueryExecutionException is thrown if any error occurs while updating the repository */
     public void update(String sparqlQuery) throws QueryExecutionException;
+    
+    /**Deletes all the contents from a given graphspace.
+     * 
+     * @param graphSpace the name of the graphspace that will be removed 
+     * @throws QueryExecutionException is thrown if any error might occur (during the deletion of the graphspace) */
+    public void clearGraph(String graphSpace) throws QueryExecutionException;
 }
