@@ -55,6 +55,21 @@
                         <id>wsimport-generate-DirectoryService_Insert</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/DirectoryService_Update.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.directory</packageName>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/DirectoryService_Update?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/DirectoryService_Update.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-DirectoryService_Update</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>
