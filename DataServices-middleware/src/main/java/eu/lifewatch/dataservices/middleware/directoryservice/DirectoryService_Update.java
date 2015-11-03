@@ -25,11 +25,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @WebService(serviceName = "DirectoryService_Update")
 public class DirectoryService_Update {
     private static final Logger logger=Logger.getLogger(DirectoryService_Update.class);
-
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
     
     @WebMethod(operationName = "updateLiteral")
     public boolean updateLiteral(@WebParam(name = "originalLiteral") String originalLiteral,
