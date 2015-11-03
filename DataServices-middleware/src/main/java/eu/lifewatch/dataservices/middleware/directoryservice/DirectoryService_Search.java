@@ -48,15 +48,15 @@ public class DirectoryService_Search {
         return retList;
     }
     
-    @WebMethod(operationName = "searchDataset")
-    public List<DirectoryStruct> searchDataset(@WebParam(name = "datasetName") String datasetName,
+    @WebMethod(operationName = "searchDatasetWithinRange")
+    public List<DirectoryStruct> searchDatasetWithinRange(@WebParam(name = "datasetName") String datasetName,
                                                @WebParam(name = "ownerName") String ownerName,
                                                @WebParam(name = "datasetURI") String datasetURI, 
                                                @WebParam(name = "datasetType") String datasetType, 
                                                @WebParam(name = "limit") int limit, 
                                                @WebParam(name = "offset") int offset,
                                                @WebParam(name = "repositoryGraph") String repositoryGraph) {
-        logger.info("Request for searchDataset("+datasetName+","+ownerName+","+datasetURI+","+datasetType+","+limit+","+offset+","+repositoryGraph+")");
+        logger.info("Request for searchDatasetWithinRange("+datasetName+","+ownerName+","+datasetURI+","+datasetType+","+limit+","+offset+","+repositoryGraph+")");
         List<DirectoryStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
