@@ -6,6 +6,6 @@ package eu.lifewatch.dataservices.middleware.client;
  */
 public class Commons {
     public static void printSeparator(){
-        System.out.println("--------------------------------------------");
+        System.out.println("------------------------------------------------------------------------");
     }
 }
