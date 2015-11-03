@@ -2,4 +2,5 @@
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
   <endpoint implementation="eu.lifewatch.dataservices.middleware.directoryservice.DirectoryService_Search" name="DirectoryService_Search" url-pattern="/DirectoryService_Search"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.directoryservice.DirectoryService_Insert" name="DirectoryService_Insert" url-pattern="/DirectoryService_Insert"/>
+  <endpoint implementation="eu.lifewatch.dataservices.middleware.directoryservice.DirectoryService_Update" name="DirectoryService_Update" url-pattern="/DirectoryService_Update"/>
 </endpoints>
