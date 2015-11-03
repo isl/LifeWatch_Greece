@@ -325,7 +325,7 @@ public class MicroCTScanningStruct {
                 retTriples+= "<"+scanningURI+"> <"+Resources.carriedOutBy+"> <"+actorURI+"> .\n";
             }
             if (!contrastMethod.isEmpty()) {
-                    retTriples += "<" + scanningURI + "> <" + Resources.hasContrastMethod + "> " + contrastMethod + " .\n";
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasContrastMethod + "> \"" + contrastMethod + "\" .\n";
                 }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+scanningURI+"> . \n";
