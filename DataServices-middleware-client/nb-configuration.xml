@@ -14,5 +14,6 @@ That way multiple projects can share the same settings (useful for formatting ru
 Any value defined here will override the pom.xml file value but is only applicable to the current project.
 -->
         <org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Search>http://localhost:8080/DataServices-middleware/DirectoryService_Search?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Search>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Insert>http://localhost:8080/DataServices-middleware/DirectoryService_Insert?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Insert>
     </properties>
 </project-shared-configuration>
