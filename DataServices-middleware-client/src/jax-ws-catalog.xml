@@ -6,4 +6,6 @@
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Update?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Update.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Update?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Update.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Delete?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Delete.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Delete?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Delete.xsd_1.xsd"/>
 </catalog>
