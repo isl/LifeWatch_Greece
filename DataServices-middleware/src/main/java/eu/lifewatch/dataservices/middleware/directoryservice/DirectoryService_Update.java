@@ -1,9 +1,7 @@
 package eu.lifewatch.dataservices.middleware.directoryservice;
 
 import eu.lifewatch.core.impl.VirtuosoRepositoryManager;
-import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.exception.QueryExecutionException;
-import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.impl.DirectoryService;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
