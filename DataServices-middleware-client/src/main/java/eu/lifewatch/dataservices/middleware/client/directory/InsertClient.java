@@ -1,5 +1,6 @@
 package eu.lifewatch.dataservices.middleware.client.directory;
 
+import java.util.Arrays;
 import org.apache.log4j.Logger;
 
 /**
@@ -48,6 +49,13 @@ public class InsertClient {
             struct.setPublisherURI("http://localhost/directory/publisher_new");
             struct.setRightsHolderName("rights holder new");
             struct.setRightsHolderURI("http://localhost/directory/rights_holder_new");
+            Pair contributor1=new Pair();
+            contributor1.setKey("http://localhost/directory/contributor1");
+            contributor1.setValue("contributor 1");
+            Pair contributor2=new Pair();
+            contributor2.setKey("http://localhost/directory/contributor2");
+            contributor2.setValue("contributor 2");
+            struct.contributors=Arrays.asList(contributor1,contributor2);
             String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
             System.out.println("Adding a new dataset with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
