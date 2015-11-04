@@ -368,8 +368,10 @@ public class InsertClient {
             struct.setHabitatURI("http://localhost/occurrencestatstemp/habitat");
             struct.setTimeSpan("occurrence stats temp timespan");
             struct.setBibliographicCitation("occurrence stats temp bibliographic citation");
+            struct.setCoordinates("occurrence stats temp coordinates");
             struct.setCountryName("occurrence stats temp country name");
             struct.setCountryURI("http://localhost/occurrencestatstemp/country");
+            struct.setDescription("occurrence stats temp description");
             struct.setEquipmentTypeName("occurrence stats temp equipment type");
             struct.setEquipmentTypeURI("http://localhost/occurrencestatstemp/equipment_type");
             struct.setLatitude("occurrence stats temp latitude");
@@ -378,10 +380,16 @@ public class InsertClient {
             struct.setLocalityURI("http://localhost/occurrencestatstemp/locality_name");
             struct.setMaximumDepth("occurrence stats temp maximum depth");
             struct.setMinimumDepth("occurrence stats temp minimum depth");
+            struct.setNumberOfParts("occurrence stats temp number of parts");
             struct.setOccurrenceEventURI("http://localhost/occurrencestatstemp/occurrence_event");
             struct.setPhysicalObjectURI("http://localhost/occurrencestatstemp/physical_object");
             struct.setSamplingProtocolName("occurrence stats temp sampling protocol name");
             struct.setSamplingProtocolURI("http://localhost/occurrencestatstemp/sampling_protocol");
+            struct.setSpeciesName("occurrence stats temp species name");
+            struct.setSpeciesURI("http://localhost/occurrencestatstemp/species");
+            struct.setStationURI("http://localhost/occurrencestatstemp/station");
+            struct.setTemporaryAggregateURI("http://localhost/occurrencestatstemp/temporary_aggregate");
+            struct.setTemporaryAggregate("occurrence stats temp temporary aggregate");
             struct.setWaterAreaName("occurrence stats temp water area");
             struct.setWaterAreaURI("http://localhost/occurrencestatstemp/water_area");
             Pair actor1=new Pair();
