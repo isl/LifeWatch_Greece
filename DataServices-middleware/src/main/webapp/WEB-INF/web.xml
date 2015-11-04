@@ -28,6 +28,11 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>MetadataRepository_Search</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DirectoryService_Search</servlet-name>
         <url-pattern>/DirectoryService_Search</url-pattern>
@@ -47,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>MetadataRepository_Insert</servlet-name>
         <url-pattern>/MetadataRepository_Insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MetadataRepository_Search</servlet-name>
+        <url-pattern>/MetadataRepository_Search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

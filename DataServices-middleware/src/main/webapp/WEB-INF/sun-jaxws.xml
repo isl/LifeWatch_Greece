@@ -5,4 +5,5 @@
   <endpoint implementation="eu.lifewatch.dataservices.middleware.directoryservice.DirectoryService_Update" name="DirectoryService_Update" url-pattern="/DirectoryService_Update"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.directoryservice.DirectoryService_Delete" name="DirectoryService_Delete" url-pattern="/DirectoryService_Delete"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Insert" name="MetadataRepository_Insert" url-pattern="/MetadataRepository_Insert"/>
+  <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Search" name="MetadataRepository_Search" url-pattern="/MetadataRepository_Search"/>
 </endpoints>
