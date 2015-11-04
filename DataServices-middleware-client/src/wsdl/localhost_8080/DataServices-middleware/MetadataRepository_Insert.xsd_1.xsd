@@ -147,6 +147,40 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="insertStats">
+<xs:sequence>
+<xs:element name="struct" type="tns:statsStruct" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="statsStruct">
+<xs:sequence>
+<xs:element name="actors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionName" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionTypeURI" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionURI" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionUnit" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionValue" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationName" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+<xs:element name="specimenName" type="xs:string" minOccurs="0"/>
+<xs:element name="specimenURI" type="xs:string" minOccurs="0"/>
+<xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertStatsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="insertMicroCTPostProcessing">
 <xs:sequence>
 <xs:element name="struct" type="tns:microCTPostProcessingStruct" minOccurs="0"/>
@@ -184,10 +218,12 @@
 <xs:sequence>
 <xs:element name="actors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="bibliographicCitation" type="xs:string" minOccurs="0"/>
+<xs:element name="coordinates" type="xs:string" minOccurs="0"/>
 <xs:element name="countryName" type="xs:string" minOccurs="0"/>
 <xs:element name="countryURI" type="xs:string" minOccurs="0"/>
 <xs:element name="datasetTitle" type="xs:string" minOccurs="0"/>
 <xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
 <xs:element name="ecosystemName" type="xs:string" minOccurs="0"/>
 <xs:element name="ecosystemURI" type="xs:string" minOccurs="0"/>
 <xs:element name="equipmentTypeName" type="xs:string" minOccurs="0"/>
@@ -200,10 +236,16 @@
 <xs:element name="longitude" type="xs:string" minOccurs="0"/>
 <xs:element name="maximumDepth" type="xs:string" minOccurs="0"/>
 <xs:element name="minimumDepth" type="xs:string" minOccurs="0"/>
+<xs:element name="numberOfParts" type="xs:string" minOccurs="0"/>
 <xs:element name="occurrenceEventURI" type="xs:string" minOccurs="0"/>
 <xs:element name="physicalObjectURI" type="xs:string" minOccurs="0"/>
 <xs:element name="samplingProtocolName" type="xs:string" minOccurs="0"/>
 <xs:element name="samplingProtocolURI" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+<xs:element name="stationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="temporaryAggregate" type="xs:string" minOccurs="0"/>
+<xs:element name="temporaryAggregateURI" type="xs:string" minOccurs="0"/>
 <xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
 <xs:element name="waterAreaName" type="xs:string" minOccurs="0"/>
 <xs:element name="waterAreaURI" type="xs:string" minOccurs="0"/>
@@ -211,40 +253,6 @@
 </xs:complexType>
 
 <xs:complexType name="insertOccurrenceStatsTempResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertStats">
-<xs:sequence>
-<xs:element name="struct" type="tns:statsStruct" minOccurs="0"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="statsStruct">
-<xs:sequence>
-<xs:element name="actors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="description" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionName" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionTypeURI" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionURI" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionUnit" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionValue" type="xs:string" minOccurs="0"/>
-<xs:element name="publicationName" type="xs:string" minOccurs="0"/>
-<xs:element name="publicationURI" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
-<xs:element name="specimenName" type="xs:string" minOccurs="0"/>
-<xs:element name="specimenURI" type="xs:string" minOccurs="0"/>
-<xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertStatsResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
@@ -278,40 +286,6 @@
 </xs:complexType>
 
 <xs:complexType name="insertMorphometricsResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertSpecimenCollection">
-<xs:sequence>
-<xs:element name="struct" type="tns:specimenCollectionStruct" minOccurs="0"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="specimenCollectionStruct">
-<xs:sequence>
-<xs:element name="collectionName" type="xs:string" minOccurs="0"/>
-<xs:element name="collectionURI" type="xs:string" minOccurs="0"/>
-<xs:element name="contactPoint" type="xs:string" minOccurs="0"/>
-<xs:element name="creationEventURI" type="xs:string" minOccurs="0"/>
-<xs:element name="creatorName" type="xs:string" minOccurs="0"/>
-<xs:element name="creatorURI" type="xs:string" minOccurs="0"/>
-<xs:element name="curatorName" type="xs:string" minOccurs="0"/>
-<xs:element name="curatorURI" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="keeperName" type="xs:string" minOccurs="0"/>
-<xs:element name="keeperURI" type="xs:string" minOccurs="0"/>
-<xs:element name="note" type="xs:string" minOccurs="0"/>
-<xs:element name="ownerName" type="xs:string" minOccurs="0"/>
-<xs:element name="ownerURI" type="xs:string" minOccurs="0"/>
-<xs:element name="timespan" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertSpecimenCollectionResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
@@ -362,6 +336,40 @@
 </xs:complexType>
 
 <xs:complexType name="insertOccurrenceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertSpecimenCollection">
+<xs:sequence>
+<xs:element name="struct" type="tns:specimenCollectionStruct" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="specimenCollectionStruct">
+<xs:sequence>
+<xs:element name="collectionName" type="xs:string" minOccurs="0"/>
+<xs:element name="collectionURI" type="xs:string" minOccurs="0"/>
+<xs:element name="contactPoint" type="xs:string" minOccurs="0"/>
+<xs:element name="creationEventURI" type="xs:string" minOccurs="0"/>
+<xs:element name="creatorName" type="xs:string" minOccurs="0"/>
+<xs:element name="creatorURI" type="xs:string" minOccurs="0"/>
+<xs:element name="curatorName" type="xs:string" minOccurs="0"/>
+<xs:element name="curatorURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="keeperName" type="xs:string" minOccurs="0"/>
+<xs:element name="keeperURI" type="xs:string" minOccurs="0"/>
+<xs:element name="note" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerName" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerURI" type="xs:string" minOccurs="0"/>
+<xs:element name="timespan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertSpecimenCollectionResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
@@ -596,6 +604,31 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="insertSynonym">
+<xs:sequence>
+<xs:element name="struct" type="tns:synonymStruct" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="synonymStruct">
+<xs:sequence>
+<xs:element name="appellation" type="xs:string" minOccurs="0"/>
+<xs:element name="appellationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+<xs:element name="synonyms" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertSynonymResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="insertIdentification">
 <xs:sequence>
 <xs:element name="struct" type="tns:identificationStruct" minOccurs="0"/>
@@ -660,31 +693,6 @@
 </xs:complexType>
 
 <xs:complexType name="insertMicroCTSpecimenResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertSynonym">
-<xs:sequence>
-<xs:element name="struct" type="tns:synonymStruct" minOccurs="0"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="synonymStruct">
-<xs:sequence>
-<xs:element name="appellation" type="xs:string" minOccurs="0"/>
-<xs:element name="appellationURI" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
-<xs:element name="synonyms" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="insertSynonymResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
