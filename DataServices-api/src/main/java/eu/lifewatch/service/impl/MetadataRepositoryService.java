@@ -2979,8 +2979,129 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return results;
     }
 
-   
-     public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
+    public List<GensSampleStruct> searchGensSample(String species, String device, String sample, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+        String queryString = "SELECT DISTINCT ?transformationEventURI ?sampleURI ?sampleName ?transformedSampleURI ?transformedSampleName "
+                + "?placeURI ?placeName ?speciesURI ?speciesName ?sequencingURI ?deviceURI ?deviceName ?deviceType "
+                + "?productURI ?productName ?postProductURI ?postProductName ?postprocessingURI ?description "
+                + "?dimensionURI ?dimensionName ?dimensionTypeURI ?dimensionUnit ?dimensionValue ?datasetURI ?datasetName "
+                + "FROM <" + repositoryGraph + "> "
+                + "WHERE{ "
+                + " ?transformationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.transformationEventLabel + "> . "
+                + " ?transformationEventURI <" + Resources.transformed + "> ?sampleURI . "
+                + " ?sampleURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleLabel + ">. "
+                + " ?sampleURI <" + Resources.rdfsLabel + "> ?sampleName. "
+                + " OPTIONAL{ ?transformationEventURI <" + Resources.resultedIn + "> ?transformedSampleURI . "
+                + " ?transformedSampleURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleLabel + ">. "
+                + " ?transformedSampleURI <" + Resources.rdfsLabel + "> ?transformedSampleName. } "
+                + " OPTIONAL{ ?sampleURI <" + Resources.hasCurrentLocation + "> ?placeURI . } "
+                + " OPTIONAL{ ?transformedSampleURI <" + Resources.hasCurrentLocation + "> ?placeURI . } "
+                + " OPTIONAL {?placeURI <" + Resources.rdfTypeLabel + "> <" + Resources.placeLabel + ">. "
+                + " ?placeURI <" + Resources.rdfsLabel + "> ?placeName. } "
+                + " ?sampleURI <" + Resources.belongsTo + "> ?speciesURI. "
+                + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + ">. "
+                + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
+                + " ?sequencingURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitizationProcessLabel + "> . "
+                + " ?sequencingURI <" + Resources.hasType + "> \"Sequencing\" . "
+                + " ?sequencingURI <" + Resources.digitized + "> ?sampleURI . "
+                + " OPTIONAL {?sequencingURI <" + Resources.hasNote + "> ?description . } "
+                + " ?sequencingURI <" + Resources.happenedOnDevice + "> ?deviceURI . "
+                + " ?sequencingURI <" + Resources.createdDerivative + "> ?productURI . "
+                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
+                + " ?datasetURI <" + Resources.refersTo + "> ?sequencingURI  . "
+                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
+                + " ?deviceURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitalDeviceLabel + "> . "
+                + " ?deviceURI <" + Resources.rdfsLabel + "> ?deviceName . "
+                + " ?deviceURI <" + Resources.hasType + "> ?deviceType. "
+                + " ?postprocessingURI <" + Resources.rdfTypeLabel + "> <" + Resources.formalDerivationEventLabel + "> . "
+                + " ?postprocessingURI <" + Resources.hasCreated + "> ?postProductURI . "
+                + " ?productURI <" + Resources.wasDerivationSourceFor + "> ?postprocessingURI . "
+                + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
+                + " ?productURI <" + Resources.rdfsLabel + "> ?productName . "
+                + " ?postProductURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
+                + " ?postProductURI <" + Resources.rdfsLabel + "> ?postProductName . "
+                + " OPTIONAL{ ?placeURI <" + Resources.hasDimension + "> ?dimensionURI . "
+                + " ?dimensionURI <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> . "
+                //                        +" ?dimensionTypeURI <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionTypeLabel+">. "
+                + " ?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName. "
+                + " ?dimensionURI <" + Resources.hasType + "> ?dimensionTypeURI. }"
+                + " OPTIONAL { ?dimensionURI <" + Resources.hasValue + "> ?dimensionValue. } "
+                + " OPTIONAL { ?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  }"
+                + " FILTER regex(?speciesName,'" + species + "',\"i\") "
+                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
+                + " FILTER regex(?deviceName,'" + device + "',\"i\") "
+                + " FILTER regex(?sampleName,'" + sample + "',\"i\")} "
+                + " LIMIT " + limit
+                + " OFFSET " + offset;
+
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The result returned " + sparqlresults.size() + " results");
+        List<GensSampleStruct> results = new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+            GensSampleStruct struct = new GensSampleStruct()
+                    .withTransformationURI(result.getValue("transformationEventURI").stringValue())
+                    .withSampleURI(result.getValue("sampleURI").stringValue())
+                    .withSampleName(result.getValue("sampleName").stringValue())
+                    .withPostProcessingURI(result.getValue("postprocessingURI").stringValue())
+                    .withSequencingURI(result.getValue("sequencingURI").stringValue())
+                    .withSpeciesName(result.getValue("speciesName").stringValue())
+                    .withSpeciesURI(result.getValue("speciesURI").stringValue())
+                    .withProductName(result.getValue("productName").stringValue())
+                    .withProductURI(result.getValue("productURI").stringValue())
+                    .withPostProductName(result.getValue("postProductName").stringValue())
+                    .withPostProductURI(result.getValue("postProductURI").stringValue())
+                    .withDeviceName(result.getValue("deviceName").stringValue())
+                    .withDeviceURI(result.getValue("deviceURI").stringValue())
+                    .withDeviceType(result.getValue("deviceType").stringValue())
+                    .withDatasetName(result.getValue("datasetName").stringValue())
+                    .withDatasetURI(result.getValue("datasetURI").stringValue());
+
+            if (result.getValue("placeURI") != null) {
+                struct.withPlaceURI(result.getValue("placeURI").stringValue());
+            }
+
+            if (result.getValue("placeName") != null) {
+                struct.withPlaceName(result.getValue("placeName").stringValue());
+            }
+
+            if (result.getValue("description") != null) {
+                struct.withDescription(result.getValue("description").stringValue());
+            }
+
+            if (result.getValue("transformedSampleURI") != null) {
+                struct.withTransformedSampleURI(result.getValue("transformedSampleURI").stringValue());
+            }
+
+            if (result.getValue("transformedSampleName") != null) {
+                struct.withTransformedSampleName(result.getValue("transformedSampleName").stringValue());
+            }
+
+            if (result.getValue("dimensionName") != null) {
+                struct.withDimensionName(result.getValue("dimensionName").stringValue());
+            }
+
+            if (result.getValue("dimensionURI") != null) {
+                struct.withDimensionURI(result.getValue("dimensionURI").stringValue());
+            }
+
+            if (result.getValue("dimensionValue") != null) {
+                struct.withDimensionValue(result.getValue("dimensionValue").stringValue());
+            }
+
+            if (result.getValue("dimensionUnit") != null) {
+                struct.withDimensionUnit(result.getValue("dimensionUnit").stringValue());
+            }
+
+            if (result.getValue("dimensionTypeURI") != null) {
+                struct.withDimensionType(result.getValue("dimensionTypeURI").stringValue());
+            }
+
+            results.add(struct);
+        }
+        return results;
+    }
+
+    public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                 + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description "
