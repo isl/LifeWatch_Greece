@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class InsertClient {
     private static final Logger logger=Logger.getLogger(InsertClient.class);
+    private static final String METADATA_CAT_GRAPHSPACE="http://www.ics.forth.gr/isl/lifewatch/metadata";
     
     private static void insert(){
         try{
@@ -57,14 +58,13 @@ public class InsertClient {
             contributor2.setKey("http://localhost/directory/contributor2");
             contributor2.setValue("contributor 2");
             struct.contributors=Arrays.asList(contributor1,contributor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Directory) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tOwner Name: "+struct.getOwnerName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tDataset Type: "+struct.getDatasetType()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insert(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insert(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Directory) metadata",ex);
@@ -96,13 +96,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/measurement/actor2");
             actor2.setValue("measurement actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Measurement) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tMeasurementEvent URI: "+struct.getMeasurementEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMeasurement(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMeasurement(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Measurement) metadata",ex);
@@ -129,14 +128,13 @@ public class InsertClient {
             place2.setKey("http://localhost/commonname/place2");
             place2.setValue("common name place 2");
             struct.places=Arrays.asList(place1,place2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Common Name) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tCommon Name URI: "+struct.getCommonNameURI()+
                                "\tCommon Name: "+struct.getCommonName()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertCommonName(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertCommonName(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Common Name) metadata",ex);
@@ -168,14 +166,13 @@ public class InsertClient {
             actor2.setKey("http://localhost/environmental/actor2");
             actor2.setValue("environmental actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Environmental) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tEnvironmental Value: "+struct.getDimensionValue()+
                                "\tEnvironmental Unit: "+struct.getDimensionUnit()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertEnvironmental(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertEnvironmental(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Environmental) metadata",ex);
@@ -205,13 +202,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/identification/actor2");
             actor2.setValue("identification actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Identification) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tIdentification URI: "+struct.getIdentificationEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertIdentification(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertIdentification(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Identification) metadata",ex);
@@ -240,13 +236,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/scientificnaming/actor2");
             actor2.setValue("scientific naming actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Scientific Naming) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tScientific Naming Assignment EventURI: "+struct.getScientificNameAssignmentEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertScientificNaming(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertScientificNaming(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Scientific Naming) metadata",ex);
@@ -274,13 +269,12 @@ public class InsertClient {
             struct.setOrderURI("http://localhost/taxonomy/order");
             struct.setPhylumName("taxonomy phylum");
             struct.setPhylumURI("http://localhost/taxonomy/phylum");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Taxonomy) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tSpecies Uri: "+struct.getSpeciesURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertTaxonomy(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertTaxonomy(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Taxonomy) metadata",ex);
@@ -312,13 +306,12 @@ public class InsertClient {
             product2.setKey("http://localhost/microctpostprocessing/product2");
             product2.setValue("microct postprocessing product 2");
             struct.products=Arrays.asList(product1,product2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (MicroCT PostProcessing) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tMicroCT PostProcessing URI: "+struct.getPostProcessingURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMicroCTPostProcessing(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMicroCTPostProcessing(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT PostProcessing) metadata",ex);
@@ -350,13 +343,12 @@ public class InsertClient {
             struct.setSpeciesName("gens dataset species");
             struct.setSpeciesURI("http://localhost/gensdataset/species");
             struct.setTimeSpan("gens dataset timespan");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Gens Dataset) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tSample URI: "+struct.getSampleURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertGensDataset(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertGensDataset(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Gens Dataset) metadata",ex);
@@ -399,13 +391,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/occurrencestatstemp/actor2");
             actor2.setValue("occurrence stats temp actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Occurrence Stats Temp) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tOccurrence Event URI: "+struct.getOccurrenceEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertOccurrenceStatsTemp(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertOccurrenceStatsTemp(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence Stats Temp) metadata",ex);
@@ -437,13 +428,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/specimen/actor2");
             actor2.setValue("specimen actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Specimen) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tSpecimen URI: "+struct.getSpecimenURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertSpecimen(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertSpecimen(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Specimen) metadata",ex);
@@ -471,13 +461,12 @@ public class InsertClient {
             struct.setOwnerName("specimen collection owner");
             struct.setOwnerURI("http://localhost/specimencollection/owner");
             struct.setTimespan("specimen collection timespan");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Specimen Collection) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tCollection URI: "+struct.getCollectionURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertSpecimenCollection(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertSpecimenCollection(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Specimen Collection) metadata",ex);
@@ -510,13 +499,12 @@ public class InsertClient {
             product2.setKey("http://localhost/microctreconstruction/product2");
             product2.setValue("microct reconstruction product 2");
             struct.products=Arrays.asList(product1,product2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (MicroCT Reconstruction) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tReconstruction URI: "+struct.getReconstructionURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMicroCTReconstruction(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMicroCTReconstruction(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Reconstruction) metadata",ex);
@@ -551,13 +539,12 @@ public class InsertClient {
             product2.setKey("http://localhost/microctscanning/product2");
             product2.setValue("microct scanning product 2");
             struct.products=Arrays.asList(product1,product2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (MicroCT Scanning) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tScanning URI: "+struct.getScanningURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMicroCTScanning(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMicroCTScanning(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Scanning) metadata",ex);
@@ -591,13 +578,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/stats/actor2");
             actor2.setValue("stats actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Stats) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tDimenion URI: "+struct.getDimensionURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertStats(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertStats(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Stats) metadata",ex);
@@ -635,13 +621,12 @@ public class InsertClient {
             struct.setTransformationURI("http://localhost/genssample/transformation");
             struct.setTransformedSampleName("gens sample transformed sample name");
             struct.setTransformedSampleURI("http://localhost/genssample/transformed_sample");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Gens Sample) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tSample URI: "+struct.getSampleURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertGensSample(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertGensSample(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Gens Sample) metadata",ex);
@@ -674,13 +659,12 @@ public class InsertClient {
             struct.setSpecimenName("microct specimen specimen");
             struct.setSpecimenType("microct specimen specimen type");
             struct.setSpecimenURI("http://localhost/microctspecimen/specimen");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (MicroCT Specimen) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tSpecimen URI: "+struct.getSpecimenURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMicroCTSpecimen(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMicroCTSpecimen(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Specimen) metadata",ex);
@@ -702,13 +686,12 @@ public class InsertClient {
             struct.setSpeciesName("occurrence stats abundance species");
             struct.setSpeciesURI("http://localhost/occurrencestatsabundance/species");
             struct.setTemporaryAggregate("http://localhost/occurrencestatsabundance/temporary_aggregate");
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Occurrence Stats Abundance) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tTemporary Aggregate URI: "+struct.getTemporaryAggregate()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertOccurrenceStatsAbundance(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertOccurrenceStatsAbundance(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence Stats Abundance) metadata",ex);
@@ -741,13 +724,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/morphometrics/actor2");
             actor2.setValue("morphometrics actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Morphometrics) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tAttribute Assignment Event URI: "+struct.getAttributeAssignmentEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertMorphometrics(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertMorphometrics(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Morphometrics) metadata",ex);
@@ -797,13 +779,12 @@ public class InsertClient {
             actor2.setKey("http://localhost/occurrence/actor2");
             actor2.setValue("occurrence actor 2");
             struct.actors=Arrays.asList(actor1,actor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Occurrence) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetTitle()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tOccurrence Event URI: "+struct.getOccurrenceEventURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertOccurrence(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertOccurrence(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence) metadata",ex);
@@ -828,13 +809,12 @@ public class InsertClient {
             synonym2.setKey("http://localhost/synonym/synonym2");
             synonym2.setValue("synonym synonym 2");
             struct.synonyms=Arrays.asList(synonym1,synonym2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/metadata";
             System.out.println("Adding new (Synonym) metadata with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tAppellation URI: "+struct.getAppellationURI()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertSynonym(struct, repositoryGraph);
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
+            boolean result = port.insertSynonym(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Synonym) metadata",ex);
