@@ -4343,25 +4343,30 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
      */
     @Override
     public void deleteTriples(String subject, String property, String object, String repositoryGraph) throws QueryExecutionException {
-        String deleteQuery = "DELETE FROM <" + repositoryGraph + "> {?s ?p ?o} "
-                + "WHERE{ ?s ?p ?o . ";
-        if (subject != null) {
-            deleteQuery += "FILTER(?s=<" + subject + ">). ";
-        }
-        if (property != null) {
-            deleteQuery += "FILTER(?p=<" + property + ">). ";
-        }
-        if (object != null) {
-            try {
-                new URI(object);
-                deleteQuery += "FILTER(?o=<" + object + ">)";
-            } catch (URISyntaxException ex) {
-                deleteQuery += "FILTER REGEX(?o,\"" + object + "\",\"i\")";
+        if(subject==null && property==null && object==null){
+            logger.debug("dropping all the contents from the graphspace: " + repositoryGraph);
+            this.repoManager.clearGraph(repositoryGraph);
+        }else{
+            String deleteQuery = "DELETE FROM <" + repositoryGraph + "> {?s ?p ?o} "
+                    + "WHERE{ ?s ?p ?o . ";
+            if (subject != null) {
+                deleteQuery += "FILTER(?s=<" + subject + ">). ";
             }
+            if (property != null) {
+                deleteQuery += "FILTER(?p=<" + property + ">). ";
+            }
+            if (object != null) {
+                try {
+                    new URI(object);
+                    deleteQuery += "FILTER(?o=<" + object + ">)";
+                } catch (URISyntaxException ex) {
+                    deleteQuery += "FILTER REGEX(?o,\"" + object + "\",\"i\")";
+                }
+            }
+            deleteQuery += "}";
+            logger.debug("Submitting the delete query: " + deleteQuery);
+            this.repoManager.update(deleteQuery);
         }
-        deleteQuery += "}";
-        logger.debug("Submitting the delete query: " + deleteQuery);
-        this.repoManager.update(deleteQuery);
     }
 
     /**

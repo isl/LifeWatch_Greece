@@ -650,6 +650,7 @@ public class DirectoryService implements Service {
     @Override
     public void deleteTriples(String subject, String property, String object, String repositoryGraph) throws QueryExecutionException {
         if(subject==null && property==null && object==null){
+            logger.debug("dropping all the contents from the graphspace: " + repositoryGraph);
             this.repoManager.clearGraph(repositoryGraph);
         }else{
             String deleteQuery = "DELETE FROM <" + repositoryGraph + "> {?s ?p ?o} "
