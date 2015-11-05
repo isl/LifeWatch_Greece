@@ -1,7 +1,6 @@
 package eu.lifewatch.dataservices.middleware.metadatarepository;
 
 import eu.lifewatch.core.impl.VirtuosoRepositoryManager;
-import eu.lifewatch.core.model.CommonNameStruct;
 import eu.lifewatch.core.model.IncomingNodeStruct;
 import eu.lifewatch.core.model.OutgoingNodeStruct;
 import eu.lifewatch.exception.QueryExecutionException;
