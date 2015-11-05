@@ -20,5 +20,10 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Insert>http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Insert>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Search>http://localhost:8080/DataServices-middleware/MetadataRepository_Search?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Search>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Select>http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Select>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchThing>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchThing?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchThing>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchActor>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchActor?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchActor>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchEvent>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchEvent?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchEvent>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchPlace>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchPlace?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchPlace>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchDimension>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchDimension?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchDimension>
     </properties>
 </project-shared-configuration>

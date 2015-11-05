@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="searchThingByActor" type="tns:searchThingByActor"/>
+
+<xs:element name="searchThingByActorResponse" type="tns:searchThingByActorResponse"/>
+
+<xs:element name="searchThingByEvent" type="tns:searchThingByEvent"/>
+
+<xs:element name="searchThingByEventResponse" type="tns:searchThingByEventResponse"/>
+
+<xs:element name="searchThingFromActor" type="tns:searchThingFromActor"/>
+
+<xs:element name="searchThingFromActorResponse" type="tns:searchThingFromActorResponse"/>
+
+<xs:element name="searchThingFromEvent" type="tns:searchThingFromEvent"/>
+
+<xs:element name="searchThingFromEventResponse" type="tns:searchThingFromEventResponse"/>
+
+<xs:element name="searchThingFromPlace" type="tns:searchThingFromPlace"/>
+
+<xs:element name="searchThingFromPlaceResponse" type="tns:searchThingFromPlaceResponse"/>
+
+<xs:element name="searchThingFromThing" type="tns:searchThingFromThing"/>
+
+<xs:element name="searchThingFromThingResponse" type="tns:searchThingFromThingResponse"/>
+
+<xs:element name="searchThingFromTime" type="tns:searchThingFromTime"/>
+
+<xs:element name="searchThingFromTimeResponse" type="tns:searchThingFromTimeResponse"/>
+
+<xs:element name="searchThingHasDimension" type="tns:searchThingHasDimension"/>
+
+<xs:element name="searchThingHasDimensionResponse" type="tns:searchThingHasDimensionResponse"/>
+
+<xs:element name="searchThingHasMetActor" type="tns:searchThingHasMetActor"/>
+
+<xs:element name="searchThingHasMetActorResponse" type="tns:searchThingHasMetActorResponse"/>
+
+<xs:element name="searchThingHasMetPlace" type="tns:searchThingHasMetPlace"/>
+
+<xs:element name="searchThingHasMetPlaceResponse" type="tns:searchThingHasMetPlaceResponse"/>
+
+<xs:element name="searchThingHasMetThing" type="tns:searchThingHasMetThing"/>
+
+<xs:element name="searchThingHasMetThingResponse" type="tns:searchThingHasMetThingResponse"/>
+
+<xs:element name="searchThingHasMetTime" type="tns:searchThingHasMetTime"/>
+
+<xs:element name="searchThingHasMetTimeResponse" type="tns:searchThingHasMetTimeResponse"/>
+
+<xs:element name="searchThingRefersToEvent" type="tns:searchThingRefersToEvent"/>
+
+<xs:element name="searchThingRefersToEventResponse" type="tns:searchThingRefersToEventResponse"/>
+
+<xs:element name="searchThingRefersToThing" type="tns:searchThingRefersToThing"/>
+
+<xs:element name="searchThingRefersToThingResponse" type="tns:searchThingRefersToThingResponse"/>
+
+<xs:complexType name="searchThingFromPlace">
+<xs:sequence>
+<xs:element name="place" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromPlaceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResultMap">
+<xs:sequence>
+<xs:element name="Sparqlresults" type="tns:sparqlResults" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResults">
+<xs:sequence>
+<xs:element name="Sparqlresult" type="tns:sparqlResult" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResult">
+<xs:sequence/>
+<xs:attribute name="Key" type="xs:string"/>
+<xs:attribute name="Value" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromTime">
+<xs:sequence>
+<xs:element name="timespan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromTimeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingByActor">
+<xs:sequence>
+<xs:element name="actor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingByActorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetTime">
+<xs:sequence>
+<xs:element name="timespan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetTimeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromEvent">
+<xs:sequence>
+<xs:element name="event" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingByEvent">
+<xs:sequence>
+<xs:element name="event" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingByEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromActor">
+<xs:sequence>
+<xs:element name="actor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingFromActorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingRefersToThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingRefersToThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetActor">
+<xs:sequence>
+<xs:element name="actor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetActorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingRefersToEvent">
+<xs:sequence>
+<xs:element name="event" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingRefersToEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetPlace">
+<xs:sequence>
+<xs:element name="place" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasMetPlaceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasDimension">
+<xs:sequence>
+<xs:element name="dimesionValue" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchThingHasDimensionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

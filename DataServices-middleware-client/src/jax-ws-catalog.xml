@@ -14,4 +14,14 @@
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Search.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Select.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Select?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Select.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchThing?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchThing.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchThing?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchThing.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchActor?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchActor.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchActor?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchActor.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchEvent?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchEvent.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchEvent?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchEvent.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchPlace?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchPlace.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchPlace?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchPlace.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchDimension?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchDimension.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchDimension?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchDimension.xsd_1.xsd"/>
 </catalog>
