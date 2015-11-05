@@ -145,7 +145,7 @@ public class StatsStruct {
         return publicationURI;
     }
     
-    public void setDtaEvaluationURI(String dataEvaluationURI) {
+    public void setDataEvaluationURI(String dataEvaluationURI) {
         this.dataEvaluationURI = dataEvaluationURI;
     }
 
