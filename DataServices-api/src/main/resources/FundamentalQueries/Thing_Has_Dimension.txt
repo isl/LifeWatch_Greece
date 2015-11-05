@@ -1,6 +1,6 @@
 SELECT distinct ?thing ?dataset
-FROM <http://Metadata_100> 
-FROM <http://Directory_100>
+FROM <http://www.ics.forth.gr/isl/lifewatch/metadata> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/directory> 
 WHERE{
     {
         ?MeasurementIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E16_Measurement> .

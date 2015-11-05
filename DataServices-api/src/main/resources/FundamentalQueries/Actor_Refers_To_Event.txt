@@ -1,6 +1,6 @@
 SELECT distinct ?actor ?dataset
-FROM <http://Metadata_100> 
-FROM <http://Directory_100>
+FROM <http://www.ics.forth.gr/isl/lifewatch/metadata> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/directory> 
 WHERE{
 
 {

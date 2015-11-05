@@ -1,6 +1,6 @@
 SELECT distinct ?event
-FROM <http://Metadata_Repository_Test> 
-FROM <http://Directory_Test> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/metadata> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/directory> 
 WHERE{
     ?event <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#S19_encounter_event> .
     ?event <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P14_carried_out_by> ?actor .

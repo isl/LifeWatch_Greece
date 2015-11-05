@@ -1,6 +1,6 @@
 SELECT distinct ?place
-FROM <http://Metadata_Repository_Test> 
-FROM <http://Directory_Test> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/metadata> 
+FROM <http://www.ics.forth.gr/isl/lifewatch/directory> 
 WHERE{
     ?place <http://www.ics.forth.gr/isl/MarineTLO/v4/marinetlo.owl#P106_falls_within> ?location .
     FILTER (?location = <[!TEMPLATE_1!]>). 
