@@ -13,4 +13,5 @@
   <endpoint implementation="eu.lifewatch.dataservices.middleware.fundamentalcategories.FundamentalCategories_SearchDimension" name="FundamentalCategories_SearchDimension" url-pattern="/FundamentalCategories_SearchDimension"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.fundamentalcategories.FundamentalCategories_SearchEvent" name="FundamentalCategories_SearchEvent" url-pattern="/FundamentalCategories_SearchEvent"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.fundamentalcategories.FundamentalCategories_SearchPlace" name="FundamentalCategories_SearchPlace" url-pattern="/FundamentalCategories_SearchPlace"/>
+  <endpoint implementation="eu.lifewatch.dataservices.middleware.fundamentalcategories.FundamentalCategories_SearchThing" name="FundamentalCategories_SearchThing" url-pattern="/FundamentalCategories_SearchThing"/>
 </endpoints>
