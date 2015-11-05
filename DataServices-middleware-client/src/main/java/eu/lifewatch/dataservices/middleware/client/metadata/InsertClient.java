@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 public class InsertClient {
     private static final Logger logger=Logger.getLogger(InsertClient.class);
     private static final String METADATA_CAT_GRAPHSPACE="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static int successedCnt=0;
+    private static int failedCnt=0;
     
     private static void insert(){
         try{
@@ -66,8 +68,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insert(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Directory) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -103,8 +107,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMeasurement(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Measurement) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -136,8 +142,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertCommonName(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Common Name) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -174,8 +182,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertEnvironmental(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Environmental) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -209,8 +219,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertIdentification(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Identification) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -243,8 +255,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertScientificNaming(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Scientific Naming) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -276,8 +290,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertTaxonomy(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Taxonomy) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -319,8 +335,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMicroCTPostProcessing(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT PostProcessing) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -356,8 +374,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertGensDataset(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Gens Dataset) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -412,8 +432,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertOccurrenceStatsTemp(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence Stats Temp) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -449,8 +471,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertSpecimen(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Specimen) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -482,8 +506,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertSpecimenCollection(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Specimen Collection) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -520,8 +546,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMicroCTReconstruction(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Reconstruction) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -560,8 +588,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMicroCTScanning(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Scanning) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -600,8 +630,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertStats(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Stats) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -643,8 +675,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertGensSample(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Gens Sample) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -681,8 +715,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMicroCTSpecimen(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (MicroCT Specimen) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -708,8 +744,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertOccurrenceStatsAbundance(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence Stats Abundance) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -746,8 +784,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertMorphometrics(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Morphometrics) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -801,8 +841,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertOccurrence(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Occurrence) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -831,8 +873,10 @@ public class InsertClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE+" ...");
             boolean result = port.insertSynonym(struct, METADATA_CAT_GRAPHSPACE);
             System.out.println("Result= "+result);
+            successedCnt++;
         } catch (Exception ex) {
             logger.error("An error occured while adding new (Synonym) metadata",ex);
+            failedCnt++;
         }
     }
     
@@ -878,5 +922,7 @@ public class InsertClient {
         insertOccurrence();
         Commons.printSeparator();
         insertSynonym();
+        System.out.println("Successfull Insertions: "+successedCnt);
+        System.out.println("Failed Insertions: "+failedCnt);
     }
 }
