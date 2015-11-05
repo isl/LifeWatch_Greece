@@ -20,6 +20,7 @@
         <h3> Metadata Repository Service - List of Services </h3>
         <ul>
             <li><a href="MetadataRepository_Search?wsdl">Search WSDL</a></li>
+            <li><a href="MetadataRepository_Select?wsdl">Select WSDL</a></li>
             <li><a href="MetadataRepository_Insert?wsdl">Insert WSDL</a></li>
             <li><a href="MetadataRepository_Update?wsdl">Update WSDL</a></li>
             <li><a href="MetadataRepository_Delete?wsdl">Delete WSDL</a></li>
