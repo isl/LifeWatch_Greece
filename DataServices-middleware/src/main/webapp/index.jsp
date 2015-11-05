@@ -6,11 +6,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Lifewatch Greece Middleware - Data Web Services</title>
-    </head>
+        <style type="text/css">
+<!--
+.style1 {font-size: 32px}
+-->
+        </style>
+</head>
     <body>
-        <h1><a href="DirectoryService_Search"> Lifewatch Middleware Greece - Data Web Services</a></h1>
-        <p>
-        <h3> Directory Service - List of Services</h3>
+        <table width="576" border="0">
+          <tr>
+            <td width="150" height="250"><p><img src="figures/lifewatch.png" width="120" height="115"></p>
+            <p><img src="figures/metacatalogue_data-services.png" width="115" height="88"></p></td>
+            <td width="416"><a href="DirectoryService_Search" class="style1">Lifewatch Greece Middleware - Data Web Services</a></td>
+          </tr>
+        </table>
+        <h3>Directory Service - List of Services</h3>
         <ul>
             <li><a href="DirectoryService_Search?wsdl">Search WSDL</a></li>
             <li><a href="DirectoryService_Insert?wsdl">Insert WSDL</a></li>
@@ -32,13 +42,6 @@
             <li><a href="FundamentalCategories_SearchEvent?wsdl">Search Event WSDL</a></li>
             <li><a href="FundamentalCategories_SearchPlace?wsdl">Search Place WSDL</a></li>
             <li><a href="FundamentalCategories_SearchDimension?wsdl">Search Dimension WSDL</a></li>
-        </ul>
-        <h3> Content Storage Service - List of Services </h3>
-        <ul>
-            <li><a href="ContentStorage_Search?wsdl">Search WSDL</a></li>
-            <li><a href="ContentStorage_Get?wsdl">Get WSDL</a></li>
-            <li><a href="ContentStorage_Delete?wsdl">Delete WSDL</a></li>
-            <li><a href="ContentStorage_Import?wsdl">Import WSDL</a></li>
-        </ul>
-    </body>
+    </ul>
+</body>
 </html>
