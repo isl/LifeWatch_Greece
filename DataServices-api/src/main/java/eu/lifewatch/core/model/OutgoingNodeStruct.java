@@ -4,10 +4,6 @@ import eu.lifewatch.common.Resources;
 import eu.lifewatch.exception.URIValidationException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import org.apache.log4j.Logger;
 
@@ -35,7 +31,6 @@ public class OutgoingNodeStruct {
         objectName="";
         objectType="";
         predicate="";
-  
     }
     
     public String getObject() {
@@ -53,8 +48,6 @@ public class OutgoingNodeStruct {
     public String getPredicate() {
         return predicate;
     }
-     
-  
     
     public void setObject(String object) {
         this.object = object;
@@ -71,8 +64,7 @@ public class OutgoingNodeStruct {
     public void setPredicate(String predicate) {
         this.predicate = predicate;
     }
-
-
+    
     public OutgoingNodeStruct withPredicate(String predicate) {
         this.predicate = predicate;
         return this;
@@ -93,7 +85,6 @@ public class OutgoingNodeStruct {
         return this;
     }
     
-    
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
      * @return an NTRIPLES representation of the struct fields */
@@ -101,28 +92,23 @@ public class OutgoingNodeStruct {
         String retTriples="";
         if(!object.isEmpty()&&object.startsWith("http://")){
             if(!objectType.isEmpty()){
-            retTriples+= "<"+object+"> <"+Resources.rdfTypeLabel+"> <"+objectType+"> .\n";
+                retTriples+= "<"+object+"> <"+Resources.rdfTypeLabel+"> <"+objectType+"> .\n";
             }
             if(!objectName.isEmpty()){
                 retTriples+= "<"+object+"> <"+Resources.rdfsLabel+"> \""+objectName+"\" .\n";
             }
         }
-            
-        
         logger.debug("Struct in NTriples format: \n"+retTriples);
         return retTriples;
     }
-    
     
     /**Validates the fields that will contain URIs
      * 
      * @throws URIValidationException if any of the URIs is not in valid form */
     public void validateURIs() throws URIValidationException{
-   
         if(!this.objectType.isEmpty()){
             this.validateURI(this.objectType);
         }
-        
     }
     
     private void validateURI(String uri) throws URIValidationException{

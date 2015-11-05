@@ -4,10 +4,6 @@ import eu.lifewatch.common.Resources;
 import eu.lifewatch.exception.URIValidationException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import org.apache.log4j.Logger;
 
@@ -35,7 +31,6 @@ public class IncomingNodeStruct {
         subjectName="";
         subjectType="";
         predicate="";
-  
     }
     
     public String getSubject() {
@@ -53,9 +48,7 @@ public class IncomingNodeStruct {
     public String getPredicate() {
         return predicate;
     }
-     
-  
-    
+
     public void setSubject(String subject) {
         this.subject = subject;
     }
@@ -71,7 +64,6 @@ public class IncomingNodeStruct {
     public void setPredicate(String predicate) {
         this.predicate = predicate;
     }
-
 
     public IncomingNodeStruct withPredicate(String predicate) {
         this.predicate = predicate;
@@ -101,28 +93,23 @@ public class IncomingNodeStruct {
         String retTriples="";
         if(!subject.isEmpty()&&subject.startsWith("http://")){
             if(!subjectType.isEmpty()){
-            retTriples+= "<"+subject+"> <"+Resources.rdfTypeLabel+"> <"+subjectType+"> .\n";
+                retTriples+= "<"+subject+"> <"+Resources.rdfTypeLabel+"> <"+subjectType+"> .\n";
             }
             if(!subjectName.isEmpty()){
                 retTriples+= "<"+subject+"> <"+Resources.rdfsLabel+"> \""+subjectName+"\" .\n";
             }
         }
-            
-        
         logger.debug("Struct in NTriples format: \n"+retTriples);
         return retTriples;
     }
-    
-    
+
     /**Validates the fields that will contain URIs
      * 
      * @throws URIValidationException if any of the URIs is not in valid form */
     public void validateURIs() throws URIValidationException{
-   
         if(!this.subjectType.isEmpty()){
             this.validateURI(this.subjectType);
         }
-        
     }
     
     private void validateURI(String uri) throws URIValidationException{
