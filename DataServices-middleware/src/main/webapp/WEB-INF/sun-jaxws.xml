@@ -8,4 +8,5 @@
   <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Search" name="MetadataRepository_Search" url-pattern="/MetadataRepository_Search"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Select" name="MetadataRepository_Select" url-pattern="/MetadataRepository_Select"/>
   <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Update" name="MetadataRepository_Update" url-pattern="/MetadataRepository_Update"/>
+  <endpoint implementation="eu.lifewatch.dataservices.middleware.metadatarepository.MetadataRepository_Delete" name="MetadataRepository_Delete" url-pattern="/MetadataRepository_Delete"/>
 </endpoints>
