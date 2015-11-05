@@ -360,14 +360,190 @@ public class SearchClient {
         }   
     }
     
+    private static void searchMicroCTSpecimen(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String specimen="specimen";
+            String collection="collection";
+            String species="species";
+            String provider="provider";
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT specimen metadata with the following details: "+
+                               "\tSpecimen: "+specimen+
+                               "\tCollection: "+collection+
+                               "\tSpecies: "+species+
+                               "\tProvider: "+provider+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTSpecimenStruct> results = port.searchMicroCTSpecimen(specimen, collection, species, provider, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTSpecimenStruct struct : results){
+                System.out.println(struct.getSpeciesURI()+"\t"+
+                                   struct.getSpecimenName()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT postprocessing metadata",ex);
+        }   
+    }
+    
+    private static void searchMicroCTSpecimenWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String specimen="specimen";
+            String collection="collection";
+            String species="species";
+            String provider="provider";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT specimen metadata within a specific range with the following details: "+
+                               "\tSpecimen: "+specimen+
+                               "\tCollection: "+collection+
+                               "\tSpecies: "+species+
+                               "\tProvider: "+provider+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTSpecimenStruct> results = port.searchMicroCTSpecimenWithinRange(specimen, collection, species, provider, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTSpecimenStruct struct : results){
+                System.out.println(struct.getSpeciesURI()+"\t"+
+                                   struct.getSpecimenName()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT specimen metadata",ex);
+        }   
+    }
+
+    private static void searchMicroCTScanning(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String device="device";
+            String specimen="specimen";
+            String species="species";
+            String contrastMethod="contrast";
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT scanning metadata with the following details: "+
+                               "\tDevice: "+device+
+                               "\tSpecimen: "+specimen+
+                               "\tSpecies: "+species+
+                               "\tContrast Method: "+contrastMethod+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTScanningStruct> results = port.searchMicroCTScanning(device, specimen, species, contrastMethod, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTScanningStruct struct : results){
+                System.out.println(struct.getScanningURI()+"\t"+
+                                   struct.getSpecimenURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT scanning metadata",ex);
+        }   
+    }
+    
+    private static void searchMicroCTScanningWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String device="device";
+            String specimen="specimen";
+            String species="species";
+            String contrastMethod="contrast";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT scanning metadata within a specific range with the following details: "+
+                               "\tDevice: "+device+
+                               "\tSpecimen: "+specimen+
+                               "\tSpecies: "+species+
+                               "\tContrast Method: "+contrastMethod+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTScanningStruct> results = port.searchMicroCTScanningWithinRange(device, specimen, species, contrastMethod, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTScanningStruct struct : results){
+                System.out.println(struct.getScanningURI()+"\t"+
+                                   struct.getSpecimenURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT scanning metadata",ex);
+        }   
+    }
+    
+    private static void searchMicroCTReconstruction(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String species="species";
+            String specimen="specimen";
+            String input="product";
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT reconstruction metadata with the following details: "+
+                               "\tSpecies: "+species+
+                               "\tSpecimen: "+specimen+
+                               "\tInput: "+input+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTReconstructionStruct> results = port.searchMicroCTReconstruction(species, specimen, input, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTReconstructionStruct struct : results){
+                System.out.println(struct.getReconstructionURI()+"\t"+
+                                   struct.getDatasetTitle()+"\t"+
+                                   struct.getDatasetURI()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT reconstruction metadata",ex);
+        }   
+    }
+    
+    private static void searchMicroCTReconstructionWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String species="species";
+            String specimen="specimen";
+            String input="product";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/microct/dataset";
+            System.out.println("Searching for microCT reconstruction metadata with the following details: "+
+                               "\tSpecies: "+species+
+                               "\tSpecimen: "+specimen+
+                               "\tInput: "+input+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<MicroCTReconstructionStruct> results = port.searchMicroCTReconstructionWithinRange(species, specimen, input, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(MicroCTReconstructionStruct struct : results){
+                System.out.println(struct.getReconstructionURI()+"\t"+
+                                   struct.getDatasetTitle()+"\t"+
+                                   struct.getDatasetURI()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for microCT reconstruction metadata",ex);
+        }   
+    }
+    
     private static void searchMicroCTPostProcessing(){
         try{
             MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
             MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
             String speciesName="species";
             String specimen="specimen";
-            String input="input";
-            String datasetURI= "http://localhost/microctpostprocessing/dataset";
+            String input="product";
+            String datasetURI="http://localhost/microct/dataset";
             System.out.println("Searching for microCT postprocessing metadata with the following details: "+
                                "\tSpecies Name: "+speciesName+
                                "\tSpecimen: "+specimen+
@@ -390,10 +566,10 @@ public class SearchClient {
         try{
             MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
             MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
-            String speciesName="";
+            String speciesName="species";
             String specimen="specimen";
-            String input="input";
-            String datasetURI= "http://localhost/microctpostprocessing/dataset";
+            String input="product";
+            String datasetURI= "http://localhost/microct/dataset";
             int offset=0;
             int limit=1;
             System.out.println("Searching for microCT postprocessing metadata within a specific range with the following details: "+
@@ -584,46 +760,474 @@ public class SearchClient {
         }   
     }
     
+    private static void searchScientificNaming(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String date="timespan";
+            String actor="actor";
+            String scientificName="appellation";
+            String datasetURI= "http://localhost/scientificnaming/dataset";
+            System.out.println("Searching for scientific naming metadata with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tDate: "+date+
+                               "\tActor: "+actor+
+                               "\tScientific Name: "+scientificName+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<ScientificNamingStruct> results = port.searchScientificNaming(speciesName, date, actor, datasetURI, scientificName, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(ScientificNamingStruct struct : results){
+                System.out.println(struct.getScientificNameAssignmentEventURI()+"\t"+
+                                   struct.getAppellationURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for scientific naming metadata",ex);
+        }   
+    }
+    
+    private static void searchScientificNamingWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String date="timespan";
+            String actor="actor";
+            String scientificName="appellation";
+            String datasetURI= "http://localhost/scientificnaming/dataset";
+            int offset=0;
+            int limit=1;
+            System.out.println("Searching for scientific naming metadata within a specific range with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tDate: "+date+
+                               "\tActor: "+actor+
+                               "\tScientific Name: "+scientificName+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<ScientificNamingStruct> results = port.searchScientificNamingWithinRange(speciesName, date, actor, datasetURI, scientificName, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(ScientificNamingStruct struct : results){
+                System.out.println(struct.getScientificNameAssignmentEventURI()+"\t"+
+                                   struct.getAppellationURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for scientific naming metadata",ex);
+        }   
+    }
+    
+    private static void searchSpecimen(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String specimen="specimen";
+            String speciesName="species";
+            String collection="collection";
+            String datasetURI= "http://localhost/specimen/dataset";
+            System.out.println("Searching for specimen metadata with the following details: "+
+                               "\tSpecimen: "+specimen+
+                               "\tSpecies Name: "+speciesName+
+                               "\tCollection: "+collection+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SpecimenStruct> results = port.searchSpecimen(specimen, speciesName, collection, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SpecimenStruct struct : results){
+                System.out.println(struct.getSpecimenURI()+"\t"+
+                                   struct.getIndividualURI()+"\t"+
+                                   struct.getMethodName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for specimen metadata",ex);
+        }   
+    }
+    
+    private static void searchSpecimenWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String specimen="specimen";
+            String speciesName="species";
+            String collection="collection";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/specimen/dataset";
+            System.out.println("Searching for specimen metadata within a specific range with the following details: "+
+                               "\tSpecimen: "+specimen+
+                               "\tSpecies Name: "+speciesName+
+                               "\tCollection: "+collection+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SpecimenStruct> results = port.searchSpecimenWithinRange(specimen, speciesName, collection, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SpecimenStruct struct : results){
+                System.out.println(struct.getSpecimenURI()+"\t"+
+                                   struct.getIndividualURI()+"\t"+
+                                   struct.getMethodName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for specimen metadata",ex);
+        }   
+    }
+    
+    private static void searchSpecimenCollection(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String collection="collection";
+            String owner="owner";
+            String datasetURI= "http://localhost/specimencollection/dataset";
+            System.out.println("Searching for specimen collection metadata with the following details: "+
+                               "\tCollection: "+collection+
+                               "\tOwner: "+owner+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SpecimenCollectionStruct> results = port.searchSpecimenCollection(collection, owner, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SpecimenCollectionStruct struct : results){
+                System.out.println(struct.getCollectionURI()+"\t"+
+                                   struct.getCollectionName()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for specimen collection metadata",ex);
+        }   
+    }
+    
+    private static void searchSpecimenCollectionWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String collection="collection";
+            String owner="owner";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/specimencollection/dataset";
+            System.out.println("Searching for specimen collection metadata within a specific range with the following details: "+
+                               "\tCollection: "+collection+
+                               "\tOwner: "+owner+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SpecimenCollectionStruct> results = port.searchSpecimenCollectionWithinRange(collection, owner, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SpecimenCollectionStruct struct : results){
+                System.out.println(struct.getCollectionURI()+"\t"+
+                                   struct.getCollectionName()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for specimen collection metadata",ex);
+        }   
+    }
+    
+    private static void searchStats(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String dimension="dimension";
+            String datasetURI= "http://localhost/stats/dataset";
+            System.out.println("Searching for stats metadata with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tDimension: "+dimension+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<StatsStruct> results = port.searchStats(speciesName, dimension, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(StatsStruct struct : results){
+                System.out.println(struct.getSpecimenName()+"\t"+
+                                   struct.getSpecimenURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for stats metadata",ex);
+        }   
+    }
+    
+    private static void searchStatsWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String dimension="dimension";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/stats/dataset";
+            System.out.println("Searching for stats metadata within a specific range with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tDimension: "+dimension+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<StatsStruct> results = port.searchStatsWithinRange(speciesName, dimension, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(StatsStruct struct : results){
+                System.out.println(struct.getSpecimenName()+"\t"+
+                                   struct.getSpecimenURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for stats metadata",ex);
+        }   
+    }
+    
+    private static void searchSynonym(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String scientificName="appellation";
+            String synonym="synonym";
+            String datasetURI= "http://localhost/synonym/dataset";
+            System.out.println("Searching for synonym metadata with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tScientific Name: "+scientificName+
+                               "\tSynonym Name: "+synonym+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SynonymStruct> results = port.searchSynonym(speciesName, scientificName, synonym, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SynonymStruct struct : results){
+                System.out.println(struct.getAppellation()+"\t"+
+                                   struct.getAppellationURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for synonym metadata",ex);
+        }   
+    }
+    
+    private static void searchSynonymWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String scientificName="appellation";
+            String synonym="synonym";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/synonym/dataset";
+            System.out.println("Searching for synonym metadata within a specific range with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tScientific Name: "+scientificName+
+                               "\tSynonym Name: "+synonym+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<SynonymStruct> results = port.searchSynonymWithinRange(speciesName, scientificName, synonym, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(SynonymStruct struct : results){
+                System.out.println(struct.getAppellation()+"\t"+
+                                   struct.getAppellationURI()+"\t"+
+                                   struct.getDatasetName()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for synonym metadata",ex);
+        }   
+    }
+    
+    private static void searchTaxonomy(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String genus="genus";
+            String family="family";
+            String order="order";
+            String classs="class";
+            String kingdom="kingdom";
+            String phylum="phylum";
+            String datasetURI= "http://localhost/taxonomy/dataset";
+            System.out.println("Searching for taxonomy metadata with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tGenus Name: "+genus+
+                               "\tFamily Name: "+family+
+                               "\tOrder Name: "+order+
+                               "\tClass Name: "+classs+
+                               "\tKingdom Name: "+kingdom+
+                               "\tPhylum Name: "+phylum+
+                               "\tDataset URI: "+datasetURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<TaxonomyStruct> results = port.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(TaxonomyStruct struct : results){
+                System.out.println(struct.getSpeciesURI()+"\t"+
+                                   struct.getFamilyURI()+"\t"+
+                                   struct.getClassURI()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for taxonomy metadata",ex);
+        }   
+    }
+    
+    private static void searchTaxonomyWithinRange(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String speciesName="species";
+            String genus="genus";
+            String family="family";
+            String order="order";
+            String classs="class";
+            String kingdom="kingdom";
+            String phylum="phylum";
+            int offset=0;
+            int limit=1;
+            String datasetURI= "http://localhost/taxonomy/dataset";
+            System.out.println("Searching for taxonomy metadata within a specific range with the following details: "+
+                               "\tSpecies Name: "+speciesName+
+                               "\tGenus Name: "+genus+
+                               "\tFamily Name: "+family+
+                               "\tOrder Name: "+order+
+                               "\tClass Name: "+classs+
+                               "\tKingdom Name: "+kingdom+
+                               "\tPhylum Name: "+phylum+
+                               "\tDataset URI: "+datasetURI+
+                               "\tOffset: "+offset+
+                               "\tLimit: "+limit+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<TaxonomyStruct> results = port.searchTaxonomyWithinRange(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(TaxonomyStruct struct : results){
+                System.out.println(struct.getSpeciesURI()+"\t"+
+                                   struct.getFamilyURI()+"\t"+
+                                   struct.getClassURI()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for taxonomy metadata",ex);
+        }   
+    }
+    
+    private static void searchResource(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String resourceURI= "http://localhost/commonname/dataset";
+            System.out.println("Searching for a resource URI in the metadata catalogue with the following details: "+
+                               "\tResource URI: "+resourceURI+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<Triple> results = port.searchResource(resourceURI, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(Triple struct : results){
+                System.out.println(struct.getSubject()+"\t"+
+                                   struct.getPredicate()+"\t"+
+                                   struct.getObject()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for a resource URI in the metadata catalogue",ex);
+        }   
+    }
+    
+    private static void searchLiteral(){
+        try{
+            MetadataRepositorySearch_Service service = new MetadataRepositorySearch_Service();
+            MetadataRepositorySearch port = service.getMetadataRepositorySearchPort();
+            String literalValue= "timespan";
+            System.out.println("Searching for a literal value in the metadata catalogue with the following details: "+
+                               "\tLiteral value: "+literalValue+
+                               "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
+            List<Triple> results = port.searchLiteral(literalValue, METADATA_CAT_GRAPHSPACE);
+            System.out.println("Found "+results.size()+" results");
+            for(Triple struct : results){
+                System.out.println(struct.getSubject()+"\t"+
+                                   struct.getPredicate()+"\t"+
+                                   struct.getObject()+"...");
+            }
+        } catch (Exception ex) {
+            logger.error("An error occured while searching for a literal value in the metadata catalogue",ex);
+        }   
+    }
+    
     public static void main(String[] args){
-//        searchCommonName();
-//        Commons.printSeparator();
-//        searchCommonNameWithinRange();
-//        Commons.printSeparator();
-//        searchEnvironmental();
-//        Commons.printSeparator();
-//        searchEnvironmentalWithinRange();
-//        Commons.printSeparator();
-//        searchGenetics();
-//        Commons.printSeparator();
-//        searchGeneticsWithinRange();
-//        Commons.printSeparator();
-//        searchGensSample();
-//        Commons.printSeparator();
-//        searchGensSampleWithinRange();
-//        Commons.printSeparator();
-//        searchIdentification();
-//        Commons.printSeparator();
-//        searchIdentificationWithinRange();
-//        Commons.printSeparator();
-//        searchMeasurement();
-//        Commons.printSeparator();
-//        searchMeasurementWithinRange();
-//        Commons.printSeparator();
-//        searchMicroCTPostProcessing();
-//        Commons.printSeparator();
-//        searchMicroCTPostProcessingWithinRange();
-//        Commons.printSeparator();
-//        searchMorphometrics();
-//        Commons.printSeparator();
-//        searchMorphometricsWithinRange();
-//        Commons.printSeparator();
-//        searchOccurrenceStatsTemp();
-//        Commons.printSeparator();
-//        searchOccurrenceStatsTempWithinRange();
-//        Commons.printSeparator();
+        searchCommonName();
+        Commons.printSeparator();
+        searchCommonNameWithinRange();
+        Commons.printSeparator();
+        searchEnvironmental();
+        Commons.printSeparator();
+        searchEnvironmentalWithinRange();
+        Commons.printSeparator();
+        searchGenetics();
+        Commons.printSeparator();
+        searchGeneticsWithinRange();
+        Commons.printSeparator();
+        searchGensSample();
+        Commons.printSeparator();
+        searchGensSampleWithinRange();
+        Commons.printSeparator();
+        searchIdentification();
+        Commons.printSeparator();
+        searchIdentificationWithinRange();
+        Commons.printSeparator();
+        searchMeasurement();
+        Commons.printSeparator();
+        searchMeasurementWithinRange();
+        Commons.printSeparator();
+        searchMicroCTSpecimen();
+        Commons.printSeparator();
+        searchMicroCTSpecimenWithinRange();
+        Commons.printSeparator();
+        searchMicroCTScanning();
+        Commons.printSeparator();
+        searchMicroCTScanningWithinRange();
+        Commons.printSeparator();
+        searchMicroCTReconstruction();
+        Commons.printSeparator();
+        searchMicroCTReconstructionWithinRange();
+        Commons.printSeparator();
+        searchMicroCTPostProcessing();
+        Commons.printSeparator();
+        searchMicroCTPostProcessingWithinRange();
+        Commons.printSeparator();
+        searchMorphometrics();
+        Commons.printSeparator();
+        searchMorphometricsWithinRange();
+        Commons.printSeparator();
+        searchOccurrenceStatsTemp();
+        Commons.printSeparator();
+        searchOccurrenceStatsTempWithinRange();
+        Commons.printSeparator();
         searchOccurrence();
         Commons.printSeparator();
         searchOccurrenceWithinRange();
+        Commons.printSeparator();
+        searchScientificNaming();
+        Commons.printSeparator();
+        searchScientificNamingWithinRange();
+        Commons.printSeparator();
+        searchSpecimen();
+        Commons.printSeparator();
+        searchSpecimenWithinRange();
+        Commons.printSeparator();
+        searchSpecimenCollection();
+        Commons.printSeparator();
+        searchSpecimenCollectionWithinRange();
+        Commons.printSeparator();
+        searchStats();
+        Commons.printSeparator();
+        searchStatsWithinRange();
+        Commons.printSeparator();
+        searchSynonym();
+        Commons.printSeparator();
+        searchSynonymWithinRange();
+        Commons.printSeparator();
+        searchTaxonomy();
+        Commons.printSeparator();
+        searchTaxonomyWithinRange();
+        Commons.printSeparator();
+        searchResource();
+        Commons.printSeparator();
+        searchLiteral();
         Commons.printSeparator();
     }
 }
