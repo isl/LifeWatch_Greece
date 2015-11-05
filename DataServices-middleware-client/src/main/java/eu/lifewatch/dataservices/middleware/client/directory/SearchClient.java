@@ -28,16 +28,14 @@ public class SearchClient {
                                "\tGraphspace: "+repositoryGraph);
             List<DirectoryStruct> results = port.searchDataset(datasetName, ownerName, datasetURI, datasetType, repositoryGraph);
             System.out.println("Found "+results.size()+" datasets");
-            for(DirectoryStruct struct : results){
-                System.out.println(struct.getDatasetID()+
-                                   "\t"+struct.getDatasetName()+
-                                   "\t"+struct.getOwnerName()+
-                                   "\t"+struct.getOwnerURI()+
-                                   "\t"+struct.getCuratorName()+
-                                   "\t"+struct.getCuratorURI()+
-                                   "\t"+struct.getCreationDate()+
-                                   "\t"+struct.getCreationEventURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getDatasetID()+
+                                                         "\t"+result.getDatasetName()+
+                                                         "\t"+result.getOwnerName()+
+                                                         "\t"+result.getOwnerURI()+
+                                                         "\t"+result.getCuratorName()+
+                                                         "\t"+result.getCuratorURI()+
+                                                         "\t"+result.getCreationDate()+
+                                                         "\t"+result.getCreationEventURI()+"..."));
         }catch(Exception ex) {
             logger.error("An error occured while searching for datasets",ex);
         }
@@ -64,16 +62,14 @@ public class SearchClient {
                                "\tGraphspace: "+repositoryGraph);
             List<DirectoryStruct> results = port.searchDatasetWithinRange(datasetName, ownerName, datasetURI, datasetType, limit, offset, repositoryGraph);
             System.out.println("Found "+results.size()+" datasets");
-            for(DirectoryStruct struct : results){
-                System.out.println(struct.getDatasetID()+
-                                   "\t"+struct.getDatasetName()+
-                                   "\t"+struct.getOwnerName()+
-                                   "\t"+struct.getOwnerURI()+
-                                   "\t"+struct.getCuratorName()+
-                                   "\t"+struct.getCuratorURI()+
-                                   "\t"+struct.getCreationDate()+
-                                   "\t"+struct.getCreationEventURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getDatasetID()+
+                                                         "\t"+result.getDatasetName()+
+                                                         "\t"+result.getOwnerName()+
+                                                         "\t"+result.getOwnerURI()+
+                                                         "\t"+result.getCuratorName()+
+                                                         "\t"+result.getCuratorURI()+
+                                                         "\t"+result.getCreationDate()+
+                                                         "\t"+result.getCreationEventURI()+"..."));
         }catch(Exception ex) {
             logger.error("An error occured while searching for datasets",ex);
         }
@@ -90,11 +86,9 @@ public class SearchClient {
                                "\tGraphspace: "+repositoryGraph);
             List<Triple> results = port.searchResource(resourceURI, repositoryGraph);
             System.out.println("Found "+results.size()+" triples containing the resource");
-            for(Triple triple : results){
-                System.out.println("Subject: "+triple.getSubject()+
-                                   "\tPredicate: "+triple.getPredicate()+
-                                   "\tObject: "+triple.getObject());
-            }
+            results.forEach(result -> System.out.println("Subject: "+result.getSubject()+
+                                                         "\tPredicate: "+result.getPredicate()+
+                                                         "\tObject: "+result.getObject()));
         } catch (Exception ex) {
             logger.error("An error occured while searching for triples containing a resource",ex);
         }
@@ -111,11 +105,9 @@ public class SearchClient {
                                "\tGraphspace: "+repositoryGraph);
             List<Triple> results = port.searchLiteral(literalValue, repositoryGraph);
             System.out.println("Found "+results.size()+" triples containing the literal");
-            for(Triple triple : results){
-                System.out.println("Subject: "+triple.getSubject()+
-                                   "\tPredicate: "+triple.getPredicate()+
-                                   "\tObject: "+triple.getObject());
-            }
+            results.forEach(result -> System.out.println("Subject: "+result.getSubject()+
+                                                         "\tPredicate: "+result.getPredicate()+
+                                                         "\tObject: "+result.getObject()));
         } catch (Exception ex) {
             logger.error("An error occured while searching for triples containing a literal",ex);
         }

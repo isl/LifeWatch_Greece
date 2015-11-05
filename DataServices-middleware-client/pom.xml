@@ -115,6 +115,21 @@
                         <id>wsimport-generate-MetadataRepository_Search</id>
                         <phase>generate-sources</phase>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Select.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Select.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Select</id>
+                        <phase>generate-sources</phase>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>
@@ -142,7 +157,7 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 </project>

@@ -30,11 +30,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<CommonNameStruct> results = port.searchCommonName(speciesName, commonName, place, language, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(CommonNameStruct struct : results){
-                System.out.println(struct.getCommonName()+"\t"+
-                                   struct.getCommonNameURI()+"\t"+
-                                   struct.getSpeciesURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getCommonName()+"\t"+
+                                                         result.getCommonNameURI()+"\t"+
+                                                         result.getSpeciesURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for common name metadata",ex);
         }
@@ -62,11 +60,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<CommonNameStruct> results = port.searchCommonNameWithinRange(speciesName, commonName, place, language, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(CommonNameStruct struct : results){
-                System.out.println(struct.getCommonName()+"\t"+
-                                   struct.getCommonNameURI()+"\t"+
-                                   struct.getSpeciesURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getCommonName()+"\t"+
+                                                         result.getCommonNameURI()+"\t"+
+                                                         result.getSpeciesURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for common name metadata",ex);
         }
@@ -86,11 +82,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<EnvironmentalStruct> results = port.searchEnvironmental(dimension, place, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(EnvironmentalStruct struct : results){
-                System.out.println(struct.getMeasurementEventURI()+"\t"+
-                                   struct.getDimensionURI()+"\t"+
-                                   struct.getDimensionValue()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getMeasurementEventURI()+"\t"+
+                                                         result.getDimensionURI()+"\t"+
+                                                         result.getDimensionValue()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for environmental metadata",ex);
         }   
@@ -114,11 +108,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<EnvironmentalStruct> results = port.searchEnvironmentalWithinRange(dimension, place, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(EnvironmentalStruct struct : results){
-                System.out.println(struct.getMeasurementEventURI()+"\t"+
-                                   struct.getDimensionURI()+"\t"+
-                                   struct.getDimensionValue()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getMeasurementEventURI()+"\t"+
+                                                         result.getDimensionURI()+"\t"+
+                                                         result.getDimensionValue()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for environmental metadata",ex);
         }
@@ -142,11 +134,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<GensDatasetStruct> results = port.searchGenetics(speciesName, sample, place, device, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(GensDatasetStruct struct : results){
-                System.out.println(struct.getSequencingEventURI()+"\t"+
-                                   struct.getDeviceTypeURI()+"\t"+
-                                   struct.getEcosystemName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSequencingEventURI()+"\t"+
+                                                         result.getDeviceTypeURI()+"\t"+
+                                                         result.getEcosystemName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for genetics metadata",ex);
         }   
@@ -174,11 +164,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<GensDatasetStruct> results = port.searchGeneticsWithinRange(speciesName, sample, place, device, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(GensDatasetStruct struct : results){
-                System.out.println(struct.getSequencingEventURI()+"\t"+
-                                   struct.getDeviceTypeURI()+"\t"+
-                                   struct.getEcosystemName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSequencingEventURI()+"\t"+
+                                                         result.getDeviceTypeURI()+"\t"+
+                                                         result.getEcosystemName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for genetics metadata",ex);
         }   
@@ -200,11 +188,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<GensSampleStruct> results = port.searchGensSample(speciesName, device, sample, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(GensSampleStruct struct : results){
-                System.out.println(struct.getSampleURI()+"\t"+
-                                   struct.getSequencingURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSampleURI()+"\t"+
+                                                         result.getSequencingURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for gens sample metadata",ex);
         }   
@@ -230,11 +216,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<GensSampleStruct> results = port.searchGensSampleWithinRange(speciesName, device, sample, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(GensSampleStruct struct : results){
-                System.out.println(struct.getSampleURI()+"\t"+
-                                   struct.getSequencingURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSampleURI()+"\t"+
+                                                         result.getSequencingURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for gens sample metadata",ex);
         }   
@@ -260,11 +244,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<IdentificationStruct> results = port.searchIdentification(speciesName, date, actor, place, individual, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(IdentificationStruct struct : results){
-                System.out.println(struct.getIdentificationEventURI()+"\t"+
-                                   struct.getIdentificationReferencesName()+"\t"+
-                                   struct.getIdentificationReferencesURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getIdentificationEventURI()+"\t"+
+                                                         result.getIdentificationReferencesName()+"\t"+
+                                                         result.getIdentificationReferencesURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for identification metadata",ex);
         }   
@@ -294,11 +276,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<IdentificationStruct> results = port.searchIdentificationWithinRange(speciesName, date, actor, place, individual, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(IdentificationStruct struct : results){
-                System.out.println(struct.getIdentificationEventURI()+"\t"+
-                                   struct.getIdentificationReferencesName()+"\t"+
-                                   struct.getIdentificationReferencesURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getIdentificationEventURI()+"\t"+
+                                                         result.getIdentificationReferencesName()+"\t"+
+                                                         result.getIdentificationReferencesURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for identification metadata",ex);
         }   
@@ -320,11 +300,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MeasurementStruct> results = port.searchMeasurement(specimen, speciesName, dimension, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MeasurementStruct struct : results){
-                System.out.println(struct.getMeasurementEventURI()+"\t"+
-                                   struct.getDimensionName()+"\t"+
-                                   struct.getDimensionURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getMeasurementEventURI()+"\t"+
+                                                         result.getDimensionName()+"\t"+
+                                                         result.getDimensionURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for measurement metadata",ex);
         }   
@@ -350,11 +328,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MeasurementStruct> results = port.searchMeasurementWithinRange(specimen, speciesName, dimension, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MeasurementStruct struct : results){
-                System.out.println(struct.getMeasurementEventURI()+"\t"+
-                                   struct.getDimensionName()+"\t"+
-                                   struct.getDimensionURI()+"...");
-            }
+            results.forEach(result ->System.out.println(result.getMeasurementEventURI()+"\t"+
+                                                        result.getDimensionName()+"\t"+
+                                                        result.getDimensionURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for measurement metadata",ex);
         }   
@@ -378,11 +354,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTSpecimenStruct> results = port.searchMicroCTSpecimen(specimen, collection, species, provider, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTSpecimenStruct struct : results){
-                System.out.println(struct.getSpeciesURI()+"\t"+
-                                   struct.getSpecimenName()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpeciesURI()+"\t"+
+                                                         result.getSpecimenName()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT postprocessing metadata",ex);
         }   
@@ -410,11 +384,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTSpecimenStruct> results = port.searchMicroCTSpecimenWithinRange(specimen, collection, species, provider, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTSpecimenStruct struct : results){
-                System.out.println(struct.getSpeciesURI()+"\t"+
-                                   struct.getSpecimenName()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpeciesURI()+"\t"+
+                                                         result.getSpecimenName()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT specimen metadata",ex);
         }   
@@ -438,11 +410,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTScanningStruct> results = port.searchMicroCTScanning(device, specimen, species, contrastMethod, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTScanningStruct struct : results){
-                System.out.println(struct.getScanningURI()+"\t"+
-                                   struct.getSpecimenURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getScanningURI()+"\t"+
+                                                         result.getSpecimenURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT scanning metadata",ex);
         }   
@@ -470,11 +440,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTScanningStruct> results = port.searchMicroCTScanningWithinRange(device, specimen, species, contrastMethod, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTScanningStruct struct : results){
-                System.out.println(struct.getScanningURI()+"\t"+
-                                   struct.getSpecimenURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getScanningURI()+"\t"+
+                                                         result.getSpecimenURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT scanning metadata",ex);
         }   
@@ -496,11 +464,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTReconstructionStruct> results = port.searchMicroCTReconstruction(species, specimen, input, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTReconstructionStruct struct : results){
-                System.out.println(struct.getReconstructionURI()+"\t"+
-                                   struct.getDatasetTitle()+"\t"+
-                                   struct.getDatasetURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getReconstructionURI()+"\t"+
+                                                         result.getDatasetTitle()+"\t"+
+                                                         result.getDatasetURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT reconstruction metadata",ex);
         }   
@@ -526,11 +492,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTReconstructionStruct> results = port.searchMicroCTReconstructionWithinRange(species, specimen, input, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTReconstructionStruct struct : results){
-                System.out.println(struct.getReconstructionURI()+"\t"+
-                                   struct.getDatasetTitle()+"\t"+
-                                   struct.getDatasetURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getReconstructionURI()+"\t"+
+                                                         result.getDatasetTitle()+"\t"+
+                                                         result.getDatasetURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT reconstruction metadata",ex);
         }   
@@ -552,11 +516,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTPostProcessingStruct> results = port.searchMicroCTPostProcessing(speciesName, specimen, input, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTPostProcessingStruct struct : results){
-                System.out.println(struct.getPostProcessingURI()+"\t"+
-                                   struct.getDatasetTitle()+"\t"+
-                                   struct.getDescription()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getPostProcessingURI()+"\t"+
+                                                         result.getDatasetTitle()+"\t"+
+                                                         result.getDescription()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT postprocessing metadata",ex);
         }   
@@ -582,11 +544,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MicroCTPostProcessingStruct> results = port.searchMicroCTPostProcessingWithinRange(speciesName, specimen, input, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MicroCTPostProcessingStruct struct : results){
-                System.out.println(struct.getPostProcessingURI()+"\t"+
-                                   struct.getDatasetTitle()+"\t"+
-                                   struct.getDescription()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getPostProcessingURI()+"\t"+
+                                                         result.getDatasetTitle()+"\t"+
+                                                         result.getDescription()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for microCT postprocessing metadata",ex);
         }   
@@ -606,11 +566,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MorphometricsStruct> results = port.searchMorphometrics(speciesName, dimension, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MorphometricsStruct struct : results){
-                System.out.println(struct.getAttributeAssignmentEventURI()+"\t"+
-                                   struct.getDimensionValue()+"\t"+
-                                   struct.getDimensionURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getAttributeAssignmentEventURI()+"\t"+
+                                                         result.getDimensionValue()+"\t"+
+                                                         result.getDimensionURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for morphometrics metadata",ex);
         }   
@@ -634,11 +592,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<MorphometricsStruct> results = port.searchMorphometricsWithinRange(speciesName, dimension, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(MorphometricsStruct struct : results){
-                System.out.println(struct.getAttributeAssignmentEventURI()+"\t"+
-                                   struct.getDimensionValue()+"\t"+
-                                   struct.getDimensionURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getAttributeAssignmentEventURI()+"\t"+
+                                                         result.getDimensionValue()+"\t"+
+                                                         result.getDimensionURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for morphometrics metadata",ex);
         }   
@@ -662,11 +618,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<OccurrenceStatsTempStruct> results = port.searchOccurrenceStatsTemp(speciesName, place, date, numberOfParts, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(OccurrenceStatsTempStruct struct : results){
-                System.out.println(struct.getOccurrenceEventURI()+"\t"+
-                                   struct.getCoordinates()+"\t"+
-                                   struct.getBibliographicCitation()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getOccurrenceEventURI()+"\t"+
+                                                         result.getCoordinates()+"\t"+
+                                                         result.getBibliographicCitation()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for occurrence stats temp metadata",ex);
         }   
@@ -694,11 +648,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<OccurrenceStatsTempStruct> results = port.searchOccurrenceStatsTempWithinRange(speciesName, place, date, numberOfParts, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(OccurrenceStatsTempStruct struct : results){
-                System.out.println(struct.getOccurrenceEventURI()+"\t"+
-                                   struct.getCoordinates()+"\t"+
-                                   struct.getBibliographicCitation()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getOccurrenceEventURI()+"\t"+
+                                                         result.getCoordinates()+"\t"+
+                                                         result.getBibliographicCitation()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for occurrence stats temp metadata",ex);
         }   
@@ -720,11 +672,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<OccurrenceStruct> results = port.searchOccurrence(speciesName, place, date, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(OccurrenceStruct struct : results){
-                System.out.println(struct.getOccurrenceEventURI()+"\t"+
-                                   struct.getCoordinates()+"\t"+
-                                   struct.getBibliographicCitation()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getOccurrenceEventURI()+"\t"+
+                                                         result.getCoordinates()+"\t"+
+                                                         result.getBibliographicCitation()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for occurrence metadata",ex);
         }   
@@ -750,11 +700,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<OccurrenceStruct> results = port.searchOccurrenceWithinRange(speciesName, place, date, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(OccurrenceStruct struct : results){
-                System.out.println(struct.getOccurrenceEventURI()+"\t"+
-                                   struct.getCoordinates()+"\t"+
-                                   struct.getBibliographicCitation()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getOccurrenceEventURI()+"\t"+
+                                                         result.getCoordinates()+"\t"+
+                                                         result.getBibliographicCitation()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for occurrence metadata",ex);
         }   
@@ -778,11 +726,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<ScientificNamingStruct> results = port.searchScientificNaming(speciesName, date, actor, datasetURI, scientificName, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(ScientificNamingStruct struct : results){
-                System.out.println(struct.getScientificNameAssignmentEventURI()+"\t"+
-                                   struct.getAppellationURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getScientificNameAssignmentEventURI()+"\t"+
+                                                         result.getAppellationURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for scientific naming metadata",ex);
         }   
@@ -810,11 +756,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<ScientificNamingStruct> results = port.searchScientificNamingWithinRange(speciesName, date, actor, datasetURI, scientificName, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(ScientificNamingStruct struct : results){
-                System.out.println(struct.getScientificNameAssignmentEventURI()+"\t"+
-                                   struct.getAppellationURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getScientificNameAssignmentEventURI()+"\t"+
+                                                         result.getAppellationURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for scientific naming metadata",ex);
         }   
@@ -836,11 +780,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SpecimenStruct> results = port.searchSpecimen(specimen, speciesName, collection, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SpecimenStruct struct : results){
-                System.out.println(struct.getSpecimenURI()+"\t"+
-                                   struct.getIndividualURI()+"\t"+
-                                   struct.getMethodName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpecimenURI()+"\t"+
+                                                         result.getIndividualURI()+"\t"+
+                                                         result.getMethodName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for specimen metadata",ex);
         }   
@@ -866,11 +808,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SpecimenStruct> results = port.searchSpecimenWithinRange(specimen, speciesName, collection, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SpecimenStruct struct : results){
-                System.out.println(struct.getSpecimenURI()+"\t"+
-                                   struct.getIndividualURI()+"\t"+
-                                   struct.getMethodName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpecimenURI()+"\t"+
+                                                         result.getIndividualURI()+"\t"+
+                                                         result.getMethodName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for specimen metadata",ex);
         }   
@@ -890,11 +830,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SpecimenCollectionStruct> results = port.searchSpecimenCollection(collection, owner, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SpecimenCollectionStruct struct : results){
-                System.out.println(struct.getCollectionURI()+"\t"+
-                                   struct.getCollectionName()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getCollectionURI()+"\t"+
+                                                         result.getCollectionName()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for specimen collection metadata",ex);
         }   
@@ -918,11 +856,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SpecimenCollectionStruct> results = port.searchSpecimenCollectionWithinRange(collection, owner, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SpecimenCollectionStruct struct : results){
-                System.out.println(struct.getCollectionURI()+"\t"+
-                                   struct.getCollectionName()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getCollectionURI()+"\t"+
+                                                         result.getCollectionName()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for specimen collection metadata",ex);
         }   
@@ -942,11 +878,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<StatsStruct> results = port.searchStats(speciesName, dimension, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(StatsStruct struct : results){
-                System.out.println(struct.getSpecimenName()+"\t"+
-                                   struct.getSpecimenURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpecimenName()+"\t"+
+                                                         result.getSpecimenURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for stats metadata",ex);
         }   
@@ -970,11 +904,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<StatsStruct> results = port.searchStatsWithinRange(speciesName, dimension, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(StatsStruct struct : results){
-                System.out.println(struct.getSpecimenName()+"\t"+
-                                   struct.getSpecimenURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpecimenName()+"\t"+
+                                                         result.getSpecimenURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for stats metadata",ex);
         }   
@@ -996,11 +928,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SynonymStruct> results = port.searchSynonym(speciesName, scientificName, synonym, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SynonymStruct struct : results){
-                System.out.println(struct.getAppellation()+"\t"+
-                                   struct.getAppellationURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getAppellation()+"\t"+
+                                                         result.getAppellationURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for synonym metadata",ex);
         }   
@@ -1026,11 +956,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<SynonymStruct> results = port.searchSynonymWithinRange(speciesName, scientificName, synonym, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(SynonymStruct struct : results){
-                System.out.println(struct.getAppellation()+"\t"+
-                                   struct.getAppellationURI()+"\t"+
-                                   struct.getDatasetName()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getAppellation()+"\t"+
+                                                         result.getAppellationURI()+"\t"+
+                                                         result.getDatasetName()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for synonym metadata",ex);
         }   
@@ -1060,11 +988,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<TaxonomyStruct> results = port.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(TaxonomyStruct struct : results){
-                System.out.println(struct.getSpeciesURI()+"\t"+
-                                   struct.getFamilyURI()+"\t"+
-                                   struct.getClassURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpeciesURI()+"\t"+
+                                                         result.getFamilyURI()+"\t"+
+                                                         result.getClassURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for taxonomy metadata",ex);
         }   
@@ -1098,11 +1024,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<TaxonomyStruct> results = port.searchTaxonomyWithinRange(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, offset, limit, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(TaxonomyStruct struct : results){
-                System.out.println(struct.getSpeciesURI()+"\t"+
-                                   struct.getFamilyURI()+"\t"+
-                                   struct.getClassURI()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSpeciesURI()+"\t"+
+                                                         result.getFamilyURI()+"\t"+
+                                                         result.getClassURI()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for taxonomy metadata",ex);
         }   
@@ -1118,11 +1042,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<Triple> results = port.searchResource(resourceURI, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(Triple struct : results){
-                System.out.println(struct.getSubject()+"\t"+
-                                   struct.getPredicate()+"\t"+
-                                   struct.getObject()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSubject()+"\t"+
+                                                         result.getPredicate()+"\t"+
+                                                         result.getObject()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for a resource URI in the metadata catalogue",ex);
         }   
@@ -1138,11 +1060,9 @@ public class SearchClient {
                                "\tGraphspace: "+METADATA_CAT_GRAPHSPACE);
             List<Triple> results = port.searchLiteral(literalValue, METADATA_CAT_GRAPHSPACE);
             System.out.println("Found "+results.size()+" results");
-            for(Triple struct : results){
-                System.out.println(struct.getSubject()+"\t"+
-                                   struct.getPredicate()+"\t"+
-                                   struct.getObject()+"...");
-            }
+            results.forEach(result -> System.out.println(result.getSubject()+"\t"+
+                                                         result.getPredicate()+"\t"+
+                                                         result.getObject()+"..."));
         } catch (Exception ex) {
             logger.error("An error occured while searching for a literal value in the metadata catalogue",ex);
         }   
