@@ -12,4 +12,6 @@
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Insert.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Search.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Search.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Select.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Select?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Select.xsd_1.xsd"/>
 </catalog>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://metadatarepository.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://metadatarepository.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="selectIncoming" type="tns:selectIncoming"/>
+
+<xs:element name="selectIncomingResponse" type="tns:selectIncomingResponse"/>
+
+<xs:element name="selectOutgoing" type="tns:selectOutgoing"/>
+
+<xs:element name="selectOutgoingResponse" type="tns:selectOutgoingResponse"/>
+
+<xs:complexType name="selectIncoming">
+<xs:sequence>
+<xs:element name="resourceURI" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectIncomingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:incomingNodeStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="incomingNodeStruct">
+<xs:sequence>
+<xs:element name="predicate" type="xs:string" minOccurs="0"/>
+<xs:element name="subject" type="xs:string" minOccurs="0"/>
+<xs:element name="subjectName" type="xs:string" minOccurs="0"/>
+<xs:element name="subjectType" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectOutgoing">
+<xs:sequence>
+<xs:element name="resourceURI" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="selectOutgoingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:outgoingNodeStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="outgoingNodeStruct">
+<xs:sequence>
+<xs:element name="object" type="xs:string" minOccurs="0"/>
+<xs:element name="objectName" type="xs:string" minOccurs="0"/>
+<xs:element name="objectType" type="xs:string" minOccurs="0"/>
+<xs:element name="predicate" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

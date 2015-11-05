@@ -19,5 +19,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Delete>http://localhost:8080/DataServices-middleware/DirectoryService_Delete?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_DirectoryService_5f_Delete>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Insert>http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Insert>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Search>http://localhost:8080/DataServices-middleware/MetadataRepository_Search?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Search>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Select>http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Select>
     </properties>
 </project-shared-configuration>
