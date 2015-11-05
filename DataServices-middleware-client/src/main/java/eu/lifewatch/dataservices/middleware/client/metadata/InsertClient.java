@@ -566,6 +566,7 @@ public class InsertClient {
             StatsStruct struct = new StatsStruct();
             struct.setDatasetURI("http://localhost/stats/dataset");
             struct.setDatasetName("stats dataset");
+            struct.setDataEvaluationURI("http://localhost/stats/data_evaluation");
             struct.setDescription("stats description");
             struct.setSpecimenName("stats specimen");
             struct.setSpecimenURI("http://localhost/stats/specimen");
