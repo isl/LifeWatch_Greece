@@ -4,18 +4,6 @@
 <xsd:import namespace="http://metadatarepository.middleware.dataservices.lifewatch.eu/" schemaLocation="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="searchResource">
-<part name="parameters" element="tns:searchResource"/>
-</message>
-<message name="searchResourceResponse">
-<part name="parameters" element="tns:searchResourceResponse"/>
-</message>
-<message name="searchLiteral">
-<part name="parameters" element="tns:searchLiteral"/>
-</message>
-<message name="searchLiteralResponse">
-<part name="parameters" element="tns:searchLiteralResponse"/>
-</message>
 <message name="searchCommonName">
 <part name="parameters" element="tns:searchCommonName"/>
 </message>
@@ -64,6 +52,36 @@
 <message name="searchTaxonomyResponse">
 <part name="parameters" element="tns:searchTaxonomyResponse"/>
 </message>
+<message name="searchSpecimenCollectionWithinRange">
+<part name="parameters" element="tns:searchSpecimenCollectionWithinRange"/>
+</message>
+<message name="searchSpecimenCollectionWithinRangeResponse">
+<part name="parameters" element="tns:searchSpecimenCollectionWithinRangeResponse"/>
+</message>
+<message name="searchScientificNamingWithinRange">
+<part name="parameters" element="tns:searchScientificNamingWithinRange"/>
+</message>
+<message name="searchScientificNamingWithinRangeResponse">
+<part name="parameters" element="tns:searchScientificNamingWithinRangeResponse"/>
+</message>
+<message name="searchOccurrenceStatsTempWithinRange">
+<part name="parameters" element="tns:searchOccurrenceStatsTempWithinRange"/>
+</message>
+<message name="searchOccurrenceStatsTempWithinRangeResponse">
+<part name="parameters" element="tns:searchOccurrenceStatsTempWithinRangeResponse"/>
+</message>
+<message name="searchMicroCTReconstructionWithinRange">
+<part name="parameters" element="tns:searchMicroCTReconstructionWithinRange"/>
+</message>
+<message name="searchMicroCTReconstructionWithinRangeResponse">
+<part name="parameters" element="tns:searchMicroCTReconstructionWithinRangeResponse"/>
+</message>
+<message name="searchMicroCTPostProcessingWithinRange">
+<part name="parameters" element="tns:searchMicroCTPostProcessingWithinRange"/>
+</message>
+<message name="searchMicroCTPostProcessingWithinRangeResponse">
+<part name="parameters" element="tns:searchMicroCTPostProcessingWithinRangeResponse"/>
+</message>
 <message name="searchCommonNameWithinRange">
 <part name="parameters" element="tns:searchCommonNameWithinRange"/>
 </message>
@@ -75,6 +93,36 @@
 </message>
 <message name="searchEnvironmentalResponse">
 <part name="parameters" element="tns:searchEnvironmentalResponse"/>
+</message>
+<message name="searchResource">
+<part name="parameters" element="tns:searchResource"/>
+</message>
+<message name="searchResourceResponse">
+<part name="parameters" element="tns:searchResourceResponse"/>
+</message>
+<message name="searchLiteral">
+<part name="parameters" element="tns:searchLiteral"/>
+</message>
+<message name="searchLiteralResponse">
+<part name="parameters" element="tns:searchLiteralResponse"/>
+</message>
+<message name="searchStatsWithinRange">
+<part name="parameters" element="tns:searchStatsWithinRange"/>
+</message>
+<message name="searchStatsWithinRangeResponse">
+<part name="parameters" element="tns:searchStatsWithinRangeResponse"/>
+</message>
+<message name="searchSynonymWithinRange">
+<part name="parameters" element="tns:searchSynonymWithinRange"/>
+</message>
+<message name="searchSynonymWithinRangeResponse">
+<part name="parameters" element="tns:searchSynonymWithinRangeResponse"/>
+</message>
+<message name="searchTaxonomyWithinRange">
+<part name="parameters" element="tns:searchTaxonomyWithinRange"/>
+</message>
+<message name="searchTaxonomyWithinRangeResponse">
+<part name="parameters" element="tns:searchTaxonomyWithinRangeResponse"/>
 </message>
 <message name="searchEnvironmentalWithinRange">
 <part name="parameters" element="tns:searchEnvironmentalWithinRange"/>
@@ -196,63 +244,7 @@
 <message name="searchSpecimenCollectionResponse">
 <part name="parameters" element="tns:searchSpecimenCollectionResponse"/>
 </message>
-<message name="searchStatsWithinRange">
-<part name="parameters" element="tns:searchStatsWithinRange"/>
-</message>
-<message name="searchStatsWithinRangeResponse">
-<part name="parameters" element="tns:searchStatsWithinRangeResponse"/>
-</message>
-<message name="searchSynonymWithinRange">
-<part name="parameters" element="tns:searchSynonymWithinRange"/>
-</message>
-<message name="searchSynonymWithinRangeResponse">
-<part name="parameters" element="tns:searchSynonymWithinRangeResponse"/>
-</message>
-<message name="searchTaxonomyWithinRange">
-<part name="parameters" element="tns:searchTaxonomyWithinRange"/>
-</message>
-<message name="searchTaxonomyWithinRangeResponse">
-<part name="parameters" element="tns:searchTaxonomyWithinRangeResponse"/>
-</message>
-<message name="searchSpecimenCollectionWithinRange">
-<part name="parameters" element="tns:searchSpecimenCollectionWithinRange"/>
-</message>
-<message name="searchSpecimenCollectionWithinRangeResponse">
-<part name="parameters" element="tns:searchSpecimenCollectionWithinRangeResponse"/>
-</message>
-<message name="searchScientificNamingWithinRange">
-<part name="parameters" element="tns:searchScientificNamingWithinRange"/>
-</message>
-<message name="searchScientificNamingWithinRangeResponse">
-<part name="parameters" element="tns:searchScientificNamingWithinRangeResponse"/>
-</message>
-<message name="searchOccurrenceStatsTempWithinRange">
-<part name="parameters" element="tns:searchOccurrenceStatsTempWithinRange"/>
-</message>
-<message name="searchOccurrenceStatsTempWithinRangeResponse">
-<part name="parameters" element="tns:searchOccurrenceStatsTempWithinRangeResponse"/>
-</message>
-<message name="searchMicroCTReconstructionWithinRange">
-<part name="parameters" element="tns:searchMicroCTReconstructionWithinRange"/>
-</message>
-<message name="searchMicroCTReconstructionWithinRangeResponse">
-<part name="parameters" element="tns:searchMicroCTReconstructionWithinRangeResponse"/>
-</message>
-<message name="searchMicroCTPostProcessingWithinRange">
-<part name="parameters" element="tns:searchMicroCTPostProcessingWithinRange"/>
-</message>
-<message name="searchMicroCTPostProcessingWithinRangeResponse">
-<part name="parameters" element="tns:searchMicroCTPostProcessingWithinRangeResponse"/>
-</message>
 <portType name="MetadataRepository_Search">
-<operation name="searchResource">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchResourceRequest" message="tns:searchResource"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchResourceResponse" message="tns:searchResourceResponse"/>
-</operation>
-<operation name="searchLiteral">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchLiteralRequest" message="tns:searchLiteral"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchLiteralResponse" message="tns:searchLiteralResponse"/>
-</operation>
 <operation name="searchCommonName">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchCommonNameRequest" message="tns:searchCommonName"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchCommonNameResponse" message="tns:searchCommonNameResponse"/>
@@ -285,6 +277,26 @@
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyRequest" message="tns:searchTaxonomy"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyResponse" message="tns:searchTaxonomyResponse"/>
 </operation>
+<operation name="searchSpecimenCollectionWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionWithinRangeRequest" message="tns:searchSpecimenCollectionWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionWithinRangeResponse" message="tns:searchSpecimenCollectionWithinRangeResponse"/>
+</operation>
+<operation name="searchScientificNamingWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchScientificNamingWithinRangeRequest" message="tns:searchScientificNamingWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchScientificNamingWithinRangeResponse" message="tns:searchScientificNamingWithinRangeResponse"/>
+</operation>
+<operation name="searchOccurrenceStatsTempWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchOccurrenceStatsTempWithinRangeRequest" message="tns:searchOccurrenceStatsTempWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchOccurrenceStatsTempWithinRangeResponse" message="tns:searchOccurrenceStatsTempWithinRangeResponse"/>
+</operation>
+<operation name="searchMicroCTReconstructionWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTReconstructionWithinRangeRequest" message="tns:searchMicroCTReconstructionWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTReconstructionWithinRangeResponse" message="tns:searchMicroCTReconstructionWithinRangeResponse"/>
+</operation>
+<operation name="searchMicroCTPostProcessingWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTPostProcessingWithinRangeRequest" message="tns:searchMicroCTPostProcessingWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTPostProcessingWithinRangeResponse" message="tns:searchMicroCTPostProcessingWithinRangeResponse"/>
+</operation>
 <operation name="searchCommonNameWithinRange">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchCommonNameWithinRangeRequest" message="tns:searchCommonNameWithinRange"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchCommonNameWithinRangeResponse" message="tns:searchCommonNameWithinRangeResponse"/>
@@ -292,6 +304,26 @@
 <operation name="searchEnvironmental">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchEnvironmentalRequest" message="tns:searchEnvironmental"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchEnvironmentalResponse" message="tns:searchEnvironmentalResponse"/>
+</operation>
+<operation name="searchResource">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchResourceRequest" message="tns:searchResource"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchResourceResponse" message="tns:searchResourceResponse"/>
+</operation>
+<operation name="searchLiteral">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchLiteralRequest" message="tns:searchLiteral"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchLiteralResponse" message="tns:searchLiteralResponse"/>
+</operation>
+<operation name="searchStatsWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchStatsWithinRangeRequest" message="tns:searchStatsWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchStatsWithinRangeResponse" message="tns:searchStatsWithinRangeResponse"/>
+</operation>
+<operation name="searchSynonymWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSynonymWithinRangeRequest" message="tns:searchSynonymWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSynonymWithinRangeResponse" message="tns:searchSynonymWithinRangeResponse"/>
+</operation>
+<operation name="searchTaxonomyWithinRange">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyWithinRangeRequest" message="tns:searchTaxonomyWithinRange"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyWithinRangeResponse" message="tns:searchTaxonomyWithinRangeResponse"/>
 </operation>
 <operation name="searchEnvironmentalWithinRange">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchEnvironmentalWithinRangeRequest" message="tns:searchEnvironmentalWithinRange"/>
@@ -373,59 +405,9 @@
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionRequest" message="tns:searchSpecimenCollection"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionResponse" message="tns:searchSpecimenCollectionResponse"/>
 </operation>
-<operation name="searchStatsWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchStatsWithinRangeRequest" message="tns:searchStatsWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchStatsWithinRangeResponse" message="tns:searchStatsWithinRangeResponse"/>
-</operation>
-<operation name="searchSynonymWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSynonymWithinRangeRequest" message="tns:searchSynonymWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSynonymWithinRangeResponse" message="tns:searchSynonymWithinRangeResponse"/>
-</operation>
-<operation name="searchTaxonomyWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyWithinRangeRequest" message="tns:searchTaxonomyWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchTaxonomyWithinRangeResponse" message="tns:searchTaxonomyWithinRangeResponse"/>
-</operation>
-<operation name="searchSpecimenCollectionWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionWithinRangeRequest" message="tns:searchSpecimenCollectionWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchSpecimenCollectionWithinRangeResponse" message="tns:searchSpecimenCollectionWithinRangeResponse"/>
-</operation>
-<operation name="searchScientificNamingWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchScientificNamingWithinRangeRequest" message="tns:searchScientificNamingWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchScientificNamingWithinRangeResponse" message="tns:searchScientificNamingWithinRangeResponse"/>
-</operation>
-<operation name="searchOccurrenceStatsTempWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchOccurrenceStatsTempWithinRangeRequest" message="tns:searchOccurrenceStatsTempWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchOccurrenceStatsTempWithinRangeResponse" message="tns:searchOccurrenceStatsTempWithinRangeResponse"/>
-</operation>
-<operation name="searchMicroCTReconstructionWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTReconstructionWithinRangeRequest" message="tns:searchMicroCTReconstructionWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTReconstructionWithinRangeResponse" message="tns:searchMicroCTReconstructionWithinRangeResponse"/>
-</operation>
-<operation name="searchMicroCTPostProcessingWithinRange">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTPostProcessingWithinRangeRequest" message="tns:searchMicroCTPostProcessingWithinRange"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Search/searchMicroCTPostProcessingWithinRangeResponse" message="tns:searchMicroCTPostProcessingWithinRangeResponse"/>
-</operation>
 </portType>
 <binding name="MetadataRepository_SearchPortBinding" type="tns:MetadataRepository_Search">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="searchResource">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchLiteral">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="searchCommonName">
 <soap:operation soapAction=""/>
 <input>
@@ -498,6 +480,51 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="searchSpecimenCollectionWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchScientificNamingWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchOccurrenceStatsTempWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchMicroCTReconstructionWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchMicroCTPostProcessingWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="searchCommonNameWithinRange">
 <soap:operation soapAction=""/>
 <input>
@@ -508,6 +535,51 @@
 </output>
 </operation>
 <operation name="searchEnvironmental">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchResource">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchLiteral">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchStatsWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchSynonymWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="searchTaxonomyWithinRange">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -688,78 +760,6 @@
 </output>
 </operation>
 <operation name="searchSpecimenCollection">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchStatsWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchSynonymWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchTaxonomyWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchSpecimenCollectionWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchScientificNamingWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchOccurrenceStatsTempWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchMicroCTReconstructionWithinRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchMicroCTPostProcessingWithinRange">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

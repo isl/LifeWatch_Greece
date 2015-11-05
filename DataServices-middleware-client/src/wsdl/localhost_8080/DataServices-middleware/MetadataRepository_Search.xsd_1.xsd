@@ -409,6 +409,45 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="searchStatsWithinRange">
+<xs:sequence>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="dimension" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="offset" type="xs:int"/>
+<xs:element name="limit" type="xs:int"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchStatsWithinRangeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:statsStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="statsStruct">
+<xs:sequence>
+<xs:element name="actors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="dataEvaluationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionName" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionTypeURI" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionURI" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionUnit" type="xs:string" minOccurs="0"/>
+<xs:element name="dimensionValue" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationName" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+<xs:element name="specimenName" type="xs:string" minOccurs="0"/>
+<xs:element name="specimenURI" type="xs:string" minOccurs="0"/>
+<xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="searchMorphometrics">
 <xs:sequence>
 <xs:element name="speciesName" type="xs:string" minOccurs="0"/>
@@ -440,44 +479,6 @@
 <xs:element name="publicationURI" type="xs:string" minOccurs="0"/>
 <xs:element name="speciesName" type="xs:string" minOccurs="0"/>
 <xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
-<xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchStatsWithinRange">
-<xs:sequence>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="dimension" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="offset" type="xs:int"/>
-<xs:element name="limit" type="xs:int"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchStatsWithinRangeResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:statsStruct" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="statsStruct">
-<xs:sequence>
-<xs:element name="actors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="description" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionName" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionTypeURI" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionURI" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionUnit" type="xs:string" minOccurs="0"/>
-<xs:element name="dimensionValue" type="xs:string" minOccurs="0"/>
-<xs:element name="publicationName" type="xs:string" minOccurs="0"/>
-<xs:element name="publicationURI" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
-<xs:element name="specimenName" type="xs:string" minOccurs="0"/>
-<xs:element name="specimenURI" type="xs:string" minOccurs="0"/>
 <xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -548,6 +549,36 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="searchSynonymWithinRange">
+<xs:sequence>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="scientificName" type="xs:string" minOccurs="0"/>
+<xs:element name="synonym" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="offset" type="xs:int"/>
+<xs:element name="limit" type="xs:int"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchSynonymWithinRangeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:synonymStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="synonymStruct">
+<xs:sequence>
+<xs:element name="appellation" type="xs:string" minOccurs="0"/>
+<xs:element name="appellationURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+<xs:element name="synonyms" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="searchIdentificationWithinRange">
 <xs:sequence>
 <xs:element name="speciesName" type="xs:string" minOccurs="0"/>
@@ -599,36 +630,6 @@
 <xs:complexType name="searchMorphometricsWithinRangeResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:morphometricsStruct" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchSynonymWithinRange">
-<xs:sequence>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="scientificName" type="xs:string" minOccurs="0"/>
-<xs:element name="synonym" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="offset" type="xs:int"/>
-<xs:element name="limit" type="xs:int"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchSynonymWithinRangeResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:synonymStruct" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="synonymStruct">
-<xs:sequence>
-<xs:element name="appellation" type="xs:string" minOccurs="0"/>
-<xs:element name="appellationURI" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
-<xs:element name="synonyms" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -816,6 +817,38 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="searchMicroCTReconstructionWithinRange">
+<xs:sequence>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="specimen" type="xs:string" minOccurs="0"/>
+<xs:element name="input" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="offset" type="xs:int"/>
+<xs:element name="limit" type="xs:int"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchMicroCTReconstructionWithinRangeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:microCTReconstructionStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="microCTReconstructionStruct">
+<xs:sequence>
+<xs:element name="actorName" type="xs:string" minOccurs="0"/>
+<xs:element name="actorURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetTitle" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="inputs" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="products" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="reconstructionURI" type="xs:string" minOccurs="0"/>
+<xs:element name="timespan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="searchEnvironmentalWithinRange">
 <xs:sequence>
 <xs:element name="dimension" type="xs:string" minOccurs="0"/>
@@ -849,38 +882,6 @@
 <xs:element name="stationName" type="xs:string" minOccurs="0"/>
 <xs:element name="stationURI" type="xs:string" minOccurs="0"/>
 <xs:element name="timeSpan" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchMicroCTReconstructionWithinRange">
-<xs:sequence>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="specimen" type="xs:string" minOccurs="0"/>
-<xs:element name="input" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="offset" type="xs:int"/>
-<xs:element name="limit" type="xs:int"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchMicroCTReconstructionWithinRangeResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:microCTReconstructionStruct" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="microCTReconstructionStruct">
-<xs:sequence>
-<xs:element name="actorName" type="xs:string" minOccurs="0"/>
-<xs:element name="actorURI" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetTitle" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="description" type="xs:string" minOccurs="0"/>
-<xs:element name="inputs" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="products" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="reconstructionURI" type="xs:string" minOccurs="0"/>
-<xs:element name="timespan" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -1010,22 +1011,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="searchMeasurement">
-<xs:sequence>
-<xs:element name="specimen" type="xs:string" minOccurs="0"/>
-<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
-<xs:element name="dimension" type="xs:string" minOccurs="0"/>
-<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
-<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="searchMeasurementResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:measurementStruct" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="searchTaxonomyWithinRange">
 <xs:sequence>
 <xs:element name="speciesName" type="xs:string" minOccurs="0"/>
@@ -1066,6 +1051,22 @@
 <xs:element name="phylumURI" type="xs:string" minOccurs="0"/>
 <xs:element name="speciesName" type="xs:string" minOccurs="0"/>
 <xs:element name="speciesURI" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchMeasurement">
+<xs:sequence>
+<xs:element name="specimen" type="xs:string" minOccurs="0"/>
+<xs:element name="speciesName" type="xs:string" minOccurs="0"/>
+<xs:element name="dimension" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchMeasurementResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:measurementStruct" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
