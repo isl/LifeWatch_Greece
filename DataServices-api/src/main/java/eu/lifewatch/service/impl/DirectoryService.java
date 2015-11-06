@@ -784,16 +784,15 @@ public class DirectoryService implements Service {
      */
     @Override
     public void updateLiteral(String originalLiteral, String newLiteral, String directoryGraph) throws QueryExecutionException {
-        String updateQuery = "INSERT INTO <" + directoryGraph + "> { "
-                + "?s ?p \"" + newLiteral + "\" } "
-                + "WHERE {GRAPH <" + directoryGraph + "> { "
-                + "?s ?p ?o ."
-                + "FILTER REGEX(?o,\"" + originalLiteral + "\",\"i\")}} "
-                + "DELETE FROM <" + directoryGraph + "> { "
-                + "?s ?p ?o } "
-                + "WHERE {GRAPH <" + directoryGraph + "> { "
-                + "?s ?p ?o . "
-                + "FILTER REGEX(?o,\"" + originalLiteral + "\",\"i\")}}";
+        List<Triple> triples=this.searchLiteral(originalLiteral, directoryGraph);
+        logger.debug("Found "+triples.size()+" with the literal value \""+originalLiteral+"\" to be updated");
+        String deleteQuery = "DELETE DATA FROM <"+directoryGraph+"> { ";
+        String insertQuery = "INSERT DATA INTO <"+directoryGraph+"> { ";
+        for(Triple triple : triples){
+            deleteQuery+="<"+triple.getSubject()+"> <"+triple.getPredicate()+"> \""+triple.getObject()+"\". ";
+            insertQuery+="<"+triple.getSubject()+"> <"+triple.getPredicate()+"> \""+newLiteral+"\". ";
+        }   
+        String updateQuery=deleteQuery+"} "+insertQuery+" }";
         logger.debug("Executing the update query: " + updateQuery);
         this.repoManager.update(updateQuery);
     }
