@@ -22,11 +22,13 @@ import org.apache.log4j.Logger;
 public class OccurrenceStruct {
 
     private String occurrenceEventURI;
+    private String occurrenceEvent;
     private String datasetURI;
     private String datasetTitle;
     private String speciesURI;
     private String speciesName;
     private String individualURI;
+    private String individualLabel;
     private List<Pair> actors;
     private String timeSpan;
     private String localityName;
@@ -62,9 +64,11 @@ public class OccurrenceStruct {
      */
     public OccurrenceStruct() {
         occurrenceEventURI = "";
+        occurrenceEvent = "";
         datasetURI = "";
         datasetTitle = "";
         individualURI = "";
+        individualLabel = "";
         actors = new ArrayList<>();
         speciesName = "";
         speciesURI = "";
@@ -99,7 +103,11 @@ public class OccurrenceStruct {
     public String getOccurrenceEventURI() {
         return occurrenceEventURI;
     }
-
+    
+    public String getOccurrenceEvent() {
+        return occurrenceEventURI;
+    }
+    
     public String getDatasetURI() {
         return datasetURI;
     }
@@ -111,6 +119,11 @@ public class OccurrenceStruct {
     public String getIndividualURI() {
         return individualURI;
     }
+    
+    public String getIndividualLabel() {
+        return individualLabel;
+    }
+
 
     public String getDescription() {
         return description;
@@ -246,6 +259,10 @@ public class OccurrenceStruct {
     public void setOccurrenceEventURI(String occurrenceEventURI) {
         this.occurrenceEventURI = occurrenceEventURI;
     }
+    
+    public void setOccurrenceEvent(String occurrenceEvent) {
+        this.occurrenceEvent= occurrenceEvent;
+    }
 
     public void setDatasetURI(String datasetURI) {
         this.datasetURI = datasetURI;
@@ -265,6 +282,10 @@ public class OccurrenceStruct {
 
     public void setIndividualURI(String individualURI) {
         this.individualURI = individualURI;
+    }
+    
+    public void setIndividualLabel(String individualLabel) {
+        this.individualLabel= individualLabel;
     }
 
     public void setActors(List<Pair> actors) {
@@ -378,6 +399,11 @@ public class OccurrenceStruct {
         this.occurrenceEventURI = occurrenceEventURI;
         return this;
     }
+    
+    public OccurrenceStruct withOccurrenceEvent(String occurrenceEvent) {
+        this.occurrenceEvent = occurrenceEvent;
+        return this;
+    }
 
     public OccurrenceStruct withDatasetTitle(String datasetTitle) {
         this.datasetTitle = datasetTitle;
@@ -399,6 +425,11 @@ public class OccurrenceStruct {
         return this;
     }
 
+    public OccurrenceStruct withIndividualLabel(String individualLabel) {
+        this.individualLabel = individualLabel;
+        return this;
+    }
+     
     public OccurrenceStruct withActor(String actorURI, String actorName) {
         if (!this.getActorURIs().contains(actorURI)) {
             this.actors.add(new Pair(actorURI, actorName));
@@ -582,6 +613,10 @@ public class OccurrenceStruct {
             if (!description.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
             }
+             if (!occurrenceEvent.isEmpty()) {
+                retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel + "> \"" + occurrenceEvent + "\" .\n";
+            }
+            
         }
         if (!equipmentTypeURI.isEmpty()) {
             retTriples += "<" + equipmentTypeURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.equipmentTypeLabel + "> .\n";
@@ -671,6 +706,9 @@ public class OccurrenceStruct {
             retTriples += "<" + individualURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementLabel + "> .\n";
             if (!speciesURI.isEmpty()) {
                 retTriples += "<" + individualURI + "> <" + Resources.belongsTo + "> <" + speciesURI + "> .\n";
+            }
+            if(!individualLabel.isEmpty()){
+                retTriples+= "<"+individualURI+"> <"+Resources.rdfsLabel+"> \""+individualLabel+"\" .\n";
             }
         }
         if (!speciesURI.isEmpty()) {

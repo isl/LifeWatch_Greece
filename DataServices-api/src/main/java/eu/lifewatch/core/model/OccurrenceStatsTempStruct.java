@@ -21,9 +21,11 @@ import org.apache.log4j.Logger;
  */
 public class OccurrenceStatsTempStruct {
     private String occurrenceEventURI;
+    private String occurrenceEvent;
     private String datasetURI;
     private String datasetTitle;
     private String physicalObjectURI;
+    private String physicalObject;
     private List<Pair> actors;
     private String timeSpan;
     private String localityName;
@@ -73,9 +75,11 @@ public class OccurrenceStatsTempStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public OccurrenceStatsTempStruct(){
         occurrenceEventURI="";
+        occurrenceEvent="";
         datasetURI="";
         datasetTitle="";
         physicalObjectURI="";
+        physicalObject="";
         actors=new ArrayList<>();
         timeSpan="";
         localityName="";
@@ -117,6 +121,10 @@ public class OccurrenceStatsTempStruct {
         return occurrenceEventURI;
     }
     
+    public String getOccurrenceEvent() {
+        return occurrenceEvent;
+    }
+    
     public String getDatasetURI() {
         return datasetURI;
     }
@@ -129,6 +137,9 @@ public class OccurrenceStatsTempStruct {
         return physicalObjectURI;
     }
      
+    public String getPhysicalObject() {
+        return physicalObject;
+    }
 
 //      public List<HashMap<String,String>> getTemporaryAggregates() {
 //        return temporaryAggregates;
@@ -321,6 +332,10 @@ public class OccurrenceStatsTempStruct {
     public void setOccurrenceEventURI(String occurrenceEventURI) {
         this.occurrenceEventURI = occurrenceEventURI;
     }
+    
+    public void setOccurrenceEvent(String occurrenceEvent) {
+        this.occurrenceEvent = occurrenceEvent;
+    }
 
     public void setDatasetURI(String datasetURI) {
         this.datasetURI = datasetURI;
@@ -334,6 +349,10 @@ public class OccurrenceStatsTempStruct {
         this.physicalObjectURI = physicalObjectURI;
     }
 
+    public void setPhysicalObject(String physicalObject) {
+        this.physicalObject = physicalObject;
+    }
+    
     public void setActors(List<Pair> actors) {
         this.actors = actors;
     }
@@ -421,49 +440,64 @@ public class OccurrenceStatsTempStruct {
     public void setBibliographicCitation(String bibliographicCitation) {
         this.bibliographicCitation = bibliographicCitation;
     }
+//
+//    public void setTemporaryAggregates(List<HashMap<String,String>> temporaryAggregates) {
+//        this.temporaryAggregates = temporaryAggregates;
+//    }
     
-    public void setTemporaryAggregate(String temporaryAggregate) {
+     public void setTemporaryAggregate() {
         this.temporaryAggregate = temporaryAggregate;
     }
     
-    public void setTemporaryAggregateURI(String temporaryAggregateURI) {
+     public void setTemporaryAggregateURI() {
         this.temporaryAggregateURI = temporaryAggregateURI;
     }
-
-    public void setSpeciesURI(String speciesURI) {
+    
+     
+     
+         public void setSpeciesURI() {
         this.speciesURI = speciesURI;
     }
     
-    public void setSpeciesName(String speciesName) {
+     public void setSpeciesName() {
         this.speciesName= speciesName;
     }
     
-    public void bibliographicCitationURI(String bibliographicCitationURI) {
+            public void bibliographicCitationURI() {
         this.bibliographicCitationURI = bibliographicCitationURI;
     }
     
-     public void setDescription(String description) {
+     public void setDescription() {
         this.description= description;
     }
      
-    public void stationNotes(String stationNotes) {
+     
+          public void stationNotes() {
         this.stationNotes = stationNotes;
     }
     
-    public void setStationURI(String stationURI) {
+     public void setStationURI() {
         this.stationURI= stationURI;
     }
      
-    public void setCoordinates(String coordinates) {
+       public void setCoordinates() {
         this.coordinates = coordinates;
     }
     
-    public void setNumberOfParts(String numberOfParts) {
+     public void setNumberOfParts() {
         this.numberOfParts= numberOfParts;
     }
+       
+   
+
      
     public OccurrenceStatsTempStruct withOccurrenceEventURI(String occurrenceEventURI) {
         this.occurrenceEventURI = occurrenceEventURI;
+        return this;
+    }
+    
+    public OccurrenceStatsTempStruct withOccurrenceEvent(String occurrenceEvent) {
+        this.occurrenceEvent = occurrenceEvent;
         return this;
     }
 
@@ -482,6 +516,10 @@ public class OccurrenceStatsTempStruct {
         return this;
     }
     
+     public OccurrenceStatsTempStruct withPhysicalObject(String physicalObject) {
+        this.physicalObject = physicalObject;
+        return this;
+    }
     
 //    public OccurrenceStatsTempStruct withTemporaryAggregate(String temporAggregateURI, String speciesURI, String speciesName, String numberOfParts) {
 //        if(!this.getTemporaryAggregateURIs().contains(temporAggregateURI)){
@@ -729,6 +767,10 @@ public class OccurrenceStatsTempStruct {
             if (!description.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
             }
+            
+            if(!occurrenceEvent.isEmpty()){
+                retTriples+= "<"+occurrenceEventURI+"> <"+Resources.rdfsLabel+"> \"" + occurrenceEvent + "\" .\n";
+            }
         }
         if (!equipmentTypeURI.isEmpty()) {
             retTriples += "<" + equipmentTypeURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.equipmentTypeLabel + "> .\n";
@@ -740,8 +782,11 @@ public class OccurrenceStatsTempStruct {
         if(!physicalObjectURI.isEmpty()){
             retTriples+= "<"+physicalObjectURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> .\n";
           
-              if(!temporaryAggregateURI.isEmpty()){
+            if(!temporaryAggregateURI.isEmpty()){
                 retTriples+= "<"+physicalObjectURI+"> <"+Resources.isComposedOf+"> <"+temporaryAggregateURI+"> .\n";
+            }
+            if (!physicalObject.isEmpty()) {
+                retTriples += "<" + physicalObjectURI + "> <" + Resources.rdfsLabel + "> \"" + physicalObject + "\" .\n";
             }
         }      
 

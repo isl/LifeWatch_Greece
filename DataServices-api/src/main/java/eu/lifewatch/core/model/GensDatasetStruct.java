@@ -33,10 +33,11 @@ public class GensDatasetStruct {
     private String habitatName;
     
     private String sampleTakingURI;
-    
+    private String sampleTaking;
     
     private String description;
     private String sequencingEventURI;
+    private String sequencingEvent;
     private String device; 
     private String deviceURI; 
     private String deviceType;
@@ -52,6 +53,8 @@ public class GensDatasetStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public GensDatasetStruct(){
         sampleTakingURI="";
+        sampleTaking="";
+        
         datasetURI="";
         datasetTitle="";
      
@@ -68,6 +71,7 @@ public class GensDatasetStruct {
      
         description="";
         sequencingEventURI="";
+        sequencingEvent="";
         device="";
         deviceType="";
         producedFile="";
@@ -78,6 +82,10 @@ public class GensDatasetStruct {
     
     public String getSampleTakingURI() {
         return sampleTakingURI;
+    }
+    
+    public String getSampleTaking() {
+        return sampleTaking;
     }
    
     public String getDatasetURI() {
@@ -130,6 +138,10 @@ public class GensDatasetStruct {
      
     public String getSequencingEventURI() {
         return sequencingEventURI;
+    }
+    
+    public String getSequencingEvent() {
+        return sequencingEvent;
     }
    
     public String getDevice() {
@@ -207,35 +219,43 @@ public class GensDatasetStruct {
         this.sampleTakingURI = sampleTakingURI;
     }
     
-    
-     public void setDescription(String description) {
-        this.description = description;
+    public void setSampleTaking(String sampleTaking) {
+        this.sampleTaking = sampleTaking;
     }
     
+    public void setDescription(String description) {
+        this.description = description;
+    }
        
-     public void setSequencingEventURI(String  sequencingEventURI) {
+    public void setSequencingEventURI(String  sequencingEventURI) {
         this. sequencingEventURI =  sequencingEventURI;
     }
      
-      public void setDevice(String device) {
+    public void setSequencingEvent(String  sequencingEvent) {
+        this. sequencingEvent =  sequencingEvent;
+    }
+      
+    public void setDevice(String device) {
         this.device =  device;
     }
      
-      public void setDeviceType(String deviceType) {
+    public void setDeviceType(String deviceType) {
         this.deviceType =  deviceType;
     }
-      public void setProducedFile(String producedFile) {
+    
+    public void setProducedFile(String producedFile) {
         this.producedFile= producedFile;
     }
-      
-        public void setDeviceURI(String deviceURI) {
+    
+    public void setDeviceURI(String deviceURI) {
         this.deviceURI =  deviceURI;
     }
      
-      public void setDeviceTypeURI(String deviceTypeURI) {
+    public void setDeviceTypeURI(String deviceTypeURI) {
         this.deviceTypeURI =  deviceTypeURI;
     }
-      public void setProducedFileURI(String producedFileURI) {
+    
+    public void setProducedFileURI(String producedFileURI) {
         this.producedFileURI= producedFileURI;
     }
       
@@ -244,6 +264,11 @@ public class GensDatasetStruct {
       
     public GensDatasetStruct withSampleTakingURI(String sampleTakingURI) {
         this.sampleTakingURI = sampleTakingURI;
+        return this;
+    }
+    
+    public GensDatasetStruct withSampleTaking(String sampleTaking) {
+        this.sampleTaking = sampleTaking;
         return this;
     }
 
@@ -318,6 +343,11 @@ public class GensDatasetStruct {
         return this;
     }
     
+    public GensDatasetStruct withSequencingEvent(String sequencingEvent) {
+        this.sequencingEvent = sequencingEvent;
+        return this;
+    }
+    
      public GensDatasetStruct withDevice(String device) {
         this.device = device;
         return this;
@@ -377,6 +407,10 @@ public class GensDatasetStruct {
                 retTriples+= "<"+sampleTakingURI+"> <"+Resources.hasNote+"> \""+description+"\" .\n";
             }
             
+            if(!sampleTaking.isEmpty()){
+                retTriples+= "<"+sampleTakingURI+"> <"+Resources.rdfsLabel+"> \""+sampleTaking+"\" .\n";
+            }
+            
         }
         if(!datasetURI.isEmpty()){
             retTriples+= "<"+datasetURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> .\n";
@@ -432,6 +466,10 @@ public class GensDatasetStruct {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+sequencingEventURI+"> . \n";
+            }
+            
+            if(!sequencingEvent.isEmpty()){
+                retTriples+= "<"+sequencingEventURI+"> <"+Resources.rdfsLabel+"> \""+sequencingEvent+"\" .\n";
             }
           
         }

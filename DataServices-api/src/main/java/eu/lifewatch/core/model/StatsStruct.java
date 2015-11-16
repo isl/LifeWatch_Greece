@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class StatsStruct {
     private String dataEvaluationURI;
+    private String dataEvaluation;
     private String dimensionUnit;
     private String dimensionValue;
     private String dimensionURI;
@@ -43,6 +44,7 @@ public class StatsStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public StatsStruct(){
         dataEvaluationURI="";
+        dataEvaluation="";
         dimensionUnit="";
         dimensionValue="";
         dimensionURI="";
@@ -63,6 +65,10 @@ public class StatsStruct {
     
     public String getDataEvaluationURI() {
         return dataEvaluationURI;
+    }
+    
+    public String getDataEvaluation() {
+        return dataEvaluation;
     }
     
     public String getDimensionURI() {
@@ -149,6 +155,10 @@ public class StatsStruct {
         this.dataEvaluationURI = dataEvaluationURI;
     }
 
+    public void setDataEvaluation(String dataEvaluation) {
+        this.dataEvaluation = dataEvaluation;
+    }
+    
     public void setDimensionUnit(String dimensionUnit) {
         this.dimensionUnit = dimensionUnit;
     }
@@ -215,6 +225,11 @@ public class StatsStruct {
     
     public StatsStruct withDataEvaluationURI(String dataEvaluationURI) {
         this.dataEvaluationURI = dataEvaluationURI;
+        return this;
+    }
+    
+    public StatsStruct withDataEvaluation(String dataEvaluation) {
+        this.dataEvaluation= dataEvaluation;
         return this;
     }
 
@@ -326,6 +341,9 @@ public class StatsStruct {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+dataEvaluationURI+"> . \n";
+            }
+            if(!dataEvaluation.isEmpty()){
+                retTriples+= "<"+dataEvaluationURI+"> <"+Resources.rdfsLabel+"> \""+dataEvaluation+"\" .\n";
             }
         }
         if(!dimensionURI.isEmpty()){

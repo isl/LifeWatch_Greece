@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class ScientificNamingStruct {
     private String scientificNameAssignmentEventURI;
+    private String scientificNameAssignmentEvent;
     private List<Pair> actors;
     private String timeSpan;
     private String appellation;
@@ -37,6 +38,7 @@ public class ScientificNamingStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public ScientificNamingStruct(){
         scientificNameAssignmentEventURI="";
+        scientificNameAssignmentEvent="";
         actors=new ArrayList<>();
         timeSpan="";
         speciesName="";
@@ -53,6 +55,10 @@ public class ScientificNamingStruct {
         return scientificNameAssignmentEventURI;
     }
      
+    public String getScientificNameAssignmentEvent() {
+        return scientificNameAssignmentEvent;
+    }
+    
     public Collection<String> getActorURIs() {
         Collection<String> actorURIs=new HashSet<>();
         for(Pair pair : this.actors){
@@ -112,6 +118,10 @@ public class ScientificNamingStruct {
     public void setScientificNameAssignmentEventURI(String scientificNameAssignmentEventURI) {
         this.scientificNameAssignmentEventURI = scientificNameAssignmentEventURI;
     }
+    
+    public void setScientificNameAssignmentEvent(String scientificNameAssignmentEvent) {
+        this.scientificNameAssignmentEvent = scientificNameAssignmentEvent;
+    }
 
     public void setActors(List<Pair> actors) {
         this.actors = actors;
@@ -157,7 +167,12 @@ public class ScientificNamingStruct {
         this.scientificNameAssignmentEventURI = scientificNameAssignmentEventURI;
         return this;
     }
-   
+    
+    public ScientificNamingStruct withScientificNameAssignmentEvent(String scientificNameAssignmentEvent) {
+        this.scientificNameAssignmentEvent = scientificNameAssignmentEvent;
+        return this;
+    }
+    
     public ScientificNamingStruct withActor(String actorURI, String actorName) {
         if(!this.getActorURIs().contains(actorURI)){
             this.actors.add(new Pair(actorURI, actorName));
@@ -236,6 +251,9 @@ public class ScientificNamingStruct {
             }
            if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+scientificNameAssignmentEventURI+"> . \n";
+            }
+           if(!scientificNameAssignmentEvent.isEmpty()){
+                retTriples+= "<"+scientificNameAssignmentEventURI+"> <"+Resources.rdfsLabel+"> \""+scientificNameAssignmentEvent+"\" .\n";
             }
         }
         if(!nomenclaturalCodeURI.isEmpty()){

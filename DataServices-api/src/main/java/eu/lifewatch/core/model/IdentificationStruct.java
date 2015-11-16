@@ -20,9 +20,11 @@ import org.apache.log4j.Logger;
  */
 public class IdentificationStruct {
     private String identificationEventURI;
+    private String identificationEvent;
     private String datasetURI;
     private String datasetTitle;
     private String individualURI;
+    private String individualLabel;
     private List<Pair> actors;
     private String timeSpan;
     private String localityName;
@@ -38,9 +40,11 @@ public class IdentificationStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public IdentificationStruct(){
         identificationEventURI="";
+        identificationEvent="";
         datasetURI="";
         datasetTitle="";
         individualURI="";
+        individualLabel="";
         this.actors=new ArrayList<>();
         timeSpan="";
         localityName="";
@@ -55,6 +59,10 @@ public class IdentificationStruct {
         return   identificationEventURI;
     }
     
+    public String getIdentificationEvent() {
+        return   identificationEvent;
+    }
+    
     public String getDatasetURI() {
         return   datasetURI;
     }
@@ -65,6 +73,10 @@ public class IdentificationStruct {
       
     public String getIndividualURI() {
         return individualURI;
+    }
+    
+    public String getIndividualLabel() {
+        return individualLabel;
     }
      
     public String getSpeciesURI() {
@@ -118,6 +130,10 @@ public class IdentificationStruct {
     public void setIdentificationEventURI(String identificationEventURI) {
         this.identificationEventURI = identificationEventURI;
     }
+    
+    public void setIdentificationEvent(String identificationEvent) {
+        this.identificationEvent = identificationEvent;
+    }
 
     public void setDatasetURI(String datasetURI) {
         this.datasetURI = datasetURI;
@@ -131,6 +147,10 @@ public class IdentificationStruct {
         this.individualURI = individualURI;
     }
 
+    public void setIndividualLabel(String individualLabel) {
+        this.individualLabel = individualLabel;
+    }
+    
     public void setActors(List<Pair> actors) {
         this.actors = actors;
     }
@@ -168,6 +188,11 @@ public class IdentificationStruct {
         return this;
     }
     
+    public IdentificationStruct withIdentificationEvent(String identificationEvent) {
+        this.identificationEvent= identificationEvent;
+        return this;
+    }
+    
     public IdentificationStruct withDatasetTitle(String datasetTitle) {
         this.datasetTitle = datasetTitle;
         return this;
@@ -180,6 +205,11 @@ public class IdentificationStruct {
     
     public IdentificationStruct withIndividualURI(String individualURI) {
         this.individualURI = individualURI;
+        return this;
+    }
+    
+    public IdentificationStruct withIndividualLabel(String individualLabel) {
+        this.individualLabel = individualLabel;
         return this;
     }
     
@@ -252,6 +282,9 @@ public class IdentificationStruct {
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+identificationEventURI+"> . \n";
             }
+            if(!identificationEvent.isEmpty()){
+                retTriples+= "<"+identificationEventURI+"> <"+Resources.rdfsLabel+"> \""+identificationEvent+"\" .\n";
+            }
         }
         if(!localityURI.isEmpty()){
             retTriples+= "<"+localityURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+"> .\n";
@@ -271,6 +304,9 @@ public class IdentificationStruct {
         }
         if(!individualURI.isEmpty()){
             retTriples+= "<"+individualURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.bioticElementLabel+"> .\n";
+            if(!individualLabel.isEmpty()){
+                retTriples+= "<"+individualURI+"> <"+Resources.rdfsLabel+"> \""+individualLabel+"\" .\n";
+            }
         }
         if(!speciesURI.isEmpty()){
             retTriples+= "<"+speciesURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+"> .\n";

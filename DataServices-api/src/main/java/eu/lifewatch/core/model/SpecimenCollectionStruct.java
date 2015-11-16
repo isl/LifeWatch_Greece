@@ -32,6 +32,7 @@ public class SpecimenCollectionStruct {
     private String note;
     private String timespan;
     private String creationEventURI;
+    private String creationEvent;
     private String creatorName;
     private String creatorURI;
     private String contactPoint;
@@ -55,6 +56,7 @@ public class SpecimenCollectionStruct {
         curatorName="";
         creatorURI="";
         creationEventURI="";
+        creationEvent="";
         creatorName="";
         timespan="";
         ownerName="";
@@ -76,6 +78,10 @@ public class SpecimenCollectionStruct {
         return creationEventURI;
     }
    
+    public String getCreationEvent() {
+        return creationEvent;
+    }
+     
     public String getKeeperName() {
         return keeperName;
     }
@@ -212,6 +218,10 @@ public class SpecimenCollectionStruct {
         this.creationEventURI = creationEventURI;
     }
 
+    public void setCreationEvent(String creationEvent) {
+        this.creationEvent = creationEvent;
+    }
+    
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
     }
@@ -231,6 +241,11 @@ public class SpecimenCollectionStruct {
 
     public SpecimenCollectionStruct withCreationEventURI(String creationEventURI) {
         this.creationEventURI = creationEventURI;
+        return this;
+    }
+    
+    public SpecimenCollectionStruct withCreationEvent(String creationEvent) {
+        this.creationEvent = creationEvent;
         return this;
     }
     
@@ -383,6 +398,9 @@ public class SpecimenCollectionStruct {
             }
             if(!timespan.isEmpty()){
                 retTriples+= "<"+creationEventURI+"> <"+Resources.hasTimespan+"> \""+timespan+"\" .\n";
+            }
+            if(!creationEvent.isEmpty()){
+                retTriples+= "<"+creationEventURI+"> <"+Resources.rdfsLabel+"> \""+creationEvent+"\" .\n";
             }
         }
         if(!creatorURI.isEmpty()){

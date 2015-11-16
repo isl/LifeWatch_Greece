@@ -23,10 +23,12 @@ public class MicroCTScanningStruct {
     private String specimenURI;
     private String specimenName;
     private String equipmentURI;
+    private String equipment;
     private String contrastMethod;
     private String methodName;
     private String methodURI;
     private String scanningURI;
+    private String scanning;
     private String timespan;
     private String actorURI;
     private String actorName;
@@ -47,10 +49,12 @@ public class MicroCTScanningStruct {
         specimenName="";
         description="";
         equipmentURI="";
+        equipment="";
         contrastMethod = "";
         methodName="";
         methodURI="";
         scanningURI="";
+        scanning="";
         timespan="";
         deviceURI="";
         deviceName="";
@@ -68,8 +72,7 @@ public class MicroCTScanningStruct {
     
     public String getSpecimenName() {
         return specimenName;
-    }
-     
+    } 
      
     public String getDatasetURI() {
         return datasetURI;
@@ -81,6 +84,10 @@ public class MicroCTScanningStruct {
      
     public String getScanningURI() {
         return scanningURI;
+    }
+    
+    public String getScanning() {
+        return scanning;
     }
     
     public Collection<String> getProductURIs() {
@@ -127,6 +134,10 @@ public class MicroCTScanningStruct {
         return equipmentURI;
     }
     
+    public String getEquipment() {
+        return equipment;
+    }
+    
     public String getContrastMethod() {
         return contrastMethod;
     }
@@ -159,6 +170,10 @@ public class MicroCTScanningStruct {
         this.equipmentURI = equipmentURI;
     }
 
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
+    
     public void setContrastMethod(String contrastMethod) {
         this.contrastMethod = contrastMethod;
     }
@@ -173,6 +188,10 @@ public class MicroCTScanningStruct {
 
     public void setScanningURI(String scanningURI) {
         this.scanningURI = scanningURI;
+    }
+    
+    public void setScanning(String scanning) {
+        this.scanning = scanning;
     }
 
     public void setTimespan(String timespan) {
@@ -245,11 +264,21 @@ public class MicroCTScanningStruct {
         return this;
     }
     
+    public MicroCTScanningStruct withEquipment(String equipment) {
+        this.equipment= equipment;
+        return this;
+    }
+    
     public MicroCTScanningStruct withScanningURI(String scanningURI) {
         this.scanningURI = scanningURI;
         return this;
     }
   
+    public MicroCTScanningStruct withScanning(String scanning) {
+        this.scanning = scanning;
+        return this;
+    }
+    
     public MicroCTScanningStruct withDeviceName(String deviceName) {
         this.deviceName = deviceName;
         return this;
@@ -330,6 +359,9 @@ public class MicroCTScanningStruct {
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+scanningURI+"> . \n";
              }
+            if(!scanning.isEmpty()){
+                retTriples+= "<"+scanningURI+"> <"+Resources.rdfsLabel+"> \""+scanning+"\" .\n";
+            }
         }
         if(!specimenURI.isEmpty()){
             retTriples+= "<"+specimenURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+"> .\n";

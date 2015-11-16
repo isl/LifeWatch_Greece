@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class MorphometricsStruct {
     private String attributeAssignmentEventURI;
+    private String attributeAssignmentEvent;
     private String dimensionUnit;
     private String dimensionValue;
     private String dimensionURI;
@@ -41,6 +42,7 @@ public class MorphometricsStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public MorphometricsStruct(){
         attributeAssignmentEventURI="";
+        attributeAssignmentEvent="";
         dimensionUnit="";
         dimensionValue="";
         dimensionURI="";
@@ -59,6 +61,10 @@ public class MorphometricsStruct {
     
     public String getAttributeAssignmentEventURI() {
         return attributeAssignmentEventURI;
+    }
+    
+    public String getAttributeAssignmentEvent() {
+        return attributeAssignmentEvent;
     }
     
     public String getDimensionURI() {
@@ -136,7 +142,11 @@ public class MorphometricsStruct {
     public void setAttributeAssignmentEventURI(String attributeAssignmentEventURI) {
         this.attributeAssignmentEventURI = attributeAssignmentEventURI;
     }
-
+    
+    public void setAttributeAssignmentEvent(String attributeAssignmentEvent) {
+        this.attributeAssignmentEvent = attributeAssignmentEvent;
+    }
+    
     public void setDimensionUnit(String dimensionUnit) {
         this.dimensionUnit = dimensionUnit;
     }
@@ -198,6 +208,11 @@ public class MorphometricsStruct {
         return this;
     }
 
+    public MorphometricsStruct withAttributeAssignmentEvent(String attributeAssignmentEvent) {
+        this.attributeAssignmentEvent = attributeAssignmentEvent;
+        return this;
+    }
+    
     public MorphometricsStruct withDimensionName(String dimensionName) {
         this.dimensionName = dimensionName;
         return this;
@@ -296,8 +311,11 @@ public class MorphometricsStruct {
             for(Pair pair : this.actors){
                 retTriples+= "<"+attributeAssignmentEventURI+"> <"+Resources.carriedOutBy+"> <"+pair.getKey()+"> . \n";
             }
-           if(!description.isEmpty()){
+            if(!description.isEmpty()){
                 retTriples+= "<"+attributeAssignmentEventURI+"> <"+Resources.hasNote+"> \""+description+"\" . \n";
+            }
+            if(!attributeAssignmentEvent.isEmpty()){
+                retTriples+= "<"+attributeAssignmentEventURI+"> <"+Resources.rdfsLabel+"> \""+attributeAssignmentEvent+"\" .\n";
             }
         }
         if(!dimensionURI.isEmpty()){

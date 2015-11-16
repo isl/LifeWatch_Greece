@@ -206,7 +206,7 @@ public class MetadataRepositoryService implements Service {
  
     public List<OccurrenceStruct> searchOccurrence(String speciesName, String place, String date, String datasetURI, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?occurrenceEventURI ?datasetURI ?datasetName"
-                + " ?speciesURI ?speciesName ?individualURI "
+                + " ?speciesURI ?speciesName ?individualURI ?individualLabel ?occurrenceEventLabel "
                 + " ?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
                 + " ?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description"
                 + " ?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI"
@@ -215,6 +215,7 @@ public class MetadataRepositoryService implements Service {
                 + "WHERE{ "
                 + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
+                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> ?occurrenceEventLabel  . "
                 + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
                 + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
                 + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
@@ -228,6 +229,7 @@ public class MetadataRepositoryService implements Service {
 
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
+                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel  . "
                 //             +" OPTIONAL {?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.bioticElementLabel+"> }. "
 
                 + " ?individualURI <" + Resources.belongsTo + "> ?speciesURI . "
@@ -270,6 +272,7 @@ public class MetadataRepositoryService implements Service {
             if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStruct struct = new OccurrenceStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
+                        .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
                         .withLocalityURI(result.getValue("localityURI").stringValue())
@@ -278,6 +281,7 @@ public class MetadataRepositoryService implements Service {
                         .withSpeciesURI(result.getValue("speciesURI").stringValue())
                         .withSpeciesName(result.getValue("speciesName").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
+                        .withIndividualLabel(result.getValue("individualLabel").stringValue())
                         .withStationURI(result.getValue("stationURI").stringValue());
                 if (result.getValue("description") != null) {
                     struct.withDescription(result.getValue("description").stringValue());
@@ -350,7 +354,7 @@ public class MetadataRepositoryService implements Service {
 
      public List<OccurrenceStruct> searchOccurrence(String speciesName, String place, String date, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?occurrenceEventURI ?datasetURI ?datasetName"
-                + " ?speciesURI ?speciesName ?individualURI "
+                + " ?speciesURI ?speciesName ?individualURI ?individualLabel ?occurrenceEventLabel"
                 + " ?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
                 + " ?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description"
                 + " ?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI"
@@ -359,6 +363,7 @@ public class MetadataRepositoryService implements Service {
                 + "WHERE{ "
                 + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
+                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> ?occurrenceEventLabel. "
                 + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
                 + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
                 + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
@@ -375,6 +380,7 @@ public class MetadataRepositoryService implements Service {
                 //             +" OPTIONAL {?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.bioticElementLabel+"> }. "
 
                 + " ?individualURI <" + Resources.belongsTo + "> ?speciesURI . "
+                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel. "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName . "
                 //             +" ?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+"> . "
                 + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
@@ -416,6 +422,7 @@ public class MetadataRepositoryService implements Service {
             if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStruct struct = new OccurrenceStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
+                        .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
                         .withLocalityURI(result.getValue("localityURI").stringValue())
@@ -424,6 +431,7 @@ public class MetadataRepositoryService implements Service {
                         .withSpeciesURI(result.getValue("speciesURI").stringValue())
                         .withSpeciesName(result.getValue("speciesName").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
+                        .withIndividualLabel(result.getValue("individualLabel").stringValue())
                         .withStationURI(result.getValue("stationURI").stringValue());
                 if (result.getValue("description") != null) {
                     struct.withDescription(result.getValue("description").stringValue());
@@ -494,8 +502,8 @@ public class MetadataRepositoryService implements Service {
 
     
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?occurrenceEventURI ?datasetURI ?datasetName"
-                + " ?speciesURI ?speciesName ?individualURI "
+        String queryString = "SELECT DISTINCT ?occurrenceEventURI ?occurrenceEventLabel ?datasetURI ?datasetName"
+                + " ?speciesURI ?speciesName ?individualURI ?individualLabel "
                 + " ?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
                 + " ?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description"
                 + " ?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI"
@@ -504,6 +512,7 @@ public class MetadataRepositoryService implements Service {
                 + "WHERE{ "
                 + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
+                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> ?occurrenceEventLabel . "
                 + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
                 + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
                 + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
@@ -517,8 +526,8 @@ public class MetadataRepositoryService implements Service {
 
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
-               +  "?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
-                
+                + " ?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
+                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel . "
                 + " ?individualURI <" + Resources.isComposedOf + "> ?tempURI. "
                 + " ?tempURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?tempURI <" + Resources.rdfsLabel + "> ?tempName . "
@@ -566,6 +575,7 @@ public class MetadataRepositoryService implements Service {
             if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStatsTempStruct struct = new OccurrenceStatsTempStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
+                        .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
                         .withLocalityURI(result.getValue("localityURI").stringValue())
@@ -576,6 +586,7 @@ public class MetadataRepositoryService implements Service {
                         .withTemporaryAggregateURI(result.getValue("tempURI").stringValue())
                         
                         .withPhysicalObjectURI(result.getValue("individualURI").stringValue())
+                        .withPhysicalObject(result.getValue("individualLabel").stringValue())
                         .withStationURI(result.getValue("stationURI").stringValue());
                 if (result.getValue("description") != null) {
                     struct.withDescription(result.getValue("description").stringValue());
@@ -653,8 +664,8 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?occurrenceEventURI ?datasetURI ?datasetName"
-                + " ?speciesURI ?speciesName ?individualURI "
+        String queryString = "SELECT DISTINCT ?occurrenceEventURI ?occurrenceEventLabel ?datasetURI ?datasetName"
+                + " ?speciesURI ?speciesName ?individualURI ?individualLabel "
                 + " ?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
                 + " ?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description"
                 + " ?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI"
@@ -663,6 +674,8 @@ public class MetadataRepositoryService implements Service {
                 + "WHERE{ "
                 + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
+                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> occurrenceEventLabel . "
+                
                 + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
                 + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
                 + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
@@ -676,7 +689,8 @@ public class MetadataRepositoryService implements Service {
 
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
-               +  "?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
+                + " ?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
+                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel . "
                 
                 + " ?individualURI <" + Resources.isComposedOf + "> ?tempURI. "
                 + " ?tempURI <" + Resources.belongsTo + "> ?speciesURI . "
@@ -727,6 +741,7 @@ public class MetadataRepositoryService implements Service {
             if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStatsTempStruct struct = new OccurrenceStatsTempStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
+                        .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
                         .withLocalityURI(result.getValue("localityURI").stringValue())
@@ -737,6 +752,8 @@ public class MetadataRepositoryService implements Service {
                         .withTemporaryAggregateURI(result.getValue("tempURI").stringValue())
                         
                         .withPhysicalObjectURI(result.getValue("individualURI").stringValue())
+                        .withPhysicalObject(result.getValue("individualLabel").stringValue())
+                        
                         .withStationURI(result.getValue("stationURI").stringValue());
                 if (result.getValue("description") != null) {
                     struct.withDescription(result.getValue("description").stringValue());
@@ -861,7 +878,7 @@ public class MetadataRepositoryService implements Service {
 
     public List<EnvironmentalStruct> searchEnvironmental(String dimension, String place, String datasetURI, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?datasetURI ?datasetName "
-                + " ?measurementEventURI ?dimensionTypeURI ?dimensionName "
+                + " ?measurementEventURI ?measurementEventLabel ?dimensionTypeURI ?dimensionName "
                 + " ?placeURI ?placeName ?date ?unit ?value ?dimensionURI ?actorName ?actorURI "
                 + "FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -870,6 +887,8 @@ public class MetadataRepositoryService implements Service {
                 + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName. "
                 + " ?measurementEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.measurementEventLabel + "> . "
                 + " ?measurementEventURI <" + Resources.measured + "> ?station . "
+                + " ?measurementEventURI <" + Resources.rdfsLabel + "> ?measurementEventLabel . "
+                
                 + " ?station <" + Resources.rdfTypeLabel + "> <" + Resources.ecosystemEnvironmentLabel + "> . "
                 + " ?measurementEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
@@ -895,6 +914,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 EnvironmentalStruct struct = new EnvironmentalStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
+                        .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetName").stringValue())
@@ -924,7 +944,7 @@ public class MetadataRepositoryService implements Service {
 
     public List<EnvironmentalStruct> searchEnvironmental(String dimension, String place, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?datasetURI ?datasetName "
-                + " ?measurementEventURI ?dimensionTypeURI ?dimensionName "
+                + " ?measurementEventURI ?measurementEventLabel ?dimensionTypeURI ?dimensionName "
                 + " ?placeURI ?placeName ?date ?unit ?value ?dimensionURI ?actorName ?actorURI "
                 + "FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -933,6 +953,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName. "
                 + " ?measurementEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.measurementEventLabel + "> . "
                 + " ?measurementEventURI <" + Resources.measured + "> ?station . "
+                + " ?measurementEventURI <" + Resources.rdfsLabel + "> ?measurementEventLabel . "
                 + " ?station <" + Resources.rdfTypeLabel + "> <" + Resources.ecosystemEnvironmentLabel + "> . "
                 + " ?measurementEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
@@ -960,6 +981,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 EnvironmentalStruct struct = new EnvironmentalStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
+                        .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetName").stringValue())
@@ -988,7 +1010,7 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<MeasurementStruct> searchMeasurement(String specimen, String species, String dimension, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?measurementEventURI ?dimensionURI ?datasetURI ?datasetTitle ?dimensionTypeURI ?dimensionName ?specimenURI ?specimenName ?date ?unit ?value "
+        String queryString = "SELECT DISTINCT ?measurementEventURI ?measurementEventLabel ?dimensionURI ?datasetURI ?datasetTitle ?dimensionTypeURI ?dimensionName ?specimenURI ?specimenName ?date ?unit ?value "
                 + "?speciesURI ?speciesName ?actorName ?actorURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -996,6 +1018,7 @@ public class MetadataRepositoryService implements Service {
                 + "?datasetURI <" + Resources.refersTo + "> ?measurementEventURI . "
                 + "?datasetURI <" + Resources.rdfsLabel+ "> ?datasetTitle . "
                 + " ?measurementEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.measurementEventLabel + "> . "
+                + " ?measurementEventURI <" + Resources.rdfsLabel + "> ?measurementEventLabel . "
                 + " ?measurementEventURI <" + Resources.measured + "> ?specimenURI . "
                 + " ?measurementEventURI <" + Resources.observedDimension + "> ?dimensionURI . "
                 + " OPTIONAL { ?measurementEventURI <" + Resources.hasTimespan + "> ?date .}  "
@@ -1024,6 +1047,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 MeasurementStruct struct = new MeasurementStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
+                        .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withSpeciesURI(result.getValue("speciesURI").stringValue())
@@ -1056,7 +1080,7 @@ public class MetadataRepositoryService implements Service {
     }
 
       public List<MeasurementStruct> searchMeasurement(String specimen, String species, String dimension, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?measurementEventURI ?dimensionURI ?datasetURI ?datasetTitle ?dimensionTypeURI ?dimensionName ?specimenURI ?specimenName ?date ?unit ?value "
+        String queryString = "SELECT DISTINCT ?measurementEventURI ?measurementEventLabel ?dimensionURI ?datasetURI ?datasetTitle ?dimensionTypeURI ?dimensionName ?specimenURI ?specimenName ?date ?unit ?value "
                 + "?speciesURI ?speciesName ?actorName ?actorURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -1064,6 +1088,7 @@ public class MetadataRepositoryService implements Service {
                 + "?datasetURI <" + Resources.refersTo + "> ?measurementEventURI . "
                 + "?datasetURI <" + Resources.rdfsLabel+ "> ?datasetTitle . "
                 + " ?measurementEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.measurementEventLabel + "> . "
+                + " ?measurementEventURI <" + Resources.rdfsLabel + "> ?measurementEventLabel . "
                 + " ?measurementEventURI <" + Resources.measured + "> ?specimenURI . "
                 + " ?measurementEventURI <" + Resources.observedDimension + "> ?dimensionURI . "
                 + " OPTIONAL { ?measurementEventURI <" + Resources.hasTimespan + "> ?date .}  "
@@ -1094,6 +1119,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 MeasurementStruct struct = new MeasurementStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
+                        .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withSpeciesURI(result.getValue("speciesURI").stringValue())
@@ -1126,7 +1152,7 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<MorphometricsStruct> searchMorphometrics(String species, String dimension, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?attributeAssignmentEventURI ?dimensionURI ?datasetURI ?datasetTitle "
+        String queryString = "SELECT DISTINCT ?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?dimensionURI ?datasetURI ?datasetTitle "
                 + "?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName ?actorName ?actorURI  "
                 + "?speciesURI ?speciesName ?date ?unit ?value ?description  "
                 + "FROM <" + repositoryGraph + ">  "
@@ -1138,6 +1164,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?attributeAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
                 + " ?attributeAssignmentEventURI  <" + Resources.assigned + "> ?dimensionURI .  "
                 + " ?attributeAssignmentEventURI  <" + Resources.hasNote + "> ?description .  "
+                + " ?attributeAssignmentEventURI <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel . "
                 + " OPTIONAL { ?attributeAssignmentEventURI  <" + Resources.hasTimespan + "> ?date .}  "
                 + " ?attributeAssignmentEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
@@ -1163,6 +1190,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("attributeAssignmentEventURI").stringValue())) {
                 MorphometricsStruct struct = new MorphometricsStruct().withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue())
+                        .withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
@@ -1200,7 +1228,7 @@ public class MetadataRepositoryService implements Service {
     }
 
       public List<MorphometricsStruct> searchMorphometrics(String species, String dimension, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?attributeAssignmentEventURI ?dimensionURI ?datasetURI ?datasetTitle "
+        String queryString = "SELECT DISTINCT ?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?dimensionURI ?datasetURI ?datasetTitle "
                 + "?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName ?actorName ?actorURI  "
                 + "?speciesURI ?speciesName ?date ?unit ?value ?description  "
                 + "FROM <" + repositoryGraph + ">  "
@@ -1212,6 +1240,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?attributeAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
                 + " ?attributeAssignmentEventURI  <" + Resources.assigned + "> ?dimensionURI .  "
                 + " ?attributeAssignmentEventURI  <" + Resources.hasNote + "> ?description .  "
+                + " ?attributeAssignmentEventURI  <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel  . "
                 + " OPTIONAL { ?attributeAssignmentEventURI  <" + Resources.hasTimespan + "> ?date .}  "
                 + " ?attributeAssignmentEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
@@ -1239,6 +1268,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("attributeAssignmentEventURI").stringValue())) {
                 MorphometricsStruct struct = new MorphometricsStruct().withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue())
+                        .withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
@@ -1276,7 +1306,7 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<StatsStruct> searchStats(String species, String dimension,String datasetURI, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?dataEvaluationURI ?dimensionURI ?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName "
+        String queryString = "SELECT DISTINCT ?dataEvaluationURI ?dataEvaluationLabel ?dimensionURI ?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName "
                 + "?speciesURI ?speciesName ?date ?unit ?value ?description ?actorName ?actorURI ?datasetURI ?datasetTitle ?specimenName ?specimenURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -1286,6 +1316,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?dataEvaluationURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataEvaluationLabel + "> . "
                 + " ?dataEvaluationURI <" + Resources.describes + "> ?specimenURI . "
                 + " ?dataEvaluationURI  <" + Resources.assignedDimension + "> ?dimensionURI .  "
+                + " ?dataEvaluationURI <" + Resources.rdfsLabel+ "> ?dataEvaluationLabel . "
                 + " OPTIONAL { ?dataEvaluationURI  <" + Resources.hasTimespan + "> ?date .} "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -1315,6 +1346,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("dataEvaluationURI").stringValue())) {
                 StatsStruct struct = new StatsStruct().withDataEvaluationURI(result.getValue("dataEvaluationURI").stringValue())
+                        .withDataEvaluation(result.getValue("dataEvaluationLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
@@ -1354,7 +1386,7 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<StatsStruct> searchStats(String species, String dimension,String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?dataEvaluationURI ?dimensionURI ?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName "
+        String queryString = "SELECT DISTINCT ?dataEvaluationURI ?dataEvaluationLabel ?dimensionURI ?dimensionTypeURI ?publicationURI ?publicationName ?dimensionName "
                 + "?speciesURI ?speciesName ?date ?unit ?value ?description ?actorName ?actorURI ?datasetURI ?datasetTitle ?specimenName ?specimenURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -1364,6 +1396,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?dataEvaluationURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataEvaluationLabel + "> . "
                 + " ?dataEvaluationURI <" + Resources.describes + "> ?specimenURI . "
                 + " ?dataEvaluationURI  <" + Resources.assignedDimension + "> ?dimensionURI .  "
+                + " ?dataEvaluationURI <" + Resources.rdfsLabel+ "> ?dataEvaluationLabel . "
                 + " OPTIONAL { ?dataEvaluationURI  <" + Resources.hasTimespan + "> ?date .} "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -1395,6 +1428,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("dataEvaluationURI").stringValue())) {
                 StatsStruct struct = new StatsStruct().withDataEvaluationURI(result.getValue("dataEvaluationURI").stringValue())
+                        .withDataEvaluation(result.getValue("dataEvaluationLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetTitle").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
@@ -1434,7 +1468,7 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<SpecimenStruct> searchSpecimen(String specimen, String species, String collection, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?transformationEventURI ?methodName ?methodURI"
+        String queryString = "SELECT DISTINCT ?transformationEventURI ?transformationEventLabel ?methodName ?methodURI"
                 + "  ?actorURI ?actorName ?individualURI ?speciesName ?speciesURI ?specimenURI ?specimenName "
                 + " ?date ?collectionName ?collectionURI ?datasetTitle ?datasetURI "
                 + "FROM <" + repositoryGraph + "> "
@@ -1451,6 +1485,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?transformationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.transformationEventLabel + "> .  "
                 + " ?transformationEventURI <" + Resources.transformed + "> ?individualURI .  "
                 + " ?transformationEventURI <" + Resources.resultedIn + "> ?specimenURI . "
+                + " ?transformationEventURI <" + Resources.rdfsLabel+ "> ?transformationEventLabel .  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.hasTimespan + "> ?date .}  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.usedSpecificTechnique + "> ?methodURI .}  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.carriedOutBy + "> ?actorURI . } "
@@ -1475,6 +1510,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("specimenURI").stringValue())) {
                 SpecimenStruct struct = new SpecimenStruct().withTransformationEventURI(result.getValue("transformationEventURI").stringValue())
+                        .withTransformationEvent(result.getValue("transformationEventLabel").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
@@ -1507,7 +1543,7 @@ public class MetadataRepositoryService implements Service {
     }
 
      public List<SpecimenStruct> searchSpecimen(String specimen, String species, String collection, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?transformationEventURI ?methodName ?methodURI"
+        String queryString = "SELECT DISTINCT ?transformationEventURI ?transformationEventLabel ?methodName ?methodURI"
                 + "  ?actorURI ?actorName ?individualURI ?speciesName ?speciesURI ?specimenURI ?specimenName "
                 + " ?date ?collectionName ?collectionURI ?datasetTitle ?datasetURI "
                 + "FROM <" + repositoryGraph + "> "
@@ -1524,6 +1560,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?transformationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.transformationEventLabel + "> .  "
                 + " ?transformationEventURI <" + Resources.transformed + "> ?individualURI .  "
                 + " ?transformationEventURI <" + Resources.resultedIn + "> ?specimenURI . "
+                + " ?transformationEventURI <" + Resources.rdfsLabel+ "> ?transformationEventLabel .  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.hasTimespan + "> ?date .}  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.usedSpecificTechnique + "> ?methodURI .}  "
                 + " OPTIONAL { ?transformationEventURI <" + Resources.carriedOutBy + "> ?actorURI . } "
@@ -1550,6 +1587,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("specimenURI").stringValue())) {
                 SpecimenStruct struct = new SpecimenStruct().withTransformationEventURI(result.getValue("transformationEventURI").stringValue())
+                        .withTransformationEvent(result.getValue("transformationEventLabel").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
@@ -1585,7 +1623,7 @@ public class MetadataRepositoryService implements Service {
         String queryString = "SELECT DISTINCT ?collectionName ?collectionURI ?datasetURI ?datasetName  "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName  "
                 + "?curatorURI ?curatorName"
-                + "?contactPoint ?creationEvent ?creatorURI ?creatorName ?creationDate  ?description  "
+                + "?contactPoint ?creationEvent ?creationEventLabel ?creatorURI ?creatorName ?creationDate  ?description  "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
@@ -1603,7 +1641,8 @@ public class MetadataRepositoryService implements Service {
                 + "OPTIONAL{ ?collectionURI <" + Resources.hasCurrentKeeper + "> ?keeperURI . "
                 + "?keeperURI <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> }. "
                 + "OPTIONAL{ ?keeperURI <" + Resources.rdfsLabel+ "> ?keeperName }. "
-                + "OPTIONAL{ ?collectionURI <" + Resources.wasCreatedBy + "> ?creationEvent }. "
+                + "OPTIONAL{ ?collectionURI <" + Resources.wasCreatedBy + "> ?creationEvent . "
+                + "?creationEvent <" +  Resources.rdfsLabel + "> ?creationEventLabel }. "
                 + "OPTIONAL{ ?creationEvent <" + Resources.carriedOutBy + "> ?creatorURI . "
                 + "?creatorURI <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> }. "
                 + "OPTIONAL{ ?creatorURI <" + Resources.rdfsLabel + "> ?creatorName }. "
@@ -1657,6 +1696,7 @@ public class MetadataRepositoryService implements Service {
 
             if (result.getValue("creationEvent") != null) {
                 struct.withCreationEventURI(result.getValue("creationEvent").stringValue());
+                struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
             }
 
 
@@ -1673,7 +1713,7 @@ public class MetadataRepositoryService implements Service {
         String queryString = "SELECT DISTINCT ?collectionName ?collectionURI ?datasetURI ?datasetName  "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName  "
                 + "?curatorURI ?curatorName"
-                + "?contactPoint ?creationEvent ?creatorURI ?creatorName ?creationDate  ?description  "
+                + "?contactPoint ?creationEvent ?creationEventLabel ?creatorURI ?creatorName ?creationDate  ?description  "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
@@ -1691,7 +1731,8 @@ public class MetadataRepositoryService implements Service {
                 + "OPTIONAL{ ?collectionURI <" + Resources.hasCurrentKeeper + "> ?keeperURI . "
                 + "?keeperURI <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> }. "
                 + "OPTIONAL{ ?keeperURI <" + Resources.rdfsLabel+ "> ?keeperName }. "
-                + "OPTIONAL{ ?collectionURI <" + Resources.wasCreatedBy + "> ?creationEvent }. "
+                + "OPTIONAL{ ?collectionURI <" + Resources.wasCreatedBy + "> ?creationEvent . "
+                + "?creationEvent <" +  Resources.rdfsLabel + "> ?creationEventLabel }. "
                 + "OPTIONAL{ ?creationEvent <" + Resources.carriedOutBy + "> ?creatorURI . "
                 + "?creatorURI <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> }. "
                 + "OPTIONAL{ ?creatorURI <" + Resources.rdfsLabel + "> ?creatorName }. "
@@ -1747,6 +1788,7 @@ public class MetadataRepositoryService implements Service {
 
             if (result.getValue("creationEvent") != null) {
                 struct.withCreationEventURI(result.getValue("creationEvent").stringValue());
+                struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
             }
 
 
@@ -1963,7 +2005,7 @@ public class MetadataRepositoryService implements Service {
     public List<ScientificNamingStruct> searchScientificNaming(String species, String date, String actor,String datasetURI, String sname, String repositoryGraph)
             throws QueryExecutionException {
         String queryString = "SELECT DISTINCT"
-                + " ?scientificNameAssignmentEventURI ?speciesURI ?actorURI ?actorName "
+                + " ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel  ?speciesURI ?actorURI ?actorName "
                 + " ?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName "
                 + " ?sname ?snameURI "
                 + " FROM <" + repositoryGraph + "> "
@@ -1972,6 +2014,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?scientificNameAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
                 + " ?scientificNameAssignmentEventURI   <" + Resources.assigned + "> ?snameURI .  "
                 + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
+                + " ?scientificNameAssignmentEventURI <" + Resources.rdfsLabel + "> ?scientificNameAssignmentEventLabel . "
                 + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.hasTimespan + "> ?date .}  "
                 + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.usedSpecificTechnique + "> ?ncodeURI .}  "
                 + " OPTIONAL { ?ncodeURI   <" + Resources.rdfsLabel + "> ?ncodeName .}  "
@@ -1994,6 +2037,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
                 ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
+                        .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
                         .withAppellation(result.getValue("sname").stringValue())
                         .withAppellationURI(result.getValue("snameURI").stringValue())
@@ -2042,7 +2086,7 @@ public class MetadataRepositoryService implements Service {
      public List<ScientificNamingStruct> searchScientificNaming(String species, String date, String actor,String datasetURI, String sname, int offset, int limit, String repositoryGraph)
             throws QueryExecutionException {
         String queryString = "SELECT DISTINCT"
-                + " ?scientificNameAssignmentEventURI ?speciesURI ?actorURI ?actorName "
+                + " ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel ?speciesURI ?actorURI ?actorName "
                 + " ?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName "
                 + " ?sname ?snameURI "
                 + " FROM <" + repositoryGraph + "> "
@@ -2051,6 +2095,7 @@ public class MetadataRepositoryService implements Service {
                 + " ?scientificNameAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
                 + " ?scientificNameAssignmentEventURI   <" + Resources.assigned + "> ?snameURI .  "
                 + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
+                + " ?scientificNameAssignmentEventURI <" + Resources.rdfsLabel + "> ?scientificNameAssignmentEventLabel . "
                 + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.hasTimespan + "> ?date .}  "
                 + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.usedSpecificTechnique + "> ?ncodeURI .}  "
                 + " OPTIONAL { ?ncodeURI   <" + Resources.rdfsLabel + "> ?ncodeName .}  "
@@ -2075,6 +2120,7 @@ public class MetadataRepositoryService implements Service {
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
                 ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
+                        .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
                         .withAppellation(result.getValue("sname").stringValue())
                         .withAppellationURI(result.getValue("snameURI").stringValue())
@@ -2429,8 +2475,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             throws QueryExecutionException {
 
         String queryString = "SELECT DISTINCT"
-                + " ?identificationEventURI ?speciesURI ?speciesName  ?actorURI ?actorName "
-                + " ?date ?individualURI ?publication ?publicationURI ?datasetName ?datasetURI "
+                + " ?identificationEventURI ?identificationEventLabel ?speciesURI ?speciesName  ?actorURI ?actorName "
+                + " ?date ?individualURI ?individualLabel ?publication ?publicationURI ?datasetName ?datasetURI "
                 + " ?placeName ?placeURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -2439,6 +2485,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?identificationEventURI  <" + Resources.classified + "> ?individualURI . "
                 + " ?identificationEventURI  <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?identificationEventURI  <" + Resources.hasTimespan + "> ?date . "
+                + " ?identificationEventURI <" + Resources.rdfsLabel + "> ?identificationEventLabel . "
                 + " OPTIONAL { ?identificationEventURI  <" + Resources.usedSpecificObject + "> ?publicationURI . "
                 + " ?publicationURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationLabel + "> .} "
                 + " OPTIONAL{ ?publicationURI <" + Resources.rdfsLabel + "> ?publication. } "
@@ -2453,6 +2500,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
                 + " ?individualURI <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementLabel + "> . "
+                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel. "
                 // +" ?individualURI <"+Resources.isIdentifiedBy+"> ?indiviualName. }"
                 + " FILTER regex(?placeName,'" + place + "',\"i\")  "
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
@@ -2468,6 +2516,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("identificationEventURI").stringValue())) {
                 IdentificationStruct struct = new IdentificationStruct().withIdentificationEventURI(result.getValue("identificationEventURI").stringValue())
+                        .withIdentificationEvent(result.getValue("identificationEventLabel").stringValue())
+                        .withIndividualLabel(result.getValue("individualLabel").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
                         .withSpeciesName(result.getValue("speciesName").stringValue())
@@ -2518,8 +2568,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             throws QueryExecutionException {
 
         String queryString = "SELECT DISTINCT"
-                + " ?identificationEventURI ?speciesURI ?speciesName  ?actorURI ?actorName "
-                + " ?date ?individualURI ?publication ?publicationURI ?datasetName ?datasetURI "
+                + " ?identificationEventURI ?identificationEventLabel ?speciesURI ?speciesName  ?actorURI ?actorName "
+                + " ?date ?individualURI ?individualLabel ?publication ?publicationURI ?datasetName ?datasetURI "
                 + " ?placeName ?placeURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -2528,6 +2578,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?identificationEventURI  <" + Resources.classified + "> ?individualURI . "
                 + " ?identificationEventURI  <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?identificationEventURI  <" + Resources.hasTimespan + "> ?date . "
+                + " ?identificationEventURI  <" + Resources.rdfsLabel + "> ?identificationEventLabel . "
                 + " OPTIONAL { ?identificationEventURI  <" + Resources.usedSpecificObject + "> ?publicationURI . "
                 + " ?publicationURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationLabel + "> .} "
                 + " OPTIONAL{ ?publicationURI <" + Resources.rdfsLabel + "> ?publication. } "
@@ -2542,6 +2593,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
                 + " ?individualURI <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementLabel + "> . "
+                + " ?individualURI   <" + Resources.rdfsLabel + "> ?individualLabel . "
                 // +" ?individualURI <"+Resources.isIdentifiedBy+"> ?indiviualName. }"
                 + " FILTER regex(?placeName,'" + place + "',\"i\")  "
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
@@ -2559,6 +2611,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("identificationEventURI").stringValue())) {
                 IdentificationStruct struct = new IdentificationStruct().withIdentificationEventURI(result.getValue("identificationEventURI").stringValue())
+                        .withIdentificationEvent(result.getValue("identificationEventLabel").stringValue())
+                        .withIndividualLabel(result.getValue("individualLabel").stringValue())
                         .withIndividualURI(result.getValue("individualURI").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
                         .withSpeciesName(result.getValue("speciesName").stringValue())
@@ -2606,17 +2660,18 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<GensDatasetStruct> searchGenetics(String species, String sample, String place, String device,String datasetURI, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?sampleTakingEventURI ?datasetURI ?datasetName "
+        String queryString = "SELECT DISTINCT ?sampleTakingEventURI ?sampleTakingEventLabel ?datasetURI ?datasetName "
                 + " ?placeURI ?placeName ?sampleURI ?sampleName "
                 + " ?speciesName ?speciesURI ?habitatURI ?habitatName ?timespan "
 
-                + " ?sequencingURI ?deviceURI ?deviceName ?deviceType ?deviceTypeURI"
-                + "?productURI ?productName ?description "
+                + " ?sequencingURI ?sequencingLabel ?deviceURI ?deviceName ?deviceType ?deviceTypeURI"
+                + " ?productURI ?productName ?description "
              
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?sampleTakingEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleTakingLabel + "> . "
                 + "?sampleTakingEventURI <" + Resources.removed + "> ?sampleURI . "
+                + "?sampleTakingEventURI <" + Resources.rdfsLabel + "> ?sampleTakingEventLabel. "
                 + " OPTIONAL {?sampleTakingEventURI <" + Resources.hasNote + "> ?description . } "
                 
                 + "?sampleURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleLabel + "> . "
@@ -2643,7 +2698,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " OPTIONAL { ?sequencingURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitizationProcessLabel + "> . "
                 + " ?sequencingURI <" + Resources.hasType + "> \"Sequencing\" . "
                 + " ?sequencingURI <" + Resources.digitized + "> ?sampleURI . "
-                 + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
+                + " ?sequencingURI <" + Resources.rdfsLabel + "> ?sequencingLabel. "
+                + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
                 + " ?productURI <" + Resources.rdfsLabel + "> ?productName . "
                 + " ?sequencingURI <" + Resources.hasCreated+ "> ?productURI .}"
                 
@@ -2665,6 +2721,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         List<GensDatasetStruct> results = new ArrayList<>();
         for (BindingSet result : sparqlresults) {
             GensDatasetStruct struct = new GensDatasetStruct().withSampleTakingURI(result.getValue("sampleTakingEventURI").stringValue())
+                    .withSampleTaking(result.getValue("sampleTakingEventLabel").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetTitle(result.getValue("datasetName").stringValue())
                     .withSpeciesURI(result.getValue("speciesURI").stringValue())
@@ -2680,6 +2737,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
 
             if (result.getValue("sequencingURI") != null) {
                 struct.withSequencingEventURI(result.getValue("sequencingURI").stringValue());
+                struct.withSequencingEvent(result.getValue("sequencingLabel").stringValue());
             }
 
             if (result.getValue("deviceURI") != null) {
@@ -2732,17 +2790,18 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<GensDatasetStruct> searchGenetics(String species, String sample, String place, String device,String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?sampleTakingEventURI ?datasetURI ?datasetName "
+        String queryString = "SELECT DISTINCT ?sampleTakingEventURI ?sampleTakingEventLabel ?datasetURI ?datasetName "
                 + " ?placeURI ?placeName ?sampleURI ?sampleName "
                 + " ?speciesName ?speciesURI ?habitatURI ?habitatName ?timespan "
 
-                + " ?sequencingURI ?deviceURI ?deviceName ?deviceType ?deviceTypeURI"
-                + "?productURI ?productName ?description "
+                + " ?sequencingURI ?sequencingLabel ?deviceURI ?deviceName ?deviceType ?deviceTypeURI"
+                + " ?productURI ?productName ?description "
              
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?sampleTakingEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleTakingLabel + "> . "
                 + "?sampleTakingEventURI <" + Resources.removed + "> ?sampleURI . "
+                + "?sampleTakingEventURI <" + Resources.rdfsLabel + "> ?sampleTakingEventLabel. "
                 + " OPTIONAL {?sampleTakingEventURI <" + Resources.hasNote + "> ?description . } "
                 
                 + "?sampleURI <" + Resources.rdfTypeLabel + "> <" + Resources.sampleLabel + "> . "
@@ -2768,8 +2827,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
               
                 + " OPTIONAL { ?sequencingURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitizationProcessLabel + "> . "
                 + " ?sequencingURI <" + Resources.hasType + "> \"Sequencing\" . "
+                + " ?sequencingURI <" + Resources.rdfsLabel + "> ?sequencingLabel. "
                 + " ?sequencingURI <" + Resources.digitized + "> ?sampleURI . "
-                 + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
+                + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
                 + " ?productURI <" + Resources.rdfsLabel + "> ?productName . "
                 + " ?sequencingURI <" + Resources.hasCreated+ "> ?productURI .}"
                 
@@ -2793,6 +2853,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         List<GensDatasetStruct> results = new ArrayList<>();
         for (BindingSet result : sparqlresults) {
             GensDatasetStruct struct = new GensDatasetStruct().withSampleTakingURI(result.getValue("sampleTakingEventURI").stringValue())
+                    .withSampleTaking(result.getValue("sampleTakingEventLabel").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetTitle(result.getValue("datasetName").stringValue())
                     .withSpeciesURI(result.getValue("speciesURI").stringValue())
@@ -2808,6 +2869,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
 
             if (result.getValue("sequencingURI") != null) {
                 struct.withSequencingEventURI(result.getValue("sequencingURI").stringValue());
+                struct.withSequencingEvent(result.getValue("sequencingLabel").stringValue());
             }
 
             if (result.getValue("deviceURI") != null) {
@@ -2979,7 +3041,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return results;
     }
 
-    public List<GensSampleStruct> searchGensSample(String species, String device, String sample, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+   
+     public List<GensSampleStruct> searchGensSample(String species, String device, String sample, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?transformationEventURI ?sampleURI ?sampleName ?transformedSampleURI ?transformedSampleName "
                 + "?placeURI ?placeName ?speciesURI ?speciesName ?sequencingURI ?deviceURI ?deviceName ?deviceType "
                 + "?productURI ?productName ?postProductURI ?postProductName ?postprocessingURI ?description "
@@ -3100,8 +3163,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         }
         return results;
     }
-
-    public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
+    
+     public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                 + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description "
@@ -3296,7 +3359,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?deviceURI ?deviceName "
+        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningLabel ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -3306,6 +3369,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?scanningURI <" + Resources.hasTimespan + "> ?timespan . "
                 + " ?scanningURI <" + Resources.happenedOnDevice + "> ?deviceURI . "
                 + " ?scanningURI <" + Resources.carriedOutBy + "> ?actorURI . "
+                + " ?scanningURI <" + Resources.rdfsLabel + "> ?scanningLabel. "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?scanningURI  <" + Resources.hasContrastMethod+ "> ?contrastMethod . "
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
@@ -3335,6 +3399,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scanningURI").stringValue())) {
                 MicroCTScanningStruct struct = new MicroCTScanningStruct().withScanningURI(result.getValue("scanningURI").stringValue())
+                        .withScanning(result.getValue("scanningLabel").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
@@ -3387,7 +3452,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?deviceURI ?deviceName "
+        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningURI ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -3397,6 +3462,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?scanningURI <" + Resources.hasTimespan + "> ?timespan . "
                 + " ?scanningURI <" + Resources.happenedOnDevice + "> ?deviceURI . "
                 + " ?scanningURI <" + Resources.carriedOutBy + "> ?actorURI . "
+                + " ?scanningURI <" + Resources.rdfsLabel + "> ?scanningLabel. "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?scanningURI  <" + Resources.hasContrastMethod+ "> ?contrastMethod . "
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
@@ -3428,6 +3494,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scanningURI").stringValue())) {
                 MicroCTScanningStruct struct = new MicroCTScanningStruct().withScanningURI(result.getValue("scanningURI").stringValue())
+                        .withScanning(result.getValue("scanningLabel").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
@@ -3480,7 +3547,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTReconstructionStruct> searchMicroCTReconstruction(String species, String specimen, String input,String datasetURI, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?reconstructionURI ?description ?timespan ?productURI ?productName "
+        String queryString = "SELECT DISTINCT ?reconstructionURI ?reconstructionLabel ?description ?timespan ?productURI ?productName "
                 + "?inputURI ?inputName ?actorURI ?actorName ?datasetName ?datasetURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -3488,6 +3555,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?reconstructionURI <" + Resources.hasType + "> \"Reconstruction\" . "
                 + " ?reconstructionURI <" + Resources.hasNote + "> ?description . "
                 + " ?reconstructionURI <" + Resources.hasTimespan + "> ?timespan . "
+                + " ?reconstructionURI  <" + Resources.rdfsLabel + "> ?reconstructionLabel . "
                 + " ?reconstructionURI  <" + Resources.createdDerivative + "> ?productURI . "
                 + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
                 + " ?productURI <" + Resources.rdfsLabel + "> ?productName. "
@@ -3518,6 +3586,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("reconstructionURI").stringValue())) {
                 MicroCTReconstructionStruct struct = new MicroCTReconstructionStruct().withReconstructionURI(result.getValue("reconstructionURI").stringValue())
+                        .withReconstruction(result.getValue("reconstructionLabel").stringValue())
                         .withInput(result.getValue("inputURI").stringValue(), result.getValue("inputName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
@@ -3557,7 +3626,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTReconstructionStruct> searchMicroCTReconstruction(String species, String specimen, String input,String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?reconstructionURI ?description ?timespan ?productURI ?productName "
+        String queryString = "SELECT DISTINCT ?reconstructionURI ?reconstructionLabel ?description ?timespan ?productURI ?productName "
                 + "?inputURI ?inputName ?actorURI ?actorName ?datasetName ?datasetURI "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -3565,6 +3634,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?reconstructionURI <" + Resources.hasType + "> \"Reconstruction\" . "
                 + " ?reconstructionURI <" + Resources.hasNote + "> ?description . "
                 + " ?reconstructionURI <" + Resources.hasTimespan + "> ?timespan . "
+                + " ?reconstructionURI  <" + Resources.rdfsLabel + "> ?reconstructionLabel . "
                 + " ?reconstructionURI  <" + Resources.createdDerivative + "> ?productURI . "
                 + " ?productURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
                 + " ?productURI <" + Resources.rdfsLabel + "> ?productName. "
@@ -3597,6 +3667,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("reconstructionURI").stringValue())) {
                 MicroCTReconstructionStruct struct = new MicroCTReconstructionStruct().withReconstructionURI(result.getValue("reconstructionURI").stringValue())
+                        .withReconstruction(result.getValue("reconstructionLabel").stringValue())
                         .withInput(result.getValue("inputURI").stringValue(), result.getValue("inputName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetTitle(result.getValue("datasetName").stringValue())
@@ -3636,12 +3707,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTPostProcessingStruct> searchMicroCTPostProcessing(String species, String specimen, String input,String datasetURI, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?postprocessingURI ?inputURI ?inputName ?productURI ?productName "
+        String queryString = "SELECT DISTINCT ?postprocessingURI ?postprocessingLabel ?inputURI ?inputName ?productURI ?productName "
                 + "?actorURI ?actorName ?description ?datasetName ?datasetURI "
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
                 + " ?postprocessingURI <" + Resources.rdfTypeLabel + "> <" + Resources.formalDerivationEventLabel + "> . "
                 + " ?postprocessingURI <" + Resources.hasType + "> \"PostProcessing\" . "
+                + " ?postprocessingURI <" + Resources.rdfsLabel + "> ?postprocessingLabel. "
                 + " OPTIONAL{ ?postprocessingURI <" + Resources.hasNote + "> ?description . } "
                 + " ?postprocessingURI <" + Resources.hasCreated + "> ?productURI . "
                 + " ?inputURI <" + Resources.wasDerivationSourceFor + "> ?postprocessingURI . "
@@ -3677,6 +3749,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("postprocessingURI").stringValue())) {
                 MicroCTPostProcessingStruct struct = new MicroCTPostProcessingStruct().withPostProcessingURI(result.getValue("postprocessingURI").stringValue())
+                        .withPostProcessing(result.getValue("postprocessingLabel").stringValue())
                         .withInput(result.getValue("inputURI").stringValue(), result.getValue("inputName").stringValue())
                         .withProduct(result.getValue("productURI").stringValue(), result.getValue("productName").stringValue())
                         .withActorName(result.getValue("actorName").stringValue())
@@ -3718,7 +3791,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
      public List<MicroCTPostProcessingStruct> searchMicroCTPostProcessing(String species, String specimen, String input,String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?postprocessingURI ?inputURI ?inputName ?productURI ?productName "
+        String queryString = "SELECT DISTINCT ?postprocessingURI ?postprocessingLabel ?inputURI ?inputName ?productURI ?productName "
                 + "?actorURI ?actorName ?description ?datasetName ?datasetURI "
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -3726,6 +3799,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?postprocessingURI <" + Resources.hasType + "> \"PostProcessing\" . "
                 + " OPTIONAL{ ?postprocessingURI <" + Resources.hasNote + "> ?description . } "
                 + " ?postprocessingURI <" + Resources.hasCreated + "> ?productURI . "
+                + " ?postprocessingURI <" + Resources.rdfsLabel + "> ?postprocessingLabel. "
                 + " ?inputURI <" + Resources.wasDerivationSourceFor + "> ?postprocessingURI . "
                 + " ?inputURI <" + Resources.rdfTypeLabel + "> <" + Resources.dataObjectLabel + "> . "
                 + " ?inputURI <" + Resources.rdfsLabel + "> ?inputName. "
@@ -3761,6 +3835,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("postprocessingURI").stringValue())) {
                 MicroCTPostProcessingStruct struct = new MicroCTPostProcessingStruct().withPostProcessingURI(result.getValue("postprocessingURI").stringValue())
+                        .withPostProcessing(result.getValue("postprocessingLabel").stringValue())
                         .withInput(result.getValue("inputURI").stringValue(), result.getValue("inputName").stringValue())
                         .withProduct(result.getValue("productURI").stringValue(), result.getValue("productName").stringValue())
                         .withActorName(result.getValue("actorName").stringValue())
@@ -4368,7 +4443,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             this.repoManager.update(deleteQuery);
         }
     }
-
     /**
      * Updates the object of a triple from the given graphspace. It takes as
      * input the original triple and replaces its value with the given resource.

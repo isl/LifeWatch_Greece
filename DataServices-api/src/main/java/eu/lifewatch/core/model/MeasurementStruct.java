@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class MeasurementStruct {
     private String measurementEventURI;
+    private String measurementEvent;
     private String dimensionUnit;
     private String dimensionValue;
     private String dimensionURI;
@@ -39,6 +40,7 @@ public class MeasurementStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public MeasurementStruct(){
         measurementEventURI="";
+        measurementEvent="";
         dimensionUnit="";
         dimensionValue="";
         dimensionURI="";
@@ -56,6 +58,10 @@ public class MeasurementStruct {
     
     public String getMeasurementEventURI() {
         return   measurementEventURI;
+    }
+    
+     public String getMeasurementEvent() {
+        return   measurementEvent;
     }
     
     public String getDimensionURI() {
@@ -130,6 +136,10 @@ public class MeasurementStruct {
         this.measurementEventURI = measurementEventURI;
     }
 
+    public void setMeasurementEvent(String measurementEvent) {
+        this.measurementEvent= measurementEvent;
+    }
+    
     public void setDimensionUnit(String dimensionUnit) {
         this.dimensionUnit = dimensionUnit;
     }
@@ -184,6 +194,11 @@ public class MeasurementStruct {
  
     public MeasurementStruct withMeasurementEventURI(String measurementEventURI) {
         this.measurementEventURI = measurementEventURI;
+        return this;
+    }
+    
+    public MeasurementStruct withMeasurementEvent(String measurementEvent) {
+        this.measurementEvent = measurementEvent;
         return this;
     }
 
@@ -276,6 +291,10 @@ public class MeasurementStruct {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+measurementEventURI+"> . \n";
+            }
+            
+            if(!measurementEvent.isEmpty()){
+                    retTriples+= "<"+measurementEventURI+"> <"+Resources.rdfsLabel+"> \""+measurementEvent+"\" .\n";
             }
         }
         if(!dimensionURI.isEmpty()){

@@ -109,26 +109,14 @@ public class DirectoryService implements Service {
         }
     }
 
-    /** This method is responsible for searching datasets in the directory with respect
-     * to given parameters. The results are returned as particular structs containing various information
-     * about Directory records.
-     * 
-     * @param datasetName the name of the dataset
-     * @param ownerName the name of the owner of the dataset 
-     * @param datasetURI the URI (identifier) of the dataset
-     * @param datasetType the type of the dataset
-     * @param repositoryGraph he graphspace that will be searched
-     * @return a list containing structs. Each struct represents a dataset with various metadata information.
-     * @throws QueryExecutionException  for any error that might occur during the execution.
-     */
     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName "
-                + "?publicationEventURI ?publisherURI ?publisherName ?publicationDate "
-                + "?attributeAssignmentEventURI ?embargoState ?embargoPeriod "
+                + "?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
+                + "?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
                 + "?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
-                + "?contactPoint ?creationEventURI ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
+                + "?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
                 + "?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
                 + " FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -152,6 +140,7 @@ public class DirectoryService implements Service {
                 + " ?keeperURI <" + Resources.rdfsLabel + "> ?keeperName }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?publicationEventURI.  "
                 + "?publicationEventURI <" + Resources.carriedOutBy + "> ?publisherURI.  "
+                + "?publicationEventURI <" + Resources.rdfsLabel + "> ?publicationEventLabel.  "
                 + "?publicationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationEventLabel + "> . "
                 + "?publicationEventURI <" + Resources.hasTimespan + "> ?publicationDate.  "
                 //+ "?publisherURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
@@ -162,12 +151,14 @@ public class DirectoryService implements Service {
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?creationEventURI . "
                 + "?creationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.creationEventLabel + "> . "
                 + " ?creationEventURI <" + Resources.carriedOutBy + "> ?creatorURI . "
+                + " ?creationEventURI <" + Resources.rdfsLabel + "> ?creationEventLabel.  "
                 //+ "?creatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
                 + "?creatorURI <" + Resources.rdfsLabel + "> ?creatorName . "
                 + " ?creationEventURI <" + Resources.hasTimespan + "> ?creationDate }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasAttributedBy + "> ?attributeAssignmentEventURI . "
                 + "?attributeAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.attributeAssignmentEventLabel + "> . "
-                + "?attributeAssignmentEventURI<" + Resources.hasTimespan + "> ?embargoPeriod . "
+                + "?attributeAssignmentEventURI <" + Resources.hasTimespan + "> ?embargoPeriod . "
+                + " ?attributeAssignmentEventURI <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel.  "
                 + "?attributeAssignmentEventURI <" + Resources.assigned + "> ?embargoState }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.isSubjectTo + "> ?accessRightsURI.  "
                 //+ "?accessRightsURI <"+Resources.rdfTypeLabel+"> <"+Resources.accessRightsLabel+"> . "
@@ -186,6 +177,7 @@ public class DirectoryService implements Service {
                 + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
                 + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}";
 
+        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -224,9 +216,11 @@ public class DirectoryService implements Service {
                 }
                 if (result.getValue("publicationEventURI") != null) {
                     struct.withPublicationEventURI(result.getValue("publicationEventURI").stringValue());
+                    struct.withPublicationEvent(result.getValue("publicationEventLabel").stringValue());
                 }
                 if (result.getValue("attributeAssignmentEventURI") != null) {
                     struct.withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue());
+                    struct.withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue());
                 }
                 if (result.getValue("embargoState") != null) {
                     struct.withEmbargoState(result.getValue("embargoState").stringValue());
@@ -259,6 +253,7 @@ public class DirectoryService implements Service {
                 }
                 if (result.getValue("creationEventURI") != null) {
                     struct.withCreationEventURI(result.getValue("creationEventURI").stringValue());
+                    struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
                 }
                 if (result.getValue("creationDate") != null) {
                     struct.withCreationDate(result.getValue("creationDate").stringValue());
@@ -297,28 +292,14 @@ public class DirectoryService implements Service {
         return new ArrayList<>(structsMap.values());
     }
 
-    /** This method is responsible for searching datasets in the directory with respect
-     * to given parameters. The results are returned as particular structs containing various information
-     * about Directory records.
-     * 
-     * @param datasetName the name of the dataset
-     * @param ownerName the name of the owner of the dataset 
-     * @param datasetURI the URI (identifier) of the dataset
-     * @param datasetType the type of the dataset
-     * @param limit the total number of datasets that will be searched for (SPARQL specific parameter)
-     * @param offset an index describing the first dataset that will be searched for (SPARQL specific parameter)
-     * @param repositoryGraph he graphspace that will be searched
-     * @return a list containing structs. Each struct represents a dataset with various metadata information.
-     * @throws QueryExecutionException  for any error that might occur during the execution.
-     */
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT "
                 + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                 + "?ownerURI ?ownerName ?keeperURI ?keeperName "
-                + "?publicationEventURI ?publisherURI ?publisherName ?publicationDate "
-                + "?attributeAssignmentEventURI ?embargoState ?embargoPeriod "
+                + "?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
+                + "?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
                 + "?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
-                + "?contactPoint ?creationEventURI ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
+                + "?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
                 + "?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
                 + " FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
@@ -342,6 +323,7 @@ public class DirectoryService implements Service {
                 + " ?keeperURI <" + Resources.rdfsLabel + "> ?keeperName }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?publicationEventURI.  "
                 + "?publicationEventURI <" + Resources.carriedOutBy + "> ?publisherURI.  "
+                + "?publicationEventURI <" + Resources.rdfsLabel + "> ?publicationEventLabel .  "
                 + "?publicationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationEventLabel + "> . "
                 + "?publicationEventURI <" + Resources.hasTimespan + "> ?publicationDate.  "
                 //+ "?publisherURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
@@ -352,12 +334,14 @@ public class DirectoryService implements Service {
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?creationEventURI . "
                 + "?creationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.creationEventLabel + "> . "
                 + " ?creationEventURI <" + Resources.carriedOutBy + "> ?creatorURI . "
+                + " ?creationEventURI <" + Resources.rdfsLabel + "> ?creationEventLabel.  "
                 //+ "?creatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
                 + "?creatorURI <" + Resources.rdfsLabel + "> ?creatorName . "
                 + " ?creationEventURI <" + Resources.hasTimespan + "> ?creationDate }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.wasAttributedBy + "> ?attributeAssignmentEventURI . "
                 + "?attributeAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.attributeAssignmentEventLabel + "> . "
                 + "?attributeAssignmentEventURI<" + Resources.hasTimespan + "> ?embargoPeriod . "
+                + " ?attributeAssignmentEventURI <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel.  "
                 + "?attributeAssignmentEventURI <" + Resources.assigned + "> ?embargoState }. "
                 + "OPTIONAL{ ?datasetURI <" + Resources.isSubjectTo + "> ?accessRightsURI.  "
                 //+ "?accessRightsURI <"+Resources.rdfTypeLabel+"> <"+Resources.accessRightsLabel+"> . "
@@ -378,6 +362,7 @@ public class DirectoryService implements Service {
                 + " LIMIT " + limit
                 + " OFFSET " + offset;
 
+        System.out.println(queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -416,9 +401,12 @@ public class DirectoryService implements Service {
                 }
                 if (result.getValue("publicationEventURI") != null) {
                     struct.withPublicationEventURI(result.getValue("publicationEventURI").stringValue());
+                    struct.withPublicationEvent(result.getValue("publicationEventLabel").stringValue());
                 }
                 if (result.getValue("attributeAssignmentEventURI") != null) {
                     struct.withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue());
+                    struct.withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue());
+               
                 }
                 if (result.getValue("embargoState") != null) {
                     struct.withEmbargoState(result.getValue("embargoState").stringValue());
@@ -451,6 +439,7 @@ public class DirectoryService implements Service {
                 }
                 if (result.getValue("creationEventURI") != null) {
                     struct.withCreationEventURI(result.getValue("creationEventURI").stringValue());
+                    struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
                 }
                 if (result.getValue("creationDate") != null) {
                     struct.withCreationDate(result.getValue("creationDate").stringValue());
@@ -474,19 +463,92 @@ public class DirectoryService implements Service {
                     struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
                 }
                 structsMap.put(struct.getDatasetURI(), struct);
-            }else{
+            } else {
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-                if(result.getValue("contributorURI") != null) {
+
+                if (result.getValue("contributorURI") != null) {
                     String contributorURI = result.getValue("contributorURI").stringValue();
                     String contributorName = result.getValue("contributorName").stringValue();
                     struct.withContributor(contributorURI, contributorName);
                 }
+
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
         return new ArrayList<>(structsMap.values());
     }
     
+    
+//     public List<Struct> searchDataset(DirectoryStruct structName, String repositoryGraph) throws QueryExecutionException{
+//        String queryString="SELECT DISTINCT ?d_uri ?d_name ?k_uri ?k_name ?o_uri ?o_name ?c_uri ?c_name ?contact_point ?acc_method ?license_owner ?license ?note ?located ?p_uri "
+//                          +"FROM <"+repositoryGraph+"> "
+//                          +"WHERE{ "
+//                          +"?d_uri <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> . "
+//                          +"?d_uri  <"+Resources.isIdentifiedBy+"> ?d_name . "
+//                          +"?d_uri <"+Resources.hasCurrentOwner+"> ?o_uri . "
+//                          +"?o_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
+//                          +"?o_uri <"+Resources.isIdentifiedBy+"> ?o_name . "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurrentKeeper+"> ?k_uri }. "
+//                          +"OPTIONAL{ ?k_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
+//                          +"OPTIONAL{ ?k_uri <"+Resources.isIdentifiedBy+"> ?k_name}.  "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurator+"> ?c_uri }. "
+//                          +"OPTIONAL{ ?c_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
+//                          +"OPTIONAL{ ?c_uri <"+Resources.isIdentifiedBy+"> ?c_name}.  "
+//                          +"OPTIONAL{ ?c_uri <"+Resources.hasContactPoint+"> ?contact_point}.  "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.hasAccessMethod+"> ?acc_method}.  "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.rightsHeldBy+"> ?license_owner}.  "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.isSubjectTo+"> ?license}.  "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.hasNote+"> ?note}. "
+//                          +"OPTIONAL{ ?d_uri <"+Resources.isLocatedAt+"> ?located}. "
+//                          +"OPTIONAL{ ?p_uri <"+Resources.isComposedOf+"> ?d_uri}. "
+//                          +"FILTER regex(?k_name,'"+structName.getKeeperName()+"',\"i\") "
+//                          +"FILTER regex(?d_name,'"+structName.getDatasetName()+"',\"i\")}";
+//        logger.debug("Submitting the query: \""+queryString+"\"");
+//        List<BindingSet> sparqlresults=this.repoManager.query(queryString);
+//        logger.debug("The result returned "+sparqlresults.size()+" results");
+//        List<Struct> results=new ArrayList<>();
+//        for(BindingSet result : sparqlresults){
+//            DirectoryStruct struct=new DirectoryStruct().withDatasetURI(result.getValue("d_uri").stringValue())
+//                                      .withDatasetName(result.getValue("d_name").stringValue())
+//                                      .withOwnerURI(result.getValue("o_uri").stringValue())
+//                                      .withOwnerName(result.getValue("o_name").stringValue());
+//            if(result.getValue("k_uri")!=null){
+//                struct.withOwnerURI(result.getValue("k_uri").stringValue());
+//            }      
+//            if(result.getValue("k_name")!=null){
+//                struct.withOwnerName(result.getValue("k_name").stringValue());
+//            }
+//            if(result.getValue("c_uri")!=null){
+//                struct.withCuratorURI(result.getValue("c_uri").stringValue());
+//            }      
+//            if(result.getValue("c_name")!=null){
+//                struct.withCuratorName(result.getValue("c_name").stringValue());
+//            }
+//            if(result.getValue("contact_point")!=null){
+//                struct.withContactPoint(result.getValue("contact_point").stringValue());
+//            }
+//            if(result.getValue("acc_method")!=null){
+//                struct.withAccessMethod(result.getValue("acc_method").stringValue());
+//            }
+//            if(result.getValue("license_owner")!=null){
+//                struct.withRightsHolderURI(result.getValue("license_owner").stringValue());
+//            }
+//            if(result.getValue("license")!=null){
+//                struct.withAccessRightsURI(result.getValue("license").stringValue());
+//            }
+//            if(result.getValue("note")!=null){
+//                struct.withNote(result.getValue("note").stringValue());
+//            }
+//            if(result.getValue("located")!=null){
+//                struct.withLocation(result.getValue("located").stringValue());
+//            }
+//            if(result.getValue("p_uri")!=null){
+//                struct.withParentDatasetURI(result.getValue("p_uri").stringValue());
+//            }            
+//            results.add(struct);
+//        }
+//        return results;
+//    }
     /**
      * Searches for triples containing the given resource. In particular it
      * searches the repository, under the given graphspace, for triples
@@ -649,30 +711,25 @@ public class DirectoryService implements Service {
      */
     @Override
     public void deleteTriples(String subject, String property, String object, String repositoryGraph) throws QueryExecutionException {
-        if(subject==null && property==null && object==null){
-            logger.debug("dropping all the contents from the graphspace: " + repositoryGraph);
-            this.repoManager.clearGraph(repositoryGraph);
-        }else{
-            String deleteQuery = "DELETE FROM <" + repositoryGraph + "> {?s ?p ?o} "
-                    + "WHERE{ ?s ?p ?o . ";
-            if (subject != null) {
-                deleteQuery += "FILTER(?s=<" + subject + ">). ";
-            }
-            if (property != null) {
-                deleteQuery += "FILTER(?p=<" + property + ">). ";
-            }
-            if (object != null) {
-                try {
-                    new URI(object);
-                    deleteQuery += "FILTER(?o=<" + object + ">)";
-                } catch (URISyntaxException ex) {
-                    deleteQuery += "FILTER REGEX(?o,\"" + object + "\",\"i\")";
-                }
-            }
-            deleteQuery += "}";
-            logger.debug("Submitting the delete query: " + deleteQuery);
-            this.repoManager.update(deleteQuery);
+        String deleteQuery = "DELETE FROM <" + repositoryGraph + "> {?s ?p ?o} "
+                + "WHERE{ ?s ?p ?o . ";
+        if (subject != null) {
+            deleteQuery += "FILTER(?s=<" + subject + ">). ";
         }
+        if (property != null) {
+            deleteQuery += "FILTER(?p=<" + property + ">). ";
+        }
+        if (object != null) {
+            try {
+                new URI(object);
+                deleteQuery += "FILTER(?o=<" + object + ">)";
+            } catch (URISyntaxException ex) {
+                deleteQuery += "FILTER REGEX(?o,\"" + object + "\",\"i\")";
+            }
+        }
+        deleteQuery += "}";
+        logger.debug("Submitting the delete query: " + deleteQuery);
+        this.repoManager.update(deleteQuery);
     }
 
     /**
@@ -784,15 +841,16 @@ public class DirectoryService implements Service {
      */
     @Override
     public void updateLiteral(String originalLiteral, String newLiteral, String directoryGraph) throws QueryExecutionException {
-        List<Triple> triples=this.searchLiteral(originalLiteral, directoryGraph);
-        logger.debug("Found "+triples.size()+" with the literal value \""+originalLiteral+"\" to be updated");
-        String deleteQuery = "DELETE DATA FROM <"+directoryGraph+"> { ";
-        String insertQuery = "INSERT DATA INTO <"+directoryGraph+"> { ";
-        for(Triple triple : triples){
-            deleteQuery+="<"+triple.getSubject()+"> <"+triple.getPredicate()+"> \""+triple.getObject()+"\". ";
-            insertQuery+="<"+triple.getSubject()+"> <"+triple.getPredicate()+"> \""+newLiteral+"\". ";
-        }   
-        String updateQuery=deleteQuery+"} "+insertQuery+" }";
+        String updateQuery = "INSERT INTO <" + directoryGraph + "> { "
+                + "?s ?p \"" + newLiteral + "\" } "
+                + "WHERE {GRAPH <" + directoryGraph + "> { "
+                + "?s ?p ?o ."
+                + "FILTER REGEX(?o,\"" + originalLiteral + "\",\"i\")}} "
+                + "DELETE FROM <" + directoryGraph + "> { "
+                + "?s ?p ?o } "
+                + "WHERE {GRAPH <" + directoryGraph + "> { "
+                + "?s ?p ?o . "
+                + "FILTER REGEX(?o,\"" + originalLiteral + "\",\"i\")}}";
         logger.debug("Executing the update query: " + updateQuery);
         this.repoManager.update(updateQuery);
     }

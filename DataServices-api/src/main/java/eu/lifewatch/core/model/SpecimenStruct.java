@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class SpecimenStruct {
     private String transformationEventURI;
+    private String transformationEvent;
     private String specimenName;
     private String specimenURI;
     private String speciesName;
@@ -40,6 +41,7 @@ public class SpecimenStruct {
      * all the fields to be empty (Null values will cause NPE issues)*/
     public SpecimenStruct(){
         transformationEventURI="";
+        transformationEvent="";
         collectionName="";
         collectionURI="";
         actors=new ArrayList<>();
@@ -57,6 +59,10 @@ public class SpecimenStruct {
     
     public String getTransformationEventURI() {
         return transformationEventURI;
+    }
+    
+    public String getTransformationEvent() {
+        return transformationEvent;
     }
     
     public String getCollectionURI() {
@@ -131,6 +137,10 @@ public class SpecimenStruct {
         this.transformationEventURI = transformationEventURI;
     }
 
+    public void setTransformationEvent(String transformationEvent) {
+        this.transformationEvent = transformationEvent;
+    }
+    
     public void setSpecimenName(String specimenName) {
         this.specimenName = specimenName;
     }
@@ -188,6 +198,11 @@ public class SpecimenStruct {
         return this;
     }
 
+    public SpecimenStruct withTransformationEvent(String transformationEvent) {
+        this.transformationEvent = transformationEvent;
+        return this;
+    }
+    
     public SpecimenStruct withCollectionName(String collectionName) {
         this.collectionName = collectionName;
         return this;
@@ -278,6 +293,9 @@ public class SpecimenStruct {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+specimenURI+"> . \n";
+            }
+            if(!transformationEvent.isEmpty()){
+                retTriples+= "<"+transformationEventURI+"> <"+Resources.rdfsLabel+"> \""+transformationEvent+"\" .\n";
             }
         }
         if(!specimenURI.isEmpty()){

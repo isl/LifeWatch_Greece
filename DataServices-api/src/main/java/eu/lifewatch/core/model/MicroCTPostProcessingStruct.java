@@ -23,6 +23,7 @@ public class MicroCTPostProcessingStruct {
     private String datasetURI;
     private String datasetTitle;
     private String postProcessingURI;
+    private String postProcessing;
     private String actorURI;
     private String actorName;
     private List<Pair> products;
@@ -40,6 +41,7 @@ public class MicroCTPostProcessingStruct {
         inputs=new ArrayList<>();
         description="";
         postProcessingURI="";
+        postProcessing="";
         actorName="";
         actorURI="";
     }
@@ -95,6 +97,10 @@ public class MicroCTPostProcessingStruct {
     public String getPostProcessingURI() {
         return postProcessingURI;
     }
+    
+    public String getPostProcessing() {
+        return postProcessing;
+    }
        
     public String getDescription() {
         return description;
@@ -120,6 +126,10 @@ public class MicroCTPostProcessingStruct {
         this.postProcessingURI = postProcessingURI;
     }
 
+    public void setPostProcessing(String postProcessing) {
+        this.postProcessing = postProcessing;
+    }
+    
     public void setActorURI(String actorURI) {
         this.actorURI = actorURI;
     }
@@ -152,6 +162,11 @@ public class MicroCTPostProcessingStruct {
     
     public MicroCTPostProcessingStruct withPostProcessingURI(String postProcessingURI) {
         this.postProcessingURI = postProcessingURI;
+        return this;
+    }
+    
+    public MicroCTPostProcessingStruct withPostProcessing(String postProcessing) {
+        this.postProcessing = postProcessing;
         return this;
     }
     
@@ -206,6 +221,9 @@ public class MicroCTPostProcessingStruct {
             }
             if(!description.isEmpty()){
                retTriples+= "<"+postProcessingURI+"> <"+Resources.hasNote+"> \""+description+"\" .\n";
+            }
+            if(!postProcessing.isEmpty()){
+                retTriples+= "<"+postProcessingURI+"> <"+Resources.rdfsLabel+"> \""+postProcessing+"\" .\n";
             }
         }
         for(Pair pair : this.products){

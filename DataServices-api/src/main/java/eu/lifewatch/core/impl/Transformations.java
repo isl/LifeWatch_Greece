@@ -72,6 +72,10 @@ public class Transformations {
 
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
+            String creationEventLabel = "Creation of "+datasetTitle+" dataset";
+            String publicationEventLabel = "Publication of "+datasetTitle+" dataset";
+            String attributeAssignmentEventLabel = "Embargo assignment of "+datasetTitle+" dataset";
+            
             String parentDatasetURI = "";
             if (parentDataset.startsWith("http:")) {
                 parentDatasetURI = parentDataset;
@@ -250,6 +254,9 @@ public class Transformations {
                 if (!creationDate.isEmpty()) {
                     retTriples += "<" + creationEventURI + "> <" + Resources.hasTimespan + "> \"" + creationDate + "\" .\n";
                 }
+                if (!creationEventLabel.isEmpty()) {
+                    retTriples += "<" + creationEventURI + "> <" + Resources.rdfsLabel + "> \"" + creationEventLabel + "\" .\n";
+                }
             }
             if (!creatorURI.isEmpty()) {
                 retTriples += "<" + creatorURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> .\n";
@@ -265,6 +272,10 @@ public class Transformations {
                 }
                 if (!publicationDate.isEmpty()) {
                     retTriples += "<" + publicationEventURI + "> <" + Resources.hasTimespan + "> \"" + publicationDate + "\" .\n";
+                }
+                
+                 if (!publicationEventLabel.isEmpty()) {
+                    retTriples += "<" + publicationEventURI + "> <" + Resources.rdfsLabel + "> \"" + publicationEventLabel + "\" .\n";
                 }
             }
 
@@ -282,6 +293,9 @@ public class Transformations {
                 }
                 if (!embargoPeriod.isEmpty()) {
                     retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasTimespan + "> \"" + embargoPeriod + "\" .\n";
+                }
+                if (!attributeAssignmentEventLabel.isEmpty()) {
+                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + attributeAssignmentEventLabel + "\" .\n";
                 }
             }
 
@@ -368,6 +382,10 @@ public class Transformations {
 
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
+            String creationEventLabel = "Creation of "+datasetTitle+" dataset";
+            String publicationEventLabel = "Publication of "+datasetTitle+" dataset";
+            String attributeAssignmentEventLabel = "Embargo assignment of "+datasetTitle+" dataset";
+            
             String parentDatasetURI = "";
             if (parentDataset.startsWith("http:")) {
                 parentDatasetURI = parentDataset;
@@ -546,6 +564,9 @@ public class Transformations {
                 if (!creationDate.isEmpty()) {
                     retTriples += "<" + creationEventURI + "> <" + Resources.hasTimespan + "> \"" + creationDate + "\" .\n";
                 }
+                 if (!creationEventLabel.isEmpty()) {
+                    retTriples += "<" + creationEventURI + "> <" + Resources.rdfsLabel + "> \"" + creationEventLabel + "\" .\n";
+                }
             }
             if (!creatorURI.isEmpty()) {
                 retTriples += "<" + creatorURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> .\n";
@@ -561,6 +582,9 @@ public class Transformations {
                 }
                 if (!publicationDate.isEmpty()) {
                     retTriples += "<" + publicationEventURI + "> <" + Resources.hasTimespan + "> \"" + publicationDate + "\" .\n";
+                }
+                 if (!publicationEventLabel.isEmpty()) {
+                    retTriples += "<" + publicationEventURI + "> <" + Resources.rdfsLabel + "> \"" + publicationEventLabel + "\" .\n";
                 }
             }
 
@@ -578,6 +602,9 @@ public class Transformations {
                 }
                 if (!embargoPeriod.isEmpty()) {
                     retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasTimespan + "> \"" + embargoPeriod + "\" .\n";
+                }
+                 if (!attributeAssignmentEventLabel.isEmpty()) {
+                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + attributeAssignmentEventLabel + "\" .\n";
                 }
             }
 
@@ -667,6 +694,11 @@ public class Transformations {
 
             String occurrenceEventURI = "";
 
+            if (individualID.isEmpty())
+            individualID="Individual of the species"+speciesName;
+             
+            String occurrenceEventLabel = "Occurrence of "+speciesName+" in "+locality;
+            
             if (occurrenceEventID.isEmpty()) {
                 occurrenceEventURI = createURI(URIprefix, datasetID + individualID + speciesName + timeSpan, "encounterEvent");
             } else {
@@ -834,6 +866,10 @@ public class Transformations {
 
                 if (!description.isEmpty()) {
                     retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }
+                
+                if (!occurrenceEventLabel.isEmpty()) {
+                    retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel+ "> \"" + occurrenceEventLabel + "\" .\n";
                 }
 
             }
@@ -937,6 +973,9 @@ public class Transformations {
                 if (!speciesURI.isEmpty()) {
                     retTriples += "<" + individualURI + "> <" + Resources.belongsTo + "> <" + speciesURI + "> .\n";
                 }
+                if (!individualID.isEmpty()) {
+                    retTriples += "<" + individualURI + "> <" + Resources.rdfsLabel + "> \"" + individualID + "\" .\n";
+                }
             }
 
             if (!speciesURI.isEmpty()) {
@@ -1029,6 +1068,11 @@ public class Transformations {
 
             String occurrenceEventURI = "";
 
+            String occurrenceEventLabel = "Occurrence of "+speciesName+" in "+locality;
+            
+            if (individualID.isEmpty())
+            individualID="Individual of the species"+speciesName;
+            
             if (occurrenceEventID.isEmpty()) {
                 occurrenceEventURI = createURI(URIprefix, datasetID + individualID + speciesName + timeSpan, "encounterEvent");
             } else {
@@ -1197,6 +1241,10 @@ public class Transformations {
                 if (!description.isEmpty()) {
                     retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
                 }
+                
+                if (!occurrenceEventLabel.isEmpty()) {
+                    retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel+ "> \"" + occurrenceEventLabel + "\" .\n";
+                }
 
             }
             if (!equipmentURI.isEmpty()) {
@@ -1299,6 +1347,9 @@ public class Transformations {
                 if (!speciesURI.isEmpty()) {
                     retTriples += "<" + individualURI + "> <" + Resources.belongsTo + "> <" + speciesURI + "> .\n";
                 }
+                if (!individualID.isEmpty()) {
+                    retTriples += "<" + individualURI + "> <" + Resources.rdfsLabel + "> \"" + individualID + "\" .\n";
+                }
             }
 
             if (!speciesURI.isEmpty()) {
@@ -1376,6 +1427,8 @@ public class Transformations {
             String dimensionUnit = tokens[7];
             String datasetID = tokens[8];
 
+            String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
+            
             String measurementEventURI = "";
             if (measurementID.isEmpty()) {
                 measurementEventURI = createURI(URIprefix, datasetID + place + dimensionType + timeSpan, "measurementEvent");
@@ -1383,7 +1436,7 @@ public class Transformations {
                 if (measurementID.startsWith("http:")) {
                     measurementEventURI = measurementID;
                 } else {
-                    measurementEventURI = createURI(URIprefix, measurementID, "encounterEvent");
+                    measurementEventURI = createURI(URIprefix, measurementID, "measurementEvent");
                 }
             }
 
@@ -1436,7 +1489,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + measurementEventURI + "> . \n";
-
+                }
+                if (!measurementEventLabel.isEmpty()) {
+                        retTriples += "<" + measurementEventURI + "> <" + Resources.rdfsLabel + "> \"" + measurementEventLabel + "\" .\n";
                 }
             }
             if (!dimensionURI.isEmpty()) {
@@ -1538,7 +1593,9 @@ public class Transformations {
             String dimensionValue = tokens[6];
             String dimensionUnit = tokens[7];
             //String datasetID = tokens[8];
-
+            
+            String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
+           
             String measurementEventURI = "";
             if (measurementID.isEmpty()) {
                 measurementEventURI = createURI(URIprefix, datasetID + place + dimensionType + timeSpan, "measurementEvent");
@@ -1599,7 +1656,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + measurementEventURI + "> . \n";
-
+                }
+                if (!measurementEventLabel.isEmpty()) {
+                        retTriples += "<" + measurementEventURI + "> <" + Resources.rdfsLabel + "> \"" + measurementEventLabel + "\" .\n";
                 }
             }
             if (!dimensionURI.isEmpty()) {
@@ -1609,7 +1668,6 @@ public class Transformations {
 
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
-
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -1702,6 +1760,9 @@ public class Transformations {
 
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
+            if (individualID.isEmpty())
+            individualID="Individual of the species"+speciesName;
+                    
             String speciesURI = createURI(URIprefix, speciesName, "species");
 
             String identificationEventURI = "";
@@ -1715,6 +1776,8 @@ public class Transformations {
                 }
             }
 
+            String identificationEventLabel = "Identification of "+speciesName+" individual in "+locality;
+            
             String datasetURI = "";
             if (datasetID.startsWith("http:")) {
                 datasetURI = datasetID;
@@ -1733,7 +1796,7 @@ public class Transformations {
             }
 
             String identificationReferencesURI = "";
-            if (!identificationReferences.isEmpty()) {
+            if (!(identificationReferences.isEmpty()||identificationReferences.equals(" "))) {
                 identificationReferencesURI = createURI(URIprefix, identificationReferences, "publication");
             }
 
@@ -1763,6 +1826,10 @@ public class Transformations {
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + identificationEventURI + "> . \n";
                 }
+                
+                if (!identificationEventLabel.isEmpty()) {
+                    retTriples += "<" + identificationEventURI  + "> <" + Resources.rdfsLabel + "> \"" + identificationEventLabel + "\" .\n";
+                }
             }
 
             if (!localityURI.isEmpty()) {
@@ -1788,6 +1855,9 @@ public class Transformations {
 
             if (!individualURI.isEmpty()) {
                 retTriples += "<" + individualURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementLabel + "> .\n";
+                if (!individualID.isEmpty()) {
+                    retTriples += "<" + individualURI + "> <" + Resources.rdfsLabel + "> \"" + individualID + "\" .\n";
+                }
             }
 
             if (!speciesURI.isEmpty()) {
@@ -1852,6 +1922,9 @@ public class Transformations {
 
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
+            if (individualID.isEmpty())
+            individualID="Individual of the species"+speciesName;
+                 
             String speciesURI = createURI(URIprefix, speciesName, "species");
 
             String identificationEventURI = "";
@@ -1864,6 +1937,8 @@ public class Transformations {
                     identificationEventURI = createURI(URIprefix, identificationEventID, "identificationEvent");
                 }
             }
+            
+            String identificationEventLabel = "Identification of "+speciesName+" individual in "+locality;
 
             String datasetURI = "";
             if (datasetID.startsWith("http:")) {
@@ -1883,7 +1958,7 @@ public class Transformations {
             }
 
             String identificationReferencesURI = "";
-            if (!identificationReferences.isEmpty()) {
+            if (!(identificationReferences.isEmpty()||identificationReferences.equals(" "))) {
                 identificationReferencesURI = createURI(URIprefix, identificationReferences, "publication");
             }
 
@@ -1913,6 +1988,9 @@ public class Transformations {
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + identificationEventURI + "> . \n";
                 }
+                if (!identificationEventLabel.isEmpty()) {
+                    retTriples += "<" + identificationEventURI  + "> <" + Resources.rdfsLabel + "> \"" + identificationEventLabel + "\" .\n";
+                }
             }
 
             if (!localityURI.isEmpty()) {
@@ -1938,6 +2016,9 @@ public class Transformations {
 
             if (!individualURI.isEmpty()) {
                 retTriples += "<" + individualURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementLabel + "> .\n";
+                if (!individualID.isEmpty()) {
+                    retTriples += "<" + individualURI + "> <" + Resources.rdfsLabel + "> \"" + individualID + "\" .\n";
+                }
             }
 
             if (!speciesURI.isEmpty()) {
@@ -2003,6 +2084,8 @@ public class Transformations {
 
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
+            String measurementEventLabel = "Measurement of "+dimensionType+" of "+specimen;
+            
            // String measurementEventURI = createURI(URIprefix, measurementID, "measurementEvent");
            // String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
             //  String dimensionURI = createURI(URIprefix, measurementID + dimensionType, "dimension");
@@ -2058,7 +2141,9 @@ public class Transformations {
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + measurementEventURI + "> . \n";
                 }
-
+                if (!measurementEventLabel.isEmpty()) {
+                        retTriples += "<" + measurementEventURI + "> <" + Resources.rdfsLabel + "> \"" + measurementEventLabel + "\" .\n";
+                }
             }
             if (!dimensionURI.isEmpty()) {
                 retTriples += "<" + dimensionURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> .\n";
@@ -2159,6 +2244,8 @@ public class Transformations {
 
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
+            String measurementEventLabel = "Measurement of "+dimensionType+" of "+specimen;
+            
            // String measurementEventURI = createURI(URIprefix, measurementID, "measurementEvent");
            // String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
             //  String dimensionURI = createURI(URIprefix, measurementID + dimensionType, "dimension");
@@ -2213,6 +2300,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + measurementEventURI + "> . \n";
+                }
+                if (!measurementEventLabel.isEmpty()) {
+                        retTriples += "<" + measurementEventURI + "> <" + Resources.rdfsLabel + "> \"" + measurementEventLabel + "\" .\n";
                 }
 
             }
@@ -2317,6 +2407,8 @@ public class Transformations {
 
             String datasetURI = createURI(URIprefix, datasetID, "dataset");
 
+            String attributeAssignmentEventLabel = "Assignment of "+dimensionType+" to "+speciesName;
+            
             String attributeAssignmentEventURI = "";
             if (attributeAssignmentID.isEmpty()) {
                 attributeAssignmentEventURI = createURI(URIprefix, datasetID + speciesName + dimensionType.replace("http://", "") + "AttributeAssignment", "AttributeAssignment");
@@ -2381,6 +2473,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" . \n";
+                }
+                if (!attributeAssignmentEventLabel.isEmpty()) {
+                        retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + attributeAssignmentEventLabel + "\" .\n";
                 }
             }
             if (!dimensionURI.isEmpty()) {
@@ -2485,6 +2580,8 @@ public class Transformations {
 
             String datasetURI = createURI(URIprefix, datasetID, "dataset");
 
+            String attributeAssignmentEventLabel = "Assignment of "+dimensionType+" to "+speciesName;
+            
             String attributeAssignmentEventURI = "";
             if (attributeAssignmentID.isEmpty()) {
                 attributeAssignmentEventURI = createURI(URIprefix, datasetID + speciesName + dimensionType.replace("http://", "") + "AttributeAssignment", "AttributeAssignment");
@@ -2549,6 +2646,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" . \n";
+                }
+                if (!attributeAssignmentEventLabel.isEmpty()) {
+                        retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + attributeAssignmentEventLabel + "\" .\n";
                 }
             }
             if (!dimensionURI.isEmpty()) {
@@ -2646,8 +2746,16 @@ public class Transformations {
             String kingdomName = tokens[6];
             String datasetID = tokens[7];
 
-            String speciesURI = createURI(URIprefix, speciesName, "species");
-
+            String speciesURI = "";
+             if (!(speciesName.startsWith("http")||speciesName.startsWith("urn"))) {
+                speciesURI = createURI(URIprefix, speciesName, "species");
+             }
+             else
+             {
+                 speciesURI = speciesName;
+             }
+            
+            
             String genusURI = "";
             if (!genusName.isEmpty()) {
                 genusURI = createURI(URIprefix, genusName, "genus");
@@ -2801,8 +2909,15 @@ public class Transformations {
             String kingdomName = tokens[6];
             //   String datasetID = tokens[7];
 
-            String speciesURI = createURI(URIprefix, speciesName, "species");
+            String speciesURI = "";
 
+             if (!(speciesName.startsWith("http")||speciesName.startsWith("urn"))) {
+                speciesURI = createURI(URIprefix, speciesName, "species");
+             }
+             else
+             {
+                 speciesURI = speciesName;
+             }
             String genusURI = "";
             if (!genusName.isEmpty()) {
                 genusURI = createURI(URIprefix, genusName, "genus");
@@ -2959,6 +3074,8 @@ public class Transformations {
 
             String scientificNameAssignmentEventURI = "";
 
+            String scientificNameAssignmentEventLabel= "Scientific name assigmnent of"+species;
+            
             if (scientificNameAssignmentEvent.isEmpty()) {
                 scientificNameAssignmentEventURI = createURI(URIprefix, datasetID + species, "scientificNameAssignmentEvent");
             } else {
@@ -3012,6 +3129,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + scientificNameAssignmentEventURI + "> . \n";
+                }
+                if (!scientificNameAssignmentEventLabel.isEmpty()) {
+                    retTriples += "<" + scientificNameAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + scientificNameAssignmentEventLabel + "\" .\n";
                 }
             }
             if (!nomenclaturalCodeURI.isEmpty()) {
@@ -3103,6 +3223,8 @@ public class Transformations {
 
             String scientificNameAssignmentEventURI = "";
 
+            String scientificNameAssignmentEventLabel= "Scientific name assigmnent of"+species;
+            
             if (scientificNameAssignmentEvent.isEmpty()) {
                 scientificNameAssignmentEventURI = createURI(URIprefix, datasetID + species, "scientificNameAssignmentEvent");
             } else {
@@ -3156,6 +3278,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + scientificNameAssignmentEventURI + "> . \n";
+                }
+                if (!scientificNameAssignmentEventLabel.isEmpty()) {
+                    retTriples += "<" + scientificNameAssignmentEventURI + "> <" + Resources.rdfsLabel + "> \"" + scientificNameAssignmentEventLabel + "\" .\n";
                 }
             }
             if (!nomenclaturalCodeURI.isEmpty()) {
@@ -3702,6 +3827,8 @@ public class Transformations {
                 individualURI = createURI(URIprefix, individual, "bioticElement");
             }
 
+            String transformationEventLabel = "Transformation of "+individual+" into a specimen";
+            
             String transformationEventURI = "";
             if (!individual.isEmpty()) {
                 {
@@ -3758,6 +3885,9 @@ public class Transformations {
 
                     if (!datasetURI.isEmpty()) {
                         retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + specimenURI + "> . \n";
+                    }
+                    if (!transformationEventLabel.isEmpty()) {
+                        retTriples += "<" + transformationEventURI + "> <" + Resources.rdfsLabel + "> \"" + transformationEventLabel + "\" .\n";
                     }
 
                 }
@@ -3876,6 +4006,9 @@ public class Transformations {
             }
 
             String transformationEventURI = "";
+            
+            String transformationEventLabel = "Transformation of "+individual+" into a specimen";
+            
             if (!individual.isEmpty()) {
                 {
                     if (transformationID.isEmpty()) {
@@ -3931,6 +4064,9 @@ public class Transformations {
 
                     if (!datasetURI.isEmpty()) {
                         retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + specimenURI + "> . \n";
+                    }
+                    if (!transformationEventLabel.isEmpty()) {
+                        retTriples += "<" + transformationEventURI + "> <" + Resources.rdfsLabel + "> \"" + transformationEventLabel + "\" .\n";
                     }
 
                 }
@@ -4051,6 +4187,8 @@ public class Transformations {
 
             String curatorURI = createURI(URIprefix, curatorName, "actor");
 
+            String creationEventLabel = "Creation of "+collectionName+" specimen collection";
+            
             String creationEventURI = "";
             if (!timespan.isEmpty() || !actorName.isEmpty()) {
                 creationEventURI = createURI(URIprefix, collectionName + "Collection" + "Creation", "creationEvent");
@@ -4104,6 +4242,9 @@ public class Transformations {
                 }
                 if (!timespan.isEmpty()) {
                     retTriples += "<" + creationEventURI + "> <" + Resources.hasTimespan + "> \"" + timespan + "\" .\n";
+                }
+                if (!creationEventLabel.isEmpty()) {
+                    retTriples += "<" + creationEventURI + "> <" + Resources.rdfsLabel + "> \"" + creationEventLabel + "\" .\n";
                 }
             }
 
@@ -4189,6 +4330,8 @@ public class Transformations {
 
             String ownerURI = createURI(URIprefix, ownerName, "actor");
 
+            String creationEventLabel = "Creation of "+collectionName+" specimen collection";
+              
             String keeperURI = "";
             if (!keeperName.isEmpty()) {
                 keeperURI = createURI(URIprefix, keeperName, "actor");
@@ -4249,6 +4392,9 @@ public class Transformations {
                 }
                 if (!timespan.isEmpty()) {
                     retTriples += "<" + creationEventURI + "> <" + Resources.hasTimespan + "> \"" + timespan + "\" .\n";
+                }
+                if (!creationEventLabel.isEmpty()) {
+                    retTriples += "<" + creationEventURI + "> <" + Resources.rdfsLabel + "> \"" + creationEventLabel + "\" .\n";
                 }
             }
 
@@ -4365,8 +4511,12 @@ public class Transformations {
                 }
             }
             
+             if (physicalObjectID.isEmpty())
+            physicalObjectID="Temporary Aggregate of the species"+speciesName;
             
             
+            String occurrenceEventLabel = "Occurrence of "+speciesName+" in "+locality;
+
             String occurrenceEventURI = "";
 
             if (occurrenceEventID.isEmpty()) {
@@ -4525,8 +4675,9 @@ public class Transformations {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.isReferredToBy + "> <" + bibliographicCitationURI + "> .\n";
             }
 
-       
-            
+            if (!occurrenceEventLabel.isEmpty()) {
+                    retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel+ "> \"" + occurrenceEventLabel + "\" .\n";
+                }
             
             if(!actorURI.isEmpty()){
                 retTriples+= "<"+occurrenceEventURI+"> <" + Resources.carriedOutBy + "> <" + actorURI + "> .\n";
@@ -4553,6 +4704,10 @@ public class Transformations {
           
               if(!temporaryAggregateURI.isEmpty()){
                 retTriples+= "<"+physicalObjectURI+"> <"+Resources.isComposedOf+"> <"+temporaryAggregateURI+"> .\n";
+            }
+              
+            if (!physicalObjectID.isEmpty()) {
+                    retTriples += "<" + physicalObjectURI + "> <" + Resources.rdfsLabel+ "> \"" + physicalObjectID + "\" .\n";
             }
         }      
 
@@ -4768,7 +4923,7 @@ public class Transformations {
             String temporaryAggregate = tokens[19];
             String numberOfParts = tokens[20];
     
-
+            String occurrenceEventLabel = "Occurrence of "+speciesName+" in "+locality;
           
             String temporaryAggregateURI = "";
             
@@ -4783,6 +4938,8 @@ public class Transformations {
             }
             
             
+            if (physicalObjectID.isEmpty())
+            physicalObjectID="Temporary Aggregate of the species"+speciesName;
             
             String occurrenceEventURI = "";
 
@@ -4942,8 +5099,9 @@ public class Transformations {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.isReferredToBy + "> <" + bibliographicCitationURI + "> .\n";
             }
 
-       
-            
+            if (!occurrenceEventLabel.isEmpty()) {
+                    retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel+ "> \"" + occurrenceEventLabel + "\" .\n";
+                }
             
             if(!actorURI.isEmpty()){
                 retTriples+= "<"+occurrenceEventURI+"> <" + Resources.carriedOutBy + "> <" + actorURI + "> .\n";
@@ -4970,6 +5128,9 @@ public class Transformations {
           
               if(!temporaryAggregateURI.isEmpty()){
                 retTriples+= "<"+physicalObjectURI+"> <"+Resources.isComposedOf+"> <"+temporaryAggregateURI+"> .\n";
+            }
+            if (!physicalObjectID.isEmpty()) {
+                    retTriples += "<" + physicalObjectURI + "> <" + Resources.rdfsLabel+ "> \"" + physicalObjectID + "\" .\n";
             }
         }      
 
@@ -5294,149 +5455,7 @@ public class Transformations {
 
     }
 
-    public ArrayList<String> transform_statistics_csv(String fileToParse, String repositoryGraph, String datasetID) throws FileNotFoundException, IOException {
-
-        //String fileToParse = "C:/uploads/TLOflat/identification.csv";
-        BufferedReader fileReader = null;
-
-        System.out.println(fileToParse);
-        //Delimiter used in CSV file
-        final String DELIMITER = ";";
-
-        String line = "";
-        String query = "";
-        ArrayList<String> Queries = new ArrayList<String>();
-
-        fileReader = new BufferedReader(new FileReader(fileToParse));
-        String URIprefix = "http://www.lifewatchgreece.eu/entity";
-        int count = 0;
-
-        while ((line = fileReader.readLine()) != null) {
-
-            if (count == 0) {
-                count++;
-                continue;
-            }
-
-            String[] tokens = line.split(DELIMITER);
-
-            String speciesName = tokens[0];
-            String specimenName = tokens[1];
-            String attributeAssignmentID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String dimensionType = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String publication = tokens[8];
-            String description = tokens[9];
-            //   String datasetID=tokens[10];
-
-            String speciesURI = createURI(URIprefix, speciesName, "species");
-            String specimenURI = createURI(URIprefix, specimenName, "specimen");
-            String attributeAssignmentEventURI = createURI(URIprefix, attributeAssignmentID, "attributeAssignmentEvent");
-            String actorURI = createURI(URIprefix, actorName, "actor");
-            String publicationURI = createURI(URIprefix, publication, "publication");
-            String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
-            String dimensionURI = createURI(URIprefix, attributeAssignmentID + dimensionType, "dimension");
-            String datasetURI = createURI(URIprefix, datasetID, "dataset");
-
-            String retTriples = "INSERT INTO <" + repositoryGraph + "> { ";
-
-            if (!attributeAssignmentEventURI.isEmpty()) {
-                retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.attributeAssignmentEventLabel + "> .\n";
-                if (!timeSpan.isEmpty()) {
-                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasTimespan + "> \"" + timeSpan + "\" .\n";
-                }
-                if (!specimenURI.isEmpty()) {
-                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.assignedAttributeTo + "> <" + specimenURI + "> .\n";
-                }
-                if (!dimensionURI.isEmpty()) {
-                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.assigned + "> <" + dimensionURI + "> .\n";
-                }
-                if (!publicationURI.isEmpty()) {
-                    retTriples += "<" + publicationURI + "> <" + Resources.refersTo + "> <" + attributeAssignmentEventURI + "> .\n";
-                }
-
-                if (!actorURI.isEmpty()) {
-                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.carriedOutBy + "> <" + actorURI + "> .\n";
-                }
-                if (!description.isEmpty()) {
-                    retTriples += "<" + attributeAssignmentEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
-                }
-                if (!datasetURI.isEmpty()) {
-                    retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + attributeAssignmentEventURI + "> . \n";
-                }
-
-            }
-            if (!dimensionURI.isEmpty()) {
-                retTriples += "<" + dimensionURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> .\n";
-                if (!dimensionTypeURI.isEmpty()) {
-                    retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
-                    if (!dimensionType.isEmpty()) {
-                        retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
-                    }
-                    if (!dimensionUnit.isEmpty()) {
-                        retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
-
-                    }
-                    if (!dimensionValue.isEmpty()) {
-                        retTriples += "<" + dimensionURI + "> <" + Resources.hasValue + "> \"" + dimensionValue + "\" .\n";
-
-                    }
-
-                }
-            }
-
-            if (!specimenURI.isEmpty()) {
-                retTriples += "<" + specimenURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> .\n";
-                if (!specimenName.isEmpty()) {
-                    retTriples += "<" + specimenURI + "> <" + Resources.rdfsLabel + "> \"" + specimenName + "\" .\n";
-                }
-                if (!speciesURI.isEmpty()) {
-                    retTriples += "<" + specimenURI + "> <" + Resources.belongsTo + "> <" + speciesURI + "> .\n";
-                }
-            }
-            if (!speciesURI.isEmpty()) {
-                retTriples += "<" + speciesURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> .\n";
-                if (!speciesName.isEmpty()) {
-                    retTriples += "<" + speciesURI + "> <" + Resources.rdfsLabel + "> \"" + speciesName + "\" .\n";
-                }
-
-            }
-
-            if (!actorURI.isEmpty()) {
-                retTriples += "<" + actorURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.personLabel + "> .\n";
-                if (!actorName.isEmpty()) {
-                    retTriples += "<" + actorURI + "> <" + Resources.rdfsLabel + "> \"" + actorName + "\" .\n";
-                }
-            }
-
-            if (!datasetURI.isEmpty()) {
-                retTriples += "<" + datasetURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> .\n";
-                if (!datasetID.isEmpty()) {
-                    retTriples += "<" + datasetURI + "> <" + Resources.rdfsLabel + "> \"" + datasetID + "\" .\n";
-                }
-            }
-
-            if (!publicationURI.isEmpty()) {
-                retTriples += "<" + publicationURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.publicationLabel + "> .\n";
-                if (!publication.isEmpty()) {
-                    retTriples += "<" + publicationURI + "> <" + Resources.rdfsLabel + "> \"" + publication + "\" .\n";
-                }
-            }
-
-            retTriples += " } ";
-
-            Queries.add(retTriples);
-
-        }
-
-        return Queries;
-
-    }
-
-    public ArrayList<String> transform_statistics_csv(String fileToParse, String repositoryGraph) throws FileNotFoundException, IOException {
+     public ArrayList<String> transform_statistics_csv(String fileToParse, String repositoryGraph) throws FileNotFoundException, IOException {
 
         //String fileToParse = "C:/uploads/TLOflat/identification.csv";
         BufferedReader fileReader = null;
@@ -5486,6 +5505,10 @@ public class Transformations {
                 }
             }
 
+            
+            String dataEvaluationLabel = "Data Evaluation of "+dimensionType+" of "+speciesName;
+            
+            
             String speciesURI = "";
             if (speciesName.startsWith("http:")) {
                 speciesURI = speciesName;
@@ -5551,6 +5574,197 @@ public class Transformations {
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + dataEvaluationURI + "> . \n";
                 }
+                if(!dataEvaluationLabel.isEmpty()){
+                retTriples+= "<"+dataEvaluationURI+"> <"+Resources.rdfsLabel+"> \""+dataEvaluationLabel+"\" .\n";
+            }
+            }
+
+            if (!dimensionURI.isEmpty()) {
+                retTriples += "<" + dimensionURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> .\n";
+                if (!dimensionTypeURI.isEmpty()) {
+                    retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
+                    if (!dimensionType.isEmpty()) {
+                        retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                    }
+                    if (!dimensionUnit.isEmpty()) {
+                        retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
+
+                    }
+                    if (!dimensionValue.isEmpty()) {
+                        retTriples += "<" + dimensionURI + "> <" + Resources.hasValue + "> \"" + dimensionValue + "\" .\n";
+
+                    }
+
+                }
+            }
+
+            if (!specimenURI.isEmpty()) {
+                retTriples += "<" + specimenURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> .\n";
+                if (!specimenName.isEmpty()) {
+                    retTriples += "<" + specimenURI + "> <" + Resources.rdfsLabel + "> \"" + specimenName + "\" .\n";
+                }
+                if (!speciesURI.isEmpty()) {
+                    retTriples += "<" + specimenURI + "> <" + Resources.belongsTo + "> <" + speciesURI + "> .\n";
+                }
+            }
+            if (!speciesURI.isEmpty()) {
+                retTriples += "<" + speciesURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> .\n";
+                if (!speciesName.isEmpty()) {
+                    retTriples += "<" + speciesURI + "> <" + Resources.rdfsLabel + "> \"" + speciesName + "\" .\n";
+                }
+
+            }
+
+            if (!actorURI.isEmpty()) {
+                retTriples += "<" + actorURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.personLabel + "> .\n";
+                if (!actorName.isEmpty()) {
+                    retTriples += "<" + actorURI + "> <" + Resources.rdfsLabel + "> \"" + actorName + "\" .\n";
+                }
+            }
+
+            if (!datasetURI.isEmpty()) {
+                retTriples += "<" + datasetURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> .\n";
+                if (!datasetID.isEmpty()) {
+                    retTriples += "<" + datasetURI + "> <" + Resources.rdfsLabel + "> \"" + datasetID + "\" .\n";
+                }
+            }
+
+            if (!publicationURI.isEmpty()) {
+                retTriples += "<" + publicationURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.publicationLabel + "> .\n";
+                if (!publication.isEmpty()) {
+                    retTriples += "<" + publicationURI + "> <" + Resources.rdfsLabel + "> \"" + publication + "\" .\n";
+                }
+            }
+
+            retTriples += " } ";
+
+            Queries.add(retTriples);
+
+        }
+        return Queries;
+
+    }
+
+    public ArrayList<String> transform_statistics_csv(String fileToParse,String repositoryGraph , String datasetID) throws FileNotFoundException, IOException {
+
+        //String fileToParse = "C:/uploads/TLOflat/identification.csv";
+        BufferedReader fileReader = null;
+
+        System.out.println(fileToParse);
+        //Delimiter used in CSV file
+        final String DELIMITER = ";";
+
+        String line = "";
+        String query = "";
+        ArrayList<String> Queries = new ArrayList<String>();
+
+        fileReader = new BufferedReader(new FileReader(fileToParse));
+        String URIprefix = "http://www.lifewatchgreece.eu/entity";
+        int count = 0;
+
+        while ((line = fileReader.readLine()) != null) {
+
+            if (count == 0) {
+                count++;
+                continue;
+            }
+
+            String[] tokens = line.split(DELIMITER);
+
+            String speciesName = tokens[0];
+            String specimenName = tokens[1];
+            String dataEvaluationID = tokens[2];
+            String actorName = tokens[3];
+            String timeSpan = tokens[4];
+            String dimensionType = tokens[5];
+            String dimensionValue = tokens[6];
+            String dimensionUnit = tokens[7];
+            String publication = tokens[8];
+            String description = tokens[9];
+           // String datasetID = tokens[10];
+
+            String dataEvaluationURI = "";
+            if (dataEvaluationID.isEmpty()) {
+                dataEvaluationURI = createURI(URIprefix, datasetID + speciesName + specimenName + dimensionType.replace("http://", "") + "DataEvaluation", "DataEvaluation");
+            } else {
+
+                if (dataEvaluationID.startsWith("http:")) {
+                    dataEvaluationURI = dataEvaluationID;
+                } else {
+                    dataEvaluationURI = createURI(URIprefix, dataEvaluationID, "DataEvaluation");
+                }
+            }
+
+             String dataEvaluationLabel = "Data Evaluation of "+dimensionType+" of "+speciesName;
+            
+            String speciesURI = "";
+            if (speciesName.startsWith("http:")) {
+                speciesURI = speciesName;
+            } else {
+                speciesURI = createURI(URIprefix, speciesName, "species");
+            }
+
+            String dimensionTypeURI = "";
+
+            if (dimensionType.startsWith("http:")) {
+                dimensionTypeURI = dimensionType;
+            } else {
+                dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
+            }
+
+            String dimensionURI = "";
+
+            if (dataEvaluationID.isEmpty()) {
+                dimensionURI = createURI(URIprefix, dataEvaluationURI.replace(URIprefix, "") + dimensionType, "dimension");
+            } else {
+                dimensionURI = createURI(URIprefix, dataEvaluationID + dimensionType, "dimension");
+            }
+
+            String actorURI = "";
+
+            if (!actorName.isEmpty()) {
+                actorURI = createURI(URIprefix, actorName, "actor");
+            }
+
+            String specimenURI = createURI(URIprefix, specimenName, "specimen");
+
+            String publicationURI = "";
+
+            if (!publication.isEmpty()) {
+                actorURI = createURI(URIprefix, publication, "publication");
+            }
+
+            String datasetURI = createURI(URIprefix, datasetID, "dataset");
+
+            String retTriples = "INSERT INTO <" + repositoryGraph + "> { ";
+
+            if (!dataEvaluationURI.isEmpty()) {
+                retTriples += "<" + dataEvaluationURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.dataEvaluationLabel + "> .\n";
+                if (!timeSpan.isEmpty()) {
+                    retTriples += "<" + dataEvaluationURI + "> <" + Resources.hasTimespan + "> \"" + timeSpan + "\" .\n";
+                }
+                if (!specimenURI.isEmpty()) {
+                    retTriples += "<" + dataEvaluationURI + "> <" + Resources.describes + "> <" + specimenURI + "> .\n";
+                }
+                if (!dimensionURI.isEmpty()) {
+                    retTriples += "<" + dataEvaluationURI + "> <" + Resources.assignedDimension + "> <" + dimensionURI + "> .\n";
+                }
+                if (!publicationURI.isEmpty()) {
+                    retTriples += "<" + publicationURI + "> <" + Resources.refersTo + "> <" + dataEvaluationURI + "> .\n";
+                }
+
+                if (!actorURI.isEmpty()) {
+                    retTriples += "<" + dataEvaluationURI + "> <" + Resources.carriedOutBy + "> <" + actorURI + "> .\n";
+                }
+                if (!description.isEmpty()) {
+                    retTriples += "<" + dataEvaluationURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }
+                if (!datasetURI.isEmpty()) {
+                    retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + dataEvaluationURI + "> . \n";
+                }
+                if(!dataEvaluationLabel.isEmpty()){
+                retTriples+= "<"+dataEvaluationURI+"> <"+Resources.rdfsLabel+"> \""+dataEvaluationLabel+"\" .\n";
+            }
             }
 
             if (!dimensionURI.isEmpty()) {
@@ -5658,6 +5872,9 @@ public class Transformations {
             String deviceType = tokens[10];
             String producedFile = tokens[11];
             
+            String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
+            String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
+            
             String sampleTakingURI = "";
            
             if (sampleTakingID.isEmpty()) {
@@ -5739,6 +5956,9 @@ public class Transformations {
             if(!description.isEmpty()){
                 retTriples+= "<"+sampleTakingURI+"> <"+Resources.hasNote+"> \""+description+"\" .\n";
             }
+            if(!sampleTakingEventLabel.isEmpty()){
+                retTriples+= "<"+sampleTakingURI+"> <"+Resources.rdfsLabel+"> \""+sampleTakingEventLabel+"\" .\n";
+            }
             
         }
         if(!datasetURI.isEmpty()){
@@ -5795,6 +6015,9 @@ public class Transformations {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+sequencingEventURI+"> . \n";
+            }
+            if(!sequencingEventLabel.isEmpty()){
+                retTriples+= "<"+sequencingEventURI+"> <"+Resources.rdfsLabel+"> \""+sequencingEventLabel+"\" .\n";
             }
           
         }
@@ -5867,6 +6090,8 @@ public class Transformations {
             String deviceType = tokens[10];
             String producedFile = tokens[11];
             
+            String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
+            String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
             
             String sampleTakingURI = "";
            
@@ -5949,6 +6174,9 @@ public class Transformations {
             if(!description.isEmpty()){
                 retTriples+= "<"+sampleTakingURI+"> <"+Resources.hasNote+"> \""+description+"\" .\n";
             }
+            if(!sampleTakingEventLabel.isEmpty()){
+                retTriples+= "<"+sampleTakingURI+"> <"+Resources.rdfsLabel+"> \""+sampleTakingEventLabel+"\" .\n";
+            }
             
         }
         if(!datasetURI.isEmpty()){
@@ -6005,6 +6233,9 @@ public class Transformations {
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+sequencingEventURI+"> . \n";
+            }
+            if(!sequencingEventLabel.isEmpty()){
+                retTriples+= "<"+sequencingEventURI+"> <"+Resources.rdfsLabel+"> \""+sequencingEventLabel+"\" .\n";
             }
           
         }
@@ -6868,6 +7099,8 @@ public class Transformations {
             String specimenURI = createURI(URIprefix, specimenID, "specimen");
             String scanningURI = createURI(URIprefix, scanningID, "digitizationProcess");
 
+            String scanningEventLabel = "Scanning of " + specimenID;
+                    
 //            String preparationURI = createURI(URIprefix, preparationID, "transformationEvent");
             String deviceURI = createURI(URIprefix, deviceType, "device");
 //            String objectURI = createURI(URIprefix, objectOfType, "equipment");
@@ -6911,6 +7144,9 @@ public class Transformations {
                 }
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + scanningURI + "> . \n";
+                }
+                if (!scanningEventLabel.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.rdfsLabel+ "> \"" + scanningEventLabel + "\" .\n";
                 }
             }
 
@@ -7024,6 +7260,8 @@ public class Transformations {
             String productName = tokens[1] + ".zip";
             //          String preparationID = tokens[2] + "_prep";
 
+            String scanningEventLabel = "Scanning of " + specimenID;
+             
             String specimenURI = createURI(URIprefix, specimenID, "specimen");
             String scanningURI = createURI(URIprefix, scanningID, "digitizationProcess");
 
@@ -7071,6 +7309,9 @@ public class Transformations {
                 
                 if (!datasetURI.isEmpty()) {
                     retTriples += "<" + datasetURI + "> <" + Resources.refersTo + "> <" + scanningURI + "> . \n";
+                }
+                if (!scanningEventLabel.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.rdfsLabel+ "> \"" + scanningEventLabel + "\" .\n";
                 }
             }
 
@@ -7170,6 +7411,8 @@ public class Transformations {
             String reconstructionURI = createURI(URIprefix, reconstructionID, "formalDerivation");
             String productURI = createURI(URIprefix, productName, "dataObject");
 
+            String reconstructionEventLabel = "Reconstruction of "+inputName;
+            
             String actorURI = "";
             if (!actor.isEmpty()) {
                 actorURI = createURI(URIprefix, actor, "actor");
@@ -7204,6 +7447,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + reconstructionURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }   
+                if (!reconstructionEventLabel.isEmpty()) {
+                    retTriples += "<" + reconstructionURI + "> <" + Resources.rdfsLabel+ "> \"" + reconstructionEventLabel + "\" .\n";
                 }
             }
 
@@ -7292,6 +7538,8 @@ public class Transformations {
             String reconstructionURI = createURI(URIprefix, reconstructionID, "formalDerivation");
             String productURI = createURI(URIprefix, productName, "dataObject");
 
+            String reconstructionEventLabel = "Reconstruction of "+inputName;
+            
             String actorURI = "";
             if (!actor.isEmpty()) {
                 actorURI = createURI(URIprefix, actor, "actor");
@@ -7326,6 +7574,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + reconstructionURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }
+                if (!reconstructionEventLabel.isEmpty()) {
+                    retTriples += "<" + reconstructionURI + "> <" + Resources.rdfsLabel+ "> \"" + reconstructionEventLabel + "\" .\n";
                 }
             }
 
@@ -7410,6 +7661,8 @@ public class Transformations {
             String productURI = createURI(URIprefix, productName, "dataObject");
             String inputURI = createURI(URIprefix, inputName, "dataObject");
 
+            String postProcessingEventLabel = "Post Processing of "+inputName;
+                    
             String actorURI = "";
             if (!actor.isEmpty()) {
                 actorURI = createURI(URIprefix, actor, "actor");
@@ -7438,6 +7691,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + postProcessingURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }
+                if (!postProcessingEventLabel.isEmpty()) {
+                    retTriples += "<" + postProcessingURI + "> <" + Resources.rdfsLabel+ "> \"" + postProcessingEventLabel + "\" .\n";
                 }
             }
 
@@ -7521,6 +7777,8 @@ public class Transformations {
             String productURI = createURI(URIprefix, productName, "dataObject");
             String inputURI = createURI(URIprefix, inputName, "dataObject");
 
+            String postProcessingEventLabel = "Post Processing of "+inputName;
+            
             String actorURI = "";
             if (!actor.isEmpty()) {
                 actorURI = createURI(URIprefix, actor, "actor");
@@ -7549,6 +7807,9 @@ public class Transformations {
                 }
                 if (!description.isEmpty()) {
                     retTriples += "<" + postProcessingURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
+                }
+                if (!postProcessingEventLabel.isEmpty()) {
+                    retTriples += "<" + postProcessingURI + "> <" + Resources.rdfsLabel+ "> \"" + postProcessingEventLabel + "\" .\n";
                 }
             }
 

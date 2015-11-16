@@ -23,6 +23,7 @@ public class MicroCTReconstructionStruct {
     private String datasetURI;
     private String datasetTitle;
     private String reconstructionURI;
+    private String reconstruction;
     private String timespan;
     private String actorURI;
     private String actorName;
@@ -39,6 +40,7 @@ public class MicroCTReconstructionStruct {
         datasetTitle="";
         description="";
         reconstructionURI="";
+        reconstruction="";
         timespan="";
         actorName="";
         actorURI="";
@@ -98,6 +100,10 @@ public class MicroCTReconstructionStruct {
         return reconstructionURI;
     }
 
+    public String getReconstruction() {
+        return reconstruction;
+    }
+
     public String getTimespan() {
         return timespan;
     }
@@ -124,6 +130,10 @@ public class MicroCTReconstructionStruct {
 
     public void setReconstructionURI(String reconstructionURI) {
         this.reconstructionURI = reconstructionURI;
+    }
+    
+    public void setReconstruction(String reconstruction) {
+        this.reconstruction = reconstruction;
     }
 
     public void setTimespan(String timespan) {
@@ -165,6 +175,11 @@ public class MicroCTReconstructionStruct {
         return this;
     }
 
+    public MicroCTReconstructionStruct withReconstruction(String reconstruction) {
+        this.reconstruction = reconstruction;
+        return this;
+    }
+    
     public MicroCTReconstructionStruct withTimespan(String timespan) {
         this.timespan= timespan;
         return this;
@@ -224,6 +239,10 @@ public class MicroCTReconstructionStruct {
             }
             if(!description.isEmpty()){
                 retTriples+= "<"+reconstructionURI+"> <"+Resources.hasNote+"> \""+description+"\" .\n";
+            }
+            
+            if(!reconstruction.isEmpty()){
+                retTriples+= "<"+reconstructionURI+"> <"+Resources.rdfsLabel+"> \""+reconstruction+"\" .\n";
             }
         }
         if(!actorURI.isEmpty()){
