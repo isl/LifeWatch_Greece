@@ -25,5 +25,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchEvent>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchEvent?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchEvent>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchPlace>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchPlace?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchPlace>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchDimension>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchDimension?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_FundamentalCategories_5f_SearchDimension>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Text>http://localhost:8080/DataServices-middleware/MetadataRepository_Text?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_MetadataRepository_5f_Text>
     </properties>
 </project-shared-configuration>

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.lifewatch</groupId>
     <artifactId>DataServices-middleware-client</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <build>
         <resources>
@@ -203,6 +203,24 @@
                             <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchDimension.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-FundamentalCategories_SearchDimension</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Text.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Text?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Text.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Text</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>
