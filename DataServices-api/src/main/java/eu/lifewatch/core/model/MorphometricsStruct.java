@@ -324,6 +324,7 @@ public class MorphometricsStruct {
                 retTriples+= "<"+dimensionURI+"> <"+Resources.hasType+"> <"+dimensionTypeURI+"> .\n";
                 if(!dimensionName.isEmpty()){
                     retTriples+= "<"+dimensionTypeURI+"> <"+Resources.rdfsLabel+"> \""+dimensionName+"\" .\n";
+                    retTriples+= "<"+dimensionURI+"> <"+Resources.rdfsLabel+"> \""+dimensionName+"\" .\n";
                 }
                 if(!dimensionUnit.isEmpty()){
                     retTriples+= "<"+dimensionURI+"> <"+Resources.hasUnit+"> \""+dimensionUnit+"\" .\n";   
