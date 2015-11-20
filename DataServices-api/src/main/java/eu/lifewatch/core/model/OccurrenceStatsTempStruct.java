@@ -50,10 +50,8 @@ public class OccurrenceStatsTempStruct {
     private String bibliographicCitation;
     private String temporaryAggregate;
     private String temporaryAggregateURI;
-    
     private String speciesURI;
     private String speciesName;
-
     private String bibliographicCitationURI;
     private String description;
     private String stationURI;
@@ -61,13 +59,6 @@ public class OccurrenceStatsTempStruct {
     private String coordinates;
     private String numberOfParts;
     
-    
-//private List<HashMap<String,String>> temporaryAggregates;
-    
-//    private static final String TEMP_AGGR="temporary_aggregates";
-//    private static final String NUMBER_OF_PARTS="number_of_parts";
-//    private static final String SPECIES_URI="species_uri";
-//    private static final String SPECIES_NAME="species_name";
     
     private static final Logger logger=Logger.getLogger(OccurrenceStatsTempStruct.class);
     
@@ -101,20 +92,16 @@ public class OccurrenceStatsTempStruct {
         samplingProtocolName="";
         samplingProtocolURI="";
         geodeticDatum="";
-        bibliographicCitation="";
-        
+        bibliographicCitation="";    
         temporaryAggregateURI="";
-    
         speciesURI="";
         speciesName="";
-
         bibliographicCitationURI="";
         description="";
         stationURI="";
         stationNotes="";
         coordinates="";
         numberOfParts="";
-      //  temporaryAggregates=new ArrayList<>();
     }
     
     public String getOccurrenceEventURI() {
@@ -440,57 +427,47 @@ public class OccurrenceStatsTempStruct {
     public void setBibliographicCitation(String bibliographicCitation) {
         this.bibliographicCitation = bibliographicCitation;
     }
-//
-//    public void setTemporaryAggregates(List<HashMap<String,String>> temporaryAggregates) {
-//        this.temporaryAggregates = temporaryAggregates;
-//    }
     
-     public void setTemporaryAggregate() {
+    public void setTemporaryAggregate(String temporaryAggregate) {
         this.temporaryAggregate = temporaryAggregate;
     }
     
-     public void setTemporaryAggregateURI() {
+    public void setTemporaryAggregateURI(String temporaryAggregateURI) {
         this.temporaryAggregateURI = temporaryAggregateURI;
     }
     
-     
-     
-         public void setSpeciesURI() {
+    public void setSpeciesURI(String speciesURI) {
         this.speciesURI = speciesURI;
     }
     
-     public void setSpeciesName() {
+    public void setSpeciesName(String speciesName) {
         this.speciesName= speciesName;
     }
     
-            public void bibliographicCitationURI() {
+    public void bibliographicCitationURI(String bibliographicCitationURI){
         this.bibliographicCitationURI = bibliographicCitationURI;
     }
     
-     public void setDescription() {
+    public void setDescription(String desription) {
         this.description= description;
     }
      
-     
-          public void stationNotes() {
+    public void stationNotes(String stationNotes) {
         this.stationNotes = stationNotes;
     }
     
-     public void setStationURI() {
+    public void setStationURI(String stationURI) {
         this.stationURI= stationURI;
     }
      
-       public void setCoordinates() {
+    public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
     }
     
-     public void setNumberOfParts() {
+    public void setNumberOfParts(String numberOfParts) {
         this.numberOfParts= numberOfParts;
     }
-       
-   
 
-     
     public OccurrenceStatsTempStruct withOccurrenceEventURI(String occurrenceEventURI) {
         this.occurrenceEventURI = occurrenceEventURI;
         return this;
@@ -1013,7 +990,6 @@ public class OccurrenceStatsTempStruct {
                    this.minimumDepth.equals(anotherStruct.getMinimumDepth()) &&
                    this.samplingProtocolName.equals(anotherStruct.getSamplingProtocolName()) &&
                    this.samplingProtocolURI.equals(anotherStruct.getSamplingProtocolURI()) &&
-                  
                    this.bibliographicCitation.equals(anotherStruct.getBibliographicCitation()) &&
                    this.longitude.equals(anotherStruct.getLongitude());
         }else{
