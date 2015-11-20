@@ -2151,6 +2151,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -2312,6 +2313,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -2484,6 +2486,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -2657,6 +2660,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -5585,6 +5589,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -5773,6 +5778,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimensionType.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimensionType + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -6834,6 +6840,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimension.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimension + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimension + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
@@ -7016,6 +7023,7 @@ public class Transformations {
                     retTriples += "<" + dimensionURI + "> <" + Resources.hasType + "> <" + dimensionTypeURI + "> .\n";
                     if (!dimension.isEmpty()) {
                         retTriples += "<" + dimensionTypeURI + "> <" + Resources.rdfsLabel + "> \"" + dimension + "\" .\n";
+                        retTriples += "<" + dimensionURI + "> <" + Resources.rdfsLabel + "> \"" + dimension + "\" .\n";
                     }
                     if (!dimensionUnit.isEmpty()) {
                         retTriples += "<" + dimensionURI + "> <" + Resources.hasUnit + "> \"" + dimensionUnit + "\" .\n";
