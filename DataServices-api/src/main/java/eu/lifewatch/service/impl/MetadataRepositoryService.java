@@ -2049,8 +2049,8 @@ public class MetadataRepositoryService implements Service {
             
             if(!SNameResults.isEmpty()) {
             String speciesURI = SNameResults.get(0).getSpeciesURI();
-            String actor = SNameResults.get(0).getActors().get(0).getValue().toString();
-            String actorURI = SNameResults.get(0).getActors().get(0).getKey().toString();
+            String actor = SNameResults.get(0).getActors().get(0).getValue();
+            String actorURI = SNameResults.get(0).getActors().get(0).getKey();
             String date = SNameResults.get(0).getTimeSpan();
 
      
@@ -2071,8 +2071,8 @@ public class MetadataRepositoryService implements Service {
             if(!OccurrenceResults.isEmpty()) {
             String speciesOccURI = OccurrenceResults.get(0).getSpeciesURI();
             
-            String occActor = OccurrenceResults.get(0).getActors().get(0).getValue().toString();
-            String occActorURI = OccurrenceResults.get(0).getActors().get(0).getKey().toString();
+            String occActor = OccurrenceResults.get(0).getActors().get(0).getValue();
+            String occActorURI = OccurrenceResults.get(0).getActors().get(0).getKey();
             
             String occDate = OccurrenceResults.get(0).getTimeSpan();
             
@@ -2110,8 +2110,8 @@ public class MetadataRepositoryService implements Service {
             String individual = IdentificationResults.get(0).getIndividualLabel();
             String individualURI = IdentificationResults.get(0).getIndividualURI();
             
-            String actor = IdentificationResults.get(0).getActors().get(0).getValue().toString();
-            String actorURI = IdentificationResults.get(0).getActors().get(0).getKey().toString();
+            String actor = IdentificationResults.get(0).getActors().get(0).getValue();
+            String actorURI = IdentificationResults.get(0).getActors().get(0).getKey();
             
             String date = IdentificationResults.get(0).getTimeSpan();
             
@@ -2153,8 +2153,8 @@ public class MetadataRepositoryService implements Service {
             String device = MicroCTResults.get(0).getDeviceName();
             String deviceURI = MicroCTResults.get(0).getDeviceURI(); 
                 
-            String product = MicroCTResults.get(0).getProducts().get(0).getValue().toString();
-            String productURI = MicroCTResults.get(0).getProducts().get(0).getKey().toString();
+            String product = MicroCTResults.get(0).getProducts().get(0).getValue();
+            String productURI = MicroCTResults.get(0).getProducts().get(0).getKey();
 
             
             if(!specimen.isEmpty())
