@@ -651,8 +651,6 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("coordinates") != null) {
                     struct.withCoordinates(result.getValue("coordinates").stringValue());
                 }
-                
-                System.out.println("OLEEEEEEEEEE");
                 map.put(struct.getOccurrenceEventURI(), struct);
             } else {
                 OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
@@ -818,8 +816,6 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("coordinates") != null) {
                     struct.withCoordinates(result.getValue("coordinates").stringValue());
                 }
-                
-                System.out.println("OLEEEEEEEEEE");
                 map.put(struct.getOccurrenceEventURI(), struct);
             } else {
                 OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
