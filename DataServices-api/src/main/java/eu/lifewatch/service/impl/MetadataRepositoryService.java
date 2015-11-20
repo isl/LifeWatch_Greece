@@ -32,7 +32,14 @@ import eu.lifewatch.exception.DataImportException;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.api.Service;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -2180,6 +2187,42 @@ public class MetadataRepositoryService implements Service {
  
     }  
       
+     public boolean materialize(String species, String browseURL, String repositoryGraph) throws QueryExecutionException, FileNotFoundException, IOException {
+                  
+            File f = new File(Resources.materializationQueriesFolder);
+
+//            FilenameFilter textFilter = new FilenameFilter() {
+//                 public boolean accept(File dir, String name) {
+//                    return name.toLowerCase().endsWith(".txt");
+//                 }
+//            };
+
+            File[] files = f.listFiles();
+            for (File file : files) {
+              if (file.isDirectory()) 
+                   continue;
+              else {
+                 FileInputStream f1= new FileInputStream(file);
+                 StringBuilder sb=new StringBuilder();
+                 BufferedReader br=new BufferedReader(new InputStreamReader(f1));
+            
+                String line;
+                while((line=br.readLine())!=null){
+                    sb.append(line);
+                    sb.append("\n");
+                }
+                String queryString= sb.toString();
+                  //  System.out.println(queryString);
+                  this.repoManager.update(queryString);
+                }
+          
+             }
+
+            return true;
+        
+    }  
+     
+     
     public List<ScientificNamingStruct> searchScientificNaming(String species, String date, String actor,String datasetURI, String sname, String repositoryGraph)
             throws QueryExecutionException {
         String queryString = "SELECT DISTINCT"

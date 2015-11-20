@@ -158,4 +158,7 @@ public class Resources {
 
     /*the folder containing the fundamental queries*/
     public static final String fundamentalQueriesFolder = "FundamentalQueries";
+    
+    /*the folder containing the materialization queries*/
+    public static final String materializationQueriesFolder = "MaterializationQueries";
 }
