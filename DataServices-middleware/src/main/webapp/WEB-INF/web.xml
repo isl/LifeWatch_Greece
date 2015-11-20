@@ -49,6 +49,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>MetadataRepository_Text</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>FundamentalCategories_SearchActor</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -108,6 +113,10 @@
     <servlet-mapping>
         <servlet-name>MetadataRepository_Delete</servlet-name>
         <url-pattern>/MetadataRepository_Delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MetadataRepository_Text</servlet-name>
+        <url-pattern>/MetadataRepository_Text</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FundamentalCategories_SearchActor</servlet-name>
