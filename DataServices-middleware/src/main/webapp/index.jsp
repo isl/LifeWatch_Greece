@@ -34,6 +34,7 @@
             <li><a href="MetadataRepository_Insert?wsdl">Insert WSDL</a></li>
             <li><a href="MetadataRepository_Update?wsdl">Update WSDL</a></li>
             <li><a href="MetadataRepository_Delete?wsdl">Delete WSDL</a></li>
+            <li><a href="MetadataRepository_Text?wsdl">Text WSDL</a></li>
         </ul>
         <h3> Fundamental Categories Service - List of Services </h3>
         <ul>
