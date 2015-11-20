@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://directoryservice.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://directoryservice.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="searchDataset" type="tns:searchDataset"/>
+
+<xs:element name="searchDatasetResponse" type="tns:searchDatasetResponse"/>
+
+<xs:element name="searchDatasetWithinRange" type="tns:searchDatasetWithinRange"/>
+
+<xs:element name="searchDatasetWithinRangeResponse" type="tns:searchDatasetWithinRangeResponse"/>
+
+<xs:element name="searchLiteral" type="tns:searchLiteral"/>
+
+<xs:element name="searchLiteralResponse" type="tns:searchLiteralResponse"/>
+
+<xs:element name="searchResource" type="tns:searchResource"/>
+
+<xs:element name="searchResourceResponse" type="tns:searchResourceResponse"/>
+
+<xs:complexType name="searchResource">
+<xs:sequence>
+<xs:element name="resourceURI" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchResourceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:triple" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="triple">
+<xs:sequence>
+<xs:element name="object" type="xs:string" minOccurs="0"/>
+<xs:element name="predicate" type="xs:string" minOccurs="0"/>
+<xs:element name="subject" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDataset">
+<xs:sequence>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetType" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDatasetResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:directoryStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="directoryStruct">
+<xs:sequence>
+<xs:element name="accessMethod" type="xs:string" minOccurs="0"/>
+<xs:element name="accessMethodURI" type="xs:string" minOccurs="0"/>
+<xs:element name="accessRights" type="xs:string" minOccurs="0"/>
+<xs:element name="accessRightsURI" type="xs:string" minOccurs="0"/>
+<xs:element name="attributeAssignmentEvent" type="xs:string" minOccurs="0"/>
+<xs:element name="attributeAssignmentEventURI" type="xs:string" minOccurs="0"/>
+<xs:element name="contactPoint" type="xs:string" minOccurs="0"/>
+<xs:element name="contributors" type="tns:pair" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="creationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="creationEvent" type="xs:string" minOccurs="0"/>
+<xs:element name="creationEventURI" type="xs:string" minOccurs="0"/>
+<xs:element name="creatorName" type="xs:string" minOccurs="0"/>
+<xs:element name="creatorURI" type="xs:string" minOccurs="0"/>
+<xs:element name="curatorName" type="xs:string" minOccurs="0"/>
+<xs:element name="curatorURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetID" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetType" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="embargoPeriod" type="xs:string" minOccurs="0"/>
+<xs:element name="embargoState" type="xs:string" minOccurs="0"/>
+<xs:element name="imageTitle" type="xs:string" minOccurs="0"/>
+<xs:element name="imageURI" type="xs:string" minOccurs="0"/>
+<xs:element name="keeperName" type="xs:string" minOccurs="0"/>
+<xs:element name="keeperURI" type="xs:string" minOccurs="0"/>
+<xs:element name="locationURL" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerName" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerURI" type="xs:string" minOccurs="0"/>
+<xs:element name="parentDatasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="parentDatasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationDate" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationEvent" type="xs:string" minOccurs="0"/>
+<xs:element name="publicationEventURI" type="xs:string" minOccurs="0"/>
+<xs:element name="publisherName" type="xs:string" minOccurs="0"/>
+<xs:element name="publisherURI" type="xs:string" minOccurs="0"/>
+<xs:element name="rightsHolderName" type="xs:string" minOccurs="0"/>
+<xs:element name="rightsHolderURI" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pair">
+<xs:sequence>
+<xs:element name="key" type="xs:string" minOccurs="0"/>
+<xs:element name="value" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchLiteral">
+<xs:sequence>
+<xs:element name="literalValue" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchLiteralResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:triple" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDatasetWithinRange">
+<xs:sequence>
+<xs:element name="datasetName" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerName" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetURI" type="xs:string" minOccurs="0"/>
+<xs:element name="datasetType" type="xs:string" minOccurs="0"/>
+<xs:element name="limit" type="xs:int"/>
+<xs:element name="offset" type="xs:int"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDatasetWithinRangeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:directoryStruct" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

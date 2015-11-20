@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Search?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Search.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Search?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Search.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Search?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Search.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Search?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Search.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Select?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Select.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Select?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Select.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Text?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Text.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Text?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Text.xsd_1.xsd"/>
+</catalog>
