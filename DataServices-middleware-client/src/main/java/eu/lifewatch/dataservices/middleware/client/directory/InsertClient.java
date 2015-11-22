@@ -24,9 +24,11 @@ public class InsertClient {
             struct.setAccessRights("access rights new");
             struct.setAccessRightsURI("http://localhost/directory/access_rights_new");
             struct.setAttributeAssignmentEventURI("http://localhost/directory/attribute_assignment_new");
+            struct.setAttributeAssignmentEvent("attribute assignment");
             struct.setContactPoint("contact point new");
             struct.setCreationDate("creation date new");
             struct.setCreationEventURI("http://localhost/directory/creatio_event_new");
+            struct.setCreationEvent("creation event");
             struct.setCreatorName("creator name new");
             struct.setCreatorURI("http://localhost/directory/creator_new");
             struct.setCuratorName("curator name new");
@@ -45,6 +47,7 @@ public class InsertClient {
             struct.setParentDatasetURI("http://localhost/directory/parent_dataset_new");
             struct.setPublicationDate("publication date new");
             struct.setPublicationEventURI("http://localhost/directory/publication_event_new");
+            struct.setPublicationEvent("publication event");
             struct.setPublisherName("publisher name new");
             struct.setPublisherURI("http://localhost/directory/publisher_new");
             struct.setRightsHolderName("rights holder new");

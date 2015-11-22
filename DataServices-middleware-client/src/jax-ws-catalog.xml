@@ -2,8 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Search?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Search.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Search?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Search.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.wsdl"/>
-    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Update?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Update.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Update?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Update.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Delete?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Delete.wsdl"/>
@@ -26,4 +24,6 @@
     <system systemId="http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchDimension?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/FundamentalCategories_SearchDimension.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Text?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Text.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Text?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Text.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.xsd_1.xsd"/>
 </catalog>
