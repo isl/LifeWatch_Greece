@@ -14,7 +14,7 @@ public class InsertClient {
     private static int successedCnt=0;
     private static int failedCnt=0;
     
-    private static void insert(){
+    private static void insertDirectory(){
         try{
             MetadataRepositoryInsert_Service service = new MetadataRepositoryInsert_Service();
             MetadataRepositoryInsert port = service.getMetadataRepositoryInsertPort();
@@ -881,7 +881,7 @@ public class InsertClient {
     }
     
     public static void main(String[] args){
-        insert();
+        insertDirectory();
         Commons.printSeparator();
         insertMesurement();
         Commons.printSeparator();
