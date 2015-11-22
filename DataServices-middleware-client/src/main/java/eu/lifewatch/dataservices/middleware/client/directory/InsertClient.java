@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
  */
 public class InsertClient {
     private static final Logger logger=Logger.getLogger(InsertClient.class);
+    private static final String DIRECTORY_GRAPHSPACE = "http://www.ics.forth.gr/isl/lifewatch/directory";
 
     private static void insertDataset(){
         try{
@@ -59,14 +60,14 @@ public class InsertClient {
             contributor2.setKey("http://localhost/directory/contributor2");
             contributor2.setValue("contributor 2");
             struct.contributors=Arrays.asList(contributor1,contributor2);
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
+            
             System.out.println("Adding a new dataset with the following details: "+
                                "\tDataset Name: "+struct.getDatasetName()+
                                "\tOwner Name: "+struct.getOwnerName()+
                                "\tDataset URI: "+struct.getDatasetURI()+
                                "\tDataset Type: "+struct.getDatasetType()+
-                               "\tGraphspace: "+repositoryGraph+" ...");
-            boolean result = port.insertDataset(struct, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE+" ...");
+            boolean result = port.insertDataset(struct, DIRECTORY_GRAPHSPACE);
             System.out.println("Insert Dataset results= "+result);
         } catch (Exception ex) {
             logger.error("An error occured while adding a new dataset",ex);

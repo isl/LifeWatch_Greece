@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class SearchClient {
     private static final Logger logger=Logger.getLogger(SearchClient.class);
+    private static final String DIRECTORY_GRAPHSPACE = "http://www.ics.forth.gr/isl/lifewatch/directory";
 
     private static void searchDataset(){
         try{
@@ -19,14 +20,13 @@ public class SearchClient {
             String ownerName = "owner 1";
             String datasetURI = "http://localhost/directory/dataset1";
             String datasetType = "dataset type 1";
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
             System.out.println("Searching for datasets with the following details: "+
                                "\tDataset Name: "+datasetName+
                                "\tOwner Name: "+ownerName+
                                "\tDataset URI: "+datasetURI+
                                "\tDataset Type: "+datasetType+
-                               "\tGraphspace: "+repositoryGraph);
-            List<DirectoryStruct> results = port.searchDataset(datasetName, ownerName, datasetURI, datasetType, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<DirectoryStruct> results = port.searchDataset(datasetName, ownerName, datasetURI, datasetType, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" datasets");
             results.forEach(result -> System.out.println(result.getDatasetID()+
                                                          "\t"+result.getDatasetName()+
@@ -51,7 +51,6 @@ public class SearchClient {
             String datasetType = "dataset type";
             int limit = 1;
             int offset = 0;
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
             System.out.println("Searching for datasets with the following details: "+
                                "\tDataset Name: "+datasetName+
                                "\tOwner Name: "+ownerName+
@@ -59,8 +58,8 @@ public class SearchClient {
                                "\tDataset Type: "+datasetType+
                                "\tLimit: "+limit+
                                "\tOffset: "+offset+
-                               "\tGraphspace: "+repositoryGraph);
-            List<DirectoryStruct> results = port.searchDatasetWithinRange(datasetName, ownerName, datasetURI, datasetType, limit, offset, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<DirectoryStruct> results = port.searchDatasetWithinRange(datasetName, ownerName, datasetURI, datasetType, limit, offset, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" datasets");
             results.forEach(result -> System.out.println(result.getDatasetID()+
                                                          "\t"+result.getDatasetName()+
