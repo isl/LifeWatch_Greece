@@ -2,10 +2,32 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Search?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Search.wsdl"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Search?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Search.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Insert?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Insert.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Insert?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Insert.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Update?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Update.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Update?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Update.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Delete?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Delete.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Delete?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/DirectoryService_Delete.xsd_1.xsd"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Search?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Search.wsdl"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Search?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Search.xsd_1.xsd"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Select?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Select.wsdl"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Select?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Select.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Insert?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Insert.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Insert?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Insert.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Update?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Update.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Update?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Update.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Delete?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Delete.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Delete?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Delete.xsd_1.xsd"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Text?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Text.wsdl"/>
     <system systemId="http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Text?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/MetadataRepository_Text.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchThing?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchThing.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchThing?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchThing.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchActor?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchActor.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchActor?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchActor.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchEvent?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchEvent.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchEvent?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchEvent.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchPlace?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchPlace.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchPlace?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchPlace.xsd_1.xsd"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchDimension?wsdl" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchDimension.wsdl"/>
+    <system systemId="http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchDimension?xsd=1" uri="wsdl/62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchDimension.xsd_1.xsd"/>
 </catalog>

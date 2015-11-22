@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://directoryservice.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://directoryservice.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="deleteTriples" type="tns:deleteTriples"/>
+
+<xs:element name="deleteTriplesHavingLiteral" type="tns:deleteTriplesHavingLiteral"/>
+
+<xs:element name="deleteTriplesHavingLiteralResponse" type="tns:deleteTriplesHavingLiteralResponse"/>
+
+<xs:element name="deleteTriplesHavingProperty" type="tns:deleteTriplesHavingProperty"/>
+
+<xs:element name="deleteTriplesHavingPropertyResponse" type="tns:deleteTriplesHavingPropertyResponse"/>
+
+<xs:element name="deleteTriplesHavingResource" type="tns:deleteTriplesHavingResource"/>
+
+<xs:element name="deleteTriplesHavingResourceResponse" type="tns:deleteTriplesHavingResourceResponse"/>
+
+<xs:element name="deleteTriplesResponse" type="tns:deleteTriplesResponse"/>
+
+<xs:complexType name="deleteTriplesHavingLiteral">
+<xs:sequence>
+<xs:element name="literalValue" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesHavingLiteralResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesHavingProperty">
+<xs:sequence>
+<xs:element name="property" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesHavingPropertyResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriples">
+<xs:sequence>
+<xs:element name="subject" type="xs:string" minOccurs="0"/>
+<xs:element name="predicate" type="xs:string" minOccurs="0"/>
+<xs:element name="object" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesHavingResource">
+<xs:sequence>
+<xs:element name="resourceURI" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteTriplesHavingResourceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

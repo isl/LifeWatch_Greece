@@ -10,6 +10,12 @@
 <message name="searchDatasetResponse">
 <part name="parameters" element="tns:searchDatasetResponse"/>
 </message>
+<message name="searchDatasetWithinRange">
+<part name="parameters" element="tns:searchDatasetWithinRange"/>
+</message>
+<message name="searchDatasetWithinRangeResponse">
+<part name="parameters" element="tns:searchDatasetWithinRangeResponse"/>
+</message>
 <message name="searchResource">
 <part name="parameters" element="tns:searchResource"/>
 </message>
@@ -22,16 +28,14 @@
 <message name="searchLiteralResponse">
 <part name="parameters" element="tns:searchLiteralResponse"/>
 </message>
-<message name="searchDatasetWithinRange">
-<part name="parameters" element="tns:searchDatasetWithinRange"/>
-</message>
-<message name="searchDatasetWithinRangeResponse">
-<part name="parameters" element="tns:searchDatasetWithinRangeResponse"/>
-</message>
 <portType name="DirectoryService_Search">
 <operation name="searchDataset">
 <input wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetRequest" message="tns:searchDataset"/>
 <output wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetResponse" message="tns:searchDatasetResponse"/>
+</operation>
+<operation name="searchDatasetWithinRange">
+<input wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetWithinRangeRequest" message="tns:searchDatasetWithinRange"/>
+<output wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetWithinRangeResponse" message="tns:searchDatasetWithinRangeResponse"/>
 </operation>
 <operation name="searchResource">
 <input wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchResourceRequest" message="tns:searchResource"/>
@@ -40,10 +44,6 @@
 <operation name="searchLiteral">
 <input wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchLiteralRequest" message="tns:searchLiteral"/>
 <output wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchLiteralResponse" message="tns:searchLiteralResponse"/>
-</operation>
-<operation name="searchDatasetWithinRange">
-<input wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetWithinRangeRequest" message="tns:searchDatasetWithinRange"/>
-<output wsam:Action="http://directoryservice.middleware.dataservices.lifewatch.eu/DirectoryService_Search/searchDatasetWithinRangeResponse" message="tns:searchDatasetWithinRangeResponse"/>
 </operation>
 </portType>
 <binding name="DirectoryService_SearchPortBinding" type="tns:DirectoryService_Search">
@@ -57,6 +57,15 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="searchDatasetWithinRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="searchResource">
 <soap:operation soapAction=""/>
 <input>
@@ -67,15 +76,6 @@
 </output>
 </operation>
 <operation name="searchLiteral">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="searchDatasetWithinRange">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

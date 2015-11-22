@@ -10,23 +10,23 @@ import org.apache.log4j.Logger;
  */
 public class SearchClient {
     private static final Logger logger=Logger.getLogger(SearchClient.class);
+    private static final String DIRECTORY_GRAPHSPACE = "http://www.ics.forth.gr/isl/lifewatch/directory";
 
     private static void searchDataset(){
         try{
             DirectoryServiceSearch_Service service = new DirectoryServiceSearch_Service();
             DirectoryServiceSearch port = service.getDirectoryServiceSearchPort();
-            String datasetName = "dataset 1";
-            String ownerName = "owner 1";
-            String datasetURI = "http://localhost/directory/dataset1";
-            String datasetType = "dataset type 1";
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
+            String datasetName = "dataset";
+            String ownerName = "owner";
+            String datasetURI = "http://localhost/directory/dataset_1";
+            String datasetType = "dataset type";
             System.out.println("Searching for datasets with the following details: "+
                                "\tDataset Name: "+datasetName+
                                "\tOwner Name: "+ownerName+
                                "\tDataset URI: "+datasetURI+
                                "\tDataset Type: "+datasetType+
-                               "\tGraphspace: "+repositoryGraph);
-            List<DirectoryStruct> results = port.searchDataset(datasetName, ownerName, datasetURI, datasetType, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<DirectoryStruct> results = port.searchDataset(datasetName, ownerName, datasetURI, datasetType, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" datasets");
             results.forEach(result -> System.out.println(result.getDatasetID()+
                                                          "\t"+result.getDatasetName()+
@@ -47,11 +47,10 @@ public class SearchClient {
             DirectoryServiceSearch port = service.getDirectoryServiceSearchPort();
             String datasetName = "dataset";
             String ownerName = "owner";
-            String datasetURI = "http://localhost/directory/dataset1";
+            String datasetURI = "http://localhost/directory/dataset_1";
             String datasetType = "dataset type";
             int limit = 1;
             int offset = 0;
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
             System.out.println("Searching for datasets with the following details: "+
                                "\tDataset Name: "+datasetName+
                                "\tOwner Name: "+ownerName+
@@ -59,8 +58,8 @@ public class SearchClient {
                                "\tDataset Type: "+datasetType+
                                "\tLimit: "+limit+
                                "\tOffset: "+offset+
-                               "\tGraphspace: "+repositoryGraph);
-            List<DirectoryStruct> results = port.searchDatasetWithinRange(datasetName, ownerName, datasetURI, datasetType, limit, offset, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<DirectoryStruct> results = port.searchDatasetWithinRange(datasetName, ownerName, datasetURI, datasetType, limit, offset, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" datasets");
             results.forEach(result -> System.out.println(result.getDatasetID()+
                                                          "\t"+result.getDatasetName()+
@@ -79,12 +78,11 @@ public class SearchClient {
         try{
             DirectoryServiceSearch_Service service = new DirectoryServiceSearch_Service();
             DirectoryServiceSearch port = service.getDirectoryServiceSearchPort();
-            java.lang.String resourceURI = "http://localhost/directory/dataset1";
-            java.lang.String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
+            java.lang.String resourceURI = "http://localhost/directory/dataset_1";
             System.out.println("Searching for resources with the following details: "+
                                "\tResource URI: "+resourceURI+
-                               "\tGraphspace: "+repositoryGraph);
-            List<Triple> results = port.searchResource(resourceURI, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<Triple> results = port.searchResource(resourceURI, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" triples containing the resource");
             results.forEach(result -> System.out.println("Subject: "+result.getSubject()+
                                                          "\tPredicate: "+result.getPredicate()+
@@ -99,11 +97,10 @@ public class SearchClient {
             DirectoryServiceSearch_Service service = new DirectoryServiceSearch_Service();
             DirectoryServiceSearch port = service.getDirectoryServiceSearchPort();
             String literalValue = "owner";
-            String repositoryGraph = "http://www.ics.forth.gr/isl/lifewatch/directory";
             System.out.println("Searching for literals with the following details: "+
                                "\tResource URI: "+literalValue+
-                               "\tGraphspace: "+repositoryGraph);
-            List<Triple> results = port.searchLiteral(literalValue, repositoryGraph);
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE);
+            List<Triple> results = port.searchLiteral(literalValue, DIRECTORY_GRAPHSPACE);
             System.out.println("Found "+results.size()+" triples containing the literal");
             results.forEach(result -> System.out.println("Subject: "+result.getSubject()+
                                                          "\tPredicate: "+result.getPredicate()+

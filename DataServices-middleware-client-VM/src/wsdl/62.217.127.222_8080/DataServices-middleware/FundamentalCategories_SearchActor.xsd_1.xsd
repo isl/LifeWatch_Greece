@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="searchActorFromPlace" type="tns:searchActorFromPlace"/>
+
+<xs:element name="searchActorFromPlaceResponse" type="tns:searchActorFromPlaceResponse"/>
+
+<xs:element name="searchActorFromTime" type="tns:searchActorFromTime"/>
+
+<xs:element name="searchActorFromTimeResponse" type="tns:searchActorFromTimeResponse"/>
+
+<xs:element name="searchActorHasMetPlace" type="tns:searchActorHasMetPlace"/>
+
+<xs:element name="searchActorHasMetPlaceResponse" type="tns:searchActorHasMetPlaceResponse"/>
+
+<xs:element name="searchActorHasMetThing" type="tns:searchActorHasMetThing"/>
+
+<xs:element name="searchActorHasMetThingResponse" type="tns:searchActorHasMetThingResponse"/>
+
+<xs:element name="searchActorIsOwnerOrCreatorOfThing" type="tns:searchActorIsOwnerOrCreatorOfThing"/>
+
+<xs:element name="searchActorIsOwnerOrCreatorOfThingResponse" type="tns:searchActorIsOwnerOrCreatorOfThingResponse"/>
+
+<xs:element name="searchActorMeasuredDimension" type="tns:searchActorMeasuredDimension"/>
+
+<xs:element name="searchActorMeasuredDimensionResponse" type="tns:searchActorMeasuredDimensionResponse"/>
+
+<xs:element name="searchActorRefersToEvent" type="tns:searchActorRefersToEvent"/>
+
+<xs:element name="searchActorRefersToEventResponse" type="tns:searchActorRefersToEventResponse"/>
+
+<xs:element name="searchActorRefersToThing" type="tns:searchActorRefersToThing"/>
+
+<xs:element name="searchActorRefersToThingResponse" type="tns:searchActorRefersToThingResponse"/>
+
+<xs:complexType name="searchActorHasMetPlace">
+<xs:sequence>
+<xs:element name="place" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorHasMetPlaceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResultMap">
+<xs:sequence>
+<xs:element name="Sparqlresults" type="tns:sparqlResults" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResults">
+<xs:sequence>
+<xs:element name="Sparqlresult" type="tns:sparqlResult" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResult">
+<xs:sequence/>
+<xs:attribute name="Key" type="xs:string"/>
+<xs:attribute name="Value" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="searchActorMeasuredDimension">
+<xs:sequence>
+<xs:element name="dimension" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorMeasuredDimensionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorHasMetThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorHasMetThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorRefersToEvent">
+<xs:sequence>
+<xs:element name="event" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorRefersToEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorIsOwnerOrCreatorOfThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorIsOwnerOrCreatorOfThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorFromPlace">
+<xs:sequence>
+<xs:element name="place" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorFromPlaceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorRefersToThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorRefersToThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorFromTime">
+<xs:sequence>
+<xs:element name="timespan" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchActorFromTimeResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -34,9 +34,6 @@
                                 <wsdlFile>62.217.127.222_8080/DataServices-middleware/DirectoryService_Search.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.directory</packageName>
-                            <vmArgs>
-                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
                             <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Search?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/DirectoryService_Search.stale</staleFile>
                         </configuration>
@@ -49,12 +46,54 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/DirectoryService_Insert.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.directory</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Insert?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/DirectoryService_Insert.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-DirectoryService_Insert</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/DirectoryService_Update.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.directory</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Update?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/DirectoryService_Update.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-DirectoryService_Update</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/DirectoryService_Delete.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.directory</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/DirectoryService_Delete?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/DirectoryService_Delete.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-DirectoryService_Delete</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
                                 <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Search.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
-                            <vmArgs>
-                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
                             <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Search?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Search.stale</staleFile>
                         </configuration>
@@ -70,9 +109,6 @@
                                 <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Select.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
-                            <vmArgs>
-                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
                             <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Select?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Select.stale</staleFile>
                         </configuration>
@@ -85,16 +121,133 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Insert.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Insert?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Insert.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Insert</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Update.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Update?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Update.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Update</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Delete.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Delete?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Delete.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Delete</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
                                 <wsdlFile>62.217.127.222_8080/DataServices-middleware/MetadataRepository_Text.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
-                            <vmArgs>
-                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
                             <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/MetadataRepository_Text?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Text.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-MetadataRepository_Text</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchThing.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchThing?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchThing.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-FundamentalCategories_SearchThing</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchActor.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchActor?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchActor.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-FundamentalCategories_SearchActor</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchEvent.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchEvent?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchEvent.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-FundamentalCategories_SearchEvent</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchPlace.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchPlace?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchPlace.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-FundamentalCategories_SearchPlace</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>62.217.127.222_8080/DataServices-middleware/FundamentalCategories_SearchDimension.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
+                            <wsdlLocation>http://62.217.127.222:8080/DataServices-middleware/FundamentalCategories_SearchDimension?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchDimension.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-FundamentalCategories_SearchDimension</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>

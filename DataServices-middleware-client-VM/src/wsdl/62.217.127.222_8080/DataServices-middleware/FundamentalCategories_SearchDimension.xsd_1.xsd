@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://fundamentalcategories.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="searchDimensionByActor" type="tns:searchDimensionByActor"/>
+
+<xs:element name="searchDimensionByActorResponse" type="tns:searchDimensionByActorResponse"/>
+
+<xs:element name="searchDimensionByEvent" type="tns:searchDimensionByEvent"/>
+
+<xs:element name="searchDimensionByEventResponse" type="tns:searchDimensionByEventResponse"/>
+
+<xs:element name="searchDimensionOfPlace" type="tns:searchDimensionOfPlace"/>
+
+<xs:element name="searchDimensionOfPlaceResponse" type="tns:searchDimensionOfPlaceResponse"/>
+
+<xs:element name="searchDimensionOfThing" type="tns:searchDimensionOfThing"/>
+
+<xs:element name="searchDimensionOfThingResponse" type="tns:searchDimensionOfThingResponse"/>
+
+<xs:complexType name="searchDimensionOfThing">
+<xs:sequence>
+<xs:element name="thing" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionOfThingResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResultMap">
+<xs:sequence>
+<xs:element name="Sparqlresults" type="tns:sparqlResults" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResults">
+<xs:sequence>
+<xs:element name="Sparqlresult" type="tns:sparqlResult" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sparqlResult">
+<xs:sequence/>
+<xs:attribute name="Key" type="xs:string"/>
+<xs:attribute name="Value" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionByEvent">
+<xs:sequence>
+<xs:element name="event" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionByEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionOfPlace">
+<xs:sequence>
+<xs:element name="place" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionOfPlaceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionByActor">
+<xs:sequence>
+<xs:element name="actor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchDimensionByActorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sparqlResultMap" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

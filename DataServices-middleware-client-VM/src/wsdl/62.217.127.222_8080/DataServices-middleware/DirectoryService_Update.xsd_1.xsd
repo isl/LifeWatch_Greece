@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://directoryservice.middleware.dataservices.lifewatch.eu/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://directoryservice.middleware.dataservices.lifewatch.eu/">
+
+<xs:element name="updateLiteral" type="tns:updateLiteral"/>
+
+<xs:element name="updateLiteralResponse" type="tns:updateLiteralResponse"/>
+
+<xs:element name="updateProperty" type="tns:updateProperty"/>
+
+<xs:element name="updatePropertyResponse" type="tns:updatePropertyResponse"/>
+
+<xs:element name="updateResource" type="tns:updateResource"/>
+
+<xs:element name="updateResourceResponse" type="tns:updateResourceResponse"/>
+
+<xs:complexType name="updateResource">
+<xs:sequence>
+<xs:element name="originalResource" type="xs:string" minOccurs="0"/>
+<xs:element name="newResource" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateResourceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateLiteral">
+<xs:sequence>
+<xs:element name="originalLiteral" type="xs:string" minOccurs="0"/>
+<xs:element name="newLiteral" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateLiteralResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateProperty">
+<xs:sequence>
+<xs:element name="originalProperty" type="xs:string" minOccurs="0"/>
+<xs:element name="newProperty" type="xs:string" minOccurs="0"/>
+<xs:element name="repositoryGraph" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updatePropertyResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
