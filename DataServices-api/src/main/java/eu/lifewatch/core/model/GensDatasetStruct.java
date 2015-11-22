@@ -18,23 +18,17 @@ public class GensDatasetStruct {
 
     private String datasetURI;
     private String datasetTitle;
-    
     private String timeSpan;    
     private String sampleURI;
     private String sampleName;
-    
     private String speciesURI;
     private String speciesName;
-    
-
     private String ecosystemName;
     private String ecosystemURI;
     private String habitatURI;
     private String habitatName;
-    
     private String sampleTakingURI;
     private String sampleTaking;
-    
     private String description;
     private String sequencingEventURI;
     private String sequencingEvent;
@@ -42,7 +36,6 @@ public class GensDatasetStruct {
     private String deviceURI; 
     private String deviceType;
     private String deviceTypeURI;
-    
     private String producedFile;
     private String producedFileURI;
     
