@@ -679,47 +679,34 @@ public class MetadataRepositoryService implements Service {
                 + "WHERE{ "
                 + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
-                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> occurrenceEventLabel . "
-                
+                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> ?occurrenceEventLabel . "
                 + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
                 + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
                 + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
                 + " OPTIONAL {?stationURI <" + Resources.isIdentifiedBy + "> ?coordinates . }"
                 + " OPTIONAL {?occurrenceEventURI <" + Resources.hasNote + "> ?description . }"
-                //             +" ?localityURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+"> . "
                 + " ?occurrenceEventURI <" + Resources.hasTimespan + "> ?timespan . "
                 + " ?occurrenceEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
-                //             +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.personLabel+"> . "
-                //             +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
                 + " ?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
                 + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel . "
-                
                 + " ?individualURI <" + Resources.isComposedOf + "> ?tempURI. "
                 + " ?tempURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?tempURI <" + Resources.rdfsLabel + "> ?tempName . "
-                
                 + " OPTIONAL {?tempURI <" + Resources.hasNumberOfParts + "> ?numberOfParts. } "
-
-             
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName . "
-                //             +" ?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+"> . "
                 + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
                 + " ?datasetURI <" + Resources.refersTo + "> ?occurrenceEventURI . "
                 + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
                 + " OPTIONAL {?occurrenceEventURI <" + Resources.usedObjectOfType + "> ?equipmentURI . "
-                //             +" ?equipmentURI <"+Resources.rdfTypeLabel+"> <"+Resources.equipmentTypeLabel+"> . "
                 + " ?equipmentURI <" + Resources.rdfsLabel + "> ?equipmentName }. "
                 + " OPTIONAL {?occurrenceEventURI <" + Resources.usedSpecificTechnique + "> ?samplingProtocolURI . "
-                //             +" ?equipmentURI <"+Resources.rdfTypeLabel+"> <"+Resources.equipmentTypeLabel+"> . "
                 + " ?samplingProtocolURI <" + Resources.rdfsLabel + "> ?samplingProtocol }. "
                 + " OPTIONAL {?occurrenceEventURI <" + Resources.isReferredToBy + "> ?bibliographicCitationURI . "
                 + " ?bibliographicCitationURI <" + Resources.rdfTypeLabel + "> <" + Resources.conceptualObjectLabel + "> . "
                 + " ?bibliographicCitationURI <" + Resources.rdfsLabel + "> ?bibliographicCitation }. "
                 + " OPTIONAL {?localityURI <" + Resources.hasType + "> ?habitatURI ."
-                //             +" ?habitatURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemTypeLabel+"> ."
                 + " ?habitatURI <" + Resources.rdfsLabel + "> ?habitatName .} "
                 + " OPTIONAL {?localityURI <" + Resources.fallsWithin + "> ?countryURI . "
                 + " ?countryURI <" + Resources.rdfTypeLabel + "> <" + Resources.countryLabel + "> . "
@@ -730,13 +717,13 @@ public class MetadataRepositoryService implements Service {
                 + " OPTIONAL {?localityURI <" + Resources.fallsWithin + "> ?waterAreaURI . "
                 + " ?waterAreaURI <" + Resources.rdfTypeLabel + "> <" + Resources.waterAreaLabel + "> .  "
                 + " ?waterAreaURI <" + Resources.rdfsLabel + "> ?waterAreaName . } "
-                + "FILTER regex(?timespan,'" + date + "',\"i\") "
-                + "FILTER regex(?speciesName,'" + speciesName + "',\"i\") "
+                + " FILTER regex(?timespan,'" + date + "',\"i\") "
+                + " FILTER regex(?speciesName,'" + speciesName + "',\"i\") "
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                  + "FILTER regex(?numberOfParts,'" + numberOfParts + "',\"i\") "
-                + "FILTER (regex(?localityName,'" + place + "',\"i\")||regex(?countryName,'" + place + "',\"i\")||regex(?waterAreaName,'" + place + "',\"i\"))}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
+                + " FILTER regex(?numberOfParts,'" + numberOfParts + "',\"i\") "
+                +  "FILTER (regex(?localityName,'" + place + "',\"i\")||regex(?countryName,'" + place + "',\"i\")|| regex(?waterAreaName,'" + place + "',\"i\"))}"
+                + " LIMIT "+limit
+                + " OFFSET "+offset;
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
@@ -758,7 +745,6 @@ public class MetadataRepositoryService implements Service {
                         
                         .withPhysicalObjectURI(result.getValue("individualURI").stringValue())
                         .withPhysicalObject(result.getValue("individualLabel").stringValue())
-                        
                         .withStationURI(result.getValue("stationURI").stringValue());
                 if (result.getValue("description") != null) {
                     struct.withDescription(result.getValue("description").stringValue());
@@ -3673,7 +3659,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     }
 
     public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningURI ?deviceURI ?deviceName "
+        String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningLabel ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
@@ -3705,8 +3691,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
                 + " FILTER regex(?contrastMethod,'" + contrastMethod + "',\"i\") "
                 + " FILTER regex(?deviceName,'" + deviceName + "',\"i\")}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
+                + " LIMIT "+limit
+                + " OFFSET "+offset;
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
@@ -3732,31 +3718,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 if (result.getValue("actorURI") != null) {
                     struct.withActorURI(result.getValue("actorURI").stringValue());
                 }
-//                if(result.getValue("methodName")!=null){
-//                    struct.withMethodName(result.getValue("methodName").stringValue());
-//                }
-//                
-//                if(result.getValue("methodURI")!=null){
-//                    struct.withMethodURI(result.getValue("methodURI").stringValue());
-//                }
-//
-//                if(result.getValue("equipmentName")!=null){
-//                    struct.withEquipmentName(result.getValue("actorName").stringValue());
-//                }
-//
-//                if(result.getValue("equipmentURI")!=null){
-//                   struct.withEquipmentURI(result.getValue("equipmentURI").stringValue());
-//                }   
-//                
-//                if(result.getValue("description")!=null){
-//                    struct.withDescription(result.getValue("description").stringValue());
-//                }
                 if (result.getValue("timespan") != null) {
                     struct.withTimespan(result.getValue("timespan").stringValue());
                 }
-//                if(result.getValue("imageURI")!=null){
-//                    struct.withProductURI(result.getValue("imageURI").stringValue());
-//                }
                 map.put(struct.getScanningURI(), struct);
             } else {
                 MicroCTScanningStruct struct = map.get(result.getValue("scanningURI").stringValue());
