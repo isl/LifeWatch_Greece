@@ -15,62 +15,115 @@ public class InsertClient {
         try{
             DirectoryServiceInsert_Service service = new DirectoryServiceInsert_Service();
             DirectoryServiceInsert port = service.getDirectoryServiceInsertPort();
-            DirectoryStruct struct = new DirectoryStruct();
-            struct.setDatasetURI("http://localhost/directory/dataset_new");
-            struct.setDatasetName("dataset new");
-            struct.setDatasetID("dataset ID new");
-            struct.setDatasetType("dataset type new");
-            struct.setAccessMethod("access method new");
-            struct.setAccessMethodURI("http://localhost/directory/access_method_new");
-            struct.setAccessRights("access rights new");
-            struct.setAccessRightsURI("http://localhost/directory/access_rights_new");
-            struct.setAttributeAssignmentEventURI("http://localhost/directory/attribute_assignment_new");
-            struct.setAttributeAssignmentEvent("attribute assignment");
-            struct.setContactPoint("contact point new");
-            struct.setCreationDate("creation date new");
-            struct.setCreationEventURI("http://localhost/directory/creatio_event_new");
-            struct.setCreationEvent("creation event");
-            struct.setCreatorName("creator name new");
-            struct.setCreatorURI("http://localhost/directory/creator_new");
-            struct.setCuratorName("curator name new");
-            struct.setCuratorURI("http://localhost/directory/curator_new");
-            struct.setDescription("description new");
-            struct.setEmbargoPeriod("embargo period new");
-            struct.setEmbargoState("embargo state new");
-            struct.setImageTitle("image title new");
-            struct.setImageURI("http://localhost/directory/image_new");
-            struct.setKeeperName("keeper name new");
-            struct.setKeeperURI("http://localhost/directory/keeper_new");
-            struct.setLocationURL("http://localhost/directory/location_new");
-            struct.setOwnerName("owner name");
-            struct.setOwnerURI("http://localhost/directory/owner_new");
-            struct.setParentDatasetName("parent dataset new");
-            struct.setParentDatasetURI("http://localhost/directory/parent_dataset_new");
-            struct.setPublicationDate("publication date new");
-            struct.setPublicationEventURI("http://localhost/directory/publication_event_new");
-            struct.setPublicationEvent("publication event");
-            struct.setPublisherName("publisher name new");
-            struct.setPublisherURI("http://localhost/directory/publisher_new");
-            struct.setRightsHolderName("rights holder new");
-            struct.setRightsHolderURI("http://localhost/directory/rights_holder_new");
-            Pair contributor1=new Pair();
-            contributor1.setKey("http://localhost/directory/contributor1");
-            contributor1.setValue("contributor 1");
-            Pair contributor2=new Pair();
-            contributor2.setKey("http://localhost/directory/contributor2");
-            contributor2.setValue("contributor 2");
-            struct.contributors=Arrays.asList(contributor1,contributor2);
+            DirectoryStruct struct1 = new DirectoryStruct();
+            struct1.setDatasetURI("http://localhost/directory/dataset_1");
+            struct1.setDatasetName("dataset 1");
+            struct1.setDatasetID("dataset ID 1");
+            struct1.setDatasetType("dataset type 1");
+            struct1.setAccessMethod("access method 1");
+            struct1.setAccessMethodURI("http://localhost/directory/access_method_1");
+            struct1.setAccessRights("access rights 1");
+            struct1.setAccessRightsURI("http://localhost/directory/access_rights_1");
+            struct1.setAttributeAssignmentEventURI("http://localhost/directory/attribute_assignment_1");
+            struct1.setAttributeAssignmentEvent("attribute assignment 1");
+            struct1.setContactPoint("contact point 1");
+            struct1.setCreationDate("creation date 1");
+            struct1.setCreationEventURI("http://localhost/directory/creation_event_1");
+            struct1.setCreationEvent("creation event 1");
+            struct1.setCreatorName("creator name 1");
+            struct1.setCreatorURI("http://localhost/directory/creator_1");
+            struct1.setCuratorName("curator name 1");
+            struct1.setCuratorURI("http://localhost/directory/curator_1");
+            struct1.setDescription("description 1");
+            struct1.setEmbargoPeriod("embargo period 1");
+            struct1.setEmbargoState("embargo state 1");
+            struct1.setImageTitle("image title 1");
+            struct1.setImageURI("http://localhost/directory/image_1");
+            struct1.setKeeperName("keeper name 1");
+            struct1.setKeeperURI("http://localhost/directory/keeper_1");
+            struct1.setLocationURL("http://localhost/directory/location_1");
+            struct1.setOwnerName("owner name 1");
+            struct1.setOwnerURI("http://localhost/directory/owner_1");
+            struct1.setParentDatasetName("parent dataset 1");
+            struct1.setParentDatasetURI("http://localhost/directory/parent_dataset_1");
+            struct1.setPublicationDate("publication date 1");
+            struct1.setPublicationEventURI("http://localhost/directory/publication_event_1");
+            struct1.setPublicationEvent("publication event 1");
+            struct1.setPublisherName("publisher name 1");
+            struct1.setPublisherURI("http://localhost/directory/publisher_1");
+            struct1.setRightsHolderName("rights holder 1");
+            struct1.setRightsHolderURI("http://localhost/directory/rights_holder_1");
+            Pair contributor11=new Pair();
+            contributor11.setKey("http://localhost/directory/contributor_11");
+            contributor11.setValue("contributor 11");
+            Pair contributor12=new Pair();
+            contributor12.setKey("http://localhost/directory/contributor_12");
+            contributor12.setValue("contributor 12");
+            struct1.contributors=Arrays.asList(contributor11,contributor12);
+            DirectoryStruct struct2 = new DirectoryStruct();
+            struct2.setDatasetURI("http://localhost/directory/dataset_2");
+            struct2.setDatasetName("dataset 2");
+            struct2.setDatasetID("dataset ID 2");
+            struct2.setDatasetType("dataset type 2");
+            struct2.setAccessMethod("access method 2");
+            struct2.setAccessMethodURI("http://localhost/directory/access_method_2");
+            struct2.setAccessRights("access rights 2");
+            struct2.setAccessRightsURI("http://localhost/directory/access_rights_2");
+            struct2.setAttributeAssignmentEventURI("http://localhost/directory/attribute_assignment_2");
+            struct2.setAttributeAssignmentEvent("attribute assignment 2");
+            struct2.setContactPoint("contact point 2");
+            struct2.setCreationDate("creation date 2");
+            struct2.setCreationEventURI("http://localhost/directory/creation_event_2");
+            struct2.setCreationEvent("creation event 2");
+            struct2.setCreatorName("creator name 2");
+            struct2.setCreatorURI("http://localhost/directory/creator_2");
+            struct2.setCuratorName("curator name 2");
+            struct2.setCuratorURI("http://localhost/directory/curator_2");
+            struct2.setDescription("description 2");
+            struct2.setEmbargoPeriod("embargo period 2");
+            struct2.setEmbargoState("embargo state 2");
+            struct2.setImageTitle("image title 2");
+            struct2.setImageURI("http://localhost/directory/image_2");
+            struct2.setKeeperName("keeper name 2");
+            struct2.setKeeperURI("http://localhost/directory/keeper_2");
+            struct2.setLocationURL("http://localhost/directory/location_2");
+            struct2.setOwnerName("owner name 2");
+            struct2.setOwnerURI("http://localhost/directory/owner_2");
+            struct2.setParentDatasetName("parent dataset 2");
+            struct2.setParentDatasetURI("http://localhost/directory/parent_dataset_2");
+            struct2.setPublicationDate("publication date 2");
+            struct2.setPublicationEventURI("http://localhost/directory/publication_event_2");
+            struct2.setPublicationEvent("publication event 2");
+            struct2.setPublisherName("publisher name 2");
+            struct2.setPublisherURI("http://localhost/directory/publisher_2");
+            struct2.setRightsHolderName("rights holder 2");
+            struct2.setRightsHolderURI("http://localhost/directory/rights_holder_2");
+            Pair contributor21=new Pair();
+            contributor21.setKey("http://localhost/directory/contributor_21");
+            contributor21.setValue("contributor 21");
+            Pair contributor22=new Pair();
+            contributor22.setKey("http://localhost/directory/contributor_22");
+            contributor22.setValue("contributor 22");
+            struct1.contributors=Arrays.asList(contributor21,contributor22);
             
             System.out.println("Adding a new dataset with the following details: "+
-                               "\tDataset Name: "+struct.getDatasetName()+
-                               "\tOwner Name: "+struct.getOwnerName()+
-                               "\tDataset URI: "+struct.getDatasetURI()+
-                               "\tDataset Type: "+struct.getDatasetType()+
+                               "\tDataset Name: "+struct1.getDatasetName()+
+                               "\tOwner Name: "+struct1.getOwnerName()+
+                               "\tDataset URI: "+struct1.getDatasetURI()+
+                               "\tDataset Type: "+struct1.getDatasetType()+
                                "\tGraphspace: "+DIRECTORY_GRAPHSPACE+" ...");
-            boolean result = port.insertDataset(struct, DIRECTORY_GRAPHSPACE);
-            System.out.println("Insert Dataset results= "+result);
+            boolean result1= port.insertDataset(struct1, DIRECTORY_GRAPHSPACE);
+            System.out.println("Insert Dataset results= "+result1);
+            System.out.println("Adding a new dataset with the following details: "+
+                               "\tDataset Name: "+struct2.getDatasetName()+
+                               "\tOwner Name: "+struct2.getOwnerName()+
+                               "\tDataset URI: "+struct2.getDatasetURI()+
+                               "\tDataset Type: "+struct2.getDatasetType()+
+                               "\tGraphspace: "+DIRECTORY_GRAPHSPACE+" ...");
+            boolean result2= port.insertDataset(struct2, DIRECTORY_GRAPHSPACE);
+            System.out.println("Insert Dataset results= "+result2);
         } catch (Exception ex) {
-            logger.error("An error occured while adding a new dataset",ex);
+            logger.error("An error occured while adding the new datasets",ex);
         }
     }
     
