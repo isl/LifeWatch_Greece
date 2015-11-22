@@ -28,9 +28,11 @@ public class InsertClient {
             struct.setAccessRights("access rights");
             struct.setAccessRightsURI("http://localhost/directory/access_rights");
             struct.setAttributeAssignmentEventURI("http://localhost/directory/attribute_assignment");
+            struct.setAttributeAssignmentEvent("attribute assignment");
             struct.setContactPoint("contact point");
             struct.setCreationDate("creation date");
-            struct.setCreationEventURI("http://localhost/directory/creatio_event");
+            struct.setCreationEventURI("http://localhost/directory/creation_event");
+            struct.setCreationEvent("creation event");
             struct.setCreatorName("creator name");
             struct.setCreatorURI("http://localhost/directory/creator");
             struct.setCuratorName("curator name");
@@ -49,6 +51,7 @@ public class InsertClient {
             struct.setParentDatasetURI("http://localhost/directory/parent_dataset");
             struct.setPublicationDate("publication date");
             struct.setPublicationEventURI("http://localhost/directory/publication_event");
+            struct.setPublicationEvent("publication event");
             struct.setPublisherName("publisher name");
             struct.setPublisherURI("http://localhost/directory/publisher");
             struct.setRightsHolderName("rights holder");
@@ -88,6 +91,7 @@ public class InsertClient {
             struct.setDimensionUnit("measurement dimension unit");
             struct.setDimensionValue("measurement dimension value");
             struct.setMeasurementEventURI("http://localhost/measurement/event");
+            struct.setMeasurementEvent("measurement event");
             struct.setSpeciesName("measurement species name");
             struct.setSpeciesURI("http://localhost/measurement/species");
             struct.setSpecimenName("measurement specimen name");
@@ -162,6 +166,7 @@ public class InsertClient {
             struct.setDimensionUnit("environmental unit");
             struct.setDimensionValue("environmental value");
             struct.setMeasurementEventURI("http://localhost/environmental/mesurement_event");
+            struct.setMeasurementEvent("mesaurement event");
             struct.setPlaceName("environmental place");
             struct.setPlaceURI("http://localhost/environmental/place");
             struct.setStationName("environmental station");
@@ -197,9 +202,11 @@ public class InsertClient {
             struct.setDatasetURI("http://localhost/identification/dataset");
             struct.setDatasetTitle("identification dataset");
             struct.setIdentificationEventURI("http://localhost/identification/event");
+            struct.setIdentificationEvent("event");
             struct.setIdentificationReferencesName("identification references name");
             struct.setIdentificationReferencesURI("http://localhost/identification/references");
             struct.setIndividualURI("http://localhost/identification/individual");
+            struct.setIndividualLabel("individual");
             struct.setLocalityName("identification locality name");
             struct.setLocalityURI("http://localhost/identification/locality");
             struct.setSpeciesName("identification species name");
@@ -241,6 +248,7 @@ public class InsertClient {
             struct.setNomenclaturalCodeName("scientific naming nomenclature code name");
             struct.setNomenclaturalCodeURI("http://locahost/scientificnaming/nomenclature_code");
             struct.setScientificNameAssignmentEventURI("http://localhost/scientificnaming/scientific_name_assignment_event");
+            struct.setScientificNameAssignmentEvent("scientific name assignment");
             Pair actor1=new Pair();
             actor1.setKey("http://localhost/scientificnaming/actor1");
             actor1.setValue("scientific naming actor 1");
@@ -297,7 +305,7 @@ public class InsertClient {
         }
     }
     
-    private static void inserMicroCTPostProcessing(){
+    private static void insertMicroCTPostProcessing(){
         try{
             MetadataRepositoryInsert_Service service = new MetadataRepositoryInsert_Service();
             MetadataRepositoryInsert port = service.getMetadataRepositoryInsertPort();
@@ -308,6 +316,7 @@ public class InsertClient {
             struct.setActorURI("http://localhost/microctpostprocessing/actor");
             struct.setDescription("microct postprocessing desccription");
             struct.setPostProcessingURI("http://localhost/microctpostprocessing/postprocessing");
+            struct.setPostProcessing("microct post processing");
             Pair input1=new Pair();
             input1.setKey("http://localhost/microctscanning/product1");
             input1.setValue("microct scanning product 1");
@@ -362,8 +371,10 @@ public class InsertClient {
             struct.setProducedFileURI("http://localhost/gensdataset/produced_file");
             struct.setSampleName("gens dataset sample name");
             struct.setSampleTakingURI("http://localhost/gensdataset/sample_taking");
+            struct.setSampleTaking("sample taking");
             struct.setSampleURI("http://localhost/gensdataset/sample");
             struct.setSequencingEventURI("http://localhost/gensdataset/sequencing_event");
+            struct.setSequencingEvent("sequencing event");
             struct.setSpeciesName("gens dataset species");
             struct.setSpeciesURI("http://localhost/gensdataset/species");
             struct.setTimeSpan("gens dataset timespan");
@@ -408,7 +419,9 @@ public class InsertClient {
             struct.setMinimumDepth("occurrence stats temp minimum depth");
             struct.setNumberOfParts("occurrence stats temp number of parts");
             struct.setOccurrenceEventURI("http://localhost/occurrencestatstemp/occurrence_event");
+            struct.setOccurrenceEvent("occurrence event");
             struct.setPhysicalObjectURI("http://localhost/occurrencestatstemp/physical_object");
+            struct.setPhysicalObject("physical object");
             struct.setSamplingProtocolName("occurrence stats temp sampling protocol name");
             struct.setSamplingProtocolURI("http://localhost/occurrencestatstemp/sampling_protocol");
             struct.setSpeciesName("occurrence stats temp species name");
@@ -457,6 +470,7 @@ public class InsertClient {
             struct.setSpecimenName("specimen specimen");
             struct.setSpecimenURI("http://localhost/specimen/specimen");
             struct.setTransformationEventURI("http://localhost/specimen/transformation_event");
+            struct.setTransformationEvent("transformation event");
             Pair actor1=new Pair();
             actor1.setKey("http://localhost/specimen/actor1");
             actor1.setValue("specimen actor 1");
@@ -489,6 +503,7 @@ public class InsertClient {
             struct.setCollectionURI("http://localhost/specimencollection/collection");
             struct.setContactPoint("specimen collection contact point");
             struct.setCreationEventURI("http://localhost/specimencollection/creation_event");
+            struct.setCreationEvent("creation event");
             struct.setCreatorName("specimen collection creator");
             struct.setCreatorURI("http://localhost/specimencollection/creator");
             struct.setCuratorName("specimen collection curator");
@@ -525,6 +540,7 @@ public class InsertClient {
             struct.setActorURI("http://localhost/microctreconstruction/actor");
             struct.setDescription("microct reconstruction description");
             struct.setReconstructionURI("http://localhost/microctreconstruction/reconstruction");
+            struct.setReconstruction("microct reconstruction");
             Pair input1=new Pair();
             input1.setKey("http://localhost/microctscanning/product1");
             input1.setValue("microct scanning product 1");
@@ -569,9 +585,11 @@ public class InsertClient {
             struct.setDeviceType("microct scanning device type");
             struct.setDeviceURI("http://localhost/microctscanning/device");
             struct.setEquipmentURI("http://localhost/microctscanning/equipment");
+            struct.setEquipment("microsc scanning equipment");
             struct.setMethodName("microct scanning method");
             struct.setMethodURI("http://localhost/microctscanning/method");
             struct.setScanningURI("http://localhost/microctscanning/scanning");
+            struct.setScanning("microct scanning");
             struct.setSpecimenName("microct specimen");
             struct.setSpecimenURI("http://localhost/microct/specimen");
             Pair product1=new Pair();
@@ -603,6 +621,7 @@ public class InsertClient {
             struct.setDatasetURI("http://localhost/stats/dataset");
             struct.setDatasetName("stats dataset");
             struct.setDataEvaluationURI("http://localhost/stats/data_evaluation");
+            struct.setDataEvaluation("data evaluation");
             struct.setDescription("stats description");
             struct.setSpecimenName("stats specimen");
             struct.setSpecimenURI("http://localhost/stats/specimen");
@@ -766,6 +785,7 @@ public class InsertClient {
             struct.setSpeciesName("morphometrics species");
             struct.setSpeciesURI("http://localhost/morphometrics/species");
             struct.setAttributeAssignmentEventURI("http://localhost/morphometrics/attribute_assignment_event");
+            struct.setAttributeAssignmentEvent("attribute assignment");
             struct.setDescription("morphometrics desrciption");
             struct.setPublicationName("morphometrics publication");
             struct.setPublicationURI("http://localhost/morphometrics/publication");
@@ -814,6 +834,7 @@ public class InsertClient {
             struct.setHabitatName("occurrence habitat");
             struct.setHabitatURI("http://localhost/occurrence/habitat");
             struct.setIndividualURI("http://localhost/occurrence/individual");
+            struct.setIndividualLabel("individual");
             struct.setLatitude("occurrence latitude");
             struct.setLocalityName("occurrence locality name");
             struct.setLocalityURI("http://localhost/occurrence/locality");
@@ -821,6 +842,7 @@ public class InsertClient {
             struct.setMaximumDepth("occurrence maximum depth");
             struct.setMinimumDepth("occurrence minimum depth");
             struct.setOccurrenceEventURI("http://localhost/occurrence/occurrence");
+            struct.setOccurrenceEvent("occurrence event");
             struct.setSamplingProtocol("occurrence sampling protocol");
             struct.setSamplingProtocolURI("http://localhost/occurrence/sampling_protocol");
             struct.setStationNotes("occurrence station notes");
@@ -895,7 +917,7 @@ public class InsertClient {
         Commons.printSeparator();
         insertTaxonomy();
         Commons.printSeparator();
-        inserMicroCTPostProcessing();
+        insertMicroCTPostProcessing();
         Commons.printSeparator();
         insertGensDataset();
         Commons.printSeparator();

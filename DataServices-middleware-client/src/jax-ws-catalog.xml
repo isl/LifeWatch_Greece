@@ -6,8 +6,6 @@
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Update?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Update.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Delete?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Delete.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Delete?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Delete.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Insert.wsdl"/>
-    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Insert.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Search.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Search?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Search.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Select?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Select.wsdl"/>
@@ -26,4 +24,6 @@
     <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Text?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Text.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.wsdl"/>
     <system systemId="http://localhost:8080/DataServices-middleware/DirectoryService_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/DirectoryService_Insert.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Insert.wsdl"/>
+    <system systemId="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?xsd=1" uri="wsdl/localhost_8080/DataServices-middleware/MetadataRepository_Insert.xsd_1.xsd"/>
 </catalog>

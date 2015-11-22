@@ -4,29 +4,17 @@
 <xsd:import namespace="http://metadatarepository.middleware.dataservices.lifewatch.eu/" schemaLocation="http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="insert">
-<part name="parameters" element="tns:insert"/>
-</message>
-<message name="insertResponse">
-<part name="parameters" element="tns:insertResponse"/>
-</message>
-<message name="insertSynonym">
-<part name="parameters" element="tns:insertSynonym"/>
-</message>
-<message name="insertSynonymResponse">
-<part name="parameters" element="tns:insertSynonymResponse"/>
-</message>
-<message name="insertOccurrence">
-<part name="parameters" element="tns:insertOccurrence"/>
-</message>
-<message name="insertOccurrenceResponse">
-<part name="parameters" element="tns:insertOccurrenceResponse"/>
-</message>
 <message name="insertMeasurement">
 <part name="parameters" element="tns:insertMeasurement"/>
 </message>
 <message name="insertMeasurementResponse">
 <part name="parameters" element="tns:insertMeasurementResponse"/>
+</message>
+<message name="insertCommonName">
+<part name="parameters" element="tns:insertCommonName"/>
+</message>
+<message name="insertCommonNameResponse">
+<part name="parameters" element="tns:insertCommonNameResponse"/>
 </message>
 <message name="insertEnvironmental">
 <part name="parameters" element="tns:insertEnvironmental"/>
@@ -46,6 +34,12 @@
 <message name="insertScientificNamingResponse">
 <part name="parameters" element="tns:insertScientificNamingResponse"/>
 </message>
+<message name="insertTaxonomy">
+<part name="parameters" element="tns:insertTaxonomy"/>
+</message>
+<message name="insertTaxonomyResponse">
+<part name="parameters" element="tns:insertTaxonomyResponse"/>
+</message>
 <message name="insertMicroCTPostProcessing">
 <part name="parameters" element="tns:insertMicroCTPostProcessing"/>
 </message>
@@ -63,6 +57,12 @@
 </message>
 <message name="insertOccurrenceStatsTempResponse">
 <part name="parameters" element="tns:insertOccurrenceStatsTempResponse"/>
+</message>
+<message name="insertSpecimen">
+<part name="parameters" element="tns:insertSpecimen"/>
+</message>
+<message name="insertSpecimenResponse">
+<part name="parameters" element="tns:insertSpecimenResponse"/>
 </message>
 <message name="insertSpecimenCollection">
 <part name="parameters" element="tns:insertSpecimenCollection"/>
@@ -82,6 +82,18 @@
 <message name="insertMicroCTScanningResponse">
 <part name="parameters" element="tns:insertMicroCTScanningResponse"/>
 </message>
+<message name="insertStats">
+<part name="parameters" element="tns:insertStats"/>
+</message>
+<message name="insertStatsResponse">
+<part name="parameters" element="tns:insertStatsResponse"/>
+</message>
+<message name="insertGensSample">
+<part name="parameters" element="tns:insertGensSample"/>
+</message>
+<message name="insertGensSampleResponse">
+<part name="parameters" element="tns:insertGensSampleResponse"/>
+</message>
 <message name="insertMicroCTSpecimen">
 <part name="parameters" element="tns:insertMicroCTSpecimen"/>
 </message>
@@ -100,52 +112,32 @@
 <message name="insertMorphometricsResponse">
 <part name="parameters" element="tns:insertMorphometricsResponse"/>
 </message>
-<message name="insertTaxonomy">
-<part name="parameters" element="tns:insertTaxonomy"/>
+<message name="insertOccurrence">
+<part name="parameters" element="tns:insertOccurrence"/>
 </message>
-<message name="insertTaxonomyResponse">
-<part name="parameters" element="tns:insertTaxonomyResponse"/>
+<message name="insertOccurrenceResponse">
+<part name="parameters" element="tns:insertOccurrenceResponse"/>
 </message>
-<message name="insertCommonName">
-<part name="parameters" element="tns:insertCommonName"/>
+<message name="insertSynonym">
+<part name="parameters" element="tns:insertSynonym"/>
 </message>
-<message name="insertCommonNameResponse">
-<part name="parameters" element="tns:insertCommonNameResponse"/>
+<message name="insertSynonymResponse">
+<part name="parameters" element="tns:insertSynonymResponse"/>
 </message>
-<message name="insertSpecimen">
-<part name="parameters" element="tns:insertSpecimen"/>
+<message name="insert">
+<part name="parameters" element="tns:insert"/>
 </message>
-<message name="insertSpecimenResponse">
-<part name="parameters" element="tns:insertSpecimenResponse"/>
-</message>
-<message name="insertGensSample">
-<part name="parameters" element="tns:insertGensSample"/>
-</message>
-<message name="insertGensSampleResponse">
-<part name="parameters" element="tns:insertGensSampleResponse"/>
-</message>
-<message name="insertStats">
-<part name="parameters" element="tns:insertStats"/>
-</message>
-<message name="insertStatsResponse">
-<part name="parameters" element="tns:insertStatsResponse"/>
+<message name="insertResponse">
+<part name="parameters" element="tns:insertResponse"/>
 </message>
 <portType name="MetadataRepository_Insert">
-<operation name="insert">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertRequest" message="tns:insert"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertResponse" message="tns:insertResponse"/>
-</operation>
-<operation name="insertSynonym">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSynonymRequest" message="tns:insertSynonym"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSynonymResponse" message="tns:insertSynonymResponse"/>
-</operation>
-<operation name="insertOccurrence">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceRequest" message="tns:insertOccurrence"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceResponse" message="tns:insertOccurrenceResponse"/>
-</operation>
 <operation name="insertMeasurement">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMeasurementRequest" message="tns:insertMeasurement"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMeasurementResponse" message="tns:insertMeasurementResponse"/>
+</operation>
+<operation name="insertCommonName">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertCommonNameRequest" message="tns:insertCommonName"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertCommonNameResponse" message="tns:insertCommonNameResponse"/>
 </operation>
 <operation name="insertEnvironmental">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertEnvironmentalRequest" message="tns:insertEnvironmental"/>
@@ -159,6 +151,10 @@
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertScientificNamingRequest" message="tns:insertScientificNaming"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertScientificNamingResponse" message="tns:insertScientificNamingResponse"/>
 </operation>
+<operation name="insertTaxonomy">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertTaxonomyRequest" message="tns:insertTaxonomy"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertTaxonomyResponse" message="tns:insertTaxonomyResponse"/>
+</operation>
 <operation name="insertMicroCTPostProcessing">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTPostProcessingRequest" message="tns:insertMicroCTPostProcessing"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTPostProcessingResponse" message="tns:insertMicroCTPostProcessingResponse"/>
@@ -170,6 +166,10 @@
 <operation name="insertOccurrenceStatsTemp">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceStatsTempRequest" message="tns:insertOccurrenceStatsTemp"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceStatsTempResponse" message="tns:insertOccurrenceStatsTempResponse"/>
+</operation>
+<operation name="insertSpecimen">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSpecimenRequest" message="tns:insertSpecimen"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSpecimenResponse" message="tns:insertSpecimenResponse"/>
 </operation>
 <operation name="insertSpecimenCollection">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSpecimenCollectionRequest" message="tns:insertSpecimenCollection"/>
@@ -183,6 +183,14 @@
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTScanningRequest" message="tns:insertMicroCTScanning"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTScanningResponse" message="tns:insertMicroCTScanningResponse"/>
 </operation>
+<operation name="insertStats">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertStatsRequest" message="tns:insertStats"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertStatsResponse" message="tns:insertStatsResponse"/>
+</operation>
+<operation name="insertGensSample">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertGensSampleRequest" message="tns:insertGensSample"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertGensSampleResponse" message="tns:insertGensSampleResponse"/>
+</operation>
 <operation name="insertMicroCTSpecimen">
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTSpecimenRequest" message="tns:insertMicroCTSpecimen"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMicroCTSpecimenResponse" message="tns:insertMicroCTSpecimenResponse"/>
@@ -195,57 +203,31 @@
 <input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMorphometricsRequest" message="tns:insertMorphometrics"/>
 <output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertMorphometricsResponse" message="tns:insertMorphometricsResponse"/>
 </operation>
-<operation name="insertTaxonomy">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertTaxonomyRequest" message="tns:insertTaxonomy"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertTaxonomyResponse" message="tns:insertTaxonomyResponse"/>
+<operation name="insertOccurrence">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceRequest" message="tns:insertOccurrence"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertOccurrenceResponse" message="tns:insertOccurrenceResponse"/>
 </operation>
-<operation name="insertCommonName">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertCommonNameRequest" message="tns:insertCommonName"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertCommonNameResponse" message="tns:insertCommonNameResponse"/>
+<operation name="insertSynonym">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSynonymRequest" message="tns:insertSynonym"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSynonymResponse" message="tns:insertSynonymResponse"/>
 </operation>
-<operation name="insertSpecimen">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSpecimenRequest" message="tns:insertSpecimen"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertSpecimenResponse" message="tns:insertSpecimenResponse"/>
-</operation>
-<operation name="insertGensSample">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertGensSampleRequest" message="tns:insertGensSample"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertGensSampleResponse" message="tns:insertGensSampleResponse"/>
-</operation>
-<operation name="insertStats">
-<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertStatsRequest" message="tns:insertStats"/>
-<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertStatsResponse" message="tns:insertStatsResponse"/>
+<operation name="insert">
+<input wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertRequest" message="tns:insert"/>
+<output wsam:Action="http://metadatarepository.middleware.dataservices.lifewatch.eu/MetadataRepository_Insert/insertResponse" message="tns:insertResponse"/>
 </operation>
 </portType>
 <binding name="MetadataRepository_InsertPortBinding" type="tns:MetadataRepository_Insert">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="insert">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="insertSynonym">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="insertOccurrence">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="insertMeasurement">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertCommonName">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -281,6 +263,15 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="insertTaxonomy">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="insertMicroCTPostProcessing">
 <soap:operation soapAction=""/>
 <input>
@@ -300,6 +291,15 @@
 </output>
 </operation>
 <operation name="insertOccurrenceStatsTemp">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertSpecimen">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -335,6 +335,24 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="insertStats">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="insertGensSample">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="insertMicroCTSpecimen">
 <soap:operation soapAction=""/>
 <input>
@@ -362,7 +380,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insertTaxonomy">
+<operation name="insertOccurrence">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -371,7 +389,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insertCommonName">
+<operation name="insertSynonym">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -380,25 +398,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="insertSpecimen">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="insertGensSample">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="insertStats">
+<operation name="insert">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
