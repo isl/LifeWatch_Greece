@@ -1,0 +1,21 @@
+INSERT INTO <http://Mater>
+{
+
+?event <http://www.lifewatchgreece.eu/fr/has_met> ?thing
+
+}
+
+WHERE
+{
+{
+?event <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+
+}
+
+UNION 
+
+{  
+?event <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+}
+
+}

@@ -1,0 +1,87 @@
+INSERT INTO <http://Mater>
+{
+
+?actor <http://www.lifewatchgreece.eu/fr/is_owner> ?thing
+
+}
+
+Where
+
+{
+{
+        ?ScientificNameAssignmentEventURI <http://www.cidoc-crm.org/cidoc-crm/P140_assigned_attribute_to> ?thing .
+        ?ScientificNameAssignmentEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+       
+}
+
+UNION
+
+{
+          
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner> ?actor .
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+} 
+
+UNION
+
+{
+          
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner> ?actor . 
+   
+}
+
+UNION
+
+{
+             
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P49_has_current_keeper> ?actor .
+        ?thing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> .
+   
+} 
+
+
+UNION
+
+{
+ 
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to> ?rights .             
+        ?rights <http://www.cidoc-crm.org/cidoc-crm/P105_rights_held_by> ?actor .
+} 
+
+
+UNION
+
+{
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?creationEvent .
+        ?creationEvent  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+    
+} 
+
+
+UNION
+
+{
+   
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P123_resulted_in> ?thing .
+        ?event  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+       
+} 
+
+UNION
+
+{
+     
+        ?thing <http://www.ics.forth.gr/isl/ontology/MarineTLO/P_was_provided_by> ?actor .
+
+} 
+
+UNION
+
+{
+     
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L22F_created_derivative> ?thing .
+        ?event  <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+ 
+} 
+
+}

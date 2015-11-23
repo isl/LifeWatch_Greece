@@ -1,0 +1,54 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/from> ?event
+
+}
+
+
+WHERE
+{
+
+{
+
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?event .
+
+} 
+
+UNION
+
+{
+       
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L22F_created_derivative> ?thing .
+
+ 
+} 
+ 
+UNION
+
+{
+        
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L20F_has_created> ?thing .
+	
+ 
+} 
+
+UNION
+
+{
+
+	?event  <http://www.ics.forth.gr/isl/CRMsci/O5_removed> ?thing .
+	
+ 
+} 
+
+UNION
+
+{
+
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P123_resulted_in> ?thing .
+	
+} 
+
+
+}

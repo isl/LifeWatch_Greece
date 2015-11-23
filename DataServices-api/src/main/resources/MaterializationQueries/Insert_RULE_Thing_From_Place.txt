@@ -1,0 +1,20 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/from> ?place
+
+}
+
+
+
+WHERE
+{
+
+{
+   
+	?event  <http://www.ics.forth.gr/isl/CRMsci/O5_removed> ?thing .
+	?event <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?place .
+	
+} 
+
+}

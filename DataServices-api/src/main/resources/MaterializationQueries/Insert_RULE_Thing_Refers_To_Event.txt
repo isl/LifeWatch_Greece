@@ -1,0 +1,20 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/refers_to> ?thing2
+
+}
+
+WHERE{
+
+{
+
+
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing .
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?thing1 .
+
+}
+
+
+
+}

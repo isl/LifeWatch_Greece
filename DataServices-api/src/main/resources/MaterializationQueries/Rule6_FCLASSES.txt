@@ -1,0 +1,25 @@
+INSERT INTO <http://Mater>
+{
+<http://www.lifewatchgreece.eu/fc/thing> a <http://www.lifewatchgreece.eu/fc/class>
+}
+
+INSERT INTO <http://Mater>
+{
+<http://www.lifewatchgreece.eu/fc/actor> a <http://www.lifewatchgreece.eu/fc/class>
+}
+
+INSERT INTO <http://Mater>
+{
+<http://www.lifewatchgreece.eu/fc/dimension> a <http://www.lifewatchgreece.eu/fc/class>
+}
+
+INSERT INTO <http://Mater>
+{
+<http://www.lifewatchgreece.eu/fc/event> a <http://www.lifewatchgreece.eu/fc/class>
+}
+
+INSERT INTO <http://Mater>
+{
+<http://www.lifewatchgreece.eu/fc/place> a <http://www.lifewatchgreece.eu/fc/class>
+}
+

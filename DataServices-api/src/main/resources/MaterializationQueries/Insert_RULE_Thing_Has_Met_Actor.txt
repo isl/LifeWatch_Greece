@@ -1,0 +1,15 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/has_met> ?actor
+
+}
+
+
+
+WHERE{
+
+?OccurrenceEventURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+
+}

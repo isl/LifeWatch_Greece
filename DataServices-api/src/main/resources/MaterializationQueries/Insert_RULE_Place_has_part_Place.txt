@@ -1,0 +1,10 @@
+INSERT INTO <http://Mater>
+{
+
+?place <http://www.lifewatchgreece.eu/fr/has_part> ?place2
+}
+
+WHERE
+{
+    ?place <http://www.cidoc-crm.org/cidoc-crm/P106_falls_within> ?place2 .
+}

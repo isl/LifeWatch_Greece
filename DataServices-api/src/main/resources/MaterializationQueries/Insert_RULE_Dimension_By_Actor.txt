@@ -1,0 +1,34 @@
+INSERT INTO <http://Mater>
+{
+
+?dimension <http://www.lifewatchgreece.eu/fr/by> ?actor
+
+}
+
+WHERE 
+
+{
+    
+{
+        ?MeasurementURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E16_Measurement> .
+	?MeasurementURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+	?MeasurementURI <http://www.cidoc-crm.org/cidoc-crm/P40_observed_dimension>  ?DimensionURI .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?dimension .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+    }  
+
+UNION
+
+{
+        ?AttributeAssignmentURI <http://www.cidoc-crm.org/cidoc-crm/P37_assigned> ?DimensionURI .
+	?AttributeAssignmentURI <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?dimension .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+    } 
+}
+   

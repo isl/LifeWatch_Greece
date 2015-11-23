@@ -1,0 +1,35 @@
+INSERT INTO <http://Mater>
+{
+
+?thing1 <http://www.lifewatchgreece.eu/fr/from> ?thing
+
+}
+
+
+
+WHERE
+{
+
+{
+      
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P124_transformed> ?thing1 .
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P123_resulted_in> ?thing .
+	
+} 
+
+UNION
+
+{
+
+?thing <http://www.ics.forth.gr/isl/CRMsci/P46_is_composed_of> ?thing1 .
+
+}
+
+UNION
+
+{
+         
+        ?thing1 <http://www.cidoc-crm.org/cidoc-crm/P5_forms_part_of> ?thing .
+
+}
+}

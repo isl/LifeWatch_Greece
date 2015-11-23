@@ -1,0 +1,13 @@
+INSERT INTO <http://Mater>
+{
+
+?event <http://www.lifewatchgreece.eu/fr/has_met> ?actor
+
+}
+
+
+WHERE{
+    ?event <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>  .
+    ?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by ?actor .
+    
+}

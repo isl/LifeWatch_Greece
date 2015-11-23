@@ -1,0 +1,72 @@
+INSERT INTO <http://Mater>
+{
+?subject a <http://www.lifewatchgreece.eu/fc/event>
+}
+
+WHERE
+{
+
+GRAPH <http://Metadata_100>
+
+{
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>
+}
+
+UNION
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment>
+
+}
+
+UNION
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E16_Measurement>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMsci/S2_Sample_Taking>
+
+}
+
+UNION
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E65_Creation>
+
+}
+
+UNION
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E81_Transformation>
+
+}
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMdig/D3_Formal_Derivation>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMdig/D2_Digitization_Process>
+
+}
+
+
+}
+}
+
+

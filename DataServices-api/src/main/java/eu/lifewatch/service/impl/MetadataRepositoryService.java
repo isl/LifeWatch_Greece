@@ -42,10 +42,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import org.apache.log4j.Logger;
 import org.openrdf.query.BindingSet;
 import org.openrdf.rio.RDFFormat;
@@ -2175,34 +2179,33 @@ public class MetadataRepositoryService implements Service {
       
      public boolean materialize(String species, String browseURL, String repositoryGraph) throws QueryExecutionException, FileNotFoundException, IOException {
                   
-            File f = new File(Resources.materializationQueriesFolder);
+            CodeSource src = MetadataRepositoryService.class.getProtectionDomain().getCodeSource();
 
-//            FilenameFilter textFilter = new FilenameFilter() {
-//                 public boolean accept(File dir, String name) {
-//                    return name.toLowerCase().endsWith(".txt");
-//                 }
-//            };
-
-            File[] files = f.listFiles();
-            for (File file : files) {
-              if (file.isDirectory()) 
-                   continue;
-              else {
-                 FileInputStream f1= new FileInputStream(file);
-                 StringBuilder sb=new StringBuilder();
-                 BufferedReader br=new BufferedReader(new InputStreamReader(f1));
+            if (src != null) {
+                URL jar = src.getLocation();
+                ZipInputStream zip = new ZipInputStream(jar.openStream());
+                while(true) {
+                    ZipEntry e = zip.getNextEntry();
+                    if (e == null)
+                         break;
+                    String name = e.getName();
+                  
+                    if(name.contains(Resources.materializationQueriesFolder)){
+                        StringBuilder sb=new StringBuilder();
+                        BufferedReader br=new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(name)));
             
-                String line;
-                while((line=br.readLine())!=null){
-                    sb.append(line);
-                    sb.append("\n");
+                        String line;
+                        while((line=br.readLine())!=null){
+                            sb.append(line);
+                            sb.append("\n");
+                        }
+                
+                        String queryString= sb.toString();
+                        //System.out.println(queryString);
+                        this.repoManager.update(queryString);
+                    }
                 }
-                String queryString= sb.toString();
-                  //  System.out.println(queryString);
-                  this.repoManager.update(queryString);
-                }
-          
-             }
+            }
 
             return true;
         

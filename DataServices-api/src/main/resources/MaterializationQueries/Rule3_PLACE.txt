@@ -1,0 +1,49 @@
+INSERT INTO <http://Mater>
+{
+?subject a <http://www.lifewatchgreece.eu/fc/place>
+}
+
+WHERE
+{
+
+GRAPH <http://Metadata_100>
+
+{
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E53_Place>
+}
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/Country>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC14_Ecosystem_Environment>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC12_Ecosystem>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC15_Water_Area>
+
+}
+
+}
+}

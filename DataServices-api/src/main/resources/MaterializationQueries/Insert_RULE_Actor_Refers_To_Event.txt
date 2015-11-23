@@ -1,0 +1,16 @@
+INSERT INTO <http://Mater>
+{
+
+?actor <http://www.lifewatchgreece.eu/fr/refers_to> ?event
+
+}
+
+
+WHERE{
+{
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?event1 .
+	?event1 <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+	?dataset <http://www.cidoc-crm.org/cidoc-crm/P67_refers_to> ?event .
+}
+
+}

@@ -1,0 +1,46 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/has_met> ?locality
+
+}
+
+WHERE
+
+
+{{
+
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?locality .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+
+}
+
+UNION
+
+{
+
+
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?locality .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+
+}
+
+UNION 
+
+{  
+
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?locality .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+
+}
+
+UNION 
+
+{  
+
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?locality .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+
+}
+
+}

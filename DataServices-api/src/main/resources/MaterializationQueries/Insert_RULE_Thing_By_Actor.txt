@@ -1,0 +1,61 @@
+INSERT INTO <http://Mater>
+{
+
+?thing <http://www.lifewatchgreece.eu/fr/by> ?actor
+
+}
+
+WHERE
+{
+
+{
+	?thing <http://www.cidoc-crm.org/cidoc-crm/P94_was_created_by> ?event .
+	?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+
+} 
+
+UNION
+
+{
+    
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L22F_created_derivative> ?thing .
+        ?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+ 
+} 
+ 
+UNION
+
+{
+      
+	?event  <http://www.ics.forth.gr/isl/CRMdig/L20F_has_created> ?thing .
+ ?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+ 
+} 
+
+UNION
+
+{
+ 
+	?event  <http://www.ics.forth.gr/isl/CRMsci/O5_removed> ?thing .
+        ?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+ 
+} 
+
+UNION
+
+{
+      
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P123_resulted_in> ?thing .
+        ?event <http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by> ?actor .
+} 
+
+UNION
+
+{
+        ?thing <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> ?thingName .
+	?event  <http://www.cidoc-crm.org/cidoc-crm/P140_assigned_attribute_to> ?thing .
+} 
+
+}
+
+

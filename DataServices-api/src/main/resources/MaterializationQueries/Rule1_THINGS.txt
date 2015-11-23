@@ -1,0 +1,74 @@
+INSERT INTO <http://Mater>
+{
+?subject a <http://www.lifewatchgreece.eu/fc/thing>
+}
+
+WHERE
+{
+
+GRAPH <http://Metadata_100>
+
+{
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC38_Biotic_Element>
+}
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC27_Publication>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/ontology/MarineTLO/BT27_Species>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMdig/D8_Digital_Device>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMdig/D9_Data_Object>
+
+}
+
+
+UNION
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E78_Collection>
+
+}
+
+UNION
+{
+
+?subject a <http://www.ics.forth.gr/isl/CRMsci/S2_Sample>
+
+}
+
+}
+}
+
+

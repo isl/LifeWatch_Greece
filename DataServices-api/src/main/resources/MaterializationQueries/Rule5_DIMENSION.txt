@@ -1,0 +1,17 @@
+INSERT INTO <http://Mater>
+{
+?subject a <http://www.lifewatchgreece.eu/fc/dimension>
+}
+
+WHERE
+{
+
+GRAPH <http://Metadata_100>
+
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension>
+}
+
+
+}

@@ -1,0 +1,46 @@
+INSERT INTO <http://Mater>
+{
+
+?place <http://www.lifewatchgreece.eu/fr/has_met> ?thing
+}
+
+WHERE
+{
+
+{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?place  .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+
+}
+
+UNION
+
+{
+?OccurrenceEventURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event> .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O21_has_found_at> ?locality .
+?OccurrenceEventURI <http://www.ics.forth.gr/isl/CRMsci/O32_has_found_object> ?thing .
+?locality <http://www.cidoc-crm.org/cidoc-crm/P106_falls_within> ?place  .
+
+}
+
+UNION 
+
+{  
+?IdentificationEventIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment> .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?place  .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+
+}
+
+UNION 
+
+{  
+?IdentificationEventIDURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment> .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at> ?locality .
+?IdentificationEventIDURI <http://www.cidoc-crm.org/cidoc-crm/P41_classified> ?thing .  
+?locality <http://www.cidoc-crm.org/cidoc-crm/P106_falls_within> ?place  .
+
+}
+
+}

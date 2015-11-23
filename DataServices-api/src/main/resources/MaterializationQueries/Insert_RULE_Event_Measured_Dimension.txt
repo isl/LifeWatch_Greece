@@ -1,0 +1,29 @@
+INSERT INTO <http://Mater>
+{
+
+?event <http://www.lifewatchgreece.eu/fr/measured> ?DimensionTypeURI
+
+}
+
+
+WHERE{
+    {
+        ?event <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E16_Measurement> .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+    }  
+
+UNION
+
+{
+        ?event <http://www.cidoc-crm.org/cidoc-crm/P37_assigned> ?DimensionURI .
+        ?DimensionURI <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P2_has_type> ?DimensionTypeURI .  
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> ?Value .
+        ?DimensionURI <http://www.cidoc-crm.org/cidoc-crm/P91_has_unit> ?Unit .   
+
+    } 
+
+}

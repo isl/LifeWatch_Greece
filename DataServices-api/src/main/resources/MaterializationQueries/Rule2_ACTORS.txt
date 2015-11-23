@@ -1,0 +1,40 @@
+INSERT INTO <http://Mater>
+{
+?subject a <http://www.lifewatchgreece.eu/fc/actor>
+}
+
+WHERE
+{
+
+GRAPH <http://Metadata_100>
+{
+
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E21_Person>
+}
+
+UNION
+
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E40_Legal_Body>
+}
+
+UNION
+
+{
+
+?subject a <http://www.cidoc-crm.org/cidoc-crm/E39_Actor>
+}
+
+
+}
+}
+
+
+
+
+
+
+
