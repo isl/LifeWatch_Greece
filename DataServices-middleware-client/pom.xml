@@ -91,21 +91,6 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Insert.wsdl</wsdlFile>
-                            </wsdlFiles>
-                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
-                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Insert.stale</staleFile>
-                        </configuration>
-                        <id>wsimport-generate-MetadataRepository_Insert</id>
-                        <phase>generate-sources</phase>
-                    </execution>
-                    <execution>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <wsdlFiles>
                                 <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Search.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
@@ -136,9 +121,39 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Insert.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Insert?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Insert.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Insert</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Text.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Text?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Text.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Text</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
                                 <wsdlFile>localhost_8080/DataServices-middleware/FundamentalCategories_SearchThing.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalCategories</packageName>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.fundamentalcategories</packageName>
                             <wsdlLocation>http://localhost:8080/DataServices-middleware/FundamentalCategories_SearchThing?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/FundamentalCategories_SearchThing.stale</staleFile>
                         </configuration>
@@ -211,16 +226,34 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Text.wsdl</wsdlFile>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Update.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Text?wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Text.stale</staleFile>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Update?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Update.stale</staleFile>
                         </configuration>
-                        <id>wsimport-generate-MetadataRepository_Text</id>
+                        <id>wsimport-generate-MetadataRepository_Update</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>localhost_8080/DataServices-middleware/MetadataRepository_Delete.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <packageName>eu.lifewatch.dataservices.middleware.client.metadata</packageName>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                            <wsdlLocation>http://localhost:8080/DataServices-middleware/MetadataRepository_Delete?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/MetadataRepository_Delete.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-MetadataRepository_Delete</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>
@@ -246,6 +279,7 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>
