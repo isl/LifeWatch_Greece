@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +93,7 @@ public class SearchMicroCTScanning extends HttpServlet {
                 this.processAndReturnResultsAsXML(results, response);
                 break;
             case "csv":
+                this.processAndReturnResultsAsCSV(results, response);
                 break;
             default:
                 break;
@@ -109,6 +109,7 @@ public class SearchMicroCTScanning extends HttpServlet {
                 sb.append(result.toNtriples());
             }
             out.println(sb.toString());
+            
             out.close();
         }catch(IOException ex){
             LOGGER.error("An error occured while producing results output",ex);
@@ -122,6 +123,60 @@ public class SearchMicroCTScanning extends HttpServlet {
         String gsonResults=gson.toJson(results);
         try(PrintWriter out = response.getWriter()){
             out.println(gsonResults);
+            out.close();
+        }catch(IOException ex){
+            LOGGER.error("An error occured while producing results output",ex);
+        }
+    }
+    
+    private void processAndReturnResultsAsCSV(List<MicroCTScanningStruct> results, HttpServletResponse response){
+        LOGGER.info("returning the results in CSV format (text/csv)");
+        final String csvDelimiter=";";
+        response.setContentType("text/csv");
+        StringBuilder sb=new StringBuilder();
+        sb.append("Dataset URI").append(csvDelimiter)
+          .append("Dataset Name").append(csvDelimiter)
+          .append("Description").append(csvDelimiter)
+          .append("Specimen URI").append(csvDelimiter)
+          .append("Specimen Name").append(csvDelimiter)
+          .append("Equipment URI").append(csvDelimiter)
+          .append("Equipment Name").append(csvDelimiter)
+          .append("Contrast Method").append(csvDelimiter)
+          .append("Method URI").append(csvDelimiter)
+          .append("Method Name").append(csvDelimiter)
+          .append("Scanning URI").append(csvDelimiter)
+          .append("Scanning Name").append(csvDelimiter)
+          .append("Timespan").append(csvDelimiter)
+          .append("Actor URI").append(csvDelimiter)
+          .append("Actor Name").append(csvDelimiter)
+          .append("Device URI").append(csvDelimiter)
+          .append("Device Name").append(csvDelimiter)
+          .append("Device Type");
+        //TODO: what about products (that have multiple values)
+        sb.append("\n");
+        for(MicroCTScanningStruct result : results){
+            sb.append(result.getDatasetURI()).append(csvDelimiter)
+              .append(result.getDatasetName()).append(csvDelimiter)
+              .append(result.getDescription()).append(csvDelimiter)
+              .append(result.getSpecimenURI()).append(csvDelimiter)
+              .append(result.getSpecimenName()).append(csvDelimiter)
+              .append(result.getEquipmentURI()).append(csvDelimiter)
+              .append(result.getEquipment()).append(csvDelimiter)
+              .append(result.getContrastMethod()).append(csvDelimiter)
+              .append(result.getMethodURI()).append(csvDelimiter)
+              .append(result.getMethodName()).append(csvDelimiter)
+              .append(result.getScanningURI()).append(csvDelimiter)
+              .append(result.getScanning()).append(csvDelimiter)
+              .append(result.getTimespan()).append(csvDelimiter)
+              .append(result.getActorURI()).append(csvDelimiter)
+              .append(result.getActorName()).append(csvDelimiter)
+              .append(result.getDeviceURI()).append(csvDelimiter)
+              .append(result.getDeviceName()).append(csvDelimiter)
+              .append(result.getDeviceType()).append("\n");
+        }
+        response.setHeader("Content-Disposition", "inline; filename=results.csv");
+        try(PrintWriter out = response.getWriter()){
+            out.println(sb.toString());
             out.close();
         }catch(IOException ex){
             LOGGER.error("An error occured while producing results output",ex);
