@@ -1,5 +1,6 @@
 package eu.lifewatch.dataservices.middleware.metadatarepository.rest;
 
+import com.google.gson.Gson;
 import eu.lifewatch.core.impl.VirtuosoRepositoryManager;
 import eu.lifewatch.core.model.MicroCTScanningStruct;
 import eu.lifewatch.core.model.Pair;
@@ -10,6 +11,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -86,6 +88,7 @@ public class SearchMicroCTScanning extends HttpServlet {
                 this.processAndReturnResultsAsNtriples(results, response);
                 break;
             case "json":
+                this.processAndReturnResultsAsJson(results, response);
                 break;
             case "xml":
                 this.processAndReturnResultsAsXML(results, response);
@@ -106,6 +109,19 @@ public class SearchMicroCTScanning extends HttpServlet {
                 sb.append(result.toNtriples());
             }
             out.println(sb.toString());
+            out.close();
+        }catch(IOException ex){
+            LOGGER.error("An error occured while producing results output",ex);
+        }
+    }
+    
+    private void processAndReturnResultsAsJson(List<MicroCTScanningStruct> results, HttpServletResponse response){
+        LOGGER.info("returning the results in JSON format (application/json)");
+        response.setContentType("application/json");
+        Gson gson=new Gson();
+        String gsonResults=gson.toJson(results);
+        try(PrintWriter out = response.getWriter()){
+            out.println(gsonResults);
             out.close();
         }catch(IOException ex){
             LOGGER.error("An error occured while producing results output",ex);
