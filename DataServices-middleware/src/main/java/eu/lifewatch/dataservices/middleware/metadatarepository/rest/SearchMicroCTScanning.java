@@ -56,8 +56,24 @@ public class SearchMicroCTScanning extends HttpServlet {
         String speciesNameReceived=request.getParameter(SPECIES_LABEL);
         String returnType=request.getParameter(RETURN_TYPE_LABEL);
         if(returnType==null){
-            LOGGER.info("the return type was not specified by the user. The default return type is JSON");
-            returnType="json";
+            String responseType=response.getContentType();
+            switch(responseType){
+                case CSV_CONTENT_TYPE:
+                    returnType="csv";
+                    break;
+                case XML_CONTENT_TYPE:
+                    returnType="xml";
+                    break;
+                case JSON_CONTENT_TYPE:
+                    returnType="json";
+                    break;
+                case NTRIPLES_CONTENT_TYPE:
+                    returnType="ntriples";
+                    break;
+                default:
+                    LOGGER.info("the return type was not specified by the user. The default return type is JSON");
+                    returnType="json";
+            }
         }
         if(speciesNameReceived==null){   /* This means that the user didn't provide the proper label in the request */
             LOGGER.info("the species attribute was not given by the user. Find and return all MicroCT Scanning data");
@@ -248,5 +264,4 @@ public class SearchMicroCTScanning extends HttpServlet {
         nodeElem.setTextContent(text);
         return nodeElem;
     }
-
 }
