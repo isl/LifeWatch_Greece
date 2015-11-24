@@ -35,13 +35,14 @@ public class SearchMicroCTScanning extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         LOGGER.info("Request for searchinh MicroCTScanning info");
         String speciesNameReceived=request.getParameter(SPECIES_LABEL);
+        String returnType=request.getParameter(RETURN_TYPE_LABEL);
         if(speciesNameReceived==null){   /* This means that the user didn't provide the proper label in the request */
             LOGGER.info("the species attribute was not given by the user. Find and return all MicroCT Scanning data");
             //TODO: Return everything or return error (??)
         }else{
             LOGGER.info("species attribute value: "+speciesNameReceived);
             List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived);
-            this.processAndReturnResults(results, response);
+            this.processAndReturnResults(results,returnType,response);
         }
     }
     
@@ -61,7 +62,24 @@ public class SearchMicroCTScanning extends HttpServlet {
       return retList; 
     }
     
-    private void processAndReturnResults(List<MicroCTScanningStruct> results, HttpServletResponse response){
+    private void processAndReturnResults(List<MicroCTScanningStruct> results, String returnType, HttpServletResponse response){
+        switch(returnType.toLowerCase()){
+            case "ntriples":
+                this.processAndReturnResultsAsNtriples(results, response);
+                break;
+            case "json":
+                break;
+            case "xml":
+                break;
+            case "csv":
+                break;
+            default:
+                break;
+        }
+    }
+    
+    private void processAndReturnResultsAsNtriples(List<MicroCTScanningStruct> results, HttpServletResponse response){
+        LOGGER.info("returning the results in NTRIPLES format (text/turtle)");
         response.setContentType("text/turtle");
         try(PrintWriter out = response.getWriter()){
             StringBuilder sb=new StringBuilder();
@@ -72,7 +90,6 @@ public class SearchMicroCTScanning extends HttpServlet {
             out.close();
         }catch(IOException ex){
             LOGGER.error("An error occured while producing results output",ex);
-            //TODO return also an error struct
         }
     }
 }
