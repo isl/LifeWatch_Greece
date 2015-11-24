@@ -45,6 +45,10 @@ public class SearchMicroCTScanning extends HttpServlet {
     private static final Logger LOGGER=Logger.getLogger(SearchMicroCTScanning.class);
     private static final String SPECIES_LABEL="species";
     private static final String RETURN_TYPE_LABEL="returnType";
+    private static final String XML_CONTENT_TYPE="text/xml";
+    private static final String CSV_CONTENT_TYPE="text/csv";
+    private static final String JSON_CONTENT_TYPE="application/json";
+    private static final String NTRIPLES_CONTENT_TYPE="text/turtle";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -101,8 +105,8 @@ public class SearchMicroCTScanning extends HttpServlet {
     }
     
     private void processAndReturnResultsAsNtriples(List<MicroCTScanningStruct> results, HttpServletResponse response){
-        LOGGER.info("returning the results in NTRIPLES format (text/turtle)");
-        response.setContentType("text/turtle");
+        LOGGER.info("returning the results in NTRIPLES format ("+NTRIPLES_CONTENT_TYPE+")");
+        response.setContentType(NTRIPLES_CONTENT_TYPE);
         try(PrintWriter out = response.getWriter()){
             StringBuilder sb=new StringBuilder();
             for(MicroCTScanningStruct result : results){
@@ -117,8 +121,8 @@ public class SearchMicroCTScanning extends HttpServlet {
     }
     
     private void processAndReturnResultsAsJson(List<MicroCTScanningStruct> results, HttpServletResponse response){
-        LOGGER.info("returning the results in JSON format (application/json)");
-        response.setContentType("application/json");
+        LOGGER.info("returning the results in JSON format ("+JSON_CONTENT_TYPE+")");
+        response.setContentType(JSON_CONTENT_TYPE);
         Gson gson=new Gson();
         String gsonResults=gson.toJson(results);
         try(PrintWriter out = response.getWriter()){
@@ -130,9 +134,9 @@ public class SearchMicroCTScanning extends HttpServlet {
     }
     
     private void processAndReturnResultsAsCSV(List<MicroCTScanningStruct> results, HttpServletResponse response){
-        LOGGER.info("returning the results in CSV format (text/csv)");
+        LOGGER.info("returning the results in CSV format ("+CSV_CONTENT_TYPE+")");
         final String csvDelimiter=";";
-        response.setContentType("text/csv");
+        response.setContentType(CSV_CONTENT_TYPE);
         StringBuilder sb=new StringBuilder();
         sb.append("Dataset URI").append(csvDelimiter)
           .append("Dataset Name").append(csvDelimiter)
@@ -184,8 +188,8 @@ public class SearchMicroCTScanning extends HttpServlet {
     }
     
     private void processAndReturnResultsAsXML(List<MicroCTScanningStruct> results, HttpServletResponse response){
-        LOGGER.info("returning the results in XML format (text/xml)");
-        response.setContentType("text/xml");
+        LOGGER.info("returning the results in XML format ("+XML_CONTENT_TYPE+")");
+        response.setContentType(XML_CONTENT_TYPE);
         DocumentBuilderFactory xmlFactory=DocumentBuilderFactory.newInstance();
         try{
             DocumentBuilder xmlBuilder=xmlFactory.newDocumentBuilder();
