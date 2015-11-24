@@ -2,19 +2,33 @@ package eu.lifewatch.dataservices.middleware.metadatarepository.rest;
 
 import eu.lifewatch.core.impl.VirtuosoRepositoryManager;
 import eu.lifewatch.core.model.MicroCTScanningStruct;
+import eu.lifewatch.core.model.Pair;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.service.impl.MetadataRepositoryService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * SearchMicroCTScanning provides the functionality of searching for information about 
@@ -36,6 +50,10 @@ public class SearchMicroCTScanning extends HttpServlet {
         LOGGER.info("Request for searchinh MicroCTScanning info");
         String speciesNameReceived=request.getParameter(SPECIES_LABEL);
         String returnType=request.getParameter(RETURN_TYPE_LABEL);
+        if(returnType==null){
+            LOGGER.info("the return type was not specified by the user. The default return type is JSON");
+            returnType="json";
+        }
         if(speciesNameReceived==null){   /* This means that the user didn't provide the proper label in the request */
             LOGGER.info("the species attribute was not given by the user. Find and return all MicroCT Scanning data");
             //TODO: Return everything or return error (??)
@@ -70,6 +88,7 @@ public class SearchMicroCTScanning extends HttpServlet {
             case "json":
                 break;
             case "xml":
+                this.processAndReturnResultsAsXML(results, response);
                 break;
             case "csv":
                 break;
@@ -92,4 +111,67 @@ public class SearchMicroCTScanning extends HttpServlet {
             LOGGER.error("An error occured while producing results output",ex);
         }
     }
+    
+    private void processAndReturnResultsAsXML(List<MicroCTScanningStruct> results, HttpServletResponse response){
+        LOGGER.info("returning the results in XML format (text/xml)");
+        response.setContentType("text/xml");
+        DocumentBuilderFactory xmlFactory=DocumentBuilderFactory.newInstance();
+        try{
+            DocumentBuilder xmlBuilder=xmlFactory.newDocumentBuilder();
+            Document doc=xmlBuilder.newDocument();
+            Element rootElement=doc.createElement("Results");
+            doc.appendChild(rootElement);
+            for(MicroCTScanningStruct result : results){
+                rootElement.appendChild(this.createXmlElement(doc,result));
+            }
+            Transformer transformer=TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source=new DOMSource(doc);
+            StringWriter writer=new StringWriter();
+            StreamResult streamResult=new StreamResult(writer);
+            transformer.transform(source, streamResult);
+            
+            PrintWriter out=response.getWriter();
+            out.append(writer.toString());
+            out.close();
+        }catch(ParserConfigurationException | TransformerException | IOException ex){
+            LOGGER.error("An error occured while producing XML data",ex);
+        }
+    }
+    
+    private Element createXmlElement(Document doc, MicroCTScanningStruct struct){
+        Element scanningElem=doc.createElement("microCT_scanning");
+        scanningElem.appendChild(createNodeWithText(doc,"dataset_uri",struct.getDatasetURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"dataset_name",struct.getDatasetName()));
+        scanningElem.appendChild(createNodeWithText(doc,"description",struct.getDescription()));
+        scanningElem.appendChild(createNodeWithText(doc,"specimen_uri",struct.getSpecimenURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"specimen_name",struct.getSpecimenName()));
+        scanningElem.appendChild(createNodeWithText(doc,"equipment_uri",struct.getEquipmentURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"equipment_name",struct.getEquipment()));
+        scanningElem.appendChild(createNodeWithText(doc,"contrast_method",struct.getContrastMethod()));
+        scanningElem.appendChild(createNodeWithText(doc,"method_uri",struct.getMethodURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"method_name",struct.getMethodName()));
+        scanningElem.appendChild(createNodeWithText(doc,"scanning_uri",struct.getScanningURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"scanning_name",struct.getScanning()));
+        scanningElem.appendChild(createNodeWithText(doc,"timespan",struct.getTimespan()));
+        scanningElem.appendChild(createNodeWithText(doc,"actor_uri",struct.getActorURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"actor_name",struct.getActorName()));
+        scanningElem.appendChild(createNodeWithText(doc,"device_uri",struct.getDeviceURI()));
+        scanningElem.appendChild(createNodeWithText(doc,"device_name",struct.getDeviceName()));
+        scanningElem.appendChild(createNodeWithText(doc,"device_type",struct.getDeviceType()));
+        for(Pair product : struct.getProducts()){
+            Element productElem=doc.createElement("product");
+            productElem.appendChild(createNodeWithText(doc, "product_uri", product.getKey()));
+            productElem.appendChild(createNodeWithText(doc, "product_name", product.getValue()));
+            scanningElem.appendChild(productElem);
+        }
+        return scanningElem;
+    }
+    
+    private Node createNodeWithText(Document doc, String tag, String text){
+        Element nodeElem=doc.createElement(tag);
+        nodeElem.setTextContent(text);
+        return nodeElem;
+    }
+
 }
