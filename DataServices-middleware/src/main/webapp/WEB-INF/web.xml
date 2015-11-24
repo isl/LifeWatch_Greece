@@ -78,6 +78,10 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>searchMicroCTScanning</servlet-name>
+        <servlet-class>eu.lifewatch.dataservices.middleware.metadatarepository.rest.SearchMicroCTScanning</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DirectoryService_Search</servlet-name>
         <url-pattern>/DirectoryService_Search</url-pattern>
@@ -137,6 +141,10 @@
     <servlet-mapping>
         <servlet-name>FundamentalCategories_SearchThing</servlet-name>
         <url-pattern>/FundamentalCategories_SearchThing</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchMicroCTScanning</servlet-name>
+        <url-pattern>/searchMicroCTScanning</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
