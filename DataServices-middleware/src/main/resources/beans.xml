@@ -13,4 +13,8 @@
         <constructor-arg value="dba" type="java.lang.String"/>
         <constructor-arg value="ofi" type="java.lang.String"/>
     </bean>
+    
+    <bean id="repoData" class="eu.lifewatch.dataservices.middleware.metadatarepository.rest.RepositoryData">
+        <constructor-arg value="http://www.ics.forth.gr/isl/lifewatch/metadata" type="java.lang.String"/>
+    </bean>
 </beans>
