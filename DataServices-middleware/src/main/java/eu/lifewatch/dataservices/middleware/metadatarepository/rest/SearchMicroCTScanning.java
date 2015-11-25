@@ -77,12 +77,12 @@ public class SearchMicroCTScanning extends HttpServlet {
         }
         if(speciesNameReceived==null){   /* This means that the user didn't provide the proper label in the request */
             LOGGER.info("the species attribute was not given by the user. Find and return all MicroCT Scanning data");
-            //TODO: Return everything or return error (??)
+            speciesNameReceived="";
         }else{
             LOGGER.info("species attribute value: "+speciesNameReceived);
-            List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived);
-            this.processAndReturnResults(results,returnType,response);
         }
+        List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived);
+        this.processAndReturnResults(results,returnType,response);
     }
     
     private List<MicroCTScanningStruct> getMicroCTScanningResults(String species){
