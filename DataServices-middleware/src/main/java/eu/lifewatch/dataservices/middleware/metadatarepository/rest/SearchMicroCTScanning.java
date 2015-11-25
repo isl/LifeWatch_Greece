@@ -116,6 +116,7 @@ public class SearchMicroCTScanning extends HttpServlet {
                 this.processAndReturnResultsAsCSV(results, response);
                 break;
             default:
+                this.processAndReturnResultsAsJson(results, response);
                 break;
         }
     }
@@ -171,28 +172,37 @@ public class SearchMicroCTScanning extends HttpServlet {
           .append("Actor Name").append(csvDelimiter)
           .append("Device URI").append(csvDelimiter)
           .append("Device Name").append(csvDelimiter)
-          .append("Device Type");
-        //TODO: what about products (that have multiple values)
+          .append("Device Type").append(csvDelimiter)
+          .append("Product URI").append(csvDelimiter)
+          .append("Product Name");
         sb.append("\n");
         for(MicroCTScanningStruct result : results){
-            sb.append(result.getDatasetURI()).append(csvDelimiter)
-              .append(result.getDatasetName()).append(csvDelimiter)
-              .append(result.getDescription()).append(csvDelimiter)
-              .append(result.getSpecimenURI()).append(csvDelimiter)
-              .append(result.getSpecimenName()).append(csvDelimiter)
-              .append(result.getEquipmentURI()).append(csvDelimiter)
-              .append(result.getEquipment()).append(csvDelimiter)
-              .append(result.getContrastMethod()).append(csvDelimiter)
-              .append(result.getMethodURI()).append(csvDelimiter)
-              .append(result.getMethodName()).append(csvDelimiter)
-              .append(result.getScanningURI()).append(csvDelimiter)
-              .append(result.getScanning()).append(csvDelimiter)
-              .append(result.getTimespan()).append(csvDelimiter)
-              .append(result.getActorURI()).append(csvDelimiter)
-              .append(result.getActorName()).append(csvDelimiter)
-              .append(result.getDeviceURI()).append(csvDelimiter)
-              .append(result.getDeviceName()).append(csvDelimiter)
-              .append(result.getDeviceType()).append("\n");
+            StringBuilder sbRow=new StringBuilder();
+            sbRow.append(result.getDatasetURI()).append(csvDelimiter)
+                 .append(result.getDatasetName()).append(csvDelimiter)
+                 .append(result.getDescription()).append(csvDelimiter)
+                 .append(result.getSpecimenURI()).append(csvDelimiter)
+                 .append(result.getSpecimenName()).append(csvDelimiter)
+                 .append(result.getEquipmentURI()).append(csvDelimiter)
+                 .append(result.getEquipment()).append(csvDelimiter)
+                 .append(result.getContrastMethod()).append(csvDelimiter)
+                 .append(result.getMethodURI()).append(csvDelimiter)
+                 .append(result.getMethodName()).append(csvDelimiter)
+                 .append(result.getScanningURI()).append(csvDelimiter)
+                 .append(result.getScanning()).append(csvDelimiter)
+                 .append(result.getTimespan()).append(csvDelimiter)
+                 .append(result.getActorURI()).append(csvDelimiter)
+                 .append(result.getActorName()).append(csvDelimiter)
+                 .append(result.getDeviceURI()).append(csvDelimiter)
+                 .append(result.getDeviceName()).append(csvDelimiter)
+                 .append(result.getDeviceType()).append(csvDelimiter);
+            for(Pair product : result.getProducts()){
+                sb.append(sbRow)
+                  .append(product.getKey())
+                  .append(csvDelimiter)
+                  .append(product.getValue())
+                  .append("\n");
+            }
         }
         response.setHeader("Content-Disposition", "inline; filename=results.csv");
         try(PrintWriter out = response.getWriter()){
