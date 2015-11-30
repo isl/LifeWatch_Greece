@@ -2455,7 +2455,7 @@ public class MetadataRepositoryService implements Service {
         }
         return new ArrayList<>(map.values());
     }
-public List<CommonNameStruct> searchCommonName(String species, String commonName, String place, int offset, int limit, String language, String datasetURI, String repositoryGraph)
+public List<CommonNameStruct> searchCommonName(String species, String commonName, String place, String language, String datasetURI, int offset, int limit,  String repositoryGraph)
             throws QueryExecutionException {
 
         String queryString = "SELECT DISTINCT "

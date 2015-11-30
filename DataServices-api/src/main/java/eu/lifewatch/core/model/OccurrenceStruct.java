@@ -105,7 +105,7 @@ public class OccurrenceStruct {
     }
     
     public String getOccurrenceEvent() {
-        return occurrenceEventURI;
+        return occurrenceEvent;
     }
     
     public String getDatasetURI() {
