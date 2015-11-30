@@ -4904,7 +4904,7 @@ public class Transformations {
 
             String occurrenceEventID = tokens[0];
           //  String datasetID = tokens[1];
-            String physicalObjectID = tokens[2];
+            String physicalObjectID = tokens[2].trim().replace("\"","");
             String speciesName = tokens[3];
             String actorName = tokens[4];
             String timeSpan = tokens[5];

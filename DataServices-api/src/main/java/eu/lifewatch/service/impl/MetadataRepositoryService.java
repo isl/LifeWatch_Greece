@@ -428,9 +428,10 @@ public class MetadataRepositoryService implements Service {
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, OccurrenceStruct> map = new HashMap<>();
+       // Map<String, OccurrenceStruct> map = new HashMap<>();
+        List<OccurrenceStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
+           // if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStruct struct = new OccurrenceStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
                         .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
@@ -501,14 +502,16 @@ public class MetadataRepositoryService implements Service {
                     struct.withCoordinates(result.getValue("coordinates").stringValue());
                 }
 
-                map.put(struct.getOccurrenceEventURI(), struct);
-            } else {
-                OccurrenceStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getOccurrenceEventURI(), struct);
-            }
+                results.add(struct);
+              //  map.put(struct.getOccurrenceEventURI(), struct);
+//            } else {
+//                OccurrenceStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getOccurrenceEventURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
     
