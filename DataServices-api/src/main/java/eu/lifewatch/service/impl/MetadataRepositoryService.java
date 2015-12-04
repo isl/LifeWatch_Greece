@@ -735,9 +735,10 @@ public class MetadataRepositoryService implements Service {
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, OccurrenceStatsTempStruct> map = new HashMap<>();
+        //Map<String, OccurrenceStatsTempStruct> map = new HashMap<>();
+        List<OccurrenceStatsTempStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
+           // if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStatsTempStruct struct = new OccurrenceStatsTempStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
                         .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
@@ -816,14 +817,17 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("coordinates") != null) {
                     struct.withCoordinates(result.getValue("coordinates").stringValue());
                 }
-                map.put(struct.getOccurrenceEventURI(), struct);
-            } else {
-                OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getOccurrenceEventURI(), struct);
-            }
+                
+                results.add(struct);
+//                map.put(struct.getOccurrenceEventURI(), struct);
+//            } else {
+//                OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getOccurrenceEventURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
 //    public List<OccurrenceStatsAbundanceStruct> searchOccurenceStatsAbundance(String speciesName, String temp, String repositoryGraph) throws QueryExecutionException {
@@ -973,9 +977,10 @@ public class MetadataRepositoryService implements Service {
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, EnvironmentalStruct> map = new HashMap<>();
+        //Map<String, EnvironmentalStruct> map = new HashMap<>();
+        List<EnvironmentalStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
+           // if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 EnvironmentalStruct struct = new EnvironmentalStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
                         .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDimensionName(result.getValue("dimensionName").stringValue())
@@ -995,14 +1000,16 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("unit") != null) {
                     struct.withDimensionUnit(result.getValue("unit").stringValue());
                 }
-                map.put(struct.getMeasurementEventURI(), struct);
-            } else {
-                EnvironmentalStruct struct = map.get(result.getValue("measurementEventURI").stringValue());
-                struct.withActor(result.getValue("actorName").stringValue(), result.getValue("actorURI").stringValue());
-                map.put(struct.getMeasurementEventURI(), struct);
-            }
+                results.add(struct);
+//                map.put(struct.getMeasurementEventURI(), struct);
+//            } else {
+//                EnvironmentalStruct struct = map.get(result.getValue("measurementEventURI").stringValue());
+//                struct.withActor(result.getValue("actorName").stringValue(), result.getValue("actorURI").stringValue());
+//                map.put(struct.getMeasurementEventURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
     public List<MeasurementStruct> searchMeasurement(String specimen, String species, String dimension, String datasetURI,String repositoryGraph) throws QueryExecutionException {
@@ -1112,8 +1119,9 @@ public class MetadataRepositoryService implements Service {
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
         Map<String, MeasurementStruct> map = new HashMap<>();
+        List<MeasurementStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
+          //  if (!map.containsKey(result.getValue("measurementEventURI").stringValue())) {
                 MeasurementStruct struct = new MeasurementStruct().withMeasurementEventURI(result.getValue("measurementEventURI").stringValue())
                         .withMeasurementEvent(result.getValue("measurementEventLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
@@ -1137,14 +1145,17 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("actorName") != null && result.getValue("actorURI") != null) {
                     struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
                 }
-                map.put(struct.getMeasurementEventURI(), struct);
-            } else {
-                MeasurementStruct struct = map.get(result.getValue("measurementEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getMeasurementEventURI(), struct);
-            }
+                
+                results.add(struct);
+//                map.put(struct.getMeasurementEventURI(), struct);
+//            } else {
+//                MeasurementStruct struct = map.get(result.getValue("measurementEventURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getMeasurementEventURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
     public List<MorphometricsStruct> searchMorphometrics(String species, String dimension, String datasetURI,String repositoryGraph) throws QueryExecutionException {
@@ -1420,9 +1431,10 @@ public class MetadataRepositoryService implements Service {
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, StatsStruct> map = new HashMap<>();
+        //Map<String, StatsStruct> map = new HashMap<>();
+        List<StatsStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("dataEvaluationURI").stringValue())) {
+           // if (!map.containsKey(result.getValue("dataEvaluationURI").stringValue())) {
                 StatsStruct struct = new StatsStruct().withDataEvaluationURI(result.getValue("dataEvaluationURI").stringValue())
                         .withDataEvaluation(result.getValue("dataEvaluationLabel").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
@@ -1453,14 +1465,16 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("publicationURI") != null) {
                     struct.withPublicationURI(result.getValue("publicationURI").stringValue());
                 }
-                map.put(struct.getDataEvaluationURI(), struct);
-            } else {
-                StatsStruct struct = map.get(result.getValue("dataEvaluationURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getDataEvaluationURI(), struct);
-            }
+                results.add(struct);
+//                map.put(struct.getDataEvaluationURI(), struct);
+//            } else {
+//                StatsStruct struct = map.get(result.getValue("dataEvaluationURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getDataEvaluationURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+       // return new ArrayList<>(map.values());
     }
 
     public List<SpecimenStruct> searchSpecimen(String specimen, String species, String collection, String datasetURI,String repositoryGraph) throws QueryExecutionException {
@@ -1580,8 +1594,9 @@ public class MetadataRepositoryService implements Service {
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
         Map<String, SpecimenStruct> map = new HashMap<>();
+        List<SpecimenStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("specimenURI").stringValue())) {
+          //  if (!map.containsKey(result.getValue("specimenURI").stringValue())) {
                 SpecimenStruct struct = new SpecimenStruct().withTransformationEventURI(result.getValue("transformationEventURI").stringValue())
                         .withTransformationEvent(result.getValue("transformationEventLabel").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
@@ -1605,14 +1620,16 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("methodURI") != null) {
                     struct.withMethodURI(result.getValue("methodURI").stringValue());
                 }
-                map.put(struct.getSpecimenURI(), struct);
-            } else {
-                SpecimenStruct struct = map.get(result.getValue("specimenURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getSpecimenURI(), struct);
-            }
+                results.add(struct);
+//                map.put(struct.getSpecimenURI(), struct);
+//            } else {
+//                SpecimenStruct struct = map.get(result.getValue("specimenURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getSpecimenURI(), struct);
+//            }
         }
-        return new ArrayList<>(map.values());
+        return results;
+      //  return new ArrayList<>(map.values());
     }
 
     public List<SpecimenCollectionStruct> searchSpecimenCollection(String collectionName, String ownerName,String datasetURI, String repositoryGraph) throws QueryExecutionException {
@@ -2329,9 +2346,10 @@ public class MetadataRepositoryService implements Service {
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, ScientificNamingStruct> map = new HashMap<>();
+       // Map<String, ScientificNamingStruct> map = new HashMap<>();
+        List<ScientificNamingStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
+            //if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
                 ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
                         .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
@@ -2349,34 +2367,37 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("ncodeName") != null) {
                     struct.withNomenclaturalCodeName(result.getValue("ncodeName").stringValue());
                 }
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            } else {
-                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            }
+                
+                results.add(struct);
+//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
+//            } else {
+//                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
+//            }
+//        }
+//        if (!map.isEmpty()) {
+//            String query = "SELECT DISTINCT ?scientificNameAssignmentEventURI ?actorURI ?actorName"
+//                    + " FROM <" + repositoryGraph + "> "
+//                    + "WHERE{ "
+//                    + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
+//                    + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
+//                    + "FILTER( ";
+//            for (ScientificNamingStruct struct : map.values()) {
+//                query += " ?scientificNameAssignmentEventURI = <" + struct.getScientificNameAssignmentEventURI() + "> || ";
+//            }
+//            query = query.substring(0, query.length() - 3) + ")}";
+//            logger.debug("Getting more actors using the query: \"" + query + "\"");
+//            sparqlresults = this.repoManager.query(query);
+//            logger.debug("The inner query returned " + sparqlresults.size() + " results");
+//            for (BindingSet result : sparqlresults) {
+//                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
+//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
+//            }
         }
-        if (!map.isEmpty()) {
-            String query = "SELECT DISTINCT ?scientificNameAssignmentEventURI ?actorURI ?actorName"
-                    + " FROM <" + repositoryGraph + "> "
-                    + "WHERE{ "
-                    + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
-                    + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
-                    + "FILTER( ";
-            for (ScientificNamingStruct struct : map.values()) {
-                query += " ?scientificNameAssignmentEventURI = <" + struct.getScientificNameAssignmentEventURI() + "> || ";
-            }
-            query = query.substring(0, query.length() - 3) + ")}";
-            logger.debug("Getting more actors using the query: \"" + query + "\"");
-            sparqlresults = this.repoManager.query(query);
-            logger.debug("The inner query returned " + sparqlresults.size() + " results");
-            for (BindingSet result : sparqlresults) {
-                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            }
-        }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
     public List<CommonNameStruct> searchCommonName(String species, String commonName, String place, String language, String datasetURI, String repositoryGraph)
@@ -2490,9 +2511,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, CommonNameStruct> map = new HashMap<>();
+        //Map<String, CommonNameStruct> map = new HashMap<>();
+        List<CommonNameStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("commonNameURI").stringValue())) {
+           // if (!map.containsKey(result.getValue("commonNameURI").stringValue())) {
                 CommonNameStruct struct = new CommonNameStruct().withCommonNameURI(result.getValue("commonNameURI").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetName").stringValue())
@@ -2508,36 +2530,39 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 if (result.getValue("placeURI") != null && result.getValue("placeName") != null) {
                     struct.withPlace(result.getValue("placeURI").stringValue(), result.getValue("placeName").stringValue());
                 }
-                map.put(struct.getCommonNameURI(), struct);
-            } else {
-                CommonNameStruct struct = map.get(result.getValue("commonNameURI").stringValue());
-                if (result.getValue("placeURI") != null && result.getValue("placeName") != null) {
-                    struct.withPlace(result.getValue("placeURI").stringValue(), result.getValue("placeName").stringValue());
-                }
-                map.put(struct.getCommonNameURI(), struct);
-            }
+                
+                results.add(struct);
+//                map.put(struct.getCommonNameURI(), struct);
+//            } else {
+//                CommonNameStruct struct = map.get(result.getValue("commonNameURI").stringValue());
+//                if (result.getValue("placeURI") != null && result.getValue("placeName") != null) {
+//                    struct.withPlace(result.getValue("placeURI").stringValue(), result.getValue("placeName").stringValue());
+//                }
+//                map.put(struct.getCommonNameURI(), struct);
+//            }
+//        }
+//        if (!map.isEmpty()) {
+//            String query = "SELECT ?commonNameURI ?placeURI ?placeName "
+//                    + "WHERE{ "
+//                    + "OPTIONAL{?commonNameURI <" + Resources.isUsedIn + "> ?placeURI. "
+//                    + " ?placeURI <" + Resources.rdfTypeLabel + "> <" + Resources.placeLabel + "> .  "
+//                    + " ?placeURI <" + Resources.rdfsLabel + "> ?placeName. } "
+//                    + " FILTER (";
+//            for (CommonNameStruct struct : map.values()) {
+//                query += " ?commonNameURI = <" + struct.getCommonNameURI() + "> || ";
+//            }
+//            query = query.substring(0, query.length() - 3) + ")}";
+//            logger.debug("Query for retrieving all the avaialble places: " + query);
+//            sparqlresults = this.repoManager.query(query);
+//            logger.debug("The query returned " + sparqlresults.size() + " results");
+//            for (BindingSet result : sparqlresults) {
+//                CommonNameStruct struct = map.get(result.getValue("commonNameURI").stringValue());
+//                struct.withPlace(result.getValue("placeURI").stringValue(), result.getValue("placeName").stringValue());
+//                map.put(struct.getCommonNameURI(), struct);
+//            }
         }
-        if (!map.isEmpty()) {
-            String query = "SELECT ?commonNameURI ?placeURI ?placeName "
-                    + "WHERE{ "
-                    + "OPTIONAL{?commonNameURI <" + Resources.isUsedIn + "> ?placeURI. "
-                    + " ?placeURI <" + Resources.rdfTypeLabel + "> <" + Resources.placeLabel + "> .  "
-                    + " ?placeURI <" + Resources.rdfsLabel + "> ?placeName. } "
-                    + " FILTER (";
-            for (CommonNameStruct struct : map.values()) {
-                query += " ?commonNameURI = <" + struct.getCommonNameURI() + "> || ";
-            }
-            query = query.substring(0, query.length() - 3) + ")}";
-            logger.debug("Query for retrieving all the avaialble places: " + query);
-            sparqlresults = this.repoManager.query(query);
-            logger.debug("The query returned " + sparqlresults.size() + " results");
-            for (BindingSet result : sparqlresults) {
-                CommonNameStruct struct = map.get(result.getValue("commonNameURI").stringValue());
-                struct.withPlace(result.getValue("placeURI").stringValue(), result.getValue("placeName").stringValue());
-                map.put(struct.getCommonNameURI(), struct);
-            }
-        }
-        return new ArrayList<>(map.values());
+        return results;
+       // return new ArrayList<>(map.values());
     }
 
     public List<SynonymStruct> searchSynonym(String species, String scientificName, String synonym, String datasetURI,String repositoryGraph)
@@ -2637,9 +2662,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, SynonymStruct> map = new HashMap<>();
+       // Map<String, SynonymStruct> map = new HashMap<>();
+        List<SynonymStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("appellationURI").stringValue())) {
+          //  if (!map.containsKey(result.getValue("appellationURI").stringValue())) {
                 SynonymStruct struct = new SynonymStruct().withAppellationURI(result.getValue("appellationURI").stringValue())
                         .withAppellation(result.getValue("appellation").stringValue())
                         .withSynonym(result.getValue("synonymURI").stringValue(), result.getValue("synonym").stringValue())
@@ -2654,34 +2680,36 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 //                struct.withLanguageURI(result.getValue("languageURI").stringValue());
                 //            }
 
-                map.put(struct.getAppellationURI(), struct);
-            } else {
-                SynonymStruct struct = map.get(result.getValue("appellationURI").stringValue());
-                struct.withSynonym(result.getValue("synonymURI").stringValue(), result.getValue("synonym").stringValue());
-                map.put(struct.getAppellationURI(), struct);
-            }
+//                map.put(struct.getAppellationURI(), struct);
+//            } else {
+//                SynonymStruct struct = map.get(result.getValue("appellationURI").stringValue());
+//                struct.withSynonym(result.getValue("synonymURI").stringValue(), result.getValue("synonym").stringValue());
+//                map.put(struct.getAppellationURI(), struct);
+//            }
+//        }
+//        if (!map.isEmpty()) {
+//            String query = "SELECT ?appellationURI ?synonymURI ?synonym "
+//                    + "FROM <" + repositoryGraph + "> "
+//                    + "WHERE{ "
+//                    + " ?synonymURI <" + Resources.rdfsLabel + "> ?synonym. "
+//                    + " ?appellationURI <" + Resources.hasAlternativeForm + "> ?synonymURI. "
+//                    + " FILTER ( ";
+//            for (SynonymStruct struct : map.values()) {
+//                query += " ?appellationURI = <" + struct.getAppellationURI() + "> || ";
+//            }
+//            query = query.substring(0, query.length() - 3) + ")}";
+//            logger.debug("Getting more synonyms using the query: \"" + query + "\"");
+//            sparqlresults = this.repoManager.query(query);
+//            logger.debug("The query returned " + sparqlresults.size() + " results");
+//            for (BindingSet result : sparqlresults) {
+//                SynonymStruct struct = map.get(result.getValue("appellationURI").stringValue());
+//                struct.withSynonym(result.getValue("synonymURI").stringValue(), result.getValue("synonym").stringValue());
+//                map.put(struct.getAppellationURI(), struct);
+//            }
+        results.add(struct);
         }
-        if (!map.isEmpty()) {
-            String query = "SELECT ?appellationURI ?synonymURI ?synonym "
-                    + "FROM <" + repositoryGraph + "> "
-                    + "WHERE{ "
-                    + " ?synonymURI <" + Resources.rdfsLabel + "> ?synonym. "
-                    + " ?appellationURI <" + Resources.hasAlternativeForm + "> ?synonymURI. "
-                    + " FILTER ( ";
-            for (SynonymStruct struct : map.values()) {
-                query += " ?appellationURI = <" + struct.getAppellationURI() + "> || ";
-            }
-            query = query.substring(0, query.length() - 3) + ")}";
-            logger.debug("Getting more synonyms using the query: \"" + query + "\"");
-            sparqlresults = this.repoManager.query(query);
-            logger.debug("The query returned " + sparqlresults.size() + " results");
-            for (BindingSet result : sparqlresults) {
-                SynonymStruct struct = map.get(result.getValue("appellationURI").stringValue());
-                struct.withSynonym(result.getValue("synonymURI").stringValue(), result.getValue("synonym").stringValue());
-                map.put(struct.getAppellationURI(), struct);
-            }
-        }
-        return new ArrayList<>(map.values());
+        return results;
+        //return new ArrayList<>(map.values());
     }
 
     public List<IdentificationStruct> searchIdentification(String species, String date, String actor, String place, String individual, String datasetURI,String repositoryGraph)
