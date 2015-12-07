@@ -48,27 +48,27 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String datasetID = tokens[0];
-            String parentDataset = tokens[1];
-            String datasetTitle = tokens[2];
-            String creatorName = tokens[3];
-            String creationDate = tokens[4];
-            String contributorName = tokens[5];
-            String ownerName = tokens[6];
-            String keeperName = tokens[7];
-            String curatorName = tokens[8];
-            String contactPoint = tokens[9];
-            String accessRights = tokens[10];
-            String rightsHolder = tokens[11];
-            String description = tokens[12];
-            String accessMethod = tokens[13];
-            String publisherName = tokens[14];
-            String publicationDate = tokens[15];
-            String imageURL = tokens[16];
-            String datasetType = tokens[17];
-            String locationURL = tokens[18];
-            String embargoState = tokens[19];
-            String embargoPeriod = tokens[20];
+            String datasetID = tokens[0].trim();
+            String parentDataset = tokens[1].trim();
+            String datasetTitle = tokens[2].trim();
+            String creatorName = tokens[3].trim();
+            String creationDate = tokens[4].trim();
+            String contributorName = tokens[5].trim();
+            String ownerName = tokens[6].trim();
+            String keeperName = tokens[7].trim();
+            String curatorName = tokens[8].trim();
+            String contactPoint = tokens[9].trim();
+            String accessRights = tokens[10].trim();
+            String rightsHolder = tokens[11].trim();
+            String description = tokens[12].trim();
+            String accessMethod = tokens[13].trim();
+            String publisherName = tokens[14].trim();
+            String publicationDate = tokens[15].trim();
+            String imageURL = tokens[16].trim();
+            String datasetType = tokens[17].trim();
+            String locationURL = tokens[18].trim();
+            String embargoState = tokens[19].trim();
+            String embargoPeriod = tokens[20].trim();
 
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
@@ -357,28 +357,28 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String datasetID = tokens[0];
-            String parentDataset = tokens[1];
+            String datasetID = tokens[0].trim();
+            String parentDataset = tokens[1].trim();
             //String datasetTitle = tokens[2];
-            String datasetTitle = datasetName;
-            String creatorName = tokens[3];
-            String creationDate = tokens[4];
-            String contributorName = tokens[5];
-            String ownerName = tokens[6];
-            String keeperName = tokens[7];
-            String curatorName = tokens[8];
-            String contactPoint = tokens[9];
-            String accessRights = tokens[10];
-            String rightsHolder = tokens[11];
-            String description = tokens[12];
-            String accessMethod = tokens[13];
-            String publisherName = tokens[14];
-            String publicationDate = tokens[15];
-            String imageURL = tokens[16];
-            String datasetType = tokens[17];
-            String locationURL = tokens[18];
-            String embargoState = tokens[19];
-            String embargoPeriod = tokens[20];
+            String datasetTitle = datasetName.trim();
+            String creatorName = tokens[3].trim();
+            String creationDate = tokens[4].trim();
+            String contributorName = tokens[5].trim();
+            String ownerName = tokens[6].trim();
+            String keeperName = tokens[7].trim();
+            String curatorName = tokens[8].trim();
+            String contactPoint = tokens[9].trim();
+            String accessRights = tokens[10].trim();
+            String rightsHolder = tokens[11].trim();
+            String description = tokens[12].trim();
+            String accessMethod = tokens[13].trim();
+            String publisherName = tokens[14].trim();
+            String publicationDate = tokens[15].trim();
+            String imageURL = tokens[16].trim();
+            String datasetType = tokens[17].trim();
+            String locationURL = tokens[18].trim();
+            String embargoState = tokens[19].trim();
+            String embargoPeriod = tokens[20].trim();
 
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
@@ -668,26 +668,26 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String occurrenceEventID = tokens[0];
-            String datasetID = tokens[1];
-            String individualID = tokens[2];
-            String speciesName = tokens[3];
-            String actorName = tokens[4];
-            String timeSpan = tokens[5];
-            String locality = tokens[6];
-            String country = tokens[7];
-            String waterArea = tokens[8];
-            String habitat = tokens[9];
-            String ecosystem = tokens[10];
-            String equipmentType = tokens[11];
-            String latitude = tokens[12];
-            String longitude = tokens[13];
-            String maximumDepth = tokens[14];
-            String minimumDepth = tokens[15];
-            String samplingProtocol = tokens[16];
+            String occurrenceEventID = tokens[0].trim();
+            String datasetID = tokens[1].trim();
+            String individualID = tokens[2].trim();
+            String speciesName = tokens[3].trim();
+            String actorName = tokens[4].trim();
+            String timeSpan = tokens[5].trim();
+            String locality = tokens[6].trim();
+            String country = tokens[7].trim();
+            String waterArea = tokens[8].trim();
+            String habitat = tokens[9].trim();
+            String ecosystem = tokens[10].trim();
+            String equipmentType = tokens[11].trim();
+            String latitude = tokens[12].trim();
+            String longitude = tokens[13].trim();
+            String maximumDepth = tokens[14].trim();
+            String minimumDepth = tokens[15].trim();
+            String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
-            String bibliographicCitation = tokens[17];
-            String description = tokens[18];
+            String bibliographicCitation = tokens[17].trim();
+            String description = tokens[18].trim();
 
             System.out.println("latitude" + latitude);
             System.out.println("longitude" + longitude);
@@ -1042,26 +1042,26 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String occurrenceEventID = tokens[0];
+            String occurrenceEventID = tokens[0].trim();
             //String datasetID = tokens[1];
-            String individualID = tokens[2];
-            String speciesName = tokens[3];
-            String actorName = tokens[4];
-            String timeSpan = tokens[5];
-            String locality = tokens[6];
-            String country = tokens[7];
-            String waterArea = tokens[8];
-            String habitat = tokens[9];
-            String ecosystem = tokens[10];
-            String equipmentType = tokens[11];
-            String latitude = tokens[12];
-            String longitude = tokens[13];
-            String maximumDepth = tokens[14];
-            String minimumDepth = tokens[15];
-            String samplingProtocol = tokens[16];
+            String individualID = tokens[2].trim();
+            String speciesName = tokens[3].trim();
+            String actorName = tokens[4].trim();
+            String timeSpan = tokens[5].trim();
+            String locality = tokens[6].trim();
+            String country = tokens[7].trim();
+            String waterArea = tokens[8].trim();
+            String habitat = tokens[9].trim();
+            String ecosystem = tokens[10].trim();
+            String equipmentType = tokens[11].trim();
+            String latitude = tokens[12].trim();
+            String longitude = tokens[13].trim();
+            String maximumDepth = tokens[14].trim();
+            String minimumDepth = tokens[15].trim();
+            String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
-            String bibliographicCitation = tokens[17];
-            String description = tokens[18];
+            String bibliographicCitation = tokens[17].trim();
+            String description = tokens[18].trim();
 
             System.out.println("latitude" + latitude);
             System.out.println("longitude" + longitude);
@@ -1417,15 +1417,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String station = tokens[0];
-            String place = tokens[1];
-            String measurementID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String dimensionType = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String datasetID = tokens[8];
+            String station = tokens[0].trim();
+            String place = tokens[1].trim();
+            String measurementID = tokens[2].trim();
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String dimensionType = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
+            String datasetID = tokens[8].trim();
 
             String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
             
@@ -1584,14 +1584,14 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String station = tokens[0];
-            String place = tokens[1];
-            String measurementID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String dimensionType = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
+            String station = tokens[0].trim();
+            String place = tokens[1].trim();
+            String measurementID = tokens[2].trim();
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String dimensionType = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
             //String datasetID = tokens[8];
             
             String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
@@ -1749,14 +1749,14 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String identificationEventID = tokens[0];
-            String individualID = tokens[1];
-            String datasetID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String locality = tokens[5];
-            String speciesName = tokens[6];
-            String identificationReferences = tokens[7];
+            String identificationEventID = tokens[0].trim();
+            String individualID = tokens[1].trim();
+            String datasetID = tokens[2].trim();
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String locality = tokens[5].trim();
+            String speciesName = tokens[6].trim();
+            String identificationReferences = tokens[7].trim();
 
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
@@ -1911,14 +1911,14 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String identificationEventID = tokens[0];
-            String individualID = tokens[1];
+            String identificationEventID = tokens[0].trim();
+            String individualID = tokens[1].trim();
             //String datasetID=tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String locality = tokens[5];
-            String speciesName = tokens[6];
-            String identificationReferences = tokens[7];
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String locality = tokens[5].trim();
+            String speciesName = tokens[6].trim();
+            String identificationReferences = tokens[7].trim();
 
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
@@ -2072,15 +2072,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimen = tokens[0];
-            String measurementID = tokens[1];
-            String actorName = tokens[2];
-            String timeSpan = tokens[3];
-            String dimensionType = tokens[4];
-            String dimensionValue = tokens[5];
-            String dimensionUnit = tokens[6];
-            String datasetID = tokens[7];
-            String speciesName = tokens[8];
+            String specimen = tokens[0].trim();
+            String measurementID = tokens[1].trim();
+            String actorName = tokens[2].trim();
+            String timeSpan = tokens[3].trim();
+            String dimensionType = tokens[4].trim();
+            String dimensionValue = tokens[5].trim();
+            String dimensionUnit = tokens[6].trim();
+            String datasetID = tokens[7].trim();
+            String speciesName = tokens[8].trim();
 
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
@@ -2233,15 +2233,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimen = tokens[0];
-            String measurementID = tokens[1];
-            String actorName = tokens[2];
-            String timeSpan = tokens[3];
-            String dimensionType = tokens[4];
-            String dimensionValue = tokens[5];
-            String dimensionUnit = tokens[6];
+            String specimen = tokens[0].trim();
+            String measurementID = tokens[1].trim();
+            String actorName = tokens[2].trim();
+            String timeSpan = tokens[3].trim();
+            String dimensionType = tokens[4].trim();
+            String dimensionValue = tokens[5].trim();
+            String dimensionUnit = tokens[6].trim();
             //  String datasetID=tokens[7];
-            String speciesName = tokens[8];
+            String speciesName = tokens[8].trim();
 
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
@@ -2394,16 +2394,16 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String attributeAssignmentID = tokens[1];
-            String actorName = tokens[2];
-            String timeSpan = tokens[3];
-            String dimensionType = tokens[4];
-            String dimensionValue = tokens[5];
-            String dimensionUnit = tokens[6];
-            String publication = tokens[7];
-            String description = tokens[8];
-            String datasetID = tokens[9];
+            String speciesName = tokens[0].trim();
+            String attributeAssignmentID = tokens[1].trim();
+            String actorName = tokens[2].trim();
+            String timeSpan = tokens[3].trim();
+            String dimensionType = tokens[4].trim();
+            String dimensionValue = tokens[5].trim();
+            String dimensionUnit = tokens[6].trim();
+            String publication = tokens[7].trim();
+            String description = tokens[8].trim();
+            String datasetID = tokens[9].trim();
 
             String speciesURI = createURI(URIprefix, speciesName, "species");
 
@@ -2568,15 +2568,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String attributeAssignmentID = tokens[1];
-            String actorName = tokens[2];
-            String timeSpan = tokens[3];
-            String dimensionType = tokens[4];
-            String dimensionValue = tokens[5];
-            String dimensionUnit = tokens[6];
-            String publication = tokens[7];
-            String description = tokens[8];
+            String speciesName = tokens[0].trim();
+            String attributeAssignmentID = tokens[1].trim();
+            String actorName = tokens[2].trim();
+            String timeSpan = tokens[3].trim();
+            String dimensionType = tokens[4].trim();
+            String dimensionValue = tokens[5].trim();
+            String dimensionUnit = tokens[6].trim();
+            String publication = tokens[7].trim();
+            String description = tokens[8].trim();
             //  String datasetID = tokens[9];
 
             String speciesURI = createURI(URIprefix, speciesName, "species");
@@ -2741,14 +2741,14 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String genusName = tokens[1];
-            String familyName = tokens[2];
-            String orderName = tokens[3];
-            String className = tokens[4];
-            String phylumName = tokens[5];
-            String kingdomName = tokens[6];
-            String datasetID = tokens[7];
+            String speciesName = tokens[0].trim();
+            String genusName = tokens[1].trim();
+            String familyName = tokens[2].trim();
+            String orderName = tokens[3].trim();
+            String className = tokens[4].trim();
+            String phylumName = tokens[5].trim();
+            String kingdomName = tokens[6].trim();
+            String datasetID = tokens[7].trim();
 
             String speciesURI = "";
              if (!(speciesName.startsWith("http")||speciesName.startsWith("urn"))) {
@@ -2904,13 +2904,13 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String genusName = tokens[1];
-            String familyName = tokens[2];
-            String orderName = tokens[3];
-            String className = tokens[4];
-            String phylumName = tokens[5];
-            String kingdomName = tokens[6];
+            String speciesName = tokens[0].trim();
+            String genusName = tokens[1].trim();
+            String familyName = tokens[2].trim();
+            String orderName = tokens[3].trim();
+            String className = tokens[4].trim();
+            String phylumName = tokens[5].trim();
+            String kingdomName = tokens[6].trim();
             //   String datasetID = tokens[7];
 
             String speciesURI = "";
@@ -3065,16 +3065,16 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String scientificNameAssignmentEvent = tokens[0];
+            String scientificNameAssignmentEvent = tokens[0].trim();
 
-            String actorName = tokens[1];
+            String actorName = tokens[1].trim();
 
-            String timeSpan = tokens[2];
+            String timeSpan = tokens[2].trim();
 
-            String appellation = tokens[3];
-            String nomenclaturalCode = tokens[4];
-            String species = tokens[5];
-            String datasetID = tokens[6];
+            String appellation = tokens[3].trim();
+            String nomenclaturalCode = tokens[4].trim();
+            String species = tokens[5].trim();
+            String datasetID = tokens[6].trim();
 
             String scientificNameAssignmentEventURI = "";
 
@@ -3214,15 +3214,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String scientificNameAssignmentEvent = tokens[0];
+            String scientificNameAssignmentEvent = tokens[0].trim();
 
-            String actorName = tokens[1];
+            String actorName = tokens[1].trim();
 
-            String timeSpan = tokens[2];
+            String timeSpan = tokens[2].trim();
 
-            String appellation = tokens[3];
-            String nomenclaturalCode = tokens[4];
-            String species = tokens[5];
+            String appellation = tokens[3].trim();
+            String nomenclaturalCode = tokens[4].trim();
+            String species = tokens[5].trim();
            // String datasetID = tokens[6];
 
             String scientificNameAssignmentEventURI = "";
@@ -3365,13 +3365,13 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String species = tokens[0];
+            String species = tokens[0].trim();
 
-            String commonName = tokens[1];
-            String place = tokens[2];
-            String language = tokens[3];
-            String datasetID = tokens[4];
-
+            String commonName = tokens[1].trim();
+            String place = tokens[2].trim();
+            String language = tokens[3].trim();
+            String datasetID = tokens[4].trim();          
+            
             String commonNameURI = createURI(URIprefix, commonName, "appellation");
 
             String speciesURI = "";
@@ -3498,11 +3498,11 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String species = tokens[0];
+            String species = tokens[0].trim();
 
-            String commonName = tokens[1];
-            String place = tokens[2];
-            String language = tokens[3];
+            String commonName = tokens[1].trim();
+            String place = tokens[2].trim();
+            String language = tokens[3].trim();
           //  String datasetID = tokens[4];
 
             String commonNameURI = createURI(URIprefix, commonName, "appellation");
@@ -3627,10 +3627,10 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String appellation = tokens[1];
-            String synonym = tokens[2];
-            String datasetID = tokens[3];
+            String speciesName = tokens[0].trim();
+            String appellation = tokens[1].trim();
+            String synonym = tokens[2].trim();
+            String datasetID = tokens[3].trim();
 
             String speciesURI = "";
             if (speciesName.startsWith("http:")) {
@@ -3720,9 +3720,9 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String appellation = tokens[1];
-            String synonym = tokens[2];
+            String speciesName = tokens[0].trim();
+            String appellation = tokens[1].trim();
+            String synonym = tokens[2].trim();
             //String datasetID = tokens[3];
 
             String speciesURI = "";
@@ -3812,15 +3812,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String individual = tokens[0];
-            String transformationID = tokens[1];
-            String specimenName = tokens[2];
-            String collectionName = tokens[3];
-            String method = tokens[4];
-            String actorName = tokens[5];
-            String timeSpan = tokens[6];
-            String datasetID = tokens[7];
-            String speciesName = tokens[8];
+            String individual = tokens[0].trim();
+            String transformationID = tokens[1].trim();
+            String specimenName = tokens[2].trim();
+            String collectionName = tokens[3].trim();
+            String method = tokens[4].trim();
+            String actorName = tokens[5].trim();
+            String timeSpan = tokens[6].trim();
+            String datasetID = tokens[7].trim();
+            String speciesName = tokens[8].trim();
 
             String specimenURI = createURI(URIprefix, specimenName, "specimen");
 
@@ -3990,15 +3990,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String individual = tokens[0];
-            String transformationID = tokens[1];
-            String specimenName = tokens[2];
-            String collectionName = tokens[3];
-            String method = tokens[4];
-            String actorName = tokens[5];
-            String timeSpan = tokens[6];
+            String individual = tokens[0].trim();
+            String transformationID = tokens[1].trim();
+            String specimenName = tokens[2].trim();
+            String collectionName = tokens[3].trim();
+            String method = tokens[4].trim();
+            String actorName = tokens[5].trim();
+            String timeSpan = tokens[6].trim();
             //  String datasetID = tokens[7];
-            String speciesName = tokens[8];
+            String speciesName = tokens[8].trim();
 
             String specimenURI = createURI(URIprefix, specimenName, "specimen");
 
@@ -4168,15 +4168,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String collectionName = tokens[0];
-            String actorName = tokens[1];
-            String timespan = tokens[2];
-            String ownerName = tokens[3];
-            String keeperName = tokens[4];
-            String curatorName = tokens[5];
-            String contactPoint = tokens[6];
-            String description = tokens[7];
-            String datasetName = tokens[8];
+            String collectionName = tokens[0].trim();
+            String actorName = tokens[1].trim();
+            String timespan = tokens[2].trim();
+            String ownerName = tokens[3].trim();
+            String keeperName = tokens[4].trim();
+            String curatorName = tokens[5].trim();
+            String contactPoint = tokens[6].trim();
+            String description = tokens[7].trim();
+            String datasetName = tokens[8].trim();
 
             String collectionURI = createURI(URIprefix, collectionName, "collection");
 
@@ -4318,14 +4318,14 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String collectionName = tokens[0];
-            String actorName = tokens[1];
-            String timespan = tokens[2];
-            String ownerName = tokens[3];
-            String keeperName = tokens[4];
-            String curatorName = tokens[5];
-            String contactPoint = tokens[6];
-            String description = tokens[7];
+            String collectionName = tokens[0].trim();
+            String actorName = tokens[1].trim();
+            String timespan = tokens[2].trim();
+            String ownerName = tokens[3].trim();
+            String keeperName = tokens[4].trim();
+            String curatorName = tokens[5].trim();
+            String contactPoint = tokens[6].trim();
+            String description = tokens[7].trim();
             //  String datasetName = tokens[8];
 
             String collectionURI = createURI(URIprefix, collectionName, "collection");
@@ -4476,30 +4476,30 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String occurrenceEventID = tokens[0];
-            String datasetID = tokens[1];
-            String physicalObjectID = tokens[2];
-            String speciesName = tokens[3];
-            String actorName = tokens[4];
-            String timeSpan = tokens[5];
-            String locality = tokens[6];
-            String country = tokens[7];
-            String waterArea = tokens[8];
-            String habitat = tokens[9];
-            String ecosystem = tokens[10];
-            String equipmentType = tokens[11];
-            String latitude = tokens[12];
-            String longitude = tokens[13];
-            String maximumDepth = tokens[14];
-            String minimumDepth = tokens[15];
-            String samplingProtocol = tokens[16];
+            String occurrenceEventID = tokens[0].trim();
+            String datasetID = tokens[1].trim();
+            String physicalObjectID = tokens[2].trim();
+            String speciesName = tokens[3].trim();
+            String actorName = tokens[4].trim();
+            String timeSpan = tokens[5].trim();
+            String locality = tokens[6].trim();
+            String country = tokens[7].trim();
+            String waterArea = tokens[8].trim();
+            String habitat = tokens[9].trim();
+            String ecosystem = tokens[10].trim();
+            String equipmentType = tokens[11].trim();
+            String latitude = tokens[12].trim();
+            String longitude = tokens[13].trim();
+            String maximumDepth = tokens[14].trim();
+            String minimumDepth = tokens[15].trim();
+            String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
-            String bibliographicCitation = tokens[17];
-            String description = tokens[18];
+            String bibliographicCitation = tokens[17].trim();
+            String description = tokens[18].trim();
 
                   
-            String temporaryAggregate = tokens[19];
-            String numberOfParts = tokens[20];
+            String temporaryAggregate = tokens[19].trim();
+            String numberOfParts = tokens[20].trim();
     
 
           
@@ -4902,26 +4902,26 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String occurrenceEventID = tokens[0];
+            String occurrenceEventID = tokens[0].trim();
           //  String datasetID = tokens[1];
             String physicalObjectID = tokens[2].trim().replace("\"","");
-            String speciesName = tokens[3];
-            String actorName = tokens[4];
-            String timeSpan = tokens[5];
-            String locality = tokens[6];
-            String country = tokens[7];
-            String waterArea = tokens[8];
-            String habitat = tokens[9];
-            String ecosystem = tokens[10];
-            String equipmentType = tokens[11];
-            String latitude = tokens[12];
-            String longitude = tokens[13];
-            String maximumDepth = tokens[14];
-            String minimumDepth = tokens[15];
-            String samplingProtocol = tokens[16];
+            String speciesName = tokens[3].trim();
+            String actorName = tokens[4].trim();
+            String timeSpan = tokens[5].trim();
+            String locality = tokens[6].trim();
+            String country = tokens[7].trim();
+            String waterArea = tokens[8].trim();
+            String habitat = tokens[9].trim();
+            String ecosystem = tokens[10].trim();
+            String equipmentType = tokens[11].trim();
+            String latitude = tokens[12].trim();
+            String longitude = tokens[13].trim();
+            String maximumDepth = tokens[14].trim();
+            String minimumDepth = tokens[15].trim();
+            String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
-            String bibliographicCitation = tokens[17];
-            String description = tokens[18];
+            String bibliographicCitation = tokens[17].trim();
+            String description = tokens[18].trim();
 
                   
             String temporaryAggregate = tokens[19];
@@ -5291,12 +5291,12 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String temporaryAggregate = tokens[0];
-            String dimensionType = tokens[1];
-            String dimensionValue = tokens[2];
-            String dimensionUnit = tokens[3];
-            String datasetID = tokens[4];
-            String speciesName = tokens[5];
+            String temporaryAggregate = tokens[0].trim();
+            String dimensionType = tokens[1].trim();
+            String dimensionValue = tokens[2].trim();
+            String dimensionUnit = tokens[3].trim();
+            String datasetID = tokens[4].trim();
+            String speciesName = tokens[5].trim();
 
             String temporaryAggregateURI = createURI(URIprefix, temporaryAggregate, "temporaryAggregate");
             String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
@@ -5388,12 +5388,12 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String temporaryAggregate = tokens[0];
-            String dimensionType = tokens[1];
-            String dimensionValue = tokens[2];
-            String dimensionUnit = tokens[3];
+            String temporaryAggregate = tokens[0].trim();
+            String dimensionType = tokens[1].trim();
+            String dimensionValue = tokens[2].trim();
+            String dimensionUnit = tokens[3].trim();
             //  String datasetID=tokens[4];
-            String speciesName = tokens[5];
+            String speciesName = tokens[5].trim();
 
             String temporaryAggregateURI = createURI(URIprefix, temporaryAggregate, "temporaryAggregate");
             String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
@@ -5485,17 +5485,17 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String specimenName = tokens[1];
-            String dataEvaluationID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String dimensionType = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String publication = tokens[8];
-            String description = tokens[9];
-            String datasetID = tokens[10];
+            String speciesName = tokens[0].trim();
+            String specimenName = tokens[1].trim();
+            String dataEvaluationID = tokens[2].trim();
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String dimensionType = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
+            String publication = tokens[8].trim();
+            String description = tokens[9].trim();
+            String datasetID = tokens[10].trim();
 
             String dataEvaluationURI = "";
             if (dataEvaluationID.isEmpty()) {
@@ -5676,16 +5676,16 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String speciesName = tokens[0];
-            String specimenName = tokens[1];
-            String dataEvaluationID = tokens[2];
-            String actorName = tokens[3];
-            String timeSpan = tokens[4];
-            String dimensionType = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String publication = tokens[8];
-            String description = tokens[9];
+            String speciesName = tokens[0].trim();
+            String specimenName = tokens[1].trim();
+            String dataEvaluationID = tokens[2].trim();
+            String actorName = tokens[3].trim();
+            String timeSpan = tokens[4].trim();
+            String dimensionType = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
+            String publication = tokens[8].trim();
+            String description = tokens[9].trim();
            // String datasetID = tokens[10];
 
             String dataEvaluationURI = "";
@@ -5865,18 +5865,18 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String datasetID = tokens[0];
-            String sampleTakingID = tokens[1];
-            String timeSpan = tokens[2];
-            String ecosystem = tokens[3];
-            String ecosystemType = tokens[4];
-            String sampleName = tokens[5];
-            String speciesName = tokens[6];
-            String description = tokens[7];
-            String sequencingEventID = tokens[8];
-            String device = tokens[9];
-            String deviceType = tokens[10];
-            String producedFile = tokens[11];
+            String datasetID = tokens[0].trim();
+            String sampleTakingID = tokens[1].trim();
+            String timeSpan = tokens[2].trim();
+            String ecosystem = tokens[3].trim();
+            String ecosystemType = tokens[4].trim();
+            String sampleName = tokens[5].trim();
+            String speciesName = tokens[6].trim();
+            String description = tokens[7].trim();
+            String sequencingEventID = tokens[8].trim();
+            String device = tokens[9].trim();
+            String deviceType = tokens[10].trim();
+            String producedFile = tokens[11].trim();
             
             String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
             String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
@@ -6084,17 +6084,17 @@ public class Transformations {
             String[] tokens = line.split(DELIMITER);
 
           //  String datasetID = tokens[0];
-            String sampleTakingID = tokens[1];
-            String timeSpan = tokens[2];
-            String ecosystem = tokens[3];
-            String ecosystemType = tokens[4];
-            String sampleName = tokens[5];
-            String speciesName = tokens[6];
-            String description = tokens[7];
-            String sequencingEventID = tokens[8];
-            String device = tokens[9];
-            String deviceType = tokens[10];
-            String producedFile = tokens[11];
+            String sampleTakingID = tokens[1].trim();
+            String timeSpan = tokens[2].trim();
+            String ecosystem = tokens[3].trim();
+            String ecosystemType = tokens[4].trim();
+            String sampleName = tokens[5].trim();
+            String speciesName = tokens[6].trim();
+            String description = tokens[7].trim();
+            String sequencingEventID = tokens[8].trim();
+            String device = tokens[9].trim();
+            String deviceType = tokens[10].trim();
+            String producedFile = tokens[11].trim();
             
             String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
             String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
@@ -6299,22 +6299,22 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String sampleName = tokens[0];
-            String transformationID = tokens[1];
-            String description = tokens[2];
-            String transformedSampleName = tokens[3];
-            String placeName = tokens[4];
-            String dimensionName = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String sequencingEventID = tokens[8];
-            String deviceName = tokens[9];
-            String deviceType = tokens[10];
-            String productName = tokens[11];
-            String postProcessingID = tokens[12];
-            String postProductName = tokens[13];
-            String datasetName = tokens[14];
-            String speciesName = tokens[15];
+            String sampleName = tokens[0].trim();
+            String transformationID = tokens[1].trim();
+            String description = tokens[2].trim();
+            String transformedSampleName = tokens[3].trim();
+            String placeName = tokens[4].trim();
+            String dimensionName = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
+            String sequencingEventID = tokens[8].trim();
+            String deviceName = tokens[9].trim();
+            String deviceType = tokens[10].trim();
+            String productName = tokens[11].trim();
+            String postProcessingID = tokens[12].trim();
+            String postProductName = tokens[13].trim();
+            String datasetName = tokens[14].trim();
+            String speciesName = tokens[15].trim();
 
             String transformationURI = createURI(URIprefix, transformationID, "transformationEvent");
             String transformedSampleURI = createURI(URIprefix, transformedSampleName, "sample");
@@ -6502,22 +6502,22 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String sampleName = tokens[0];
-            String transformationID = tokens[1];
-            String description = tokens[2];
-            String transformedSampleName = tokens[3];
-            String placeName = tokens[4];
-            String dimensionName = tokens[5];
-            String dimensionValue = tokens[6];
-            String dimensionUnit = tokens[7];
-            String sequencingEventID = tokens[8];
-            String deviceName = tokens[9];
-            String deviceType = tokens[10];
-            String productName = tokens[11];
-            String postProcessingID = tokens[12];
-            String postProductName = tokens[13];
+            String sampleName = tokens[0].trim();
+            String transformationID = tokens[1].trim();
+            String description = tokens[2].trim();
+            String transformedSampleName = tokens[3].trim();
+            String placeName = tokens[4].trim();
+            String dimensionName = tokens[5].trim();
+            String dimensionValue = tokens[6].trim();
+            String dimensionUnit = tokens[7].trim();
+            String sequencingEventID = tokens[8].trim();
+            String deviceName = tokens[9].trim();
+            String deviceType = tokens[10].trim();
+            String productName = tokens[11].trim();
+            String postProcessingID = tokens[12].trim();
+            String postProductName = tokens[13].trim();
             //  String datasetName=tokens[14];
-            String speciesName = tokens[15];
+            String speciesName = tokens[15].trim();
 
             String transformationURI = createURI(URIprefix, transformationID, "transformationEvent");
             String transformedSampleURI = createURI(URIprefix, transformedSampleName, "sample");
@@ -6705,17 +6705,17 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimen = tokens[0];
+            String specimen = tokens[0].trim();
             //String specimenLabel = tokens[1];
-            String datasetID = tokens[2];
-            String collectionID = tokens[3];
-            String providerID = tokens[4];
-            String institution = tokens[5];
-            String description = tokens[6];
+            String datasetID = tokens[2].trim();
+            String collectionID = tokens[3].trim();
+            String providerID = tokens[4].trim();
+            String institution = tokens[5].trim();
+            String description = tokens[6].trim();
             //String material = tokens[7];
-            String species = tokens[8];
+            String species = tokens[8].trim();
             String dimension = "size";
-            String dimensionValue = tokens[9];
+            String dimensionValue = tokens[9].trim();
             String dimensionUnit = "mm";
 
             //String fixationType = tokens[10];
@@ -6888,17 +6888,17 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimen = tokens[0];
+            String specimen = tokens[0].trim();
             //String specimenLabel = tokens[1];
             //String datasetID = tokens[2];
-            String collectionID = tokens[3];
-            String providerID = tokens[4];
-            String institution = tokens[5];
-            String description = tokens[6];
+            String collectionID = tokens[3].trim();
+            String providerID = tokens[4].trim();
+            String institution = tokens[5].trim();
+            String description = tokens[6].trim();
             //String material = tokens[7];
-            String species = tokens[8];
+            String species = tokens[8].trim();
             String dimension = "size";
-            String dimensionValue = tokens[9];
+            String dimensionValue = tokens[9].trim();
             String dimensionUnit = "mm";
 
             //String fixationType = tokens[10];
@@ -7071,22 +7071,22 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimenID = tokens[0];
-            String scanningID = tokens[1];
-            String datasetID = tokens[2];
-            String contrastEnhancementMethod = tokens[3];
+            String specimenID = tokens[0].trim();
+            String scanningID = tokens[1].trim();
+            String datasetID = tokens[2].trim();
+            String contrastEnhancementMethod = tokens[3].trim();
 //            String preparationMethod = tokens[4];
 //            String preparationTimespan = tokens[5] + " " + tokens[6] + "-" + tokens[7] + " " + tokens[8];
 //            String preparationDescription = tokens[9];
 //            String scopeOfScan = tokens[10];
-            String objectOfType = tokens[11];
+            String objectOfType = tokens[11].trim();
 //            String scanningMethod = tokens[12];
 //            String scannedPart = tokens[13];
-            String actor = tokens[14];
-            String timespan = tokens[15];
+            String actor = tokens[14].trim();
+            String timespan = tokens[15].trim();
 //            String scanningDuration = tokens[16];
 
-            String deviceType = tokens[17];
+            String deviceType = tokens[17].trim();
 
 //            String voltage_kV = tokens[18];
 //            String current_uA = tokens[19];
@@ -7101,7 +7101,7 @@ public class Transformations {
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
 //            String scanFilesStatus = tokens[30];
-            String productName = tokens[1] + ".zip";
+            String productName = tokens[1].trim() + ".zip";
             //          String preparationID = tokens[2] + "_prep";
 
             String specimenURI = createURI(URIprefix, specimenID, "specimen");
@@ -7235,22 +7235,22 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String specimenID = tokens[0];
-            String scanningID = tokens[1];
+            String specimenID = tokens[0].trim();
+            String scanningID = tokens[1].trim();
             //  String datasetID = tokens[2];
-            String contrastEnhancementMethod = tokens[3];
+            String contrastEnhancementMethod = tokens[3].trim();
 //            String preparationMethod = tokens[4];
 //            String preparationTimespan = tokens[5] + " " + tokens[6] + "-" + tokens[7] + " " + tokens[8];
 //            String preparationDescription = tokens[9];
 //            String scopeOfScan = tokens[10];
-            String objectOfType = tokens[11];
+            String objectOfType = tokens[11].trim();
 //            String scanningMethod = tokens[12];
 //            String scannedPart = tokens[13];
-            String actor = tokens[14];
-            String timespan = tokens[15];
+            String actor = tokens[14].trim();
+            String timespan = tokens[15].trim();
 //            String scanningDuration = tokens[16];
 
-            String deviceType = tokens[17];
+            String deviceType = tokens[17].trim();
 
 //            String voltage_kV = tokens[18];
 //            String current_uA = tokens[19];
@@ -7265,7 +7265,7 @@ public class Transformations {
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
 //            String scanFilesStatus = tokens[30];
-            String productName = tokens[1] + ".zip";
+            String productName = tokens[1].trim() + ".zip";
             //          String preparationID = tokens[2] + "_prep";
 
             String scanningEventLabel = "Scanning of " + specimenID;
@@ -7400,19 +7400,19 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String scanningID = tokens[0];
-            String reconstructionID = tokens[1];
-            String datasetName = tokens[2];
+            String scanningID = tokens[0].trim();
+            String reconstructionID = tokens[1].trim();
+            String datasetName = tokens[2].trim();
             //String reconScope = tokens[3];
-            String actor = tokens[4];
-            String timespan = tokens[5];
+            String actor = tokens[4].trim();
+            String timespan = tokens[5].trim();
             //String duration = tokens[6];
-            String description = tokens[7];
+            String description = tokens[7].trim();
             //String cleanup = tokens[8];
             //String results = tokens[9];
             //String reconFilesStatus = tokens[10];
-            String inputName = tokens[0] + ".zip";
-            String productName = tokens[1] + ".zip";
+            String inputName = tokens[0].trim() + ".zip";
+            String productName = tokens[1].trim() + ".zip";
 
             String scanningURI = createURI(URIprefix, scanningID, "digitizationProcess");
             String inputURI = createURI(URIprefix, inputName, "dataObject");
@@ -7527,19 +7527,19 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String scanningID = tokens[0];
-            String reconstructionID = tokens[1];
+            String scanningID = tokens[0].trim();
+            String reconstructionID = tokens[1].trim();
             //String datasetName = tokens[2];
             //String reconScope = tokens[3];
-            String actor = tokens[4];
-            String timespan = tokens[5];
+            String actor = tokens[4].trim();
+            String timespan = tokens[5].trim();
             //String duration = tokens[6];
-            String description = tokens[7];
+            String description = tokens[7].trim();
             //String cleanup = tokens[8];
             //String results = tokens[9];
             //String reconFilesStatus = tokens[10];
-            String inputName = tokens[0] + ".zip";
-            String productName = tokens[1] + ".zip";
+            String inputName = tokens[0].trim() + ".zip";
+            String productName = tokens[1].trim() + ".zip";
 
             String scanningURI = createURI(URIprefix, scanningID, "digitizationProcess");
             String inputURI = createURI(URIprefix, inputName, "dataObject");
@@ -7653,15 +7653,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String postProcessingID = tokens[1];
-            String reconstructionID = tokens[0];
-            String datasetName = tokens[2];
+            String postProcessingID = tokens[1].trim();
+            String reconstructionID = tokens[0].trim();
+            String datasetName = tokens[2].trim();
             //String subvolumeScope = tokens[3];
-            String actor = tokens[4];
-            String description = tokens[5];
+            String actor = tokens[4].trim();
+            String description = tokens[5].trim();
             //String fileStatus = tokens[6];
-            String productName = tokens[1] + ".zip";
-            String inputName = tokens[0] + ".zip";
+            String productName = tokens[1].trim() + ".zip";
+            String inputName = tokens[0].trim() + ".zip";
 
             String datasetURI = createURI(URIprefix, datasetName, "dataset");
             String recostructionURI = createURI(URIprefix, reconstructionID, "formalDerivation");
@@ -7769,15 +7769,15 @@ public class Transformations {
 
             String[] tokens = line.split(DELIMITER);
 
-            String postProcessingID = tokens[1];
-            String reconstructionID = tokens[0];
+            String postProcessingID = tokens[1].trim();
+            String reconstructionID = tokens[0].trim();
             // String datasetName=tokens[2];
             //String subvolumeScope = tokens[3];
-            String actor = tokens[4];
-            String description = tokens[5];
+            String actor = tokens[4].trim();
+            String description = tokens[5].trim();
             //String fileStatus = tokens[6];
-            String productName = tokens[1] + ".zip";
-            String inputName = tokens[0] + ".zip";
+            String productName = tokens[1].trim() + ".zip";
+            String inputName = tokens[0].trim() + ".zip";
 
             String datasetURI = createURI(URIprefix, datasetName, "dataset");
             String recostructionURI = createURI(URIprefix, reconstructionID, "formalDerivation");
