@@ -68,8 +68,11 @@ public class Transformations {
             String datasetType = tokens[17].trim();
             String locationURL = tokens[18].trim();
             String embargoState = tokens[19].trim();
-            String embargoPeriod = tokens[20].trim();
+            String embargoPeriod = "";
 
+            if(tokens.length>20)
+            embargoPeriod = tokens[20].trim();
+            
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
             String creationEventLabel = "Creation of "+datasetTitle+" dataset";
@@ -378,8 +381,11 @@ public class Transformations {
             String datasetType = tokens[17].trim();
             String locationURL = tokens[18].trim();
             String embargoState = tokens[19].trim();
-            String embargoPeriod = tokens[20].trim();
+            String embargoPeriod = "";
 
+            if(tokens.length>20)
+            embargoPeriod = tokens[20].trim();
+            
             String datasetURI = createURI(URIprefix, datasetTitle, "dataset");
 
             String creationEventLabel = "Creation of "+datasetTitle+" dataset";
@@ -686,9 +692,12 @@ public class Transformations {
             String minimumDepth = tokens[15].trim();
             String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
-            String bibliographicCitation = tokens[17].trim();
-            String description = tokens[18].trim();
+            String bibliographicCitation = tokens[17].trim();     
 
+            String description  = ""; 
+            if(tokens.length>18)
+            description  = tokens[18].trim();
+            
             System.out.println("latitude" + latitude);
             System.out.println("longitude" + longitude);
 
@@ -1061,8 +1070,11 @@ public class Transformations {
             String samplingProtocol = tokens[16].trim();
             //  String geodeticDatum=tokens[17];
             String bibliographicCitation = tokens[17].trim();
-            String description = tokens[18].trim();
 
+            String description  = ""; 
+            if(tokens.length>18)
+            description  = tokens[18].trim();
+            
             System.out.println("latitude" + latitude);
             System.out.println("longitude" + longitude);
 
@@ -1425,8 +1437,11 @@ public class Transformations {
             String dimensionType = tokens[5].trim();
             String dimensionValue = tokens[6].trim();
             String dimensionUnit = tokens[7].trim();
-            String datasetID = tokens[8].trim();
+            String datasetID = "";
 
+            if(tokens.length>8)
+            datasetID = tokens[8].trim();
+            
             String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
             
             String measurementEventURI = "";
@@ -1592,7 +1607,11 @@ public class Transformations {
             String dimensionType = tokens[5].trim();
             String dimensionValue = tokens[6].trim();
             String dimensionUnit = tokens[7].trim();
-            //String datasetID = tokens[8];
+            //String datasetID = "";
+            //if(tokens.length>8)
+            //datasetID = tokens[8].trim();
+            
+            
             
             String measurementEventLabel = "Environmental Measurement of "+dimensionType+" in "+place;
            
@@ -1756,8 +1775,11 @@ public class Transformations {
             String timeSpan = tokens[4].trim();
             String locality = tokens[5].trim();
             String speciesName = tokens[6].trim();
-            String identificationReferences = tokens[7].trim();
+            String identificationReferences = "";
 
+            if(tokens.length>7)
+            identificationReferences = tokens[7].trim();
+             
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
             if (individualID.isEmpty())
@@ -1918,7 +1940,10 @@ public class Transformations {
             String timeSpan = tokens[4].trim();
             String locality = tokens[5].trim();
             String speciesName = tokens[6].trim();
-            String identificationReferences = tokens[7].trim();
+            String identificationReferences = "";
+
+            if(tokens.length>7)
+            identificationReferences = tokens[7].trim();
 
             String individualURI = createURI(URIprefix, individualID, "bioticElement");
 
@@ -2080,8 +2105,11 @@ public class Transformations {
             String dimensionValue = tokens[5].trim();
             String dimensionUnit = tokens[6].trim();
             String datasetID = tokens[7].trim();
-            String speciesName = tokens[8].trim();
+            String speciesName = "";
 
+            if(tokens.length>8)
+            speciesName = tokens[8].trim();
+            
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
             String measurementEventLabel = "Measurement of "+dimensionType+" of "+specimen;
@@ -2241,8 +2269,11 @@ public class Transformations {
             String dimensionValue = tokens[5].trim();
             String dimensionUnit = tokens[6].trim();
             //  String datasetID=tokens[7];
-            String speciesName = tokens[8].trim();
+            String speciesName = "";
 
+            if(tokens.length>8)
+            speciesName = tokens[8].trim();
+            
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
             String measurementEventLabel = "Measurement of "+dimensionType+" of "+specimen;
@@ -2403,8 +2434,11 @@ public class Transformations {
             String dimensionUnit = tokens[6].trim();
             String publication = tokens[7].trim();
             String description = tokens[8].trim();
-            String datasetID = tokens[9].trim();
-
+           
+            String datasetID    = ""; 
+            if(tokens.length>9)
+            datasetID = tokens[9].trim();
+            
             String speciesURI = createURI(URIprefix, speciesName, "species");
 
             String datasetURI = createURI(URIprefix, datasetID, "dataset");
@@ -2577,7 +2611,9 @@ public class Transformations {
             String dimensionUnit = tokens[6].trim();
             String publication = tokens[7].trim();
             String description = tokens[8].trim();
-            //  String datasetID = tokens[9];
+//            String datasetID    = ""; 
+//            if(tokens.length>9)
+//            datasetID = tokens[9].trim();
 
             String speciesURI = createURI(URIprefix, speciesName, "species");
 
@@ -2748,8 +2784,11 @@ public class Transformations {
             String className = tokens[4].trim();
             String phylumName = tokens[5].trim();
             String kingdomName = tokens[6].trim();
-            String datasetID = tokens[7].trim();
-
+          
+            String datasetID    = ""; 
+            if(tokens.length>7)
+            datasetID = tokens[7].trim();
+            
             String speciesURI = "";
              if (!(speciesName.startsWith("http")||speciesName.startsWith("urn"))) {
                 speciesURI = createURI(URIprefix, speciesName, "species");
@@ -2911,7 +2950,9 @@ public class Transformations {
             String className = tokens[4].trim();
             String phylumName = tokens[5].trim();
             String kingdomName = tokens[6].trim();
-            //   String datasetID = tokens[7];
+//            String datasetID    = ""; 
+//            if(tokens.length>7)
+//            datasetID = tokens[7].trim();
 
             String speciesURI = "";
 
@@ -3074,8 +3115,11 @@ public class Transformations {
             String appellation = tokens[3].trim();
             String nomenclaturalCode = tokens[4].trim();
             String species = tokens[5].trim();
-            String datasetID = tokens[6].trim();
 
+            String datasetID  = ""; 
+            if(tokens.length>6)
+            datasetID = tokens[6].trim();
+            
             String scientificNameAssignmentEventURI = "";
 
             String scientificNameAssignmentEventLabel= "Scientific name assigmnent of"+species;
@@ -3223,8 +3267,11 @@ public class Transformations {
             String appellation = tokens[3].trim();
             String nomenclaturalCode = tokens[4].trim();
             String species = tokens[5].trim();
-           // String datasetID = tokens[6];
 
+            //String datasetID  = ""; 
+            //if(tokens.length>6)
+            //datasetID = tokens[6].trim();
+            
             String scientificNameAssignmentEventURI = "";
 
             String scientificNameAssignmentEventLabel= "Scientific name assigmnent of"+species;
@@ -3370,8 +3417,11 @@ public class Transformations {
             String commonName = tokens[1].trim();
             String place = tokens[2].trim();
             String language = tokens[3].trim();
-            String datasetID = tokens[4].trim();          
+            String datasetID = "";
             
+            if(tokens.length>4)
+            datasetID = tokens[4].trim();          
+
             String commonNameURI = createURI(URIprefix, commonName, "appellation");
 
             String speciesURI = "";
@@ -3503,8 +3553,10 @@ public class Transformations {
             String commonName = tokens[1].trim();
             String place = tokens[2].trim();
             String language = tokens[3].trim();
-          //  String datasetID = tokens[4];
-
+          //  String datasetID = "";
+          //  if(tokens.length>4)
+          //  datasetID = tokens[4].trim();
+            
             String commonNameURI = createURI(URIprefix, commonName, "appellation");
 
             String speciesURI = "";
@@ -3630,8 +3682,11 @@ public class Transformations {
             String speciesName = tokens[0].trim();
             String appellation = tokens[1].trim();
             String synonym = tokens[2].trim();
-            String datasetID = tokens[3].trim();
-
+           
+            String datasetID    = ""; 
+            if(tokens.length>3)
+            datasetID = tokens[3].trim();
+            
             String speciesURI = "";
             if (speciesName.startsWith("http:")) {
                 speciesURI = speciesName;
@@ -3723,7 +3778,9 @@ public class Transformations {
             String speciesName = tokens[0].trim();
             String appellation = tokens[1].trim();
             String synonym = tokens[2].trim();
-            //String datasetID = tokens[3];
+//            String datasetID    = ""; 
+//            if(tokens.length>3)
+//            datasetID = tokens[3].trim();
 
             String speciesURI = "";
             if (speciesName.startsWith("http:")) {
@@ -3820,8 +3877,11 @@ public class Transformations {
             String actorName = tokens[5].trim();
             String timeSpan = tokens[6].trim();
             String datasetID = tokens[7].trim();
-            String speciesName = tokens[8].trim();
-
+            
+            String speciesName   = ""; 
+            if(tokens.length>8)
+            speciesName  = tokens[8].trim();
+            
             String specimenURI = createURI(URIprefix, specimenName, "specimen");
 
             String datasetURI = createURI(URIprefix, datasetID, "dataset");
@@ -3998,8 +4058,11 @@ public class Transformations {
             String actorName = tokens[5].trim();
             String timeSpan = tokens[6].trim();
             //  String datasetID = tokens[7];
-            String speciesName = tokens[8].trim();
-
+           
+            String speciesName   = ""; 
+            if(tokens.length>8)
+            speciesName  = tokens[8].trim();
+            
             String specimenURI = createURI(URIprefix, specimenName, "specimen");
 
             String datasetURI = createURI(URIprefix, datasetID, "dataset");
@@ -4176,8 +4239,11 @@ public class Transformations {
             String curatorName = tokens[5].trim();
             String contactPoint = tokens[6].trim();
             String description = tokens[7].trim();
-            String datasetName = tokens[8].trim();
-
+           
+            String datasetName  = ""; 
+            if(tokens.length>8)
+            datasetName = tokens[8].trim();
+            
             String collectionURI = createURI(URIprefix, collectionName, "collection");
 
             String datasetURI = createURI(URIprefix, datasetName, "dataset");;
@@ -4326,8 +4392,11 @@ public class Transformations {
             String curatorName = tokens[5].trim();
             String contactPoint = tokens[6].trim();
             String description = tokens[7].trim();
-            //  String datasetName = tokens[8];
 
+//            String datasetName  = ""; 
+//            if(tokens.length>8)
+//            datasetName = tokens[8].trim();
+            
             String collectionURI = createURI(URIprefix, collectionName, "collection");
 
             String datasetURI = createURI(URIprefix, datasetName, "dataset");;
@@ -4499,9 +4568,10 @@ public class Transformations {
 
                   
             String temporaryAggregate = tokens[19].trim();
-            String numberOfParts = tokens[20].trim();
-    
 
+            String numberOfParts  = ""; 
+            if(tokens.length>20)
+            numberOfParts = tokens[20].trim();
           
             String temporaryAggregateURI = "";
             
@@ -4925,7 +4995,9 @@ public class Transformations {
 
                   
             String temporaryAggregate = tokens[19];
-            String numberOfParts = tokens[20];
+            String numberOfParts  = ""; 
+            if(tokens.length>20)
+            numberOfParts = tokens[20].trim();
     
             String occurrenceEventLabel = "Occurrence of "+speciesName+" in "+locality;
           
@@ -5296,8 +5368,11 @@ public class Transformations {
             String dimensionValue = tokens[2].trim();
             String dimensionUnit = tokens[3].trim();
             String datasetID = tokens[4].trim();
-            String speciesName = tokens[5].trim();
-
+            
+            String speciesName  = ""; 
+            if(tokens.length>5)
+            speciesName  = tokens[5].trim();
+            
             String temporaryAggregateURI = createURI(URIprefix, temporaryAggregate, "temporaryAggregate");
             String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
             String dimensionURI = createURI(URIprefix, temporaryAggregate + dimensionType, "dimension");
@@ -5393,8 +5468,11 @@ public class Transformations {
             String dimensionValue = tokens[2].trim();
             String dimensionUnit = tokens[3].trim();
             //  String datasetID=tokens[4];
-            String speciesName = tokens[5].trim();
 
+            String speciesName  = ""; 
+            if(tokens.length>5)
+            speciesName  = tokens[5].trim();
+            
             String temporaryAggregateURI = createURI(URIprefix, temporaryAggregate, "temporaryAggregate");
             String dimensionTypeURI = createURI(URIprefix, dimensionType, "dimension");
             String dimensionURI = createURI(URIprefix, temporaryAggregate + dimensionType, "dimension");
@@ -5495,8 +5573,11 @@ public class Transformations {
             String dimensionUnit = tokens[7].trim();
             String publication = tokens[8].trim();
             String description = tokens[9].trim();
-            String datasetID = tokens[10].trim();
-
+           
+            String datasetID    = ""; 
+            if(tokens.length>10)
+            datasetID = tokens[10].trim();
+            
             String dataEvaluationURI = "";
             if (dataEvaluationID.isEmpty()) {
                 dataEvaluationURI = createURI(URIprefix, datasetID + speciesName + specimenName + dimensionType.replace("http://", "") + "DataEvaluation", "DataEvaluation");
@@ -5686,7 +5767,9 @@ public class Transformations {
             String dimensionUnit = tokens[7].trim();
             String publication = tokens[8].trim();
             String description = tokens[9].trim();
-           // String datasetID = tokens[10];
+//            String datasetID    = ""; 
+//            if(tokens.length>10)
+//            datasetID = tokens[10].trim();
 
             String dataEvaluationURI = "";
             if (dataEvaluationID.isEmpty()) {
@@ -5876,7 +5959,11 @@ public class Transformations {
             String sequencingEventID = tokens[8].trim();
             String device = tokens[9].trim();
             String deviceType = tokens[10].trim();
-            String producedFile = tokens[11].trim();
+            String producedFile = "";
+            
+            if(tokens.length>11)
+            producedFile = tokens[11].trim();
+            
             
             String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
             String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
@@ -6094,7 +6181,10 @@ public class Transformations {
             String sequencingEventID = tokens[8].trim();
             String device = tokens[9].trim();
             String deviceType = tokens[10].trim();
-            String producedFile = tokens[11].trim();
+            String producedFile = "";
+            
+            if(tokens.length>11)
+            producedFile = tokens[11].trim();
             
             String sequencingEventLabel = "DNA Sequencing Event of "+sampleName;
             String sampleTakingEventLabel = "DNA Sample Taking Event of "+speciesName;
@@ -6314,8 +6404,11 @@ public class Transformations {
             String postProcessingID = tokens[12].trim();
             String postProductName = tokens[13].trim();
             String datasetName = tokens[14].trim();
-            String speciesName = tokens[15].trim();
+            String speciesName = "";
 
+            if(tokens.length>15)
+            speciesName = tokens[15].trim();
+            
             String transformationURI = createURI(URIprefix, transformationID, "transformationEvent");
             String transformedSampleURI = createURI(URIprefix, transformedSampleName, "sample");
             String placeURI = createURI(URIprefix, placeName, "place");
@@ -6517,8 +6610,11 @@ public class Transformations {
             String postProcessingID = tokens[12].trim();
             String postProductName = tokens[13].trim();
             //  String datasetName=tokens[14];
-            String speciesName = tokens[15].trim();
+            String speciesName = "";
 
+            if(tokens.length>15)
+            speciesName = tokens[15].trim();
+            
             String transformationURI = createURI(URIprefix, transformationID, "transformationEvent");
             String transformedSampleURI = createURI(URIprefix, transformedSampleName, "sample");
             String placeURI = createURI(URIprefix, placeName, "place");
@@ -6721,7 +6817,11 @@ public class Transformations {
             //String fixationType = tokens[10];
             //String fixationNotes = tokens[11];
             //String preservationMedium = tokens[12];
-            //String storagePlace = tokens[14];
+            //String storagePlace  = ""; 
+            //if(tokens.length>14)
+            //storagePlace  = tokens[14].trim();
+            
+            
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
             String collectionURI = "";
@@ -6904,7 +7004,9 @@ public class Transformations {
             //String fixationType = tokens[10];
             //String fixationNotes = tokens[11];
             //String preservationMedium = tokens[12];
-            //String storagePlace = tokens[14];
+            //String storagePlace  = ""; 
+            //if(tokens.length>14)
+            //storagePlace  = tokens[14].trim();
             String specimenURI = createURI(URIprefix, specimen, "specimen");
 
             String collectionURI = "";
@@ -7100,7 +7202,12 @@ public class Transformations {
 //            String oversizeSettings = tokens[27];
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
-//            String scanFilesStatus = tokens[30];
+            
+            //String scanFilesStatus  = ""; 
+            //if(tokens.length>30)
+            //scanFilesStatus  = tokens[30].trim();
+            
+            
             String productName = tokens[1].trim() + ".zip";
             //          String preparationID = tokens[2] + "_prep";
 
@@ -7265,6 +7372,11 @@ public class Transformations {
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
 //            String scanFilesStatus = tokens[30];
+            
+            //String scanFilesStatus  = ""; 
+            //if(tokens.length>30)
+            //scanFilesStatus  = tokens[30].trim();
+            
             String productName = tokens[1].trim() + ".zip";
             //          String preparationID = tokens[2] + "_prep";
 
@@ -7410,7 +7522,10 @@ public class Transformations {
             String description = tokens[7].trim();
             //String cleanup = tokens[8];
             //String results = tokens[9];
-            //String reconFilesStatus = tokens[10];
+            //String reconFilesStatus = ""; 
+            //if(tokens.length>10)
+            //reconFilesStatus = tokens[10].trim();
+            
             String inputName = tokens[0].trim() + ".zip";
             String productName = tokens[1].trim() + ".zip";
 
@@ -7537,7 +7652,10 @@ public class Transformations {
             String description = tokens[7].trim();
             //String cleanup = tokens[8];
             //String results = tokens[9];
-            //String reconFilesStatus = tokens[10];
+            //String reconFilesStatus = ""; 
+            //if(tokens.length>10)
+            //reconFilesStatus = tokens[10].trim();
+            
             String inputName = tokens[0].trim() + ".zip";
             String productName = tokens[1].trim() + ".zip";
 
@@ -7659,7 +7777,10 @@ public class Transformations {
             //String subvolumeScope = tokens[3];
             String actor = tokens[4].trim();
             String description = tokens[5].trim();
-            //String fileStatus = tokens[6];
+            //String fileStatus = ""; 
+            //if(tokens.length>6)
+            //fileStatus = tokens[6].trim();
+            
             String productName = tokens[1].trim() + ".zip";
             String inputName = tokens[0].trim() + ".zip";
 
@@ -7775,7 +7896,10 @@ public class Transformations {
             //String subvolumeScope = tokens[3];
             String actor = tokens[4].trim();
             String description = tokens[5].trim();
-            //String fileStatus = tokens[6];
+            //String fileStatus = ""; 
+            //if(tokens.length>6)
+            //fileStatus = tokens[6].trim();
+            
             String productName = tokens[1].trim() + ".zip";
             String inputName = tokens[0].trim() + ".zip";
 
