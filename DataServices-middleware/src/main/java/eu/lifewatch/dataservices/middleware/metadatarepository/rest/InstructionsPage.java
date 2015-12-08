@@ -26,13 +26,13 @@ public class InstructionsPage {
                        +"<h2> Examples </h2> "
                        +"<h3> Give me all the MicroCT scanning as regards the species, with scientific name that contains the word \"spec\" in...</h3> "
                        +"<h3> JSON format: </h3> "
-                       +"<a href=/DataServices-middleware/searchMicroCTScanning?spec=species&returnType=json> /searchMicroCTScanning?spec=species&returnType=json</a> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=species&returnType=json> /searchMicroCTScanning?species=species&returnType=json</a> "
                        +"<h3> XML format: </h3> "
-                       +"<a href=/DataServices-middleware/searchMicroCTScanning?spec=species&returnType=json> /searchMicroCTScanning?spec=species&returnType=xml</a> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=species&returnType=json> /searchMicroCTScanning?species=species&returnType=xml</a> "
                        +"<h3> CSV format: </h3> "
-                       +"<a href=/DataServices-middleware/searchMicroCTScanning?spec=species&returnType=json> /searchMicroCTScanning?spec=species&returnType=csv</a> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=species&returnType=json> /searchMicroCTScanning?species=species&returnType=csv</a> "
                        +"<h3> NTRIPLES format: </h3> "
-                       +"<a href=/DataServices-middleware/searchMicroCTScanning?spec=species&returnType=json> /searchMicroCTScanning?spec=species&returnType=ntriples</a> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=species&returnType=json> /searchMicroCTScanning?species=species&returnType=ntriples</a> "
                        +"</body> "
                        +"</html>";
         try{
