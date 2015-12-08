@@ -81,7 +81,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchCommonName(speciesName, commonName, place, offset, limit, language, datasetURI, repositoryGraph);
+            retList=api.searchCommonName(speciesName, commonName, place, language, datasetURI, offset, limit, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for common names. Returning an empty list.\n", ex);

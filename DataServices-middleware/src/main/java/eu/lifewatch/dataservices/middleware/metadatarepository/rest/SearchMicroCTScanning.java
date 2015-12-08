@@ -45,6 +45,7 @@ import org.w3c.dom.Node;
 public class SearchMicroCTScanning extends HttpServlet {
     private static final Logger LOGGER=Logger.getLogger(SearchMicroCTScanning.class);
     private static final String SPECIES_LABEL="species";
+    private static final String SPECIMEN_LABEL="specimen";
     private static final String RETURN_TYPE_LABEL="returnType";
     private static final String XML_CONTENT_TYPE="text/xml";
     private static final String CSV_CONTENT_TYPE="text/csv";
@@ -55,14 +56,21 @@ public class SearchMicroCTScanning extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         LOGGER.info("Request for searchinh MicroCTScanning info");
         String speciesNameReceived=request.getParameter(SPECIES_LABEL);
+        String specimenNameReceived=request.getParameter(SPECIMEN_LABEL);
         String returnType=request.getParameter(RETURN_TYPE_LABEL);
         Enumeration<String> params=request.getParameterNames();
         if(!params.hasMoreElements()){
             LOGGER.info("The user didn't provide any attributes. Showing the HTML page with instructions.");
             InstructionsPage.showHtmlPageWithInstructions(response);
-        }else{
+        }else if(speciesNameReceived==null && specimenNameReceived==null){
+            LOGGER.info("The user didn't provide any values for either \"species\" or \"specimen\". Showing the HTML page with instructions.");
+            InstructionsPage.showHtmlPageWithInstructions(response);
+        }else{   
             if(returnType==null){
                 String responseType=response.getContentType();
+                if(responseType==null){
+                    responseType="else";    //This will force it to get the default value (and report the proper log message)
+                }
                 switch(responseType){
                     case CSV_CONTENT_TYPE:
                         returnType="csv";
@@ -81,26 +89,26 @@ public class SearchMicroCTScanning extends HttpServlet {
                         returnType="json";
                 }
             }
-            if(speciesNameReceived==null){   /* This means that the user didn't provide the proper label in the request */
-                LOGGER.info("the species attribute was not given by the user. Find and return all MicroCT Scanning data");
+            if(speciesNameReceived==null){
                 speciesNameReceived="";
-            }else{
-                LOGGER.info("species attribute value: "+speciesNameReceived);
             }
-            List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived);
+            if(specimenNameReceived==null){
+                specimenNameReceived="";
+            }
+            List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived,specimenNameReceived);
             this.processAndReturnResults(results,returnType,response);
         }
     }
     
-    private List<MicroCTScanningStruct> getMicroCTScanningResults(String species){
+    private List<MicroCTScanningStruct> getMicroCTScanningResults(String species,String specimen){
         List<MicroCTScanningStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             RepositoryData repoData=context.getBean(RepositoryData.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            LOGGER.info("Searching for MicroCTScanning data with the following details: Species: "+species+", repositoryGraph: "+repoData.getRepositoryGraph());
-            retList=api.searchMicroCTScanning("", "", species, "", "", repoData.getRepositoryGraph());
+            LOGGER.info("Searching for MicroCTScanning data with the following details: Species: "+species+",Specimen: "+specimen+", repositoryGraph: "+repoData.getRepositoryGraph());
+            retList=api.searchMicroCTScanning("", specimen, species, "", "", repoData.getRepositoryGraph());
             LOGGER.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             LOGGER.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);
