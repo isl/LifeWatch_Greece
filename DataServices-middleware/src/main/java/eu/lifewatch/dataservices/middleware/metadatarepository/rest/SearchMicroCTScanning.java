@@ -65,9 +65,12 @@ public class SearchMicroCTScanning extends HttpServlet {
         }else if(speciesNameReceived==null && specimenNameReceived==null){
             LOGGER.info("The user didn't provide any values for either \"species\" or \"specimen\". Showing the HTML page with instructions.");
             InstructionsPage.showHtmlPageWithInstructions(response);
-        }else{
+        }else{   
             if(returnType==null){
                 String responseType=response.getContentType();
+                if(responseType==null){
+                    responseType="else";    //This will force it to get the default value (and report the proper log message)
+                }
                 switch(responseType){
                     case CSV_CONTENT_TYPE:
                         returnType="csv";
