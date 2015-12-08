@@ -656,6 +656,18 @@ public class OccurrenceStruct {
             if (!localityURI.isEmpty()) {
                 retTriples += "<" + stationURI + "> <" + Resources.fallsWithin + "> <" + localityURI + "> .\n";
             }
+            if (!ecosystemURI.isEmpty()) {
+                retTriples += "<" + stationURI  + "> <" + Resources.fallsWithin + "> <" + ecosystemURI + "> .\n";
+            }
+            if (!countryURI.isEmpty()) {
+                retTriples += "<" + stationURI  + "> <" + Resources.fallsWithin + "> <" + countryURI + "> .\n";
+            }
+            if (!waterAreaURI.isEmpty()) {
+                retTriples += "<" + stationURI  + "> <" + Resources.fallsWithin + "> <" + waterAreaURI + "> .\n";
+            }
+            if (!habitatURI.isEmpty()) {
+                retTriples += "<" + stationURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
+            }
 
 //            if (!countryURI.isEmpty()) {
 //                retTriples += "<" + localityURI + "> <" + Resources.fallsWithin + "> <" + countryURI + "> .\n";
@@ -682,9 +694,9 @@ public class OccurrenceStruct {
             if (!waterAreaURI.isEmpty()) {
                 retTriples += "<" + localityURI + "> <" + Resources.fallsWithin + "> <" + waterAreaURI + "> .\n";
             }
-            if (!habitatURI.isEmpty()) {
-                retTriples += "<" + localityURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
-            }
+//            if (!habitatURI.isEmpty()) {
+//                retTriples += "<" + localityURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
+//            }
         }
         if (!habitatURI.isEmpty()) {
             retTriples += "<" + habitatURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.ecosystemTypeLabel + "> .\n";
