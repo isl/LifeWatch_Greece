@@ -22,7 +22,7 @@ public class InstructionsPage {
                        +"<ul> "
                        +"<li><b>species:</b> The scientific name (or part of it) of the species</li> "
                        +"<li><b>specimen:</b> The name (or part of it) of the specimen</li> "
-                       +"<li><b>returnType:</b> The format of the output. The supported formats are: json, xml, csv, ntriples)</li> "
+                       +"<li><b>returnType:</b> The format of the output. The supported formats are: <b><i>json, xml, csv, ntriples</i></b></li> "
                        +"</ul> "
                        +"<h2> Examples: </h2> "
                        +"<ul> "
