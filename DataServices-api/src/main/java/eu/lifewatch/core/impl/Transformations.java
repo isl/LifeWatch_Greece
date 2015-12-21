@@ -1646,7 +1646,7 @@ public class Transformations {
                 if (measurementID.startsWith("http:")) {
                     measurementEventURI = measurementID;
                 } else {
-                    measurementEventURI = createURI(URIprefix, measurementID, "encounterEvent");
+                    measurementEventURI = createURI(URIprefix, measurementID, "measurementEvent");
                 }
             }
 

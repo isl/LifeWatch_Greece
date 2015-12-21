@@ -1066,7 +1066,7 @@ public class MetadataRepositoryService implements Service {
         //return new ArrayList<>(map.values());
     }
 
-    public List<MeasurementStruct> searchMeasurement(String specimen, String species, String dimension, String datasetURI,String repositoryGraph) throws QueryExecutionException {
+    public List<MeasurementStruct> searchMeasurement(String specimen, String species, String dimension, String datasetURI, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?measurementEventURI ?measurementEventLabel ?dimensionURI ?datasetURI ?datasetTitle ?dimensionTypeURI ?dimensionName ?specimenURI ?specimenName ?date ?unit ?value "
                 + "?speciesURI ?speciesName ?actorName ?actorURI "
                 + "FROM <" + repositoryGraph + "> "
