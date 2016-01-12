@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.net.URI;
 import eu.lifewatch.common.Resources;
+import eu.lifewatch.core.model.OccurrenceStruct;
 import eu.lifewatch.core.model.Triple;
 import eu.lifewatch.exception.DataImportException;
 import eu.lifewatch.exception.QueryExecutionException;
@@ -360,13 +361,14 @@ public class DirectoryService implements Service {
                 + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}"
                 + " LIMIT " + limit
                 + " OFFSET " + offset;
-
+         System.out.println("query"+queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
-        Map<String, DirectoryStruct> structsMap = new HashMap<>();
+       // Map<String, DirectoryStruct> structsMap = new HashMap<>();
+        List<DirectoryStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            if (!structsMap.containsKey(result.getValue("datasetURI").stringValue())) {
+           // if (!structsMap.containsKey(result.getValue("datasetURI").stringValue())) {
                 DirectoryStruct struct = new DirectoryStruct().withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetName").stringValue())
                         .withDatasetType(result.getValue("datasetType").stringValue())
@@ -460,20 +462,22 @@ public class DirectoryService implements Service {
                 if (result.getValue("parentDatasetName") != null) {
                     struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
                 }
-                structsMap.put(struct.getDatasetURI(), struct);
-            } else {
-                DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-
-                if (result.getValue("contributorURI") != null) {
-                    String contributorURI = result.getValue("contributorURI").stringValue();
-                    String contributorName = result.getValue("contributorName").stringValue();
-                    struct.withContributor(contributorURI, contributorName);
-                }
-
-                structsMap.put(struct.getDatasetURI(), struct);
-            }
+                results.add(struct);
+//                structsMap.put(struct.getDatasetURI(), struct);
+//            } else {
+//                DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
+//
+//                if (result.getValue("contributorURI") != null) {
+//                    String contributorURI = result.getValue("contributorURI").stringValue();
+//                    String contributorName = result.getValue("contributorName").stringValue();
+//                    struct.withContributor(contributorURI, contributorName);
+//                }
+//
+//                structsMap.put(struct.getDatasetURI(), struct);
+//            }
         }
-        return new ArrayList<>(structsMap.values());
+         return results;
+       // return new ArrayList<>(structsMap.values());
     }
     
     
