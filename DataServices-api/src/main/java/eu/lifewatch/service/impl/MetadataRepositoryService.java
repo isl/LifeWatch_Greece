@@ -2009,12 +2009,12 @@ public class MetadataRepositoryService implements Service {
      public List<OutgoingNodeStruct> selectOutgoing(String resourceURI, String repositoryGraph) throws QueryExecutionException {
 
         String queryString = "SELECT ?predicate ?object ?objectType ?objectName"
-                + "WHERE { "
+                + " WHERE { "
                 + "  <" + resourceURI + "> ?predicate ?object ."
                 + " OPTIONAL { ?object <"+Resources.rdfsLabel+"> ?objectName } ."
                 + " OPTIONAL { ?object a ?objectType }} ";
        
-
+        System.out.println("QUERY"+queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -2040,7 +2040,7 @@ public class MetadataRepositoryService implements Service {
       public List<IncomingNodeStruct> selectIncoming(String resourceURI, String repositoryGraph) throws QueryExecutionException {
 
         String queryString = "SELECT ?predicate ?subject ?subjectType ?subjectName"
-                + "WHERE { "
+                + " WHERE { "
                 + " ?subject ?predicate <" + resourceURI + "> ."
                 + " OPTIONAL { ?subject <" + Resources.rdfsLabel+"> ?subjectName } ."
                 + " OPTIONAL { ?subject a ?subjectType }} ";
