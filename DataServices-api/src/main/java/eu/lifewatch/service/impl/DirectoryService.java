@@ -178,6 +178,7 @@ public class DirectoryService implements Service {
                 + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
                 + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}";
 
+        System.out.println("QUERY:"+queryString);
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
