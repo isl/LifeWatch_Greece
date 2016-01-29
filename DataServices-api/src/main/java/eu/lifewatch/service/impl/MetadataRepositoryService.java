@@ -2006,7 +2006,7 @@ public class MetadataRepositoryService implements Service {
         return results;
     }
     
-     public List<OutgoingNodeStruct> selectOutgoing(String resourceURI, String repositoryGraph) throws QueryExecutionException {
+     public List<OutgoingNodeStruct> selectOutgoing(String resourceURI) throws QueryExecutionException {
 
         String queryString = "SELECT ?predicate ?object ?objectType ?objectName"
                 + " WHERE { "
@@ -2037,9 +2037,75 @@ public class MetadataRepositoryService implements Service {
         return results;
     }
     
-      public List<IncomingNodeStruct> selectIncoming(String resourceURI, String repositoryGraph) throws QueryExecutionException {
+     public List<OutgoingNodeStruct> selectOutgoing(String resourceURI, String directoryGraph, String metadataRepositoryGraph) throws QueryExecutionException {
+
+        String queryString = "SELECT ?predicate ?object ?objectType ?objectName"
+                + " FROM <"+directoryGraph+"> "
+                + " FROM <"+metadataRepositoryGraph+"> "
+                + " WHERE { "
+                + "  <" + resourceURI + "> ?predicate ?object ."
+                + " OPTIONAL { ?object <"+Resources.rdfsLabel+"> ?objectName } ."
+                + " OPTIONAL { ?object a ?objectType }} ";
+       
+        System.out.println("QUERY"+queryString);
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The result returned " + sparqlresults.size() + " results");
+        List<OutgoingNodeStruct> results = new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+           
+            
+            
+            OutgoingNodeStruct struct = new OutgoingNodeStruct()
+                    .withObject(result.getValue("object").stringValue())
+                    .withPredicate(result.getValue("predicate").stringValue());
+             if (result.getValue("objectType") != null) {
+                    struct.withObjectType(result.getValue("objectType").stringValue());
+                }
+              if (result.getValue("objectName") != null) {
+                    struct.withObjectName(result.getValue("objectName").stringValue());
+                }
+            results.add(struct);
+        }
+        return results;
+    }
+     
+      public List<IncomingNodeStruct> selectIncoming(String resourceURI) throws QueryExecutionException {
 
         String queryString = "SELECT ?predicate ?subject ?subjectType ?subjectName"
+                + " WHERE { "
+                + " ?subject ?predicate <" + resourceURI + "> ."
+                + " OPTIONAL { ?subject <" + Resources.rdfsLabel+"> ?subjectName } ."
+                + " OPTIONAL { ?subject a ?subjectType }} ";
+       
+
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The result returned " + sparqlresults.size() + " results");
+        List<IncomingNodeStruct> results = new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+           
+            
+            
+            IncomingNodeStruct struct = new IncomingNodeStruct()
+                    .withSubject(result.getValue("subject").stringValue())
+                    .withPredicate(result.getValue("predicate").stringValue());
+             if (result.getValue("subjectType") != null) {
+                    struct.withSubjectType(result.getValue("subjectType").stringValue());
+                }
+              if (result.getValue("subjectName") != null) {
+                    struct.withSubjectName(result.getValue("subjectName").stringValue());
+                }
+            results.add(struct);
+        }
+        return results;
+    }
+      
+      public List<IncomingNodeStruct> selectIncoming(String resourceURI, String directoryGraph, String metadataRepositoryGraph) throws QueryExecutionException {
+
+        String queryString = "SELECT ?predicate ?subject ?subjectType ?subjectName"
+                + " FROM <"+directoryGraph+"> "
+                + " FROM <"+metadataRepositoryGraph+"> "
                 + " WHERE { "
                 + " ?subject ?predicate <" + resourceURI + "> ."
                 + " OPTIONAL { ?subject <" + Resources.rdfsLabel+"> ?subjectName } ."
