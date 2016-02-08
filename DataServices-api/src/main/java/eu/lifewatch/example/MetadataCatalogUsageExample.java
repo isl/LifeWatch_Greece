@@ -1146,7 +1146,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for MicroCTScanning structs.");
         try{
-            List<MicroCTScanningStruct> results=this.mrService.searchMicroCTScanning("device", "specimen", "species","","", "http://UNUSED_GRAPHSPACE");
+            List<MicroCTScanningStruct> results=this.mrService.searchMicroCTScanning("device", "specimen", "species","","","", "http://UNUSED_GRAPHSPACE");
             for(MicroCTScanningStruct struct : results){
                 System.out.println(struct.getScanningURI());
             }

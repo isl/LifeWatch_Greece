@@ -25,10 +25,15 @@ public class MicroCTScanningStruct {
     private String equipmentURI;
     private String equipment;
     private String contrastMethod;
+    private String voltage;
+    private String filter;
+    private String zoom;
+    private String exposureTime;
     private String methodName;
     private String methodURI;
     private String scanningURI;
     private String scanning;
+    private String scanningLabel;
     private String timespan;
     private String actorURI;
     private String actorName;
@@ -51,10 +56,15 @@ public class MicroCTScanningStruct {
         equipmentURI="";
         equipment="";
         contrastMethod = "";
+        voltage = "";
+        filter = "";
+        zoom = "";
+        exposureTime = "";
         methodName="";
         methodURI="";
         scanningURI="";
         scanning="";
+        scanningLabel="";
         timespan="";
         deviceURI="";
         deviceName="";
@@ -88,6 +98,10 @@ public class MicroCTScanningStruct {
     
     public String getScanning() {
         return scanning;
+    }
+    
+    public String getScanningLabel() {
+        return scanningLabel;
     }
     
     public Collection<String> getProductURIs() {
@@ -142,6 +156,22 @@ public class MicroCTScanningStruct {
         return contrastMethod;
     }
      
+    public String getVoltage() {
+        return voltage;
+    }
+    
+    public String getFilter() {
+        return filter;
+    }
+    
+    public String getZoom() {
+        return zoom;
+    }
+    
+    public String getExposureTime() {
+        return exposureTime;
+    }
+    
     public String getMethodName() {
         return methodName;
     }
@@ -178,6 +208,22 @@ public class MicroCTScanningStruct {
         this.contrastMethod = contrastMethod;
     }
     
+    public void setZoom(String zoom) {
+        this.zoom = zoom;
+    }
+    
+    public void setVoltage(String voltage) {
+        this.voltage = voltage;
+    }
+    
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
+    
+    public void setExposureTime(String exposureTime) {
+        this.exposureTime = exposureTime;
+    }
+    
     public void setMethodName(String methodName) {
         this.methodName = methodName;
     }
@@ -192,6 +238,10 @@ public class MicroCTScanningStruct {
     
     public void setScanning(String scanning) {
         this.scanning = scanning;
+    }
+    
+    public void setScanningLabel(String scanningLabel) {
+        this.scanningLabel = scanningLabel;
     }
 
     public void setTimespan(String timespan) {
@@ -279,6 +329,11 @@ public class MicroCTScanningStruct {
         return this;
     }
     
+    public MicroCTScanningStruct withScanningLabel(String scanningLabel) {
+        this.scanningLabel = scanningLabel;
+        return this;
+    }
+    
     public MicroCTScanningStruct withDeviceName(String deviceName) {
         this.deviceName = deviceName;
         return this;
@@ -308,6 +363,26 @@ public class MicroCTScanningStruct {
     
     public MicroCTScanningStruct withContrastMethod(String contrastMethod) {
         this.contrastMethod= contrastMethod;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withZoom(String zoom) {
+        this.zoom= zoom;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withVoltage(String voltage) {
+        this.voltage= voltage;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withExposureTime(String exposureTime) {
+        this.exposureTime= exposureTime;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withFilter(String filter) {
+        this.filter = filter;
         return this;
     }
      
@@ -359,9 +434,24 @@ public class MicroCTScanningStruct {
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+scanningURI+"> . \n";
              }
-            if(!scanning.isEmpty()){
-                retTriples+= "<"+scanningURI+"> <"+Resources.rdfsLabel+"> \""+scanning+"\" .\n";
+            if(!scanningLabel.isEmpty()){
+                retTriples+= "<"+scanningURI+"> <"+Resources.rdfsLabel+"> \""+scanningLabel+"\" .\n";
             }
+            if(!scanning.isEmpty()){
+                retTriples+= "<"+scanningURI+"> <"+Resources.isIdentifiedBy+"> \""+scanning+"\" .\n";
+            }
+            if (!zoom.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasZoom + "> \"" + zoom + "\" .\n";
+                }
+            if (!filter.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasFilter + "> \"" + filter + "\" .\n";
+                }
+            if (!voltage.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasVoltage + "> \"" + voltage + "\" .\n";
+                }
+            if (!exposureTime.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasExposureTime + "> \"" + exposureTime + "\" .\n";
+                }
         }
         if(!specimenURI.isEmpty()){
             retTriples+= "<"+specimenURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+"> .\n";

@@ -141,6 +141,10 @@ public class Resources {
     public static final String wasProvidedBy = tloNamespace + "P_was_provided_by";
     public static final String isUsedIn = tloNamespace + "P_is_used_in";
     public static final String hasContrastMethod = cidocCrmNamespace + "P_has_contrast_method";
+    public static final String hasZoom = cidocCrmNamespace + "P_has_zoom";
+    public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";
+    public static final String hasFilter = cidocCrmNamespace + "P_has_filter";
+    public static final String hasExposureTime = cidocCrmNamespace + "P_has_exposure_time";
 
     public static final String rdfsLabel = rdfsNamespace + "label";
 

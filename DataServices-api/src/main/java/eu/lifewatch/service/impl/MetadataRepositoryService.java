@@ -2273,7 +2273,7 @@ public class MetadataRepositoryService implements Service {
             }
             
             
-            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "",repositoryGraph);
+            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "","",repositoryGraph);
            
             String MicroCTInfo = "";
          
@@ -3719,9 +3719,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return results;
     }
 
-    public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String datasetURI,String repositoryGraph) throws QueryExecutionException {
+    public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String scanning, String datasetURI,String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningLabel ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
+                + " ?scanning ?zoom ?exposureTime ?filter ?voltage"
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
                 + " ?scanningURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitizationProcessLabel + "> . "
@@ -3731,8 +3732,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?scanningURI <" + Resources.happenedOnDevice + "> ?deviceURI . "
                 + " ?scanningURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?scanningURI <" + Resources.rdfsLabel + "> ?scanningLabel. "
+                + " ?scanningURI <" + Resources.isIdentifiedBy + "> ?scanning. "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?scanningURI  <" + Resources.hasContrastMethod+ "> ?contrastMethod . "
+                + " ?scanningURI  <" + Resources.hasZoom+ "> ?zoom . "
+                + " ?scanningURI  <" + Resources.hasExposureTime+ "> ?exposureTime . "
+                + " ?scanningURI  <" + Resources.hasFilter+ "> ?filter . "
+                + " ?scanningURI  <" + Resources.hasVoltage+ "> ?voltage . "
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
                 + " ?datasetURI <" + Resources.refersTo + "> ?scanningURI . "
@@ -3751,6 +3757,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " FILTER regex(?speciesName,'" + species + "',\"i\") "
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
                 + " FILTER regex(?contrastMethod,'" + contrastMethod + "',\"i\") "
+                + " FILTER regex(?scanning,'" + scanning + "',\"i\") "
                 + " FILTER regex(?deviceName,'" + deviceName + "',\"i\")}";
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
@@ -3760,7 +3767,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scanningURI").stringValue())) {
                 MicroCTScanningStruct struct = new MicroCTScanningStruct().withScanningURI(result.getValue("scanningURI").stringValue())
-                        .withScanning(result.getValue("scanningLabel").stringValue())
+                        .withScanningLabel(result.getValue("scanningLabel").stringValue())
+                        .withScanning(result.getValue("scanning").stringValue())
+                        .withZoom(result.getValue("zoom").stringValue())
+                        .withExposureTime(result.getValue("exposureTime").stringValue())
+                        .withVoltage(result.getValue("voltage").stringValue())
+                        .withFilter(result.getValue("filter").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
@@ -3812,7 +3824,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return new ArrayList<>(map.values());
     }
 
-    public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+    public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String scanning, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningLabel ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
                 + " FROM <" + repositoryGraph + "> "
@@ -3824,8 +3836,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " ?scanningURI <" + Resources.happenedOnDevice + "> ?deviceURI . "
                 + " ?scanningURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 + " ?scanningURI <" + Resources.rdfsLabel + "> ?scanningLabel. "
+                + " ?scanningURI <" + Resources.isIdentifiedBy + "> ?scanning. "
                 + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?scanningURI  <" + Resources.hasContrastMethod+ "> ?contrastMethod . "
+                + " ?scanningURI  <" + Resources.hasZoom+ "> ?zoom . "
+                + " ?scanningURI  <" + Resources.hasExposureTime+ "> ?exposureTime . "
+                + " ?scanningURI  <" + Resources.hasFilter+ "> ?filter . "
+                + " ?scanningURI  <" + Resources.hasVoltage+ "> ?voltage . "
                 + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
                 + " ?datasetURI <" + Resources.refersTo + "> ?scanningURI . "
@@ -3844,6 +3861,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + " FILTER regex(?speciesName,'" + species + "',\"i\") "
                 + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
                 + " FILTER regex(?contrastMethod,'" + contrastMethod + "',\"i\") "
+                + " FILTER regex(?scanning,'" + scanning + "',\"i\") "
                 + " FILTER regex(?deviceName,'" + deviceName + "',\"i\")}"
                 + " LIMIT "+limit
                 + " OFFSET "+offset;
@@ -3855,7 +3873,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scanningURI").stringValue())) {
                 MicroCTScanningStruct struct = new MicroCTScanningStruct().withScanningURI(result.getValue("scanningURI").stringValue())
-                        .withScanning(result.getValue("scanningLabel").stringValue())
+                        .withScanningLabel(result.getValue("scanningLabel").stringValue())
+                        .withScanning(result.getValue("scanning").stringValue())
+                        .withZoom(result.getValue("zoom").stringValue())
+                        .withExposureTime(result.getValue("exposureTime").stringValue())
+                        .withVoltage(result.getValue("voltage").stringValue())
+                        .withFilter(result.getValue("filter").stringValue())
                         .withSpecimenURI(result.getValue("specimenURI").stringValue())
                         .withSpecimenName(result.getValue("specimenName").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())

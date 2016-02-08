@@ -77,7 +77,7 @@ public class MicroCTScanningCardinallityExample {
     
     public MicroCTScanningCardinallityExample search(){
         try{
-            List<MicroCTScanningStruct> structs=this.mrService.searchMicroCTScanning("device", "specimen", "species","", "",defaultGraphspace);
+            List<MicroCTScanningStruct> structs=this.mrService.searchMicroCTScanning("device", "specimen", "species","", "","",defaultGraphspace);
             System.out.println("Found "+structs.size()+" structs");
             for(MicroCTScanningStruct struct : structs){
                 System.out.println(struct);

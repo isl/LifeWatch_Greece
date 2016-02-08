@@ -7239,15 +7239,15 @@ public class Transformations {
 
             String deviceType = tokens[17].trim();
 
-//            String voltage_kV = tokens[18];
+            String voltage= tokens[18];
 //            String current_uA = tokens[19];
-//            String filter = tokens[20];
-//            String zoom_um = tokens[21];
+            String filter = tokens[20];
+            String zoom = tokens[21];
 //            String cameraResolution = tokens[22];
 //            String averaging = tokens[23];
 //            String randomMovement = tokens[24];
 //            String d360 = tokens[25];
-//            String exposureTime_ms = tokens[26];
+            String exposureTime = tokens[26];
 //            String oversizeSettings = tokens[27];
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
@@ -7311,6 +7311,21 @@ public class Transformations {
                 }
                 if (!scanningEventLabel.isEmpty()) {
                     retTriples += "<" + scanningURI + "> <" + Resources.rdfsLabel+ "> \"" + scanningEventLabel + "\" .\n";
+                }
+                if (!scanningID.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.isIdentifiedBy+ "> \"" + scanningID + "\" .\n";
+                }
+                 if (!zoom.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasZoom + "> \"" + zoom + "\" .\n";
+                }
+                if (!filter.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasFilter + "> \"" + filter + "\" .\n";
+                }
+                if (!voltage.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasVoltage + "> \"" + voltage + "\" .\n";
+                }
+                if (!exposureTime.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasExposureTime + "> \"" + exposureTime + "\" .\n";
                 }
             }
 
@@ -7408,15 +7423,15 @@ public class Transformations {
 
             String deviceType = tokens[17].trim();
 
-//            String voltage_kV = tokens[18];
+            String voltage = tokens[18];
 //            String current_uA = tokens[19];
-//            String filter = tokens[20];
-//            String zoom_um = tokens[21];
+            String filter = tokens[20];
+            String zoom = tokens[21];
 //            String cameraResolution = tokens[22];
 //            String averaging = tokens[23];
 //            String randomMovement = tokens[24];
 //            String d360 = tokens[25];
-//            String exposureTime_ms = tokens[26];
+            String exposureTime = tokens[26];
 //            String oversizeSettings = tokens[27];
 //            String scanNotes = tokens[28];
 //            String fileLocation = tokens[29];
@@ -7481,6 +7496,21 @@ public class Transformations {
                 }
                 if (!scanningEventLabel.isEmpty()) {
                     retTriples += "<" + scanningURI + "> <" + Resources.rdfsLabel+ "> \"" + scanningEventLabel + "\" .\n";
+                }
+                 if (!scanningID.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.isIdentifiedBy+ "> \"" + scanningID + "\" .\n";
+                }
+                 if (!zoom.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasZoom + "> \"" + zoom + "\" .\n";
+                }
+                if (!filter.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasFilter + "> \"" + filter + "\" .\n";
+                }
+                if (!voltage.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasVoltage + "> \"" + voltage + "\" .\n";
+                }
+                if (!exposureTime.isEmpty()) {
+                    retTriples += "<" + scanningURI + "> <" + Resources.hasExposureTime + "> \"" + exposureTime + "\" .\n";
                 }
             }
 
