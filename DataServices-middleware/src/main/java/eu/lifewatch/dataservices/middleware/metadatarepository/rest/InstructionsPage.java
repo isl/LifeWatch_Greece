@@ -44,7 +44,7 @@ public class InstructionsPage {
                        +"<a href=/DataServices-middleware/searchMicroCTScanning?species=albacares&specimen=id1234&returnType=json> /searchMicroCTScanning?species=albacares&specimen=id1234&returnType=json</a> "
                        +"<li> <h3> Give me all the MicroCT scanning as regards the species, with scientific name that contains the word \"albacares\" and the scanning ID is \"scan1550\" in...</h3></li> "
                        +"<h4> JSON format: </h4> "
-                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=albacares&returnType=json> /searchMicroCTScanning?species=albacares&scanning=scan1550&returnType=json</a> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=albacares&scanning=scan1550&returnType=json> /searchMicroCTScanning?species=albacares&scanning=scan1550&returnType=json</a> "
                        +"</ul> "
                        +"</body> "
                        +"</html>";
