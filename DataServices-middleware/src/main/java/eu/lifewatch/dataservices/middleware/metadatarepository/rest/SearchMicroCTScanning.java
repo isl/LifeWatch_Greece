@@ -187,12 +187,17 @@ public class SearchMicroCTScanning extends HttpServlet {
           .append("Method Name").append(csvDelimiter)
           .append("Scanning URI").append(csvDelimiter)
           .append("Scanning Name").append(csvDelimiter)
+          .append("Scanning ID").append(csvDelimiter)
           .append("Timespan").append(csvDelimiter)
           .append("Actor URI").append(csvDelimiter)
           .append("Actor Name").append(csvDelimiter)
           .append("Device URI").append(csvDelimiter)
           .append("Device Name").append(csvDelimiter)
           .append("Device Type").append(csvDelimiter)
+          .append("Voltage").append(csvDelimiter)
+          .append("Filter").append(csvDelimiter)
+          .append("Zoom").append(csvDelimiter)
+          .append("Exposure Time").append(csvDelimiter)
           .append("Product URI").append(csvDelimiter)
           .append("Product Name");
         sb.append("\n");
@@ -209,13 +214,18 @@ public class SearchMicroCTScanning extends HttpServlet {
                  .append(result.getMethodURI()).append(csvDelimiter)
                  .append(result.getMethodName()).append(csvDelimiter)
                  .append(result.getScanningURI()).append(csvDelimiter)
+                 .append(result.getScanningLabel()).append(csvDelimiter)
                  .append(result.getScanning()).append(csvDelimiter)
                  .append(result.getTimespan()).append(csvDelimiter)
                  .append(result.getActorURI()).append(csvDelimiter)
                  .append(result.getActorName()).append(csvDelimiter)
                  .append(result.getDeviceURI()).append(csvDelimiter)
                  .append(result.getDeviceName()).append(csvDelimiter)
-                 .append(result.getDeviceType()).append(csvDelimiter);
+                 .append(result.getDeviceType()).append(csvDelimiter)
+                 .append(result.getVoltage()).append(csvDelimiter)
+                 .append(result.getFilter()).append(csvDelimiter)
+                 .append(result.getZoom()).append(csvDelimiter)
+                 .append(result.getExposureTime()).append(csvDelimiter);
             for(Pair product : result.getProducts()){
                 sb.append(sbRow)
                   .append(product.getKey())
@@ -280,6 +290,10 @@ public class SearchMicroCTScanning extends HttpServlet {
         scanningElem.appendChild(createNodeWithText(doc,"device_uri",struct.getDeviceURI()));
         scanningElem.appendChild(createNodeWithText(doc,"device_name",struct.getDeviceName()));
         scanningElem.appendChild(createNodeWithText(doc,"device_type",struct.getDeviceType()));
+        scanningElem.appendChild(createNodeWithText(doc,"voltage",struct.getVoltage()));
+        scanningElem.appendChild(createNodeWithText(doc,"filter",struct.getFilter()));
+        scanningElem.appendChild(createNodeWithText(doc,"zoom",struct.getZoom()));
+        scanningElem.appendChild(createNodeWithText(doc,"exposure_time",struct.getExposureTime()));
         for(Pair product : struct.getProducts()){
             Element productElem=doc.createElement("product");
             productElem.appendChild(createNodeWithText(doc, "product_uri", product.getKey()));
