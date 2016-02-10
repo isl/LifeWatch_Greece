@@ -392,15 +392,16 @@ public class MetadataRepository_Search {
                                                              @WebParam(name = "specimen") String specimen, 
                                                              @WebParam(name = "speciesName") String speciesName,
                                                              @WebParam(name = "contrastMethod") String contrastMethod,
+                                                             @WebParam(name = "scanning") String scanning,
                                                              @WebParam(name = "datasetURI") String datasetURI,
                                                              @WebParam(name = "repositoryGraph") String repositoryGraph) {
-        logger.info("Request for searchMicroCTScanning("+deviceName+","+specimen+","+speciesName+","+contrastMethod+","+datasetURI+","+repositoryGraph+")");
+        logger.info("Request for searchMicroCTScanning("+deviceName+","+specimen+","+speciesName+","+contrastMethod+","+scanning+","+datasetURI+","+repositoryGraph+")");
         List<MicroCTScanningStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, datasetURI, repositoryGraph);
+            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, scanning, datasetURI, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);
@@ -413,17 +414,18 @@ public class MetadataRepository_Search {
                                                                         @WebParam(name = "specimen") String specimen, 
                                                                         @WebParam(name = "speciesName") String speciesName,
                                                                         @WebParam(name = "contrastMethod") String contrastMethod,
+                                                                        @WebParam(name = "scanning") String scanning,
                                                                         @WebParam(name = "datasetURI") String datasetURI,
                                                                         @WebParam(name = "offset") int offset,
                                                                         @WebParam(name = "limit") int limit,
                                                                         @WebParam(name = "repositoryGraph") String repositoryGraph) {
-        logger.info("Request for searchMicroCTScanningWithinRange("+deviceName+","+specimen+","+speciesName+","+contrastMethod+","+datasetURI+","+offset+","+limit+","+repositoryGraph+")");
+        logger.info("Request for searchMicroCTScanningWithinRange("+deviceName+","+specimen+","+speciesName+","+contrastMethod+","+scanning+","+datasetURI+","+offset+","+limit+","+repositoryGraph+")");
         List<MicroCTScanningStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, datasetURI, offset, limit, repositoryGraph);
+            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, scanning, datasetURI, offset, limit, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);
