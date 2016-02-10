@@ -22,6 +22,7 @@ public class InstructionsPage {
                        +"<ul> "
                        +"<li><b>species:</b> The scientific name (or part of it) of the species</li> "
                        +"<li><b>specimen:</b> The name (or part of it) of the specimen</li> "
+                       +"<li><b>scanning:</b> The ID (or part of it) of the scanning</li> "
                        +"<li><b>returnType:</b> The format of the output. The supported formats are: <b><i>json, xml, csv, ntriples</i></b></li> "
                        +"</ul> "
                        +"<h2> Examples: </h2> "
@@ -41,6 +42,9 @@ public class InstructionsPage {
                        +"<li><h3> Give me all the MicroCT scanning as regards the specimen whose value contain value \"id1234\" and the corresponding species has a scientific name that contains the value \"albacares\" in...</h3></li> "
                        +"<h4> JSON format: </h4> "
                        +"<a href=/DataServices-middleware/searchMicroCTScanning?species=albacares&specimen=id1234&returnType=json> /searchMicroCTScanning?species=albacares&specimen=id1234&returnType=json</a> "
+                       +"<li> <h3> Give me all the MicroCT scanning as regards the species, with scientific name that contains the word \"albacares\" and the scanning ID is \"scan1550\" in...</h3></li> "
+                       +"<h4> JSON format: </h4> "
+                       +"<a href=/DataServices-middleware/searchMicroCTScanning?species=albacares&returnType=json> /searchMicroCTScanning?species=albacares&scanning=scan1550&returnType=json</a> "
                        +"</ul> "
                        +"</body> "
                        +"</html>";
