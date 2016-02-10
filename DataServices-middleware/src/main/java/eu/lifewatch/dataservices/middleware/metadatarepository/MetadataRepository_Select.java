@@ -28,15 +28,14 @@ public class MetadataRepository_Select {
     private static final Logger logger=Logger.getLogger(MetadataRepository_Select.class);
 
     @WebMethod(operationName = "selectIncoming")
-    public List<IncomingNodeStruct> selectIncoming(@WebParam(name = "resourceURI") String resourceURI,
-                                                   @WebParam(name = "repositoryGraph") String repositoryGraph) {
-        logger.info("Request for selectIncoming("+resourceURI+","+repositoryGraph+")");
+    public List<IncomingNodeStruct> selectIncoming(@WebParam(name = "resourceURI") String resourceURI){
+        logger.info("Request for selectIncoming("+resourceURI+")");
         List<IncomingNodeStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.selectIncoming(resourceURI, repositoryGraph);
+            retList=api.selectIncoming(resourceURI);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while getting the incoming nodes of a resource URI. Returning an empty list.\n", ex);
@@ -45,18 +44,53 @@ public class MetadataRepository_Select {
     }
 
     @WebMethod(operationName = "selectOutgoing")
-    public List<OutgoingNodeStruct> selectOutgoing(@WebParam(name = "resourceURI") String resourceURI,
-                                                   @WebParam(name = "repositoryGraph") String repositoryGraph) {
-        logger.info("Request for selectOutgoing("+resourceURI+","+repositoryGraph+")");
+    public List<OutgoingNodeStruct> selectOutgoing(@WebParam(name = "resourceURI") String resourceURI) {
+        logger.info("Request for selectOutgoing("+resourceURI+")");
         List<OutgoingNodeStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.selectOutgoing(resourceURI, repositoryGraph);
+            retList=api.selectOutgoing(resourceURI);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while getting the outgoing nodes of a resource URI. Returning an empty list.\n", ex);
+        }
+        return retList;
+    }
+
+    @WebMethod(operationName = "selectOutgoingFromGraph")
+    public List<OutgoingNodeStruct> selectOutgoingFromGraph(@WebParam(name = "resourceURI") String resourceURI, 
+                                                          @WebParam(name = "directoryGraph") String directoryGraph, 
+                                                          @WebParam(name = "metadataGraph") String metadataGraph){
+        logger.info("Request for selectOutgoingFromGraph("+resourceURI+","+directoryGraph+","+metadataGraph+")");
+        List<OutgoingNodeStruct> retList=new ArrayList<>();
+        try{
+            ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+            VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
+            MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
+            retList=api.selectOutgoing(resourceURI, directoryGraph, metadataGraph);
+            logger.info("Number of results that will be returned: "+retList.size());
+        }catch(QueryExecutionException ex){
+            logger.error("An error occured while getting the outgoing nodes of a resource URI. Returning an empty list.\n", ex);
+        }
+        return retList;
+    }
+
+    @WebMethod(operationName = "selectIncomingFromGraph")
+    public List<IncomingNodeStruct> selectIncomingFromGraph(@WebParam(name = "resourceURI") String resourceURI, 
+                                                            @WebParam(name = "directoryGraph") String directoryGraph, 
+                                                            @WebParam(name = "metadataGraph") String metadataGraph){
+        logger.info("Request for selectIncomingFromGraph("+resourceURI+","+directoryGraph+","+metadataGraph+")");
+        List<IncomingNodeStruct> retList=new ArrayList<>();
+        try{
+            ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+            VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
+            MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
+            retList=api.selectIncoming(resourceURI, directoryGraph, metadataGraph);
+            logger.info("Number of results that will be returned: "+retList.size());
+        }catch(QueryExecutionException ex){
+            logger.error("An error occured while getting the incoming nodes of a resource URI. Returning an empty list.\n", ex);
         }
         return retList;
     }

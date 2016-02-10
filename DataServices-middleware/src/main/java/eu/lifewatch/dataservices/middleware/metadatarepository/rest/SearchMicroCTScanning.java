@@ -46,6 +46,7 @@ public class SearchMicroCTScanning extends HttpServlet {
     private static final Logger LOGGER=Logger.getLogger(SearchMicroCTScanning.class);
     private static final String SPECIES_LABEL="species";
     private static final String SPECIMEN_LABEL="specimen";
+    private static final String SCANNING_ID_LABEL="scanning";
     private static final String RETURN_TYPE_LABEL="returnType";
     private static final String XML_CONTENT_TYPE="text/xml";
     private static final String CSV_CONTENT_TYPE="text/csv";
@@ -57,6 +58,7 @@ public class SearchMicroCTScanning extends HttpServlet {
         LOGGER.info("Request for searchinh MicroCTScanning info");
         String speciesNameReceived=request.getParameter(SPECIES_LABEL);
         String specimenNameReceived=request.getParameter(SPECIMEN_LABEL);
+        String scanningIdReceived=request.getParameter(SCANNING_ID_LABEL);
         String returnType=request.getParameter(RETURN_TYPE_LABEL);
         Enumeration<String> params=request.getParameterNames();
         if(!params.hasMoreElements()){
@@ -95,20 +97,23 @@ public class SearchMicroCTScanning extends HttpServlet {
             if(specimenNameReceived==null){
                 specimenNameReceived="";
             }
-            List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived,specimenNameReceived);
+            if(scanningIdReceived==null){
+                scanningIdReceived="";
+            }
+            List<MicroCTScanningStruct> results=this.getMicroCTScanningResults(speciesNameReceived,specimenNameReceived,scanningIdReceived);
             this.processAndReturnResults(results,returnType,response);
         }
     }
     
-    private List<MicroCTScanningStruct> getMicroCTScanningResults(String species,String specimen){
+    private List<MicroCTScanningStruct> getMicroCTScanningResults(String species,String specimen,String scanningID){
         List<MicroCTScanningStruct> retList=new ArrayList<>();
         try{
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             RepositoryData repoData=context.getBean(RepositoryData.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            LOGGER.info("Searching for MicroCTScanning data with the following details: Species: "+species+",Specimen: "+specimen+", repositoryGraph: "+repoData.getRepositoryGraph());
-            retList=api.searchMicroCTScanning("", specimen, species, "", "", repoData.getRepositoryGraph());
+            LOGGER.info("Searching for MicroCTScanning data with the following details: Species: "+species+",Specimen: "+specimen+",ScanningID: "+scanningID+", repositoryGraph: "+repoData.getRepositoryGraph());
+            retList=api.searchMicroCTScanning("", specimen, species, "", scanningID, "", repoData.getRepositoryGraph());
             LOGGER.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             LOGGER.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);
@@ -182,12 +187,17 @@ public class SearchMicroCTScanning extends HttpServlet {
           .append("Method Name").append(csvDelimiter)
           .append("Scanning URI").append(csvDelimiter)
           .append("Scanning Name").append(csvDelimiter)
+          .append("Scanning ID").append(csvDelimiter)
           .append("Timespan").append(csvDelimiter)
           .append("Actor URI").append(csvDelimiter)
           .append("Actor Name").append(csvDelimiter)
           .append("Device URI").append(csvDelimiter)
           .append("Device Name").append(csvDelimiter)
           .append("Device Type").append(csvDelimiter)
+          .append("Voltage").append(csvDelimiter)
+          .append("Filter").append(csvDelimiter)
+          .append("Zoom").append(csvDelimiter)
+          .append("Exposure Time").append(csvDelimiter)
           .append("Product URI").append(csvDelimiter)
           .append("Product Name");
         sb.append("\n");
@@ -204,13 +214,18 @@ public class SearchMicroCTScanning extends HttpServlet {
                  .append(result.getMethodURI()).append(csvDelimiter)
                  .append(result.getMethodName()).append(csvDelimiter)
                  .append(result.getScanningURI()).append(csvDelimiter)
+                 .append(result.getScanningLabel()).append(csvDelimiter)
                  .append(result.getScanning()).append(csvDelimiter)
                  .append(result.getTimespan()).append(csvDelimiter)
                  .append(result.getActorURI()).append(csvDelimiter)
                  .append(result.getActorName()).append(csvDelimiter)
                  .append(result.getDeviceURI()).append(csvDelimiter)
                  .append(result.getDeviceName()).append(csvDelimiter)
-                 .append(result.getDeviceType()).append(csvDelimiter);
+                 .append(result.getDeviceType()).append(csvDelimiter)
+                 .append(result.getVoltage()).append(csvDelimiter)
+                 .append(result.getFilter()).append(csvDelimiter)
+                 .append(result.getZoom()).append(csvDelimiter)
+                 .append(result.getExposureTime()).append(csvDelimiter);
             for(Pair product : result.getProducts()){
                 sb.append(sbRow)
                   .append(product.getKey())
@@ -275,6 +290,10 @@ public class SearchMicroCTScanning extends HttpServlet {
         scanningElem.appendChild(createNodeWithText(doc,"device_uri",struct.getDeviceURI()));
         scanningElem.appendChild(createNodeWithText(doc,"device_name",struct.getDeviceName()));
         scanningElem.appendChild(createNodeWithText(doc,"device_type",struct.getDeviceType()));
+        scanningElem.appendChild(createNodeWithText(doc,"voltage",struct.getVoltage()));
+        scanningElem.appendChild(createNodeWithText(doc,"filter",struct.getFilter()));
+        scanningElem.appendChild(createNodeWithText(doc,"zoom",struct.getZoom()));
+        scanningElem.appendChild(createNodeWithText(doc,"exposure_time",struct.getExposureTime()));
         for(Pair product : struct.getProducts()){
             Element productElem=doc.createElement("product");
             productElem.appendChild(createNodeWithText(doc, "product_uri", product.getKey()));

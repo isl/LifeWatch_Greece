@@ -4,7 +4,7 @@
 
     <groupId>eu.lifewatch</groupId>
     <artifactId>DataServices-middleware</artifactId>
-    <version>2.6-SNAPSHOT</version>
+    <version>2.7-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>DataServices-middleware</name>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>eu.lifewatch</groupId>
             <artifactId>DataServices-api</artifactId>
-            <version>2.2-SNAPSHOT</version>
+            <version>2.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
