@@ -3827,6 +3827,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
     public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String scanning, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenURI ?specimenName ?speciesURI ?speciesName ?scanningURI ?scanningLabel ?deviceURI ?deviceName "
                 + " ?productURI ?productName ?timespan ?actorURI ?actorName ?datasetURI ?datasetName ?contrastMethod"
+                + " ?scanning ?zoom ?exposureTime ?filter ?voltage"
                 + " FROM <" + repositoryGraph + "> "
                 + " WHERE{ "
                 + " ?scanningURI <" + Resources.rdfTypeLabel + "> <" + Resources.digitizationProcessLabel + "> . "
