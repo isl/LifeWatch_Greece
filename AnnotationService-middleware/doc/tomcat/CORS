@@ -1,0 +1,34 @@
+Have to enable cors for tomcat
+
+If it's a static site, then starting with Tomcat 7.0.41, you can easily control CORS behavior via a built-in filter.
+
+Pretty much the only thing you have to do is edit the global web.xml in CATALINA_HOME/conf and add the filter definition:
+
+http://stackoverflow.com/questions/16296145/set-cors-header-in-tomcat/18850438#18850438
+     <!-- ================== Built In Filter Definitions ===================== -->
+
+      ...
+
+     <filter>
+       <filter-name>CorsFilter</filter-name>
+       <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+     </filter>
+     <filter-mapping>
+       <filter-name>CorsFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+    <!-- ==================== Built In Filter Mappings ====================== -->
+
+Be aware, though, that Firefox does not like Access-Control-Allow-Origin: * and requests with credentials (cookies): when responding to a credentialed request, server must specify a domain, and cannot use wild carding.
+
+<filter>
+       <filter-name>CorsFilter</filter-name>
+       <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+     </filter>
+     <filter-mapping>
+       <filter-name>CorsFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+

@@ -1,0 +1,133 @@
+==== DOCUMENTATION ====
+http://www.w3.org/TR/annotation-protocol/#create-a-new-annotation
+
+These are from 4.2.1 of Web Annotation Protocol
+
+New Annotations are created by posting a JSON-LD serialization of the Annotation to an Annotation Container.
+The Annotation's data is sent in the body of the request. All of the known information about the Annotation SHOULD be sent, and if there are already URIs associated with the resources,
+they MAY be included. The serialization SHOULD use the Open Annotation JSON-LD context and profile, and servers MAY reject other contexts even
+if they would otherwise produce the same model.
+
+Upon receipt of an Annotation, the server MAY assign HTTP URIs to resources and blank nodes in the Annotation, and MUST assign a URI to the Annotation resource,
+even if it aleady has one provided in the entity body description. The server SHOULD also add additional information to the Annotation. Possible additional information
+includes the agent that created it, the time of the Annotation's creation, additional types and formats.
+
+The server MUST respond with a 201 Created response if the creation is successful, and an appropriate error code otherwise.
+The response MUST have a Location header with the Annotation's new URI.
+
+The body of the response SHOULD be the Annotation as stored by the server, including any additional URIs or triples created in the process, and,
+barring content negotiation, it SHOULD be serialized in JSON-LD following the serialization in the Annotation Data Model specification. (Additional Constraint)
+
+The response MUST include a Link header with the target IRI of http://www.w3.org/ns/ldp#Resource and the rel parameter value of type to advertise that this
+is an RDF Source, according to the LDP specification. It MAY also include the URI http://www.w3.org/ns/oa#Annotation with the same rel
+parameter of type to also assert that it is an Annotation following the Open Annotation specifications.
+
+The response MUST include a Vary header with the value that includes Accept, as the representation is negotiable based on the client's Accept header.
+As above, if paging or minimal container triples preferences are supported, this MUST also include Prefer (Additional Constraint).
+
+If the client sends content that is not an Annotation according to the Web Annotation specification, the server MAY reject it. The server MAY discard information
+that is not in the Web Annotation specification included in the Annotation description, but what is stored MUST be included in the body of the response. (Additional Constraint)
+
+
+=== CREATE CLEAN VERSION ====
+curl -X POST -i -H 'Content-Type: application/ld+json' -d '
+{
+  "@context":"https://raw.githubusercontent.com/w3c/web-annotation/gh-pages/jsonld/anno.jsonld",
+ "@type":"oa:Annotation" ,
+ "body": {
+ "@type":"http://purl.obolibrary.org/obo/CMO_0000013",
+ "value":"http://polytraits.lifewatchgreece.eu/terms/BS_5"
+ },
+ "target": {
+ "@id": "http://dbpedia.org/page/Yellowfin_tuna"
+ }
+}
+' http://localhost:8084/LifeWatchAnnotation/annotations/
+
+=== CREATE COPY/PASTE VERSION ====
+
+curl -X POST -i -H 'Content-Type: application/ld+json' -d ' {"@context":"https://raw.githubusercontent.com/w3c/web-annotation/gh-pages/jsonld/anno.jsonld","@type":"oa:Annotation" , "body": { "@type":"http://purl.obolibrary.org/obo/CMO_0000013", "value":"http://polytraits.lifewatchgreece.eu/terms/BS_5" }, "target": { "@id": "http://dbpedia.org/page/Yellowfin_tuna" } } ' http://localhost:8084/LifeWatchAnnotation/annotations/
+
+=== RESPONSE ====
+
+HTTP/1.1 201 Created
+Server: Apache-Coyote/1.1
+Allow:: POST, GET, OPTIONS, HEAD, UPDATE, DELETE
+Cache-Control: no-transform, max-age=86400
+ETag: "-619146480"
+Link: <http://www.w3.org/ns/ldp#Resource>; rel="type"
+Link: <http://www.w3.org/ns/oa#Annotation>; rel="type"
+Location: http://lifewatchgreece.eu/entity/annotations/18faae99-60bf-4fb2-a96b-d2b53955e9c7
+Vary:: Accept
+Content-Type: application/ld+json
+Content-Length: 1543
+Date: Wed, 14 Oct 2015 10:26:30 GMT
+
+{
+  "@graph" : [ {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/18faae99-60bf-4fb2-a96b-d2b53955e9c7",
+    "@type" : "http://www.w3.org/ns/oa#Annotation",
+    "http://www.w3.org/ns/oa#annotatedAt" : "2015-10-14T13:26:26",
+    "http://www.w3.org/ns/oa#annotatedBy" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis"
+    },
+    "http://www.w3.org/ns/oa#hasBody" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/061f499e-c93d-4268-af91-55865e597f34"
+    },
+    "http://www.w3.org/ns/oa#hasTarget" : {
+      "@id" : "http://dbpedia.org/page/Yellowfin_tuna"
+    },
+    "http://www.w3.org/ns/oa#serializedBy" : {
+      "@id" : "http://www.lifewatchgreece.eu"
+    }
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/061f499e-c93d-4268-af91-55865e597f34",
+    "@type" : "http://purl.obolibrary.org/obo/CMO_0000013",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value" : "http://polytraits.lifewatchgreece.eu/terms/BS_5"
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis",
+    "@type" : "http://xmlns.com/foaf/0.1/Person",
+    "http://xmlns.com/foaf/0.1/name" : "Panagiotis Papadakos",
+    "http://xmlns.com/foaf/0.1/nick" : "papadako"
+  }, {
+    "@id" : "http://www.lifewatchgreece.eu",
+    "@type" : "http://www.w3.org/ns/prov/SoftwareAgent",
+    "http://xmlns.com/foaf/0.1/homepage" : "http://www.lifewatchgreece.eu",
+    "http://xmlns.com/foaf/0.1/name" : "Created through LifeWatch-Greece platform"
+  } ]
+}
+
+
+{
+{
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/18faae99-60bf-4fb2-a96b-d2b53955e9c7",
+    "@type" : "http://www.w3.org/ns/oa#Annotation",
+    "http://www.w3.org/ns/oa#annotatedAt" : "2015-10-14T13:26:26",
+    "http://www.w3.org/ns/oa#annotatedBy" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis"
+    },
+    "http://www.w3.org/ns/oa#hasBody" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/061f499e-c93d-4268-af91-55865e597f34"
+    },
+    "http://www.w3.org/ns/oa#hasTarget" : {
+      "@id" : "http://dbpedia.org/page/Yellowfin_tuna"
+    },
+    "http://www.w3.org/ns/oa#serializedBy" : {
+      "@id" : "http://www.lifewatchgreece.eu"
+    }
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/061f499e-c93d-4268-af91-55865e597f34",
+    "@type" : "http://purl.obolibrary.org/obo/CMO_0000013",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value" : "http://polytraits.lifewatchgreece.eu/terms/BS_5"
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis",
+    "@type" : "http://xmlns.com/foaf/0.1/Person",
+    "http://xmlns.com/foaf/0.1/name" : "Panagiotis Papadakos",
+    "http://xmlns.com/foaf/0.1/nick" : "papadako"
+  }, {
+    "@id" : "http://www.lifewatchgreece.eu",
+    "@type" : "http://www.w3.org/ns/prov/SoftwareAgent",
+    "http://xmlns.com/foaf/0.1/homepage" : "http://www.lifewatchgreece.eu",
+    "http://xmlns.com/foaf/0.1/name" : "Created through LifeWatch-Greece platform"
+  } 
+}

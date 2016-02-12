@@ -1,0 +1,102 @@
+==== DOCUMENTATION ====
+http://www.w3.org/TR/annotation-protocol/#retrieve-a-known-annotation
+These are from 4.2.2 of Web Annotation Protocol
+
+Clients may retrieve an Annotation from its advertised URI with the HTTP GET method. 
+Servers MUST support the JSON-LD representation using the Open Annotation profile, Turtle, 
+and MAY support other RDF serializations, other JSON-LD profiles, and other JSON-LD contexts.
+
+Content negotiation for different JSON-LD contexts is performed by adding a profile parameter 
+to the JSON-LD media type in a space separated, quoted list. The URI that defines the Open Annotation 
+profile is http://www.w3.org/TR/annotation-model/jsonLdProfile and other specifications 
+may define other such profiles. (Additional Constraint)
+
+The response MUST have a Link header entry where the target IRI is http://www.w3.org/ns/ldp#Resource 
+and the rel parameter value is type. The Annotation type MAY also be added.
+
+The response MUST have an ETag header, an Allow header, and a Vary header, as previously described.
+
+
+====all===
+curl -X GET -i -H 'Accept: application/ld+json' http://localhost:8084/LifeWatchAnnotation/annotations/
+
+=== specific annotation ====
+curl -X GET -i -H 'Accept: application/ld+json' http://localhost:8084/LifeWatchAnnotation/annotations/7d3292b7-90c5-4a2a-bc1c-37555eb5126c
+
+===user===
+curl -X GET -i -H 'Accept: application/ld+json' http://localhost:8084/LifeWatchAnnotation/annotations/user/papadako
+
+===targetIDs====
+curl -X POST -i -H 'Content-Type: application/ld+json'  "http://localhost:8084/LifeWatchAnnotation/annotations/targetsOnly/"
+
+===hasTarget===
+curl -X GET -i -H 'Accept: application/ld+json' "http://localhost:8084/LifeWatchAnnotation/annotations/target/?uri=http%3A%2F%2Fdbpedia.org%2Fpage%2FYellowfin_tuna"
+
+===hasTarget & user ===
+curl -X GET -i -H 'Accept: application/ld+json' "http://localhost:8084/LifeWatchAnnotation/annotations/user/papadako/target/?uri=http%3A%2F%2Fdbpedia.org%2Fpage%2FYellowfin_tuna"
+curl -X GET -i -H 'Accept: application/ld+json' "http://localhost:8084/LifeWatchAnnotation/annotations/target/user/papadako?uri=http%3A%2F%2Fdbpedia.org%2Fpage%2FYellowfin_tuna"
+
+===type===
+curl -X GET -i -H 'Accept: application/ld+json' "http://localhost:8084/LifeWatchAnnotation/annotations/type/?uri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCMO_0000013"
+
+=== RESPONSE ====
+
+HTTP/1.1 201 Created
+Server: Apache-Coyote/1.1
+Allow:: POST, GET, OPTIONS, HEAD, UPDATE, DELETE
+Cache-Control: no-transform, max-age=86400
+ETag: "-2054135947"
+Link: <http://www.w3.org/ns/ldp#Resource>; rel="type"
+Link: <http://www.w3.org/ns/oa#Annotation>; rel="type"
+Location: http://lifewatchgreece.eu/entity/annotations/fb2b6e0c-0fb0-4225-ab8a-49d9c24e0b9d
+Vary:: Accept
+Content-Type: application/ld+json
+Content-Length: 1648
+Date: Tue, 13 Oct 2015 13:37:21 GMT
+
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Allow:: POST, GET, OPTIONS, HEAD, UPDATE, DELETE
+Cache-Control: no-transform, max-age=86400
+ETag: "-674062221"
+Link: <http://www.w3.org/ns/ldp#Resource>; rel="type"
+Link: <http://www.w3.org/ns/oa#Annotation>; rel="type"
+Location: http://lifewatchgreece.eu/entity/annotations/resources/bfb328c7-34dc-4fb1-895b-da478a4752fe
+Vary:: Accept
+Content-Type: application/ld+json
+Content-Length: 1543
+Date: Thu, 15 Oct 2015 16:49:43 GMT
+
+{
+  "@graph" : [ {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/8eddc781-3b58-43dd-9858-de7a49820009",
+    "@type" : "http://www.w3.org/ns/oa#Annotation",
+    "http://www.w3.org/ns/oa#annotatedAt" : "2015-10-15T18:15:14",
+    "http://www.w3.org/ns/oa#annotatedBy" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis"
+    },
+    "http://www.w3.org/ns/oa#hasBody" : {
+      "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/b9eb4ffc-3697-4236-ab05-ab3eb05c7fcb"
+    },
+    "http://www.w3.org/ns/oa#hasTarget" : {
+      "@id" : "http://dbpedia.org/page/Yellowfin_tuna"
+    },
+    "http://www.w3.org/ns/oa#serializedBy" : {
+      "@id" : "http://www.lifewatchgreece.eu"
+    }
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/bodies/b9eb4ffc-3697-4236-ab05-ab3eb05c7fcb",
+    "@type" : "http://purl.obolibrary.org/obo/CMO_0000013",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value" : "http://polytraits.lifewatchgreece.eu/terms/BS_5"
+  }, {
+    "@id" : "http://lifewatchgreece.eu/entity/annotations/user/papadakos_panagiotis",
+    "@type" : "http://xmlns.com/foaf/0.1/Person",
+    "http://xmlns.com/foaf/0.1/name" : "Panagiotis Papadakos",
+    "http://xmlns.com/foaf/0.1/nick" : "papadako"
+  }, {
+    "@id" : "http://www.lifewatchgreece.eu",
+    "@type" : "http://www.w3.org/ns/prov/SoftwareAgent",
+    "http://xmlns.com/foaf/0.1/homepage" : "http://www.lifewatchgreece.eu",
+    "http://xmlns.com/foaf/0.1/name" : "Created through LifeWatch-Greece platform"
+  } ]
+}

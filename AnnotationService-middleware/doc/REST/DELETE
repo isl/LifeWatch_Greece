@@ -1,0 +1,23 @@
+==== DOCUMENTATION ====
+http://www.w3.org/TR/annotation-protocol/#retrieve-a-known-annotation
+These are from 4.2.2 of Web Annotation Protocol
+
+Clients may retrieve an Annotation from its advertised URI with the HTTP GET method. 
+Servers MUST support the JSON-LD representation using the Open Annotation profile, Turtle, 
+and MAY support other RDF serializations, other JSON-LD profiles, and other JSON-LD contexts.
+
+Content negotiation for different JSON-LD contexts is performed by adding a profile parameter 
+to the JSON-LD media type in a space separated, quoted list. The URI that defines the Open Annotation 
+profile is http://www.w3.org/TR/annotation-model/jsonLdProfile and other specifications 
+may define other such profiles. (Additional Constraint)
+
+The response MUST have a Link header entry where the target IRI is http://www.w3.org/ns/ldp#Resource 
+and the rel parameter value is type. The Annotation type MAY also be added.
+
+The response MUST have an ETag header, an Allow header, and a Vary header, as previously described.
+
+
+=== CREATE COPY/PASTE VERSION ====
+curl -X DELETE -i -H 'Accept: application/ld+json' http://localhost:8084/LifeWatchAnnotation/annotations/7d3292b7-90c5-4a2a-bc1c-37555eb5126c
+
+

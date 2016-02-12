@@ -1,0 +1,5 @@
+Create graph for annotation
+CREATE GRAPH <http://LifeWatchAnnotationGraph>
+
+Clear the graph:
+clear graph <http://LifeWatchAnnotationGraph>
