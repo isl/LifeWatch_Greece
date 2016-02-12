@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Annotation Client</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/jquery/jquery-1.11.3.min.js"></script>
+        <script src="js/jquery/jquery-ui.min.js"></script>
+        <script src="js/jquery/jquery.slidereveal.min.js"></script>
+        <script type="text/javascript">
+            // Change JQueryUI plugin names to fix name collision with Bootstrap.
+            // Currently the annotation uses jquery-ui tooltips and slide bars.
+            // Have to check if we can port it to pure bootstrap
+            $.widget.bridge('uitooltip', $.ui.tooltip);
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <script src="js/anno/anno.js" ></script>
+        <script src="js/anno/jsonld-markup.js"></script>
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="js/select2/select2.full.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="css/anno/anno.css">
+        <link rel="stylesheet" type="text/css" href="css/anno/jsonld-markup.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/select2/select2.min.css">
+    </head>
+    <body>
+        <br>
+        <label> Button that enables the annotation</label>
+        <button onclick = 'anno.toggleAnnotation("annotatedPart")'>
+            Toggle Annotation
+        </button>
+        <div id="annotatedPart">
+            <br>
+            <a href="metacatalogue.portal.lifewatch.gr.eu/search/browse?uri=http://www.lifewatchgreece.eu/entity/species/protula_tubularia" title="">This should be annotated</a>
+            <br>
+
+            <a href="http://www.lifewatchgreece.eu/entity/species/protula_tubularia" title=""> This should not be annotated (no query part)</a>
+            <br >
+            Have some text also without a URI. Here is another URI not annotated!
+            <a href="http://dbpedia.org/page/Yellowfin_tuna" title=""> This should not be annotated (no lifewatch species) </a>
+
+            <br>
+            <a href="metacatalogue.portal.lifewatch.gr.eu/search/browse?uri=http://www.lifewatchgreece.eu/entity/species/protula_tubularia" title="">This should be annotated</a>
+        </div>
+    </body>
+</html>

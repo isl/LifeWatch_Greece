@@ -1,0 +1,222 @@
+.ui-tooltip {
+    background: #E6F3F7;    /* Color from LifeWatch */
+    color: black;
+    border-style: solid;
+    padding: 1px;
+    opacity: 1;
+    box-shadow: 8px 8px 16px black;
+    min-width: 32px;
+    border-color: #888;
+    z-index: 100
+}
+
+.ui-tooltip-content::before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    display: block;
+    width: 3px;
+    bottom: -16px;
+    left: 4px;
+    border-color: #E6F3F7 transparent; /* Color from LifeWatch */
+    border-width: 15px 15px 0;
+}
+
+.ui-widget-content {
+    color: #E6F3F7;  /* Color from LifeWatch */
+}
+
+.button {
+    width: 30px;
+    font-size: 35px;
+    text-align: center;
+    font-family: 'h'!important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    white-space: nowrap;
+    background-color: #ccc;
+    background-image: linear-gradient(top, #eee, #eee);
+    margin: 2px;
+    margin-bottom: 4px;
+    padding: 2px;
+    font: bold 18px/18px Arial, Helvetica;
+    text-decoration: none;
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    border: 1px solid #444;
+    border-radius: .2em;
+    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.4);
+    background: #fff;
+}
+
+.button-anno:active {
+/*  background-color: #27496d;*/
+  box-shadow: inset 0 0 0 1px #27496d,inset 0 5px 30px #193047;
+}
+
+.wrap{
+    white-space: normal !important;
+    word-wrap: break-word;
+    word-break: normal;
+    font-weight: bold;
+}
+
+.annoCreationContainer {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: inherit;
+}
+
+.button-show:active {
+/*  background-color: #27496d;*/
+  box-shadow: inset 0 0 0 1px #27496d,inset 0 5px 30px #193047;
+}
+
+/* Annotations Wrappers */
+.annoWrapper {
+    /*box-shadow: 1px 0px 2px black;*/
+    background: #FFFFFF;    
+}
+
+.annoWrapperHighlight {
+    box-shadow: 1px 0px 2px black;
+    background: #E6F3F7;    
+}
+
+.annoWrapperHighlightActive {
+    box-shadow: 1px 0px 2px black;
+    /*background: #FFD0DB;*/
+    background: #FFFFCC;
+}
+
+/* Annotation slide */
+.left-shadow-overlay{
+    box-shadow: 10px 0 15px 10px #585858;
+}
+
+#annoBar {
+    background-color: #E6F3F7;
+    height: 100%;
+}
+
+#annoBar h4{
+    background-color: #C6D3D7;
+    font-size: 1.7em;
+    padding: 20px;
+    margin: 0;
+    font-weight: 200;
+    height: 11%;
+}
+#annoBar a{
+/*    border-bottom: 1px solid #D8D8D8;
+    padding: 1em;
+    color: #424242;
+    font-weight: 300;
+    text-decoration: none;*/
+}
+#annoBar a:hover{
+    background-color: #E6F3F7;
+}
+#annoBar .handle{
+    background-color: #C6D3D7;
+    left: -20px;
+    padding: 5px 8px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    cursor: pointer;
+    /*margin-top: -20px;*/
+	/*-moz-transition: 200ms ease all;
+	-webkit-transition: 200ms ease all;
+  -o-transition: 200ms ease all;
+  transition: 200ms ease all;*/
+}
+#annoBar .handle:hover{
+  /*left: -46px;
+  width: 30px;*/
+}
+
+.handle-left:before {
+    content: "\276C";
+}
+
+.handle-right:before {
+    content: "\276D";
+}
+
+/*
+This is responsible for the annotation information
+shown in the annotation bar
+*/
+#annoInfo {
+    height: inherit;
+    overflow: auto;
+    font-size: 75%;
+    overflow: hidden;
+    position: relative;
+    height: 84%
+}
+
+#annoConsole {
+    font-size: 75%;
+    height: 5%;
+    width: 100%;
+    border-top: 1px solid #000;
+    background-color: #C6D3D7;
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 0;
+    display: block;
+}
+
+.annoConsole {
+    background-color: #C6D3D7;
+    position: relative;
+    display: block;
+    padding: 0px 10px;
+    margin: 0px 0px;
+    overflow: hidden;
+}
+
+
+#annoBarHeader {
+    background-color: #E6F3F7;
+    overflow: hidden;
+}
+
+.annoParts {
+/*    background: #E6F3F7;*/    /* Color from LifeWatch */
+}
+
+.annoPanelRef {
+    position: relative;
+    min-height: 1px;
+    word-wrap: break-word; 
+    word-break: break-all;
+}
+
+.anno-list-group-item {
+    position: relative;
+    display: block;
+    padding: 5px 5px;
+    margin-bottom: 4px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+.anno-list-group {
+    padding-left: 0px;
+    margin-bottom: 20px;
+    height: inherit;
+    overflow: auto;
+}
+
+hr {
+    margin-top: 5px!important;
+    margin-bottom: 5px!important;
+}
