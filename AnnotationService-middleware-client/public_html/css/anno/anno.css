@@ -103,6 +103,7 @@
 #annoBar {
     background-color: #E6F3F7;
     height: 100%;
+    z-index: 1001;
 }
 
 #annoBar h4{
@@ -113,16 +114,7 @@
     font-weight: 200;
     height: 11%;
 }
-#annoBar a{
-/*    border-bottom: 1px solid #D8D8D8;
-    padding: 1em;
-    color: #424242;
-    font-weight: 300;
-    text-decoration: none;*/
-}
-#annoBar a:hover{
-    background-color: #E6F3F7;
-}
+
 #annoBar .handle{
     background-color: #C6D3D7;
     left: -20px;
