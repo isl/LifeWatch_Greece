@@ -1,0 +1,13 @@
+= {{#show: {{this}} |foaf:thumbnail| valueResolver=BIGTHUMBNAIL }} File: {{#show: {{this}} | dc:title}} =
+Here you can go back to the [[foaf:Document|list of all uploaded documents]] including meta information. 
+
+
+== Download ==
+{{#widget: com.fluidops.iwb.widget.DownloadWidget}}
+
+
+== Properties ==
+{{#widget: TableResult |
+query = 'SELECT * WHERE { ?? ?p ?o }'
+}} 
+

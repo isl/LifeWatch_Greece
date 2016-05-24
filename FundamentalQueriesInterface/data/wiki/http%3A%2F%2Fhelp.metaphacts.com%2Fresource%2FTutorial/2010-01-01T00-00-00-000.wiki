@@ -1,0 +1,197 @@
+= Tutorial - Getting Started =
+
+Taking the first steps with the metaphacts platform? Take this introductory tutorial to learn:
+* How to import data
+* How to query the data
+* How to visualize the data with rich widgets
+* How to create simple wiki templates
+
+
+Prerequisites: This tutorial assumes that you have installed your own instance of the metaphacts platform. If this is not the case, read the  [[Help:Installation | installation manual]].
+
+== Introduction ==  
+In this tutorial we use a small dataset from the [http://www.w3.org/TR/rdf11-primer/ RDF Primer document]
+<ref>Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang). This software or document includes material copied from or derived from http://www.w3.org/TR/rdf11-primer/.</ref>.
+
+The following figure shows an informal representation of the sample data as a graph:
+
+<img src="http://www.w3.org/TR/rdf11-primer/example-graph.jpg" alt="Informal graph of the sample data"/>
+
+
+You can download the sample data <a href="/metaphacts/samples/sample.ttl">here</a>.
+
+== Loading the data ==
+Please make sure you have the Download <a href="/metaphacts/samples/sample.ttl">sample data</a> available as a local file.
+You can now load the data via the Blazegraph Workbench:
+
+# Switch to the Blazegraph workbench
+## Unless you changed the configuration, the Blazegraph workbench runs at <a href ="/bigdata">/bigdata</a>
+# Select the '''UPDATE''' tab
+# Choose the '''Type''' ...
+## ... ''RDF data'' to directly input the data via the data input form at the top, or
+## ... ''File Path or URL'' to load data from the local file 
+# Make sure to specify the correct serialization Format '''Turtle''' and confirm with the '''Update''' button.
+
+{{#ifexpr: {{#sparql: ASK {  <http://example.org/bob#me> a foaf:Person  } }} 
+ | ''Check: It seems that you have already correctly loaded the sample data.''
+ | ''Check: It seems that you have not yet loaded the sample data.''
+}}
+
+== Querying the data ==
+You can now query the data via the <a href="/sparql">SPARQL endpoint</a>.
+For example, you may want to issue a query  for all statements made about Bob as a subject:
+
+<code>
+ SELECT * WHERE { <http://example.org/bob#me> ?p ?o }
+</code>
+
+Simply copy the query and paste it into the editor field of the SPARQL endpoint, then click Execute.
+
+== Visualizing results ==
+Let’s visualize the results of queries by embedding visualization widgets in a page.
+
+=== Tables === 
+We start by visualizing the results in a simple table. For this purpose, go to a new page, e.g. [[TableWidget]] and edit the page by clicking on the Edit button ( <i class="fa fa-pencil">&nbsp;</i>). 
+Copy and paste the widget definition below into the page and save the page.
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT * WHERE { <http://example.org/bob#me> ?p ?o }'
+    | columnConfiguration = {{ 
+        {{variableName='p'| displayName='Predicate'}} | {{variableName='o'| displayName='Object'}} 
+    }}
+}}
+</nowiki></pre></div></div>
+
+Next, we want to customize the layout of a query result to not only show a plain table, but to also embed thumbnail images in the result visualization.
+For this, we make use of the tupleTemplate, which is applied to every result tuple.
+
+We start with the following SPARQL query, which asks for all resources together label and thumbnail:
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+   SELECT ?uri ?label ?thumbnail WHERE { ?uri rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }
+</nowiki></pre></div></div>
+
+With the following widget definition, we define a template that shows a result panel with thumbnails displayed as images, the labels of the resources as captions, and links to the individual resource pages:
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+{{#widget: com.metaphacts.widgets.TableWidget
+    | query='SELECT ?uri ?label ?thumbnail WHERE { ?uri rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                 <a title="{{label.value}}" href="/resource/?uri={{uri.value}}">{{label.value}}</a>
+          </div>
+          <div class="panel-body">
+            <img class="img-responsive img-thumbnail" style="max-height:130px;display:block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+          </div>
+        </div>   '
+    }} 
+}}
+</nowiki></pre></div></div>
+Again, copy and paste the widget definition into a new page, e.g. [[TableWidget2]]. 
+
+You find further documentation about using the Table widget [[Help:TableWidget | here]].
+
+=== Graphs ===
+Next, let’s visualize the graph structure of the sample data using the Graph widget.
+We start by visualizing all entities and their relationships in a single graph.
+
+
+The SPARQL query to obtain the entire graph is simple:
+<code>
+  CONSTRUCT WHERE { ?s ?p ?o }
+</code>
+
+
+To visualize the graph, go to a new page, e.g. [[Graph]], and embed the following snippet:
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+    | query = ' CONSTRUCT WHERE { ?s ?p ?o }' 
+    | layout = {{ name = 'cola'}}
+}}
+</nowiki></pre>
+  </div>
+</div>
+
+== Creating a template ==
+Finally, we want to create a template for resources of a particular type.
+The general templatimg mechanism is described [[Help:TemplatingConcept|here]].
+
+In our example, we create a template for the class foaf:Person.
+For every person, we want to display:
+* the person's name
+* an image, if available
+* his interests
+* his friendship relationship
+
+To edit a template page, you have two choices:
+* either go the template page directly, i.e. [[Template:foaf:Person]]
+* or go an instance page, e.g. <a href="/resource/?uri=http%3A%2F%2Fexample.org%2Fbob%23me">Bob</a>, click on '''Edit''' and follow the link to the template page.
+
+Now copy and paste the following Wiki snippet into the template page:
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+= {{#show: {{this}} | rdfs:label}} = 
+<row>
+<col width="3">
+<p><b>Birthdate:</b> {{ #show: {{this}} | <http://schema.org/birthDate>}}</p>
+{{ #show: {{this}} | <http://schema.org/thumbnail> | valueResolver=IMAGE}}
+</col>
+
+<col width="3">
+<b>Friends</b>
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:knows ?friend. ?friend rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                  <a title="{{label.value}}" href="/resource/?uri={{friend.value}}">{{label.value}}</a>
+                </div>
+                <div class="panel-body">
+                  <img class="img-responsive img-thumbnail" style="max-height:130px;display:block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+                </div>
+            </div>'
+        | options='{"showFilter":false}'
+    }} 
+}}
+</col>
+
+<col width="3">
+<b>Interests</b>
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:topic_interest ?topic. ?topic rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'  
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                  <a title="{{label.value}}" href="/resource/?uri={{topic.value}}">{{label.value}}</a>
+                </div>
+                <div class="panel-body">
+                  <img class="img-responsive img-thumbnail" style="max-height: 130px;display: block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+                </div>
+            </div>'
+  | options='{"showFilter":false}'
+  }} 
+}}
+</col>
+</row>
+</nowiki></pre>
+  </div>
+</div>
+Now look at the applied result on an instance pages, such as <a href="/resource/?uri=http%3A%2F%2Fexample.org%2Fbob%23me">Bob</a>.
+== References ==
+ <references/> 
+
+

@@ -1,0 +1,79 @@
+__NOTOC__
+
+= RDFS Class: '{{#show: {{this}} | rdfs:label}}' =
+
+'''URI''': ''{{#show: {{this}} }}''
+
+== Taxonomy ==
+
+=== Subclasses ===
+
+{{#widget: TableResult |
+query = '
+SELECT ?subclass WHERE { 
+  ?subclass rdfs:subclassOf ?? .  
+}'
+}}
+
+=== Superclasses ===
+{{#widget: TableResult |
+query = '
+SELECT ?superclass WHERE { 
+  ?? rdfs:subclassOf ?superclass .  
+}'
+}}
+
+
+
+=== Subclasses of {{#show: {{this}} | rdfs:label}} ===
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?subclass WHERE { 
+  ?subclass rdfs:subClassOf ??.  
+}'
+}}
+</div>
+
+=== Superclasses of {{#show: {{this}} | rdfs:label}} ===
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?superclass WHERE { 
+  ?? rdfs:subClassOf ?superclass.  
+}'
+}}
+</div>
+
+== Properties with domain {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?domainOf WHERE { 
+  ?domainOf rdfs:domain ?? .  
+}'
+}}
+</div>
+
+== Properties with range {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?rangeOf WHERE { 
+  ?rangeOf rdfs:range ??.  
+}'
+}}
+</div>
+
+== Instances of class {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?Instance WHERE { 
+  ?Instance rdf:type ??.  
+}'
+}}
+</div>

@@ -1,0 +1,9 @@
+[[sp:Query | Query Catalog]] > {{#show: {{this}} | rdfs:label}}
+
+Query reference: <b>Query:{{#show: {{this}} | valueResolver=PREFIXED_URI}} </b>
+
+<pre>
+{{#show: {{this}} | sp:text }}
+</pre>
+
+

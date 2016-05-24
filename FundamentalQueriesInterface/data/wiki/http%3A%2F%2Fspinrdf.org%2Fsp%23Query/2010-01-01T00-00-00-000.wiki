@@ -1,0 +1,14 @@
+__NOTOC__
+= Query Catalog=
+
+
+== Queries Items ==
+{{#widget: TableResult | 
+ query = 'SELECT ?ID ?Comment
+WHERE{
+?ID a sp:Query.
+OPTIONAL{?ID rdfs:comment ?Comment}
+}'
+}}
+
+

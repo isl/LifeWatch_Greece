@@ -1,0 +1,43 @@
+={{#ifexpr: {{#sparql: ASK { ?? dc:title ?o } }} 
+ | {{#show: {{this}} | dc:title | noDataMessage= }}
+ | {{#show: {{this}} | rdfs:label| noDataMessage= $this$}}
+}}=
+<br/>
+{{#ifexpr: {{#sparql: ASK { ?? rdfs:comment ?c } }} 
+ | {{#show: {{this}} | rdfs:comment | noDataMessage= }}
+ | {{#show: {{this}} | dc:description | noDataMessage= }}
+}}
+
+<br/>
+== Classes  ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{ #widget: TableResult
+| query = 'SELECT ?class WHERE { GRAPH ?g { ?class rdf:type owl:Class . ?? rdf:type owl:Ontology } }'
+}}
+</div>
+
+
+== Object Properties  ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{ #widget: TableResult
+| query = 'SELECT ?ObjectProperty WHERE { GRAPH ?g { ?ObjectProperty rdf:type owl:ObjectProperty . ?? rdf:type owl:Ontology } }'
+}}
+</div>
+
+== Datatype Properties  ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{ #widget: TableResult
+| query = 'SELECT ?DatatypeProperty WHERE { GRAPH ?g { ?DatatypeProperty rdf:type owl:DatatypeProperty . ?? rdf:type owl:Ontology } }'
+}}
+</div>
+
+== Individuals  ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{ #widget: TableResult
+| query = 'SELECT ?Individual ?Class WHERE { GRAPH ?g { ?Individual rdf:type ?Class . ?Class rdf:type owl:Class . ?? rdf:type owl:Ontology } }'
+}}
+</div>

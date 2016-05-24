@@ -1,0 +1,133 @@
+= Carousel Widget =
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+      Animated browsing through a list of result items.
+      __TOC__
+  </div>
+    <div class="documentation__intro__demo" style="height:400px;width:400px;">
+    {{#widget: com.metaphacts.widgets.CarouselWidget |
+  query='
+      prefix person: <http://example.com/person/> 
+      prefix org: <http://example.com/org/> 
+      SELECT ?subject ?thumbnail ?label WHERE {                    
+        VALUES (?subject ?thumbnail ?label){ 
+            (Help:TableWidget "/images/help/table-widget.png" "Table Widget")
+            (Help:PivotWidget "/images/help/pivot-widget.png" "Pivot Widget")
+            (Help:GraphWidget "/images/help/graph-widget.png" "Graph Widget")
+            (Help:SimpleSearchWidget "/images/help/simple-search-widget.png" "Simple Search Widget")
+       }
+    }
+      '
+  | layout={{
+        tupleTemplate='<div class="text-center panel panel-default" style="border:none;margin-right:20px;font-size:12px;height:300px;width: 100%;">
+            <div class="panel-body" style="height: 280px;">
+              <img src="{{thumbnail.value}}" style="max-height:260px; margin: 0 auto;" class="img-rounded">
+            </div>
+            <div class="panel-footer" style="position: relative;  border: none;">
+              <mph-resource-link title="{{label.value}}" class="grid-resource-link" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+            </div>
+          </div>'
+    }}
+    }}
+    </div>
+</div>
+
+== Recommended Usage ==
+For item-based browsing through small collections of result items where individual result items can have an extended representation.
+
+===Limitations===
+* Individual carousel items have a corresponding element in the final DOM (even though these can be rendered lazily) and as such the size and complexitiy of tupleTemplates may impact the overall performance.  
+
+== Widget Configuration ==
+{| class="table table-bordered"
+| query
+| [http://www.w3.org/TR/sparql11-query/#select SPARQL Select Query] of which the result bindings can be used to populate the tupleTemplate
+|-
+| layout
+   |{| class="table"
+   |-
+   | tupleTemplate
+   | Handlebars [http://handlebarsjs.com/ html template] which defines visual representation of each result tuple e.g. cards with images
+   |}
+|}
+
+
+
+== Examples ==
+Sample dataset:
+<pre>
+
+  @prefix : <http://help.metaphacts.com/resource/> .
+  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
+  @prefix foaf: <foaf=http://xmlns.com/foaf/0.1/>
+
+  :TableWidget  rdfs:label "Table Widget";
+            foaf:thumbnail "/images/help/table-widget.png".
+  :PivotWidget  rdfs:label "Pivot Widget";
+            foaf:thumbnail "/images/help/pivot-widget.png".
+  :GraphWidget  rdfs:label  "Graph Widget";
+            foaf:thumbnail "/images/help/graph-widget.png".
+  :SimpleSearchWidget rdfs:label "Simple Search Widget";
+            foaf:thumbnail "/images/help/simple-search-widget.png".
+
+</pre>
+
+=== Carousel with Bootstrap Card-Layout ===
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.CarouselWidget |
+    query='
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+        SELECT ?subject ?thumbnail ?label WHERE {                    
+        VALUES (?subject ?thumbnail ?label){ 
+            (Help:TableWidget "/images/help/table-widget.png" "Table Widget")
+            (Help:PivotWidget "/images/help/pivot-widget.png" "Pivot Widget")
+            (Help:GraphWidget "/images/help/graph-widget.png" "Graph Widget")
+            (Help:SimpleSearchWidget "/images/help/simple-search-widget.png" "Simple Search Widget")
+        }
+        }
+      '|
+    layout={{
+        tupleTemplate='<div class="text-center panel panel-default" style="border:none;margin-right:20px;font-size:12px;height:300px;width: 100%;">
+            <div class="panel-body" style="height: 280px;">
+              <img src="{{thumbnail.value}}" style="max-height:260px; margin: 0 auto;" class="img-rounded">
+            </div>
+            <div class="panel-footer" style="position: relative;  border: none;">
+              <mph-resource-link title="{{label.value}}" class="grid-resource-link" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+            </div>
+          </div>'
+    }}
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+        {{#widget: com.metaphacts.widgets.CarouselWidget |
+  query='
+      prefix person: <http://example.com/person/> 
+      prefix org: <http://example.com/org/> 
+      SELECT ?subject ?thumbnail ?label WHERE {                    
+        VALUES (?subject ?thumbnail ?label){ 
+            (Help:TableWidget "/images/help/table-widget.png" "Table Widget")
+            (Help:PivotWidget "/images/help/pivot-widget.png" "Pivot Widget")
+            (Help:GraphWidget "/images/help/graph-widget.png" "Graph Widget")
+            (Help:SimpleSearchWidget "/images/help/simple-search-widget.png" "Simple Search Widget")
+       }
+    }
+      '
+  | layout={{
+        tupleTemplate='<div class="text-center panel panel-default" style="border:none;margin-right:20px;font-size:12px;height:300px;width: 100%;">
+            <div class="panel-body" style="height: 280px;">
+              <img src="{{thumbnail.value}}" style="max-height:260px; margin: 0 auto;" class="img-rounded">
+            </div>
+            <div class="panel-footer" style="position: relative;  border: none;">
+              <mph-resource-link title="{{label.value}}" class="grid-resource-link" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+            </div>
+          </div>'
+    }}
+    }}
+</div>
+

@@ -1,0 +1,617 @@
+= Graph Widget =
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+      Used for visualization of directed and undirected [http://en.wikipedia.org/wiki/Graph_(mathematics) graphs].
+      __TOC__
+  </div>
+  <div class="documentation__intro__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' |
+    layout = {{
+        name = 'circle' | options='{}'
+    }} |
+    style = '
+     [
+        {
+          "selector": "edge",
+          "style": {
+            "font-size": "12px"
+          }
+        },
+		{
+          "selector": "node[uri='http://example.com/person/alice']",
+     	  "style": {      		  
+      		  "background-color": "blue"
+		  }
+		},
+        {
+		  "selector": "node[uri='http://example.com/org/W3C']",
+		  "style": {
+			"background-color": "green"
+ 		  }
+   		}
+    ]
+    '
+}}
+</div>
+</div>
+
+== Recommended Usage ==
+Very useful to expound relationships beetwen entities. 
+
+===Limitations===
+* Scales best for small to mid-size graphs with ideally not more than up to hundred nodes and edges depending an the layout. 
+* Custom styling of the graph is possible including dynamic access to bindings from the query result. However, access to external, dynamic functions (e.g. for computing a gradient) is not yet supported.
+
+== Widget Configuration ==
+{| class="table table-bordered"
+| query 
+| [http://www.w3.org/TR/sparql11-query/#construct SPARQL Construct Query] where the resulting triples correspond to nodes (subjects/objects) and edges (predicates).
+|-
+| style
+| Stringified JSON object of styling properties as available through the [http://js.cytoscape.org/#layouts cytoscape graph library]. 
+[http://handlebarsjs.com/ HTML template syntax] can be used to access bindings from the query result such as, for example, thumbnails in order to customise the graph depending on the result.
+|-
+| layout
+   |{| class="table"
+   |-
+   | name
+   | Name of the graph layout algorithm. Supported algorithm are:
+* <i>cola</i> - <b>Force directed</b> graph layout with the ability to specify layout constraints. See [http://js.cytoscape.org/#layouts/cola] for further reference.
+* <i>cose</i> - Compound Spring Embedder layout. Based on the traditional <b>force-directed layout</b> with the ability to handle multi-level nesting for visualizing compound graphs. Useful for medium-sized graphs with equal distribution of edges and nodes. See [http://js.cytoscape.org/#layouts/cose] for further reference.
+* <i>circle</i> - Orders graph nodes in a <b>circle</b>. Useful for communicating, for example, network topologies such as ring or star networks. See [http://js.cytoscape.org/#layouts/circle] for further reference.
+* <i>breadthfirst</i> - <b>Hierarchical</b> (directed edges point downwards) graph layout based on a breadthfirst traversal. Useful for visualizing hierarchies. See [http://js.cytoscape.org/#layouts/breadthfirst] for further reference.
+* <i>dagre</i> - Directed acyclic graph layout especially for displaying <b>DAGs or also trees</b>. Can be useful, for example, for expounding histories such as sequences of versions.  See [http://js.cytoscape.org/#layouts/dagre] for further reference.
+   |-
+   | roots
+   | List of 1(:n) root nodes of the Graph referenced by the URI.
+   |-
+   | options
+   | Stringified JSON object of options specific to different layouts available through the [http://js.cytoscape.org/#layouts cytoscape graph library]
+   |}
+ |-
+ | height
+ | height of the widget container in pixels, default value is 400.
+|}
+
+
+
+== Examples ==
+Sample dataset:
+<pre>
+
+  @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+  @prefix person: <http://example.com/person/> .
+  @prefix org: <http://example.com/org/> . 
+
+  person:alice foaf:knows person:bob, person:carol, person:mike ;
+               foaf:member org:W3C .                                         
+
+  person:carol foaf:knows person:mike .
+               
+  person:bob foaf:knows person:carol .            
+
+  person:mike foaf:member org:W3C ;
+              foaf:knows person:carol .			  
+</pre>
+
+=== Layouts ===
+
+==== COLA (Constraint-Based Layout) ====
+
+<div class="documentation__example">
+ <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'cola'}}
+      | height = 600
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'cola'}}
+      | height = 600
+}}
+
+</div>
+</div>
+
+
+==== COSE (Compound Spring Embedder) ====
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'cose'}}
+      | height = 600
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }    
+    ' | layout = {{ name = 'cose'}}
+      | height = 600
+}}
+</div>
+</div>
+
+==== Circle ====
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' |
+    layout = {{
+        name = 'circle' | options='{}'
+    }} |
+    height = 600
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' |
+    layout = {{
+        name = 'circle' | options='{}'
+    }} |
+    height = 600
+}}
+</div>
+</div>
+
+==== Breadthfirst ====
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'breadthfirst' | roots={{ 'http://example.com/org/W3C' }} }}
+      | height = 600
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'breadthfirst' | roots={{ 'http://example.com/org/W3C' }} }}
+      | height = 600
+}}
+</div>
+</div>
+
+==== Dagre ====
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'dagre' }} 
+      | height = 600
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'dagre' }} 
+      | height = 600
+}}
+</div>
+</div>
+
+
+=== Styling ===
+<div class="documentation__example">
+ <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice rdfs:label "Alice")
+               (person:carol rdfs:label "Carol")               		   
+               (person:mike rdfs:label "Mike")
+               (person:bob rdfs:label "Bob")
+               (org:W3C rdfs:label "W3C")
+               (foaf:knows rdfs:label "knows")
+               (foaf:member rdfs:label "member")
+
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'cola'}}
+      | height = 600 
+      | style = '
+     [
+       {
+         "selector": "node",
+      	 "style": {
+            "content": "{{[http://www.w3.org/2000/01/rdf-schema#label].[0].value}}",
+           "background-color": "black",
+           "shape": "pentagon",
+           "text-outline-width": 1,
+           "text-outline-color": "red"
+      	 }
+        },
+		{
+          "selector": "node[uri='http://example.com/person/alice']",
+     	  "style": {      		  
+      		  "background-color": "blue"
+		  }
+		},
+        {
+		  "selector": "node[uri='http://example.com/org/W3C']",
+		  "style": {
+			"background-color": "green"
+ 		  }
+   		},
+		{
+		  "selector": "edge",
+          "content": "{{[http://www.w3.org/2000/01/rdf-schema#label].[0].value}}",
+		  "style": {
+      	    "target-arrow-shape": "triangle",
+	        "font-size": "8px",
+      		"text-outline-width": 1,
+      		"text-outline-color": "yellow"
+    	  }
+		}
+    ]
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget: com.metaphacts.widgets.GraphWidget 
+  | query = '
+        prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix person: <http://example.com/person/> 
+        prefix org: <http://example.com/org/> 
+
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+         {
+           SELECT ?s ?p ?o WHERE {
+             VALUES (?s ?p ?o)
+             { 
+               (person:alice rdfs:label "Alice")
+               (person:carol rdfs:label "Carol")               		   
+               (person:mike rdfs:label "Mike")
+               (person:bob rdfs:label "Bob")
+               (org:W3C rdfs:label "W3C")
+               (foaf:knows rdfs:label "knows")
+               (foaf:member rdfs:label "member")
+
+               (person:alice foaf:knows person:bob)
+               (person:alice foaf:knows person:carol)
+               (person:carol foaf:knows person:mike)               
+               (person:mike foaf:knows person:carol)
+               (person:bob foaf:knows person:carol)               
+               (person:alice foaf:knows person:mike)
+               (person:alice foaf:member org:W3C)
+               (person:mike foaf:member org:W3C)
+             }
+           }
+         }
+       }
+    ' | layout = {{ name = 'cola'}}
+      | height = 600 
+      | style = '
+     [
+       {
+         "selector": "node",
+      	 "style": {
+           "content": "{{[http://www.w3.org/2000/01/rdf-schema#label].[0].value}}",
+           "background-color": "black",
+           "shape": "pentagon",
+           "text-outline-width": 1,
+           "text-outline-color": "red"
+      	 }
+        },
+		{
+          "selector": "node[uri='http://example.com/person/alice']",
+     	  "style": {
+      		  "background-color": "blue"
+		  }
+		},
+        {
+		  "selector": "node[uri='http://example.com/org/W3C']",
+		  "style": {
+			"background-color": "green"
+ 		  }
+   		},
+		{
+		  "selector": "edge",
+          "content": "{{[http://www.w3.org/2000/01/rdf-schema#label].[0].value}}",
+		  "style": {
+      	    "target-arrow-shape": "triangle",
+	        "font-size": "8px",
+      		"text-outline-width": 1,
+      		"text-outline-color": "yellow"
+    	  }
+		}
+    ]
+}}
+</div>
+</div>

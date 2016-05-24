@@ -1,0 +1,103 @@
+= Map Widget =
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+      Used for displaying spatial data on a map.
+      __TOC__
+  </div>
+  <div class="documentation__intro__demo" style="height:400px;width:400px;">
+        {{#widget: com.metaphacts.widgets.MapWidget |
+            query='SELECT ?lat ?lng ?description ?link WHERE { 
+                    VALUES(?lat ?lng ?description ?link){
+                        ("49.2928" "8.6484" "Metaphacts GmbH" <http://metaphacts.com>)
+                        ("51.9500" "7.6240" "Münster City" <http://www.wikidata.org/wiki/Q2742>)
+                    }
+                }' |
+            markers = {{ 
+                {{lat='52.5075' |  lng='13.4251' | description='Berlin City ' | link='http://www.wikidata.org/wiki/Q64 '}}
+                |{{lat='53.5585' |  lng='9.9278' | description='Hamburg ' | link='http://www.wikidata.org/wiki/Q1055'}}
+            }} 
+        }}
+  </div>
+</div>
+
+== Recommended Usage ==
+Displaying spatial data on a geographic map. 
+
+===Limitations===
+* For the time being only simple point geometries are supported i.e. simple lat,long coordinate pairs
+* Coordinates are assumed to be in EPSG:4326 (WGS84) and will be transformed internally to EPSG:3857
+
+== Widget Configuration ==
+{| class="table table-bordered"
+| query
+| [http://www.w3.org/TR/sparql11-query/#select SPARQL Select Query] where each tuple in the result binding corresponds to one marker on the map. The query <b>must have at least</b> <i>?lat</i> and <i>?lng</i> binding variable, whereas <i>?description</i> and <i>?link</i> are being optional.
+|-
+| makers
+   |{| class="table"
+   |-
+   | lat 
+   | Latitude of the marker.
+   |-
+   | lng
+   | Longitude of the marker.
+   |-
+   | description
+   | Textual desscription to be displayed within the marker popup.
+   |-
+   | link
+   | Link e.g. URI to link from the marker popup.
+   |}
+|-
+|}
+
+
+
+== Examples ==
+Sample dataset:
+<pre>
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+<http://metaphacts.com> rdfs:label "Metaphacts GmbH";
+    wgs:lat "49.2928"; 
+    wgs:long "8.6484".
+<http://www.wikidata.org/wiki/Q2742> rdsf:label "Münster City";
+    wgs:lat "51.9500";
+    wgs:long "7.6240". 
+</pre>
+
+
+=== Fixed and Dynamic Markers ===
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+{{#widget: com.metaphacts.widgets.MapWidget |
+    query='SELECT ?lat ?lng ?description ?link WHERE { 
+            VALUES(?lat ?lng ?description ?link){
+                ("49.2928" "8.6484" "Metaphacts GmbH" <http://metaphacts.com>)
+                ("51.9500" "7.6240" "Münster City" <http://www.wikidata.org/wiki/Q2742>)
+            }
+        }' |
+    markers = {{ 
+        {{lat='52.5075' |  lng='13.4251' | description='Berlin City ' | link='http://www.wikidata.org/wiki/Q64 '}}
+        |{{lat='53.5585' |  lng='9.9278' | description='Hamburg ' | link='http://www.wikidata.org/wiki/Q1055'}}
+    }} 
+}}
+        </nowiki></pre>
+  </div>
+<div class="documentation__example__demo" style="width:800px">
+        {{#widget: com.metaphacts.widgets.MapWidget |
+            query='SELECT ?lat ?lng ?description ?link WHERE { 
+                    VALUES(?lat ?lng ?description ?link){
+                        ("49.2928" "8.6484" "Metaphacts GmbH" <http://metaphacts.com>)
+                        ("51.9500" "7.6240" "Münster City" <http://www.wikidata.org/wiki/Q2742>)
+                    }
+                }' |
+            markers = {{ 
+                {{lat='52.5075' |  lng='13.4251' | description='Berlin City ' | link='http://www.wikidata.org/wiki/Q64 '}}
+                |{{lat='53.5585' |  lng='9.9278' | description='Hamburg ' | link='http://www.wikidata.org/wiki/Q1055'}}
+            }} 
+        }}
+</div>
+</div>
+
+

@@ -1,0 +1,10 @@
+= Annotation Properties =
+
+﻿{{#widget: TableResult |
+query = '
+SELECT DISTINCT ?property ?propertyLabel ?superProperty WHERE { 
+  ?property rdf:type ?? .  
+  OPTIONAL { ?property rdfs:label ?propertyLabel }
+  OPTIONAL { ?property rdfs:subClassOf ?superProperty }
+}'
+}}

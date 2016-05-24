@@ -1,0 +1,157 @@
+= Basic System Configuration =
+This page describes how to adjust general system behavior via configuration properties. 
+__TOC__
+== General System Properties ==
+Most system parameters can be set using the configuration file "config/config.prop".
+
+<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>startPage</td>
+          <td>URI</td>
+          <td>Prefixed or full URI ( surround by <>) to specify the page the user should be redirect to after login or if she clicks on the home button. Default: "Start"</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>repositoryType</td>
+          <td>String</td>
+          <td>"SPARQL" if a remote SPARQL repository should be used as default repository instead of a native sesame repository. Default: "native" (native sesame repository)</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>endpoint</td>
+          <td>URL</td>
+          <td>URL to the remote repository e.g. "http://127.0.0.1:9001/bigdata/sparql" if a blazegraph instance is running on the same host.</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>backendServerUrl</td>
+          <td>URL</td>
+          <td>IP/URL including port to the backend e.g. "http://127.0.0.1:8888/". Needs only to be set if the pivot widget is used.</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>authenticationFilter</td>
+          <td>List of Strings (comma separated)</td>
+          <td>Authentication filter to apply. Any combination of "anon" (Anonymous User),"authc" (FormBasedAuthentication) ,"authcBasic" (HTTP Basic Authentication). Default: "authc" </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+== Security ==
+<p>The platform relies on the <a href="http://shiro.apache.org" target="_blank">Apache Shiro</a> security framework. 
+While it is possible to hook-in different security providers and realms, the easiest way is to define users, roles and permissions using the "shiro.ini" file. </p>
+
+New users can be added, for example, by modifying the section <i>[users]</i> in the shiro file.*<br/>
+
+
+<b>Example Configuration:</b>
+The example below defines a user with the name "john.smith", the password "123" and assigns a role "guestRole".<br/>
+
+<div class="highlight" style="margin-left:2%"><pre>
+[users]
+john.smith = 123, guestRole
+</pre></div>
+
+<b>* Please note:</b><br/>
+Creating users using the shiro.ini should be used for testing and evaluation purpose only, since the file is neither proptected nor encrypted i.e. passwords are being stored in plain text. 
+For production other security providers such as LDAP need to be configured.  
+
+=== Login Protection ===
+By default the platform requires authentication for all resources below the root /** URL. <br/>
+For security reasons it is not possible to disable authentication entirely, 
+however, one can grant access to anonymous/guest user by enabling a special "anon" authentication filter (c.f. general system properties section).
+
+To activate the filter, the following configuration property needs to be set in config.prop
+<div class="highlight" style="margin-left:2%"><pre>
+authenticationFilter=anon,authc
+</pre></div>
+
+For the special anonymous filter ("anon") a static user with the user principal "anonymous" can be used in order to grant permissions and/or assign roles to guest users (c.f. Basic ACLs section below).
+
+=== Basic ACLs ===
+For the time being fine granular permissions can only be granted to the SPARQL endpoint and the WIKI service.
+Permissions are <b>whitelist based</b> i.e. one needs to assign permissions explicitly.
+
+Permissions:
+<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Package/Pattern</th>
+          <th>Permission</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>sparql:query:select</td>
+          <td>Grants permission to execute SELECT queries.</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>sparql:query:ask</td>
+          <td>Grants permission to execute ASK queries.</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>sparql:query:construct</td>
+          <td>Grants permission to execute CONSTRUCT queries.</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>sparql:query:describe</td>
+          <td>Grants permission to execute DESCRIBE queries.</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>sparql:query:*</td>
+          <td>Grants permission to all SPARQL query operations i.e. SELECT, ASK, CONSTRUCT, DESCRIBE</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>wiki:edit:view</td>
+          <td>Grants permission to view wiki code.</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>wiki:edit:save</td>
+          <td>Grants permission to edit and save wiki pages.</td>
+        </tr>
+		<tr>
+          <th scope="row">4</th>
+          <td>wiki:edit:*</td>
+          <td>Grants permission to all wiki edit operations.</td>
+        </tr>
+      </tbody>
+    </table>
+
+<b>Example Configuration:</b><br/>
+The example below defines two users and assigns roles to them. Permissions are granted to roles in the <i>[roles]</i> section.<br/>
+<ul>
+<li>The role "adminRole" is granted permission to execute all SPARQL query and update opertions as well as to save wiki pages </li>
+<li>The role "guestRole" is granted permission to execute all SPARQL query opertions, but no update operations.  In addition, the "guestRole" can not save wiki pages.</li>
+</ul>
+<div class="highlight" style="margin-left:2%"><pre>
+[users]
+guest = adminpassword, guestRole
+admin = adminpassword, adminRole
+
+[roles]
+adminRole = sparql:*:*
+adminRole = wiki:*:*
+guestRole = sparql:query:*
+
+</pre></div>
+
+

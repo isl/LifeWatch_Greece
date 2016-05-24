@@ -1,0 +1,145 @@
+{{#widget: org.researchspace.search.SearchWidget |
+  domainSelectorConfig = {{
+    tupleTemplate = '<div class="fundamental-category-item" style="background-image: url('{{thumbnail.value}}');"></div>' |
+    query = '
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix schema: <http://schema.org/>
+
+      SELECT ?uri ?label ?thumbnail WHERE {
+        ?uri a rso:FundamentalCategory ;
+          rdfs:label ?label .
+      } ORDER BY ?order
+      VALUES (?uri ?thumbnail ?order) {
+        (rso:Thing "../images/things.svg" 1)
+        (rso:Actor "../images/actors.svg" 2)
+        (rso:Place "../images/places.svg" 3)
+        (rso:Time "../images/dates.svg" 4)
+        (rso:Event "../images/events.svg" 5)
+        (rso:Concept "../images/concepts.svg" 6)
+      }' |
+      uriBindingName = 'uri' |
+      labelBindingName = 'label'
+  }} |rangeSelectorConfig = {{
+    tupleTemplate = '<div class="fundamental-category-item" style="background-image: url('{{thumbnail.value}}');"></div>' |
+    query = '
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix schema: <http://schema.org/>
+
+      SELECT ?uri ?label ?thumbnail WHERE {
+        OPTIONAL {
+          ?uri a rso:FundamentalCategory .
+          ?uri rdfs:label ?label
+        }.
+      } ORDER BY ?order
+      VALUES (?uri ?thumbnail ?order ?label) {
+        (rso:Thing "../images/things.svg" 1 UNDEF)
+        (rso:Actor "../images/actors.svg" 2 UNDEF)
+        (rso:Place "../images/places.svg" 3 UNDEF)
+        (rso:Time "../images/dates.svg" 4 UNDEF)
+        (rso:Event "../images/events.svg" 5 UNDEF)
+        (rso:Concept "../images/concepts.svg" 6 UNDEF)
+        (<http://metaphacts.com/TextSearch> "../images/keywords.svg" 7 "Text Search")
+      }' |
+    uriBindingName = 'uri' |
+    labelBindingName = 'label'
+  }} |
+  relationSelectorConfig = {{
+    tupleTemplate = '{{label.value}}' |
+    query = '
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+      select ?relation ?label where {
+        ?relation
+          rdfs:label ?label;
+          rso:hasDomain ?domain ;
+          rso:hasRange ?range .
+      }' |
+    uriBindingName = 'relation' |
+    labelBindingName = 'label'
+  }} |
+  resourceSelectorConfig = {{
+    query = '
+      prefix skos: <http://www.w3.org/2004/02/skos/core#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix bds: <http://www.bigdata.com/rdf/search#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+
+      select ?value ?label where {
+
+     {
+     select ?value (GROUP_CONCAT(DISTINCT ?x ; separator=" <PIPE> ") as ?comment) where {
+      ?value rdf:type <?range> .
+      {
+       ?value skos:altLabel ?label .
+      } union {
+       ?value rdfs:label ?label .
+      } union {
+       ?value skos:prefLabel ?label .
+      }
+
+      SERVICE <http://www.bigdata.com/rdf/search#search> {
+         ?label bds:search "*?token*" ;
+           bds:relevance ?score .
+      }
+
+      {
+       ?value skos:altLabel ?x .
+      } union {
+       ?value rdfs:label ?x .
+      } union {
+       ?value skos:prefLabel ?x .
+      }
+        } GROUP BY ?value
+      }
+         optional {
+       ?value skos:altLabel ?altLabel .
+      }
+      optional {
+       ?value rdfs:label ?rdfsLabel .
+      }
+      optional {
+       ?value skos:prefLabel ?prefLabel .
+      }
+
+      bind(coalesce(?prefLabel, coalesce(?rdfsLabel, ?altLabel)) as ?label) .
+    }' |
+    uriBindingName = 'value' |
+    labelBindingName = 'label' |
+    noSuggestionsTemplate = '<div class="suggestion-no-matches">no matches found</div>' |
+    suggestionItemTemplate = '<p title="{{label.value}}" data-rdfa-label="{{label.value}}" data-rdfa-about="{{value.value}}">{{label.value}}</p>'
+  }}
+   |
+    
+  resultViewConfig = {{
+
+    tablePaneProps = {{
+      query = 'SELECT DISTINCT ?subject ?label ?fc WHERE {} ORDER BY ?Label' |
+      columnConfiguration = {{
+        {{
+          variableName = 'subject' |
+          displayName = 'Item' |
+          cellTemplate = '
+            <div class="rs-actionable-table-cell">
+              <mph-resource-link class="table-resource-link" title="{{label.value}}" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+                <mph-anonymous-hidden-component style=" position: absolute; top: -5px; ">
+                    <researchspace-result-item-action data-set-type="{{fc.value}}" data-iri="{{subject.value}}"/>
+                </mph-anonymous-hidden-component>
+            </div>
+          '
+        }} |
+        {{
+          variableName = 'label' |
+          displayName = 'Label'
+        }}
+      }} |
+      layout = {{
+        options='{"showFilter":false, "resultsPerPage":10}'
+      }} |
+
+
+}}
+

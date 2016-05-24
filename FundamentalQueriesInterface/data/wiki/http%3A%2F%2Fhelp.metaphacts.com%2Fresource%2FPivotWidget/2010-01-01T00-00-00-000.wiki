@@ -1,0 +1,163 @@
+= Pivot Widget =
+<widget>
+<style>
+    pivot-widget > div {
+      height: 400px !important;
+    }
+</style>
+</widget>
+
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+      Used for interactive, faceted exploration of entity collections.
+      __TOC__
+  </div>
+
+
+</div>
+
+{{#widget: Pivot
+  | query = '
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+          VALUES (?s ?p ?o)
+          { 
+               (Help:TableWidget rdf:type Help:Widget)
+               (Help:PivotWidget rdf:type Help:Widget)
+               (Help:GraphWidget rdf:type Help:Widget)
+               (Help:SimpleSearchWidget rdf:type Help:Widget)
+               (Help:MapWidget rdf:type Help:Widget)
+               (Help:TableWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/table-widget.png")
+               (Help:PivotWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/pivot-widget.png")
+               (Help:GraphWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/graph-widget.png")
+               (Help:SimpleSearchWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/simple-search-widget.png")
+               (Help:MapWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/map-widget.png")
+               (Help:TableWidget rdfs:label "Table Widget")
+               (Help:PivotWidget rdfs:label "Pivot Widget")
+               (Help:GraphWidget rdfs:label "Graph Widget")
+               (Help:SimpleSearchWidget rdfs:label "Simple Search Widget")
+               (Help:MapWidget rdfs:label "Map Widget")
+               (Help:TableWidget Help:availableSince "2015-03-15"^^xsd:date)
+               (Help:PivotWidget Help:availableSince "2015-04-19"^^xsd:date)
+               (Help:GraphWidget Help:availableSince "2015-04-19"^^xsd:date)
+               (Help:SimpleSearchWidget Help:availableSince "2015-05-25"^^xsd:date)
+               (Help:MapWidget Help:availableSince "2015-01-10"^^xsd:date)
+               (Help:TableWidget Help:widgetType "Visualization")
+               (Help:PivotWidget Help:widgetType "Visualization")
+               (Help:PivotWidget Help:widgetType "Exploration")
+               (Help:GraphWidget Help:widgetType "Visualization")
+               (Help:GraphWidget Help:widgetType "Exploration")
+               (Help:SimpleSearchWidget Help:widgetType "Visualization")
+               (Help:MapWidget Help:widgetType "Visualization")
+           }
+  }'
+}}
+
+== Recommended Usage ==
+Very useful to investigate small to mid-size entity collections based on their properties in various dimensions.
+
+===Limitations===
+* Scales up to 500-1000 entities, depending on the performance of the client.
+* Requires the [http://www.microsoft.com/silverlight/ Microsoft Silverlight] browser plugin. Note that support in [https://www.google.com/chrome Chrome] will expire soon. 
+
+== Widget Configuration ==
+{| class="table table-bordered"
+| query 
+| A [http://www.w3.org/TR/sparql11-query/#construct SPARQL Construct Query] or a [http://www.w3.org/TR/sparql11-query/#select SPARQL Select Query] used to initialize the widget. In case of a Construct Query, the resulting triples describe the collection to be visualized. 
+The entities displayed in the widget are defined by the distinct subjects in the collections; 
+the facets and their values are defined through the properties and the respective objects that are associated with the subjects. The value of property '''http://dbpedia.org/ontology/thumbnail''' is used as image for the respective item, if available. Further note that datatypes such as integer or xsd:date are interpreted properly by the widget. In case of a Select query, the result describes the item set to be visualized. See the examples below for more details.
+|-
+| maxEntities
+| Integer value defining the maximum number of entities (i.e., distinct subjects) to be included. Defaults to 1000. If the threshold is exceeded, a random selection of subjects will be displayed.
+|-
+| maxFacets
+| The maximum number of facets (in total, aggregated over all entities in the collection). Not limited by default. If a threshold is set and the threshold is exceeded, a random selection of subjects will be displayed.
+|}
+
+Note that te widget requires the parameter <tt>backendServerUrl</tt> to be set in ''config.prop'' to <tt>backendServerUrl=PROTOCOL://SERVER-URL[:SERVER-PORT]</tt> where
+** <tt>PROTOCOL</tt> is the protocol (either ''http'' or ''https''),
+** <tt>SERVER-URL</tt> is the external URL used by the client to connect to the server, and 
+** the optional <tt>SERVER-PORT</tt> is the port that the clients are using to connect to the server
+
+See [[Help:BasicSystemConfiguration]] for more information about configuration parameters.
+
+
+== Examples ==
+===Using CONSTRUCT===
+The following example demonstrates the use of the Pivot Widget by visualizing some sample data about selected widgets included in the platform. Just play around with the widget below yourself!
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: Pivot
+  | query = '
+        CONSTRUCT {
+          ?s ?p ?o
+        } WHERE {                    
+          VALUES (?s ?p ?o)
+          { 
+               (Help:TableWidget rdf:type Help:Widget)
+               (Help:PivotWidget rdf:type Help:Widget)
+               (Help:GraphWidget rdf:type Help:Widget)
+               (Help:SimpleSearchWidget rdf:type Help:Widget)
+               (Help:MapWidget rdf:type Help:Widget)
+               (Help:TableWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/table-widget.png")
+               (Help:PivotWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/pivot-widget.png")
+               (Help:GraphWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/graph-widget.png")
+               (Help:SimpleSearchWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/simple-search-widget.png")
+               (Help:MapWidget <http://dbpedia.org/ontology/thumbnail> "/images/help/map-widget.png")
+               (Help:TableWidget rdfs:label "Table Widget")
+               (Help:PivotWidget rdfs:label "Pivot Widget")
+               (Help:GraphWidget rdfs:label "Graph Widget")
+               (Help:SimpleSearchWidget rdfs:label "Simple Search Widget")
+               (Help:MapWidget rdfs:label "Map Widget")
+               (Help:TableWidget Help:availableSince "2015-03-15"^^xsd:date)
+               (Help:PivotWidget Help:availableSince "2015-04-19"^^xsd:date)
+               (Help:GraphWidget Help:availableSince "2015-04-19"^^xsd:date)
+               (Help:SimpleSearchWidget Help:availableSince "2015-05-25"^^xsd:date)
+               (Help:MapWidget Help:availableSince "2015-01-10"^^xsd:date)
+               (Help:TableWidget Help:widgetType "Visualization")
+               (Help:PivotWidget Help:widgetType "Visualization")
+               (Help:PivotWidget Help:widgetType "Exploration")
+               (Help:GraphWidget Help:widgetType "Visualization")
+               (Help:GraphWidget Help:widgetType "Exploration")
+               (Help:SimpleSearchWidget Help:widgetType "Visualization")
+               (Help:MapWidget Help:widgetType "Visualization")
+           }
+  }'
+}}
+        </nowiki>
+     </pre>
+  </div>
+
+</div>
+
+===Using SELECT===
+Instead of construction the result from a CONSTRUCT query, it is also possible to initialize the widget via SPARQL SELECT. When using SELECT, the result of the query identifies the set of items to be visualized. Note that the value of special variable ''?img'' will be used to determine the display image.
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget: Pivot
+  | query = '
+SELECT * WHERE {
+VALUES (?item ?label ?img ?availableSince ?type) {
+   (Help:TableWidget "Table Widget" "/images/help/table-widget.png" "2015-03-15"^^xsd:date "Visualization")
+   (Help:PivotWidget "Pivot Widget" "/images/help/pivot-widget.png" "2015-04-15"^^xsd:date "Visualization")
+   (Help:PivotWidget "Pivot Widget" "/images/help/pivot-widget.png" "2015-04-15"^^xsd:date "Exploration")
+   (Help:MapWidget "Map Widget" "/images/help/map-widget.png" "2015-03-15"^^xsd:date "Visualization")
+   (Help:GraphWidget "Graph Widget" "/images/help/graph-widget.png" "2015-05-15"^^xsd:date "Visualization")
+   (Help:GraphWidget "Graph Widget" "/images/help/graph-widget.png" "2015-05-15"^^xsd:date "Exploration")
+   (Help:SimpleSearchWidget  "Simple Search Widget" "/images/help/simple-search-widget.png" "2015-06-15"^^xsd:date "Exploration")
+
+}
+} '
+}}
+        </nowiki>
+     </pre>
+  </div>
+
+</div>

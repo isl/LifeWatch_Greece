@@ -1,0 +1,6 @@
+Pivot=com.fluidops.iwb.widget.PivotWidget
+Image=com.fluidops.iwb.widget.ImageWidget
+Timeline=com.metaphacts.widgets.TimelineWidget
+TableResult=com.metaphacts.widgets.TableWidget
+QueryResult=com.fluidops.iwb.widget.QueryResultWidget
+IFrame=com.fluidops.iwb.widget.IFrameWidget

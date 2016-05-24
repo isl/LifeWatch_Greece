@@ -1,0 +1,44 @@
+__NOTOC__
+
+= RDF Property: '{{#show: {{this}} | rdfs:label}}' =
+== {{#ifexpr: {{#sparql: ASK { ?? a owl:ObjectProperty } }} | Object Property | }} {{#ifexpr: {{#sparql: ASK { ?? a owl:DatatypeProperty } }} | Object Property | }}==
+
+'''URI''': ''{{#show: {{this}} }}''
+
+<row>
+<col width="4">
+<h2>Domains</h2>
+    {{ #widget: TableResult
+    | query = 'SELECT ?domain WHERE { ?? rdfs:domain ?domain }'
+    }}
+</col>
+<col width="4">
+<h2>Ranges</h2>
+    {{ #widget: TableResult
+    | query = 'SELECT ?range WHERE { ?? rdfs:range ?range }'
+    }}
+</col>
+</row>
+
+<row>
+<col width="4">
+<h2>Superproperties</h2>
+    {{ #widget: TableResult
+    | query = 'SELECT ?superProperty WHERE { ?? rdfs:subPropertyOf ?superProperty  }'
+    }}
+</col>
+<col width="4">
+<h2>Subproperties</h2>
+    {{ #widget: TableResult
+    | query = 'SELECT ?subProperty WHERE { ?subProperty rdfs:subPropertyOf ?? }'
+    }}
+</col>
+</row>
+
+== Triples with predicate {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{ #widget: TableResult
+| query = 'SELECT ?subject ?object WHERE { ?subject ?? ?object }'
+}}
+</div>

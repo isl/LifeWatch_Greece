@@ -1,0 +1,197 @@
+= Simple Search Widget=
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+    Simple keyword search with autosuggestion or instant search while typing.<br/>
+      __TOC__
+  </div>
+  <div class="documentation__intro__demo" style="height:50px;width:400px;">
+{{#widget: com.metaphacts.widgets.SimpleSearchWidget |
+      query = '
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+        PREFIX person: <http://example.com/person/> 
+        SELECT ?uri ?label ?typelabel WHERE {
+          FILTER REGEX(?label, "?token", "i")
+          VALUES(?uri ?label ?typelabel){
+            ( person:alice "Alice" "Person" )
+            ( person:carola "Carola" "Person" )      
+            ( person:bob "Bob" "Person" )
+            ( person:mike "Mike" "Person" )
+          }
+        } LIMIT 10
+      ' |       
+    searchTermVariable = 'token' |
+    resourceSelection = {{
+      resourceBindingName = 'uri' |
+      template = '<span style="color: blue;" title="{{uri.value}}">{{label.value}} ({{typelabel.value}})</span>'
+    }}|
+    inputPlaceholder = 'Search for something e.g. "Bob"'
+}}</div>
+</div>
+
+== Recommended Usage ==
+Keyword search over entire datasets or specified subsets. Can operate in two different ways:
+* Autosuggestion while typing
+* Search and instant result visualization while typing
+
+Search query is based on fully customizable SPARQL query possibly including calls to external search indicies such as Solr (depending on the availability of the triple store) .
+===Limitations===
+* It is recommended to use, for example, Blazegraph's ability to invoke external full text search indicies such as Solr including the possiblity to score, rank and limit the results for responsive autosuggestion.
+* Performance for displaying query results instantly (i.e. in one of two search modes) depends on several aspects such as client-side performance, complexity of the query as well as number of results to be rendered. <br/> It is recommended to limit the number of results e.g. possibly exploiding a score to show only the top matches.
+== Widget Configuration ==
+{| class="table table-bordered"
+| query
+| [http://www.w3.org/TR/sparql11-query/#select SPARQL Select Query] where each tuple in the result binding corresponds to one autosuggestion entry. <br/>
+Query <b>must contain the </b> <i>searchTermVariable</i>.
+|-
+| searchTermVariable
+| Name of the binding variable (without leading ?) to be used within the SPARQL query to parameterize the query with the current user input.
+|-
+| inputPlaceHolder
+| String to be placed as initial placeholder into the search field.
+|-
+| resourceSelection
+   |{| class="table"
+   |-
+   | resourceBindingName
+   | Name of the binding variable (without leading ?) which is the actual target enitity i.e. the URI to where the user will be redirected on click.
+   |-
+   | template
+   | [http://handlebarsjs.com/ HTML template] for customizing the autosuggestion entries. Special syntax <nowiki>{{bindingVariable.value}}</nowiki> can be used to access the results from autosuggestion query within the template.
+   |}
+|-
+| resultTemplate
+| [http://handlebarsjs.com/ HTML template] for formatting the result tuples. Special syntax <nowiki>{{bindingVariable.value}}</nowiki> can be used to access the results from autosuggestion query within the template. <br/>
+If not specified results will not be visualized and only autosuggestion entries are being displayed. 
+|}
+
+Either <i>resourceSelection</i> (to operated in the autosuggestion modus) or <i>resultTemplate</i> (to operated in the instant search and result visualization modus) <b>must be specified</b>.
+
+== Examples ==
+Sample dataset:
+<pre>
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix person: <http://example.com/person/> .
+@prefix org: <http://example.com/org/> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+foaf:Person rdfs:label "Person".
+
+person:alice a foaf:Person;
+    foaf:name "Alice".
+
+person:carola foaf:Person;
+    foaf:name "Carola".
+               
+person:bob a foaf:Person;
+    foaf:name "Bob".
+
+person:mike a foaf:Person;
+    foaf:name "Mike".
+</pre>
+
+=== Instant Search and Result Visualization ===
+The following example uses a custom html template to visualize and format the result entries instantly.
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+    {{#widget: com.metaphacts.widgets.SimpleSearchWidget |
+          query = '
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+            PREFIX person: <http://example.com/person/> 
+            SELECT ?uri ?label ?image WHERE {
+              FILTER REGEX(?label, "?token", "i")
+              VALUES(?uri ?label ?image){
+                ( person:alice "Alice" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+                ( person:carola "Carola" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )      
+                ( person:bob "Bob" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+                ( person:mike "Mike" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+              }
+            } LIMIT 10
+          ' |       
+        searchTermVariable = 'token' |
+        resultTemplate = '<div style="float:left;width:50%;min-width:100px;height:100px;" class="panel panel-default text-center" title="{{uri.value}}">
+                                <div class="panel-body"><img src="{{image.value}}" style="width:50px;" /></div>  <div class="panel-footer" style="position: relative">{{label.value}}</div>
+                        </div>
+            '|
+        inputPlaceholder = 'Search for something to see results instantly'
+    }}
+      </nowiki></pre>
+  </div>
+  <div class="documentation__example__demo">
+    {{#widget: com.metaphacts.widgets.SimpleSearchWidget |
+          query = '
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+            PREFIX person: <http://example.com/person/> 
+            SELECT ?uri ?label ?image WHERE {
+              FILTER REGEX(?label, "?token", "i")
+              VALUES(?uri ?label ?image){
+                ( person:alice "Alice" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+                ( person:carola "Carola" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )      
+                ( person:bob "Bob" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+                ( person:mike "Mike" "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png" )
+              }
+            } LIMIT 10
+          ' |       
+        searchTermVariable = 'token' |
+        resultTemplate = '<div style="float:left;width:50%;min-width:100px;height:100px;" class="panel panel-default text-center" title="{{uri.value}}">
+                                <div class="panel-body"><img src="{{image.value}}" style="width:50px;"/></div>  <div class="panel-footer" style="position: relative">{{label.value}}</div>
+                        </div>
+            '|
+        inputPlaceholder = 'Search for something to see results instantly'
+    }}
+   <div>
+</div>
+=== Customizable Autosuggestion Entries ===
+The following example uses a custom html template to format the autosuggestion entries i.e. adds an additional icon in front of the entry.
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre><nowiki>
+ {{#widget: com.metaphacts.widgets.SimpleSearchWidget |
+    query = '
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+        PREFIX person: <http://example.com/person/> 
+        SELECT ?uri ?label ?typelabel WHERE {
+            FILTER REGEX(?label, "?token", "i")
+            VALUES(?uri ?label ?typelabel){
+            ( person:alice "Alice" "Person" )
+            ( person:carola "Carola" "Person" )      
+            ( person:bob "Bob" "Person" )
+            ( person:mike "Mike" "Person" )
+            }
+        } LIMIT 10
+        ' |       
+    searchTermVariable = 'token' |
+    resourceSelection = {{
+        resourceBindingName = 'uri' |
+        template = '<span style="color: blue;" title="{{uri.value}}"><i class="fa fa-user"></i> {{label.value}} ({{typelabel.value}})</span>'
+    }}|
+    inputPlaceholder = 'Search for something'
+  }}
+        </nowiki></pre>
+  </div>
+
+<div class="documentation__example__demo">
+      {{#widget: com.metaphacts.widgets.SimpleSearchWidget |
+          query = '
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+            PREFIX person: <http://example.com/person/> 
+            SELECT ?uri ?label ?typelabel WHERE {
+              FILTER REGEX(?label, "?token", "i")
+              VALUES(?uri ?label ?typelabel){
+                ( person:alice "Alice" "Person" )
+                ( person:carola "Carola" "Person" )      
+                ( person:bob "Bob" "Person" )
+                ( person:mike "Mike" "Person" )
+              }
+            } LIMIT 10
+          ' |       
+        searchTermVariable = 'token' |
+        resourceSelection = {{
+            resourceBindingName = 'uri' |
+            template = '<span style="color: blue;" title="{{uri.value}}"><i class="fa fa-user"></i> {{label.value}} ({{typelabel.value}})</span>'
+        }}|
+        inputPlaceholder = 'Search for something'
+    }}
+</div>
+</div>
+

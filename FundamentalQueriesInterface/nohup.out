@@ -1,0 +1,62 @@
+WARNING: System properties and/or JVM args set.  Consider using --dry-run or --exec
+2016-01-25 10:13:46.209:INFO::main: Logging initialized @3161ms
+2016-01-25 10:13:46.603:WARN:oejs.HomeBaseWarning:main: This instance of Jetty is not running from a separate {jetty.base} directory, this is not recommended.  See documentation at http://www.eclipse.org/jetty/documentation/current/startup.html
+2016-01-25 10:13:46.886:INFO:oejs.Server:main: jetty-9.2.11.v20150529
+2016-01-25 10:13:46.920:INFO:oejdp.ScanningAppProvider:main: Deployment monitor [file:/home/minadakis/metaphactory_lifewatch/jetty-distribution-9.2.11.v20150529/webapps/] at interval 1
+
+BlazeGraph(TM) Graph Engine
+
+                   Flexible
+                   Reliable
+                  Affordable
+      Web-Scale Computing for the Enterprise
+
+Copyright SYSTAP, LLC 2006-2015.  All rights reserved.
+
+metadator.her.hcmr.gr
+Mon Jan 25 10:13:50 EET 2016
+Linux/3.13.0-74-generic amd64
+Westmere E56xx/L56xx/X56xx (Nehalem-C) Family 6 Model 44 Stepping 1, GenuineIntel #CPU=4
+Oracle Corporation 1.8.0_65
+freeMemory=75877872
+buildVersion=1.5.2
+
+Dependency         License                                                        
+ICU                http://source.icu-project.org/repos/icu/icu/trunk/license.html 
+bigdata-ganglia    http://www.apache.org/licenses/LICENSE-2.0.html                
+blueprints-core    https://github.com/tinkerpop/blueprints/blob/master/LICENSE.txt
+colt               http://acs.lbl.gov/software/colt/license.html                  
+commons-codec      http://www.apache.org/licenses/LICENSE-2.0.html                
+commons-fileupload http://www.apache.org/licenses/LICENSE-2.0.html                
+commons-io         http://www.apache.org/licenses/LICENSE-2.0.html                
+commons-logging    http://www.apache.org/licenses/LICENSE-2.0.html                
+dsiutils           http://www.gnu.org/licenses/lgpl-2.1.html                      
+fastutil           http://www.apache.org/licenses/LICENSE-2.0.html                
+flot               http://www.opensource.org/licenses/mit-license.php             
+high-scale-lib     http://creativecommons.org/licenses/publicdomain               
+httpclient         http://www.apache.org/licenses/LICENSE-2.0.html                
+httpclient-cache   http://www.apache.org/licenses/LICENSE-2.0.html                
+httpcore           http://www.apache.org/licenses/LICENSE-2.0.html                
+httpmime           http://www.apache.org/licenses/LICENSE-2.0.html                
+jackson-core       http://www.apache.org/licenses/LICENSE-2.0.html                
+jetty              http://www.apache.org/licenses/LICENSE-2.0.html                
+jquery             https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt   
+log4j              http://www.apache.org/licenses/LICENSE-2.0.html                
+lucene             http://www.apache.org/licenses/LICENSE-2.0.html                
+nanohttp           http://elonen.iki.fi/code/nanohttpd/#license                   
+rexster-core       https://github.com/tinkerpop/rexster/blob/master/LICENSE.txt   
+river              http://www.apache.org/licenses/LICENSE-2.0.html                
+servlet-api        http://www.apache.org/licenses/LICENSE-2.0.html                
+sesame             http://www.openrdf.org/download.jsp                            
+slf4j              http://www.slf4j.org/license.html                              
+zookeeper          http://www.apache.org/licenses/LICENSE-2.0.html                
+
+INFO: com.bigdata.util.config.LogUtil: Configure: file:/home/minadakis/metaphactory_lifewatch/jetty-distribution-9.2.11.v20150529/webapps/bigdata/WEB-INF/classes/log4j.properties
+WARN : ServiceProviderHook.java:162: Running.
+WARN : ServiceRegistry.java:57: New service class com.bigdata.rdf.rio.json.BigdataSPARQLResultsJSONWriterFactory replaces existing service class org.openrdf.query.resultio.sparqljson.SPARQLResultsJSONWriterFactory
+WARN : ServiceRegistry.java:57: New service class com.bigdata.rdf.rio.json.BigdataSPARQLResultsJSONParserFactory replaces existing service class org.openrdf.query.resultio.sparqljson.SPARQLResultsJSONParserFactory
+2016-01-25 10:13:50.902:INFO:oejsh.ContextHandler:main: Started o.e.j.w.WebAppContext@2c6a3f77{/bigdata,file:/home/minadakis/metaphactory_lifewatch/jetty-distribution-9.2.11.v20150529/webapps/bigdata/,AVAILABLE}{/bigdata}
+ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console.
+2016-01-25 10:14:00.995:INFO:oejsh.ContextHandler:main: Started o.e.j.w.WebAppContext@6cb107fd{/,file:/tmp/jetty-0.0.0.0-10214-ROOT.war-_-any-4273257020582796470.dir/webapp/,AVAILABLE}{/ROOT.war}
+2016-01-25 10:14:01.168:INFO:oejs.ServerConnector:main: Started ServerConnector@35e98af{HTTP/1.1}{0.0.0.0:10214}
+2016-01-25 10:14:01.169:INFO:oejs.Server:main: Started @18121ms

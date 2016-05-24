@@ -1,0 +1,8 @@
+= OWL Object Properties =
+
+﻿{{#widget: TableResult |
+query = '
+SELECT ?property WHERE { 
+ ?property rdf:type ?? 
+}'
+}}

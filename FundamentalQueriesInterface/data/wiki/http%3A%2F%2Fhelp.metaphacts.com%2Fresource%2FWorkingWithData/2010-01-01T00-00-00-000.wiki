@@ -1,0 +1,179 @@
+= Working with Data =
+__TOC__
+== Background: Semantic Data Formats ==
+<div style="float:left;width:70%;">
+The metaphacts platform is based on open Linked Data standards for semantic data processing 
+that have been created as part of the W3C's Semantic Web initiative [http://www.w3.org/standards/semanticweb/].
+Designed to represent and process data published in the Web, in recent years these standards have
+found entrance into vertical applications in industry [http://www.w3.org/standards/semanticweb/applications].
+By switching from the traditional, relational model to a graph structured data model, these semantic data
+formats offer an intuitive, object-centric view on entities and, in particular, their relationships.
+Bringing schema and instance level data closer together, they overcome the need for a complex schemata
+definition upfront and clear the way for intelligent reasoning by scalable built-in inference mechanisms.
+</div>
+
+<div style="float:left;width:5%;">&nbsp;</div>
+
+<div style="float:left;width:25%;">
+[W3C + SW Logo]
+</div>
+
+<div style="clear:both;" />
+
+<div>
+If you want to learn more about the standards underlying the metaphacts platform, you may get started
+by catching up with the latest W3C specs listed below:
+
+<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Standard</th>
+          <th>What</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">RDF</th>
+          <th scope="row">The Resource Description Framework (RDF) is a W3C specification that allows us to represent data in the form of so-called ''triples of knowledge''. A knowledge triple can be understood as a statement of the form ''subject predicate object'', where the predicate describes the relationship between the subject and the object.</th>
+          <th scope="row"><a href="http://www.w3.org/RDF/" target="_blank">W3C RDF Overview</a>, <a href="http://www.w3.org/TR/rdf11-concepts/" target="_blank">RDF 1.1 Concepts and Abstract Syntax</a>, <a href="http://www.w3.org/standards/techs/rdf#w3c_all" target="_blank">Overview over RDF Standards</a>          
+          </th>
+        </tr>
+        <tr>
+          <th scope="row">RDFS</th>
+          <th scope="row">While the RDF standard is barely a specification of the syntax for specifying triples (including very basic capabilities such as typing), '''RDF''' '''S'''chema (RDFS) extends RDF through a predefined vocabulary for basic modeling of the domain. As such, it offers constructs for subclassing,
+the specification of domains and ranges, basic containers such as lists and bags, etc. RDFS also comes with a predefined semantics that enables simple reasoning.</th>
+          <th scope="row"><a href="http://www.w3.org/TR/rdf-schema/">W3C RDF Schema Recommendation</a></th>
+        </tr>
+        <tr>
+          <th scope="row">SPARQL</th>
+          <th scope="row">SPARQL is a declarative, query language for extracting data from RDF or RDFS graphs. While SPARQL 1.0 provides basic pattern matching capabilities over such graphs, version 1.1 extends these facilities with advanced constructs such as aggregation, flexible property path querying, and federation. SPARQL also provides a REST-style protocol for integrated querying of multiple SPARQL databases.
+</th>
+          <th scope="row"><a href="http://www.w3.org/TR/rdf-sparql-query/" target="_blank">SPARQL Query Language (v1.0)</a>, <a href="http://www.w3.org/TR/sparql11-query/" target="_blank">SPARQL Query Language Extensions (v1.1)</a>, <a href="http://www.w3.org/TR/sparql11-update/" target="_blank">SPARQL 1.1 Update</a></th>
+        </tr>
+ </tbody>
+</table> 
+</div>
+
+We provide some basic examples for RDF(S) data and SPARQL queries in our [[Help:Tutorial|Tutorial]].
+Further, the <a href="http://euclid-project.eu/" target="_blank">EUCLID</a> project provides
+a rich set of educational resources around the Linked Data technology stack and how to build
+innovative applications based on these technologies.
+
+== Managing Data via the GUI ==
+The metaphacts platform is using <a href="http://www.blazegraph.com" target="_blank">SYSTAP</a>'s graph database 
+<a href="http://blazegraph.com/bigdata" target="_blank">Blazegraph</a> (formerly known as ''bigdata'') as a high-performance
+backend for storage and retrieval of data. While we are currently working on higher-level APIs and GUIs for loading
+and integrating data from various sources, the Sneak Preview release supports loading of data in the form of RDF dumps
+via the Blazegraph APIs. In this section we describe how to manage data using the Blazegraph workbench as a GUI,
+the next section covers data management via command line.
+
+=== Loading Data Into the System ===
+To load data via the Blazegraph workbench, please proceed as follows:
+
+# Switch to the Blazegraph workbench
+## Unless you changed the configuration, the Blazegraph workbench runs at context path <a href="/bigdata">/bigdata</a>
+### Note: ''If you installed from docker, the port for Blazegraph differs from the port of the mepathactory, see [[Help:Installation]]''
+# Select the '''UPDATE''' tab
+# Choose the '''Type''' ...
+## ... ''RDF data'' to directly input data via the data input form at the top, or
+## ... ''File Path or URL'' to load data from a local file or from an accessible URL
+# Make sure to specify the correct serialization '''Format''' and confirm with the '''Update''' button
+
+Alternatively, it is possible to load data directly by submitting SPARQL UPDATE queries against the
+SPARQL endpoint using the SPARQL Protocol, see the 
+<a href="http://wiki.blazegraph.com/wiki/index.php/SPARQL_Update" target="_blank">Blazegraph SPARQL UPDATE support</a>
+for more details
+
+=== Manipulating Data ===
+For the manipulation of data, the Blazegraph workbench supports the
+<a href="http://www.w3.org/TR/sparql11-update/" target="_blank">SPARQL UPDATE</a>
+query language, which allows to delete, insert and transform data. To do so, proceed as follows:
+
+# Switch to the Blazegraph workbench
+## Unless you changed the configuration, the Blazegraph workbench runs at context path <a href="/bigdata">/bigdata</a>
+### Note: ''If you installed from docker, the port for Blazegraph differs from the port of the mepathactory, see [[Help:Installation]]''
+# Select the '''UPDATE''' tab
+# Choose the '''Type''' ''SPARQL UPDATE''
+# Enter your SPARQL UPDATE query into the text field above and confirm with the '''Update''' button
+
+Your SPARQL UPDATE query will be applied to the database.
+
+=== Querying Data ===
+Querying data can be done in two different ways: using the blazegraph workbench or using the built-in endpoint,
+which supports different visualization paradigms over the queried data. 
+
+# Switch to the Blazegraph workbench
+## Unless you changed the configuration, the Blazegraph workbench runs at context path <a href="/bigdata">/bigdata</a>
+### Note: ''If you installed from docker, the port for Blazegraph differs from the port of the mepathactory, see [[Help:Installation]]''
+# Select the '''QUERY''' tab and enter your SPARQL query
+## Once submitted and computed, the result of the query will be displayed below the input form
+
+The Blazegraph workbench sends the query against Blazegraph's internal SPARQL endpoint
+running at context path <a href="/bigdata/sparql">/bigdata/sparql</a>.
+
+The second option is using the metaphacts platform Web interface that allows you to manually
+compose and submit SPARQL queries using the metaphactory SPARQL endpoint. In the default configuration, 
+you can reach the Web interface at context path <a href="sparql">sparql</a>. The interface supports
+syntax highlighting and different output modes (e.g. tables or pivotal exploration of results).
+
+
+== Managing Data via the Command Line ==
+=== Loading Data Into the System ===
+Assume you want to load an ontology from a local file, say '''foaf.owl''' into a dedicated named graph,
+say '''http://my.foaf.graph/'''. Using the 
+<a href="https://wiki.blazegraph.com/wiki/index.php/REST_API#INSERT" target="_blank">blazegraph API</a>, 
+this could be done with the following curl command against the blazegraph SPARQL endpoint (you need to
+substitute your the PROTOCOL, SERVER-URL, and SERVER_PORT of your own deployment):
+
+<code>
+curl -X POST -H 'Content-Type: application/xml' --data-binary '@foaf.owl' PROTOCOL://SERVER-URL[:SERVER-PORT]/bigdata/sparql?context-uri=http%3A%2F%2Fmy.foaf.graph%2F
+</code>
+
+=== Manipulating Data ===
+The manipulation of data can be achieved using SPARQL UPDATE. The Blazegraph endpoint supports the full 
+<a href="http://www.w3.org/TR/sparql11-protocol/#update-operation" target="_blank">SPARQL UPDATE</a> protocol,
+which means you can send any update command against the endpoint running at context path
+<a href="/bigdata/sparql">/bigdata/sparql</a>. Alternatively,
+Blazegraph offers its own <a href="https://wiki.blazegraph.com/wiki/index.php/REST_API" target="_blank">REST API</a>.
+
+To delete the named graph '''http://my.foaf.graph/''' initialized in the previous sections, you may submit the following
+HTTP DELETE via curl, where the parameter '''c''' identifies the named graph to be deleted:
+
+<code>
+curl -X DELETE -H 'Content-Type: application/xml' PROTOCOL://SERVER-URL[:SERVER-PORT]//bigdata/sparql?c=%3Chttp%3A%2F%2Fmy.foaf.graph%2F%3E
+</code>
+
+An alternative approach using SPARQL UPDATE is
+
+<code>
+curl -X POST --data-binary 'DELETE { ?s ?p ?o } WHERE { GRAPH <http://my.foaf.graph/> { ?s ?p ?o } }' --header 'Content-Type:application/sparql-update' PROTOCOL://SERVER-URL[:SERVER-PORT]/bigdata/sparql
+</code>
+
+Of course, this way you may submit any SPARQL UPDATE query, possibly also inserting triples or manipulating the existing
+data by means of any complex SPARQL queries.
+
+=== Querying Data ===
+The integrated endpoint running at <a href="http://localhost/sparql">http://localhost/sparql</a> is
+(mostly) compliant with the [[SPARQL Protocol|http://www.w3.org/TR/rdf-sparql-protocol/]]. It can be
+queries using command line commands such as '''curl''' or '''wget''' according to the standard.
+To give an example, in order to submit the query
+
+<code>
+SELECT (COUNT(*) AS ?nrTriples) WHERE { ?s ?p ?o }
+</code>
+
+you may submit the following '''curl''' command:
+
+<code>
+curl --data-urlencode 'query=SELECT (COUNT(*) AS ?nrTriples) WHERE { ?s ?p ?o }' -H 'Accept: application/sparql-results+json' 'PROTOCOL://SERVER-URL[:SERVER-PORT]/bigdata/sparql'
+</code>
+
+In case you have basic authentication enabled in the authentication scheme, the command would look like:
+
+<code>
+curl --data-urlencode 'query=SELECT (COUNT(*) AS ?nrTriples) WHERE { ?s ?p ?o }' -H 'Accept: application/sparql-results+json' -u user:pass 'PROTOCOL://SERVER-URL[:SERVER-PORT]/bigdata/sparql'
+</code>
+
+== Protecting the Endpoint ==
+Please see help page for [[Help:BasicSystemConfiguration | basic system configuration ]].

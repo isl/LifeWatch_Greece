@@ -1,0 +1,14 @@
+{{#widget: com.metaphacts.widgets.TableWidget
+    | query='SELECT ?uri ?label ?thumbnail WHERE { ?uri rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                 <a title="{{label.value}}" href="/resource/?uri={{uri.value}}">{{label.value}}</a>
+          </div>
+          <div class="panel-body">
+            <img class="img-responsive img-thumbnail" style="max-height:130px;display:block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+          </div>
+        </div>   '
+    }} 
+}}

@@ -1,0 +1,21 @@
+= AnnotationProperty: '{{#show: {{this}} | rdfs:label}}' =
+ 
+<pre>
+The identifier '{{#show: {{this}} | rdfs:label}}' represents a predicate that can be used to associate annotate an object with a literal value.</pre>
+
+== General Information ==
+
+* '''Full name''': ''{{#show: {{this}} }}''
+* '''Description''': ''{{#show: {{this}} | rdfs:comment}}''
+
+== Domain and Range ==
+* The following objects types are defined as domain of this property:
+{{#widget: TableResult |
+query='SELECT ?domain WHERE { ?? rdfs:domain ?domain }'
+}}
+* The range of the property is datatype {{#show: {{this}} | rdfs:range}}
+
+== Triples with predicate {{#show: {{this}} | rdfs:label}} ==
+{{#widget: TableResult |
+query='SELECT ?subject ?object WHERE { ?subject ?? ?object }'
+}}

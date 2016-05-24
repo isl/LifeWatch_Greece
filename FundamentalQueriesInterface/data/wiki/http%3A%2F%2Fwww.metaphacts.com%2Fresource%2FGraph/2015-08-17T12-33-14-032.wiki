@@ -1,0 +1,4 @@
+{{#widget: com.metaphacts.widgets.GraphWidget 
+    | query = ' CONSTRUCT WHERE { ?s ?p ?o }' 
+    | layout = {{ name = 'cola'}}
+}}

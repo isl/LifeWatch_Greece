@@ -1,0 +1,45 @@
+= {{#show: {{this}} | rdfs:label}} = 
+<row>
+<col width="3">
+<p><b>Birthdate:</b> {{ #show: {{this}} | <http://schema.org/birthDate>}}</p>
+{{ #show: {{this}} | <http://schema.org/thumbnail> | valueResolver=IMAGE}}
+</col>
+
+<col width="3">
+<b>Friends</b>
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:knows ?friend. ?friend rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                  <a title="{{label.value}}" href="/resource/?uri={{friend.value}}">{{label.value}}</a>
+                </div>
+                <div class="panel-body">
+                  <img class="img-responsive img-thumbnail" style="max-height:130px;display:block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+                </div>
+            </div>'
+        | options='{"showFilter":false}'
+    }} 
+}}
+</col>
+
+<col width="3">
+<b>Interests</b>
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT ?friend ?label ?thumbnail WHERE { ?? foaf:topic_interest ?topic. ?topic rdfs:label ?label; <http://schema.org/thumbnail> ?thumbnail }'  
+    | layout = {{
+        tupleTemplate = '
+            <div style="height: 250px; width: 250px; margin: 10px;" class="panel panel-default">         
+                <div class="panel-heading" style="overflow: hidden; text-overflow: ellipsis;">
+                  <a title="{{label.value}}" href="/resource/?uri={{topic.value}}">{{label.value}}</a>
+                </div>
+                <div class="panel-body">
+                  <img class="img-responsive img-thumbnail" style="max-height: 130px;display: block;margin-left:auto;margin-right:auto;" src="{{thumbnail.value}}"/>
+                </div>
+            </div>'
+  | options='{"showFilter":false}'
+  }} 
+}}
+</col>
+</row>

@@ -1,0 +1,41 @@
+= Installation =
+__TOC__
+== Deployment Modes ==
+For the time being three deployment artefacts are available:
+* <b>Docker Image</b>  - Prefered and well tested deployment mode. Easy to update and migrate once new releases are available. Takes just a few minutes to login to metaphacts registry, pull the platform image and start the container.
+* <b>ZIP Artefact</b> - No external dependencies. Simply unzip and run the start script (batch or shell). Recommended for quick getting started or for constrained environments. No automated upgrade procedures.
+* <b>WAR Archive</b> - For quick deployments into existing J2EE web application environments (e.g. Tomcat). No automated upgrade procedures.
+
+<b>Please contact <a href="mailto:support@metaphacts.com">support@metaphacts.com</a> in order to request access to downloads and/or credentials for docker registry.</b>
+==Docker Deployment==
+Within the docker environment, the platform and Blazegraph will run in two separate docker containers.
+
+# Install Docker (see [https://docs.docker.com/installation/ official documentation])
+# Login into Metaphacts docker registry
+##> docker login docker.metaphacts.com
+# Pull latest platform and blazegraph image
+##> docker pull docker.metaphacts.com/blazegraph:1.5.2
+##> docker pull docker.metaphacts.com/platform:0.5.0
+##> docker pull docker.metaphacts.com/platform-data:0.5.0
+# Prepare & run Blazegraph container
+## Create data (journal) container for Blazegraph container
+###> docker create --name blazegraph-journal -v /blazegraph-data ubuntu
+## Run Blazegraph container with data container mounted
+###> docker run --name blazegraph -d --restart=always -p 10080:8080 --env JAVA_OPTS="" --volumes-from blazegraph-journal docker.metaphacts.com/blazegraph:1.5.2
+# Prepare & Run Platform container
+## Create platform data container from image
+###> docker create --name platform-data docker.metaphacts.com/platform-data:0.5.0
+## Create & Run platform container
+###> docker run --name platform -d --restart=always -p 10214:8080 --link blazegraph:blazegraph --volumes-from platform-data --env PLATFORM_OPTS="-DstartPage=Help:Start -DrepositoryType=sparql -Dendpoint=http://blazegraph:8080/bigdata/sparql -Dcom.metaphacts.config.location=/config/config.prop -DworkingDir=/ -DappsFolder=/apps/" docker.metaphacts.com/platform:0.5.0
+# Open http://dockerip:10214/ in your browser (i.e. run 'boot2docker ip' to get IP from boot2docker)
+==ZIP Artefact==
+# Unzip artefact
+# Unix: Make start.sh executeable
+##> chmod +x start.sh
+# Start platform
+##> sh start.sh (Unix) or doubleclick start.bat (Windows)
+# Open http://localhost:10214/ in your browser
+# Login with admin/admin (please refer to [[Help:BasicSystemConfiguration]] in order to change the standard login)
+Please refer to README.txt (located in root folder of the artefact) for further information. 
+==WAR Archive==
+Please refer to official <a href="https://tomcat.apache.org/tomcat-6.0-doc/deployer-howto.html#Deploying_using_the_Tomcat_Manager" target="_blank">Tomcat Documentation</a> for details on deployments of web application container. 

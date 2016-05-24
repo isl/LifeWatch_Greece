@@ -1,0 +1,123 @@
+= Timeline Widget =
+<div class="documentation__intro">
+  <div class="documentation__intro__description">
+    Plotting events on a timeline.
+      __TOC__
+  </div>
+    <div class="documentation__intro__demo" >
+        {{#widget:Timeline
+          |query ='SELECT ?birth    ?death  ?label  ?uri WHERE {
+              VALUES(?birth ?death  ?label  ?uri){
+                  ("1486-07-16"^^xsd:date "1531-01-31"^^xsd:date "Andrea del Sarto"@en <http://www.wikidata.org/entity/Q5571>)  
+                  ("1503-01-21"^^xsd:date "1540-09-03"^^xsd:date "Parmigianino"@en <http://www.wikidata.org/entity/Q9348>)
+                  ("1474-09-17"^^xsd:date "1533-07-16"^^xsd:date "Ludovico Ariosto"@en <http://www.wikidata.org/entity/Q48900>) 
+                  ("1475-02-25"^^xsd:date "1564-02-08"^^xsd:date "Michelangelo"@en <http://www.wikidata.org/entity/Q5592>)
+              }
+          }
+          '
+          | start='birth'
+          | end='death' 
+          | label='label'
+          | link='uri'
+          | interval='CENTURY'
+        }}
+    </div>
+</div>
+
+== Recommended Usage ==
+Timeline widget is useful for exhibiting temporal data in interactive 2D charts.
+
+===Limitations===
+* Scales best for small and medium-sized result sets.
+
+== Widget Configuration ==
+{| class="table table-bordered"
+| query
+| [http://www.w3.org/TR/sparql11-query/#select SPARQL Select Query] where each tuple for the result set corresponds to one event on the timeline. 
+|-
+| start
+| Binding variable to extract the "start" for the event interval from the result set.
+|-
+| end
+| Binding variable to extract the "end" for the event interval from the result set.
+|-
+| label
+| Binding variable to extract the value for the label attribute from the result set.
+|-
+| link
+| Binding variable to extract the value for the link attribute from the result set.
+|-
+| interval
+| Interval unit for the band. Possible values are "millisecond", "second", "minute", "hour", "day", "week", "month", "year", "decade", "century", "millennium" .
+|}
+
+
+
+== Examples ==
+Sample dataset:
+<pre>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://www.wikidata.org/entity/Q5571>  rdfs:label "Andrea del Sarto"@en;
+                    wd:P569c "1486-07-16"^^xsd:date;
+                    wd:P570c "1531-01-31"^^xsd:date.
+                                        
+<http://www.wikidata.org/entity/Q5571>  rdfs:label "Parmigianino"@en;
+                    wd:P569c "1503-01-21"^^xsd:date;
+                    wd:P570c "1540-09-03"^^xsd:date.
+
+<http://www.wikidata.org/entity/Q5571>  rdfs:label "Ludovico Ariosto"@en;
+                    wd:P569c "1474-09-17"^^xsd:date;
+                    wd:P570c "1533-07-16"^^xsd:date.
+
+<http://www.wikidata.org/entity/Q5571>  rdfs:label "Michelangelo"@en;
+                    wd:P569c "1475-02-25^^xsd:date;
+                    wd:P570c "1564-02-08"^^xsd:date.
+</pre>
+
+
+=== Timeline with default Configuration===
+
+<div class="documentation__example">
+  <div class="documentation__example__description">
+     <pre>
+        <nowiki>
+{{#widget:Timeline
+  |query ='SELECT ?birth ?death ?label ?uri WHERE {
+      VALUES(?birth ?death ?label ?uri){
+          ("1486-07-16"^^xsd:date "1531-01-31"^^xsd:date "Andrea del Sarto"@en <http://www.wikidata.org/entity/Q5571>)  
+          ("1503-01-21"^^xsd:date "1540-09-03"^^xsd:date "Parmigianino"@en <http://www.wikidata.org/entity/Q9348>)
+          ("1474-09-17"^^xsd:date "1533-07-16"^^xsd:date "Ludovico Ariosto"@en <http://www.wikidata.org/entity/Q48900>) 
+          ("1475-02-25"^^xsd:date "1564-02-08"^^xsd:date "Michelangelo"@en <http://www.wikidata.org/entity/Q5592>)
+      }
+  }
+  '
+  | start='birth'
+  | end='death' 
+  | label='label'
+  | link='uri'
+  | interval='DECADE'
+}}
+        </nowiki>
+     </pre>
+  </div>
+<div class="documentation__example__demo">
+{{#widget:Timeline
+  |query ='SELECT ?birth ?death ?label  ?uri WHERE {
+      VALUES(?birth ?death ?label ?uri){
+          ("1486-07-16"^^xsd:date "1531-01-31"^^xsd:date "Andrea del Sarto"@en <http://www.wikidata.org/entity/Q5571>)  
+          ("1503-01-21"^^xsd:date "1540-09-03"^^xsd:date "Parmigianino"@en <http://www.wikidata.org/entity/Q9348>)
+          ("1474-09-17"^^xsd:date "1533-07-16"^^xsd:date "Ludovico Ariosto"@en <http://www.wikidata.org/entity/Q48900>) 
+          ("1475-02-25"^^xsd:date "1564-02-08"^^xsd:date "Michelangelo"@en <http://www.wikidata.org/entity/Q5592>)
+      }
+  }
+  '
+  | start='birth'
+  | end='death' 
+  | label='label'
+  | link='uri'
+  | interval='DECADE'
+}}
+</div>
+</div>
+

@@ -1,0 +1,57 @@
+__NOTOC__
+
+= OWL Class: '{{#show: {{this}} | rdfs:label}}' =
+
+'''URI''': ''{{#show: {{this}} }}''
+
+== Taxonomy ==
+
+=== Subclasses ===
+
+{{#widget: TableResult |
+query = '
+SELECT ?subclass WHERE { 
+  ?subclass rdfs:subclassOf ?? .  
+}'
+}}
+
+=== Superclasses ===
+{{#widget: TableResult |
+query = '
+SELECT ?superclass WHERE { 
+  ?? rdfs:subclassOf ?superclass .  
+}'
+}}
+
+== Properties with domain {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?property WHERE { 
+  ?property rdfs:domain ?? .  
+}'
+}}
+<div>
+
+== Properties with range {{#show: {{this}} | rdfs:label}} ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?property WHERE { 
+  ?property rdfs:range ??.  
+}'
+}}
+</div>
+
+== Instances of class '{{#show: {{this}} | rdfs:label}}' ==
+
+<div style="width:650px; padding-top:10px; padding-bottom:10px">
+{{#widget: TableResult |
+query = '
+SELECT ?Instance WHERE { 
+  ?Instance rdf:type ??.  
+}'
+}}
+</div>

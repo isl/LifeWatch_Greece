@@ -1,0 +1,6 @@
+{{#widget: com.metaphacts.widgets.TableWidget 
+    | query='SELECT * WHERE { <http://example.org/bob#me> ?p ?o }'
+    | columnConfiguration = {{ 
+        {{variableName='p'| displayName='Predicate'}} | {{variableName='o'| displayName='Object'}} 
+    }}
+}}

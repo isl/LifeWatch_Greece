@@ -1,0 +1,7 @@
+= All OWL Classes in Database =
+{{#widget: TableResult |
+query = '
+SELECT ?Class WHERE { 
+  ?Class rdf:type ?? .  
+}'
+}}

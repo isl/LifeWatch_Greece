@@ -1,0 +1,9 @@
+== Ontologies in the Repository ==
+
+{{#widget: TableResult | 
+query = 'SELECT DISTINCT ?Ontology  WHERE { 
+  ?Ontology rdf:type owl:Ontology. 
+?Ontology rdf:type owl:Ontology }
+'
+ | labels = false
+}}

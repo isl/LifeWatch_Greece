@@ -1,0 +1,504 @@
+{{#widget: org.researchspace.search.SearchWidget |
+  domainSelectorConfig = {{
+    tupleTemplate = '<div class="fundamental-category-item" style="background-image: url('{{thumbnail.value}}');"></div>' |
+    query = '
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix schema: <http://schema.org/>
+
+SELECT distinct ?uri ?label  WHERE {
+{
+?uri a <http://www.w3.org/2002/07/owl#Class> .
+?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+}
+UNION
+{
+?uri a <http://www.w3.org/2000/01/rdf-schema#Class> .
+?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+}
+
+VALUES (?uri ?thumbnail) {
+        (<http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> "C:\\Users\\minadakn\\Desktop\\images\\actors.svg")
+		(<http://www.cidoc-crm.org/cidoc-crm/E39_Actor> "C:\\Users\\minadakn\\Desktop\\images\\actors2.svg")
+}
+}
+' |
+      uriBindingName = 'uri' |
+      labelBindingName = 'label'
+  }} |rangeSelectorConfig = {{
+    tupleTemplate = '<div class="fundamental-category-item" style="background-image: url('{{thumbnail.value}}');"></div>' |
+    query = '
+    SELECT distinct ?uri ?label WHERE {
+{
+?uri a <http://www.w3.org/2002/07/owl#Class> .
+?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+}
+UNION
+{
+?uri a <http://www.w3.org/2000/01/rdf-schema#Class> .
+?uri <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+}
+
+VALUES (?uri ?thumbnail) {
+        (<http://www.ics.forth.gr/isl/ontology/MarineTLO/BC21_Dataset> "C:\\Users\\minadakn\\Desktop\\images\\actors.svg")
+		(<http://www.cidoc-crm.org/cidoc-crm/E39_Actor> "C:\\Users\\minadakn\\Desktop\\images\\actors2.svg")
+}
+}
+      ' |
+    uriBindingName = 'uri' |
+    labelBindingName = 'label'
+  }} |
+  relationSelectorConfig = {{
+    tupleTemplate = '{{label.value}}' |
+    query = '
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+      select ?relation ?label where {
+        ?relation
+          rdfs:label ?label;
+          rdfs:domain ?domain ;
+          rdfs:range ?range .
+      }' |
+    uriBindingName = 'relation' |
+    labelBindingName = 'label'
+  }} | 
+  resourceSelectorConfig = {{
+    query = '
+      prefix skos: <http://www.w3.org/2004/02/skos/core#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix bds: <http://www.bigdata.com/rdf/search#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+
+      select ?value ?label where {     
+        ?value rdf:type <?range> .
+        ?value rdfs:label ?label .                
+    }' |
+    uriBindingName = 'value' |
+    labelBindingName = 'label' |
+    noSuggestionsTemplate = '<div class="suggestion-no-matches">no matches found</div>' |
+    suggestionItemTemplate = '<p title="{{label.value}}" data-rdfa-label="{{label.value}}" data-rdfa-about="{{value.value}}">{{label.value}}</p>'
+  }} | 
+
+  clipboardResourceSelectorConfig = {{
+    query = '
+      prefix skos: <http://www.w3.org/2004/02/skos/core#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix bds: <http://www.bigdata.com/rdf/search#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix ldp: <http://www.w3.org/ns/ldp#>
+      prefix prov: <http://www.w3.org/ns/prov#>
+      prefix platform: <http://www.metaphacts.com/ontologies/platform#>
+  
+      SELECT DISTINCT ?value ?label
+      WHERE {
+        platform:setContainer ldp:contains ?value .
+        ?value prov:wasAttributedTo ?user.
+        ?value prov:generatedAtTime ?modificationDate .
+
+        ?value <http://www.metaphacts.com/ontologies/platform#containerType> ?setType ;
+          rdfs:label ?l .
+        BIND(CONCAT(?l , " [Set]") AS ?label) .
+        SERVICE <http://www.bigdata.com/rdf/search#search> {
+          ?l bds:search "*?token*" ;
+          bds:relevance ?score .
+        }
+           FILTER (
+            (?user=?useruri) 
+            {{Pipe}}{{Pipe}} 
+                (
+                    ((?visibility IN (platform:public,platform:restricted)) && ?useruri!=platform:anoymousUser)
+                {{Pipe}}{{Pipe}} 
+                    (?useruri=platform:anoymousUser && ?visibility=platform:public)
+                )
+            )
+      }
+    ' |
+    uriBindingName = 'value' |
+    labelBindingName = 'label' |
+    setTypeBindingName = 'setType' |
+    tupleTemplate = '
+      <p style="white-space: normal;overflow: hidden;text-overflow: ellipsis;" title="{{label.value}}" data-rdfa-label="{{label.value}}" data-rdfa-about="{{value.value}}">{{label.value}}</p>
+    '
+  }} |
+
+  setSelectorConfig = {{
+    query = '
+      prefix skos: <http://www.w3.org/2004/02/skos/core#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix bds: <http://www.bigdata.com/rdf/search#>
+      prefix rso: <http://www.researchspace.org/ontology/>
+      prefix ldp: <http://www.w3.org/ns/ldp#>
+      prefix prov: <http://www.w3.org/ns/prov#>
+      prefix platform: <http://www.metaphacts.com/ontologies/platform#>
+  
+      SELECT DISTINCT ?value ?label
+      WHERE {
+        platform:setContainer ldp:contains ?value .
+        ?value prov:wasAttributedTo ?user.
+        ?value prov:generatedAtTime ?modificationDate .
+
+        ?value <http://www.metaphacts.com/ontologies/platform#containerType> ?setType ;
+          rdfs:label ?l .
+        BIND(CONCAT(?l , " [Set]") AS ?label) .
+        SERVICE <http://www.bigdata.com/rdf/search#search> {
+          ?l bds:search "*?token*" ;
+          bds:relevance ?score .
+        }
+        FILTER (
+            (?user=?useruri) 
+            {{Pipe}}{{Pipe}} 
+                (
+                    ((?visibility IN (platform:public,platform:restricted)) && ?useruri!=platform:anoymousUser)
+                {{Pipe}}{{Pipe}} 
+                    (?useruri=platform:anoymousUser && ?visibility=platform:public)
+                )
+        )
+      }
+    ' |
+    uriBindingName = 'value' |
+    labelBindingName = 'label' |
+    setTypeBindingName = 'setType' |
+    tupleTemplate = '
+      <p style="white-space: normal;overflow: hidden;text-overflow: ellipsis;" title="{{label.value}}" data-rdfa-label="{{label.value}}" data-rdfa-about="{{value.value}}">{{label.value}}</p>
+    '
+  }} |
+
+  resultViewConfig = {{
+
+    tablePaneProps = {{ 
+      query = 'SELECT DISTINCT ?subject ?label WHERE { ?value rdfs:label ?label} ORDER BY ?Label' |
+      columnConfiguration = {{
+        {{
+          variableName = 'subject' |
+          displayName = 'Item' |
+          cellTemplate = '
+            <div class="rs-actionable-table-cell">
+              <mph-resource-link class="table-resource-link" title="{{label.value}}" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+                <mph-anonymous-hidden-component style=" position: absolute; top: -5px; ">
+                    <researchspace-result-item-action data-set-type="{{fc.value}}" data-iri="{{subject.value}}"/>
+                </mph-anonymous-hidden-component>
+            </div>
+          '
+        }} |
+        {{
+          variableName = 'label' |
+          displayName = 'Label'
+        }}
+      }} |
+      layout = {{
+        options='{"showFilter":false, "resultsPerPage":4}'
+      }} |
+    }} | 
+
+    carouselPaneProps = {{
+
+      query = '
+        SELECT DISTINCT ?subject ?fc ?label ?thumbnail WHERE { 
+          BIND(
+            REPLACE(
+              COALESCE(STR(?image), "//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png"), "http://", "//"
+            ) as ?thumbnail
+          ).
+        } ORDER BY ?label' |  
+
+      layout = {{
+
+        tupleTemplate = '
+          <div class="text-center panel panel-default" style="border:none;margin-right:20px;font-size:12px;height:300px;width: 100%;">
+            <div class="panel-body" style="height: 280px;">
+              <img src="{{thumbnail.value}}" style="max-height:260px; margin: 0 auto;" class="img-rounded">
+            </div>
+            <div class="panel-footer" style="position: relative;  border: none;">
+              <mph-resource-link title="{{label.value}}" class="grid-resource-link" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+                <mph-anonymous-hidden-component style=" position: absolute; top: 5px; ">
+                    <researchspace-result-item-action data-set-type="{{fc.value}}" data-iri="{{subject.value}}"/>
+                </mph-anonymous-hidden-component>
+            </div>
+          </div>' | 
+
+        options='{"centerMode":true,"dots":false}
+      }}
+    }} |
+
+    timelinePaneProps = {{ 
+      query = '
+        SELECT DISTINCT ?begin ?end ?label (?subject as ?uri) WHERE {
+      ?subject <http://www.researchspace.org/ontology/Thing_created_on_Time> ?time.
+      ?time <http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin> ?begin.
+          OPTIONAL{ ?time <http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin> ?b2.}
+      ?time <http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end> ?end.
+      OPTIONAL{ ?time <http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end> ?e2.}
+      FILTER(?end>?e2 && ?b2>?begin && ?end > ?begin)
+        }
+      ' |
+      layout = {{
+        tupleTemplate = '
+          <b>
+            <mph-resource-link title="{{label.value}}" class="timeline-resource-link" data-uri="{{uri.value}}">{{label.value}}</mph-resource-link>
+          </b>
+          <br>{{dateTimeFormat _event.start}} - {{dateTimeFormat _.event.end}}<br>
+        '
+      }} |
+      start = 'begin' |
+      end = 'end' |
+      label = 'label' |
+      link = 'uri' |
+      durationEvent = true |
+      height = 200
+    }} |
+    
+    mapPaneProps = {{ 
+      query = '
+        SELECT ?lat ?lng ?name ?subject  WHERE {
+          ?subject <http://www.cidoc-crm.org/cidoc-crm/P87_is_identified_by> ?place.
+          ?place <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat.
+          ?place <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lng.
+      ?place <http://www.geonames.org/ontology#name> ?name.
+    }' | 
+      layout = {{  
+        tupleTemplate = '
+          <mph-resource-link title="{{name}}" class="map-resource-link" data-uri="{{subject}}">{{name}}</mph-resource-link>'
+      }}
+    }} | 
+
+    gridPaneProps = {{ 
+      query = '
+        SELECT DISTINCT ?subject ?fc ?label ?thumbnail WHERE { 
+          BIND(
+            REPLACE(
+              COALESCE(STR(?image), "//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/200px-No_image_available.svg.png"), "http://", "//"
+            ) as ?thumbnail
+          ).
+        } ORDER BY ?label
+      ' |
+      layout = {{
+        tupleTemplate = '
+          <div class="rs-grid-element text-center panel panel-default">
+            <div class="panel-body">
+              <img src="{{thumbnail.value}}" style="height:120px;max-width:150px;" class="img-rounded">
+            </div>
+            <div class="panel-footer" style="position: relative">
+              <mph-resource-link title="{{label.value}}" class="grid-resource-link" data-uri="{{subject.value}}">{{label.value}}</mph-resource-link>
+              <mph-anonymous-hidden-component style=" position: absolute; top: 5px; ">
+                <researchspace-result-item-action data-set-type="{{fc.value}}" data-iri="{{subject.value}}"/>
+              </mph-anonymous-hidden-component>
+            </div>
+          </div>
+        ' | 
+        options='{"showFilter":false, "resultsPerPage":4}'
+      }}
+    }}
+  }} | queryConfig = {{
+   fullTextSearchClause = '
+      SERVICE <http://www.bigdata.com/rdf/fts#search> {
+          ?subject fts:endpoint "http://solr:8983/solr/test/select" ;
+            fts:params "fl=id,prefLabel&defType=edismax&qf=prefLabel^20.0+altLabel^10.0" ;
+            fts:searchField "id" ;
+            fts:searchResultType "URI" ;
+            fts:snippetField "prefLabel" ;
+            fts:search """?token* AND fc:"?domain\"""" .
+      }     
+   ' |
+    projectionClause = '
+      prefix skos: <http://www.w3.org/2004/02/skos/core#>
+      prefix crm: <http://www.cidoc-crm.org/cidoc-crm/>
+      prefix schema: <http://schema.org/>
+      prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+      PREFIX fts: <http://www.bigdata.com/rdf/fts#>
+
+      SELECT DISTINCT ?subject (?domain AS ?fc) ?image ?label
+
+    ' |
+    whereClause = '
+      ?subject a ?domain .
+        
+      OPTIONAL {
+        ?subject <http://collection.britishmuseum.org/id/ontology/PX_has_main_representation> ?image.
+      }
+
+      optional {
+       ?subject skos:altLabel ?altLabel .
+      }  
+      optional {
+       ?subject rdfs:label ?rdfsLabel .
+      } 
+      optional {
+       ?subject skos:prefLabel ?prefLabel .  
+      }
+  
+      bind(coalesce(?prefLabel, coalesce(?rdfsLabel, coalesce(?altLabel, str(?subject)))) as ?label) .
+
+   ' |
+   datePropertiesConfig = {{
+    beginIntervalProperty = 'crm:P82a_begin_of_the_begin' |
+    endIntervalProperty = 'crm:P82b_end_of_the_end'
+   }}
+  }} | facetConfig = {{
+     category = {{
+        query = '
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX fts: <http://www.bigdata.com/rdf/fts#>
+PREFIX thesUnit: <http://collection.britishmuseum.org/id/thesauri/unit/>
+PREFIX rs: <http://www.researchspace.org/ontology/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX bmo: <http://collection.britishmuseum.org/id/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX thesIdentifier: <http://collection.britishmuseum.org/id/>
+PREFIX rsp: <http://researchspace.org/>
+PREFIX rshelp: <http://researchspace.org/help/>
+PREFIX default: <http://www.metaphacts.com/resource/>
+PREFIX skosCore04: <http://www.w3.org/2004/02/skos/core#>
+PREFIX thes: <http://collection.britishmuseum.org/id/thesauri/>
+PREFIX thesDimension: <http://collection.britishmuseum.org/id/thesauri/dimension/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ecrm: <http://erlangen-crm.org/current/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+  PREFIX rso: <http://www.researchspace.org/ontology/>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+  SELECT ?category ?categoryLabel (COUNT(DISTINCT ?propValue) AS ?count) ?thumbnail ?order WHERE {
+    ?category a rso:FundamentalCategory ;
+    rdfs:label ?categoryLabel .
+
+    VALUES (?category ?thumbnail ?order) {
+      (rso:Thing "../images/things.svg" 1)
+      (rso:Actor "../images/actors.svg" 2)
+      (rso:Place "../images/places.svg" 3)
+      (rso:Time "../images/dates.svg" 4)
+      (rso:Event "../images/events.svg" 5)
+      (rso:Concept "../images/concepts.svg" 6)
+    }
+    OPTIONAL {
+      ?subject ?prop ?propValue.
+      ?prop <http://www.researchspace.org/ontology/hasRange> ?category.
+    }
+  }
+  GROUP BY ?category ?categoryLabel ?thumbnail ?order
+  ORDER BY ?order
+        ' |
+        uriBindingName = 'category' |
+        labelBindingName = 'categoryLabel' |
+        tupleTemplate = '
+        <div {{#ifCond count.value "===" "0"}}data-disabled="true"{{else}}{{/ifCond}} class="fundamental-category-item{{#ifCond count.value "===" "0"}}--disabled{{else}}{{/ifCond}}" data-rdfa-about="{{category.value}}" title="{{categoryLabel.value}} ({{count.value}})" style="background-image: url('{{thumbnail.value}}');"></div>'
+     }} |
+     relation = {{
+        query = '
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX fts: <http://www.bigdata.com/rdf/fts#>
+PREFIX thesUnit: <http://collection.britishmuseum.org/id/thesauri/unit/>
+PREFIX rs: <http://www.researchspace.org/ontology/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX bmo: <http://collection.britishmuseum.org/id/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX thesIdentifier: <http://collection.britishmuseum.org/id/>
+PREFIX rsp: <http://researchspace.org/>
+PREFIX rshelp: <http://researchspace.org/help/>
+PREFIX default: <http://www.metaphacts.com/resource/>
+PREFIX skosCore04: <http://www.w3.org/2004/02/skos/core#>
+PREFIX thes: <http://collection.britishmuseum.org/id/thesauri/>
+PREFIX thesDimension: <http://collection.britishmuseum.org/id/thesauri/dimension/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ecrm: <http://erlangen-crm.org/current/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+  PREFIX rso: <http://www.researchspace.org/ontology/>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+  SELECT ?prop ?propLabel (COUNT( DISTINCT ?subject) AS ?count) ?categoryThumbnail WHERE {
+
+    ?prop rso:hasRange ?category ;
+      rdfs:label ?propLabel .
+
+    OPTIONAL {
+      ?subject ?prop ?propValue .    
+    }
+    FILTER(BOUND(?propValue)).
+    VALUES (?category ?categoryThumbnail) {
+      (rso:Thing "../images/things.svg")
+      (rso:Actor "../images/actors.svg")
+      (rso:Place "../images/places.svg")
+      (rso:Time "../images/dates.svg")
+      (rso:Event "../images/events.svg")
+      (rso:Concept "../images/concepts.svg")
+    }
+  } GROUP BY ?prop ?propLabel ?categoryThumbnail
+    ORDER BY ?categoryThumbnail ?propLabel
+    ' |
+        uriBindingName = 'prop' |
+        labelBindingName = 'propLabel' |
+        tupleTemplate = '<div class="facet-relation__content" title="{{propLabel.value}} ({{count.value}})">{{propLabel.value}} ({{count.value}}) <img class="facet__relation__content__category-image" src="{{categoryThumbnail.value}}"/></div>'
+     }} |
+     facet = {{
+        query = 'PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX fts: <http://www.bigdata.com/rdf/fts#>
+PREFIX thesUnit: <http://collection.britishmuseum.org/id/thesauri/unit/>
+PREFIX rs: <http://www.researchspace.org/ontology/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX bmo: <http://collection.britishmuseum.org/id/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX thesIdentifier: <http://collection.britishmuseum.org/id/>
+PREFIX rsp: <http://researchspace.org/>
+PREFIX rshelp: <http://researchspace.org/help/>
+PREFIX default: <http://www.metaphacts.com/resource/>
+PREFIX skosCore04: <http://www.w3.org/2004/02/skos/core#>
+PREFIX thes: <http://collection.britishmuseum.org/id/thesauri/>
+PREFIX thesDimension: <http://collection.britishmuseum.org/id/thesauri/dimension/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ecrm: <http://erlangen-crm.org/current/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+  PREFIX rso: <http://www.researchspace.org/ontology/>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  SELECT ?propValue ?valueLabel (COUNT(DISTINCT ?subject) AS ?count) WHERE {
+
+   OPTIONAL { 
+      ?subject ?prop ?propValue. 
+    
+      OPTIONAL { ?propValue <http://www.w3.org/2004/02/skos/core#altLabel> ?altLabel. }
+      OPTIONAL { ?propValue <http://www.w3.org/2000/01/rdf-schema#label> ?rdfsLabel. }
+      OPTIONAL { ?propValue <http://www.w3.org/2004/02/skos/core#prefLabel> ?prefLabel. }
+      BIND(COALESCE(?prefLabel, COALESCE(?rdfsLabel, COALESCE(?altLabel, REPLACE(str(?propValue), "^.*(#{{Pipe}}/)", "")))) AS ?valueLabel)
+    }
+    FILTER(BOUND(?propValue)).
+  } GROUP BY ?propValue ?valueLabel
+    ORDER BY ?valueLabel' |
+        valueBindingName = 'propValue' |
+        labelBindingName = 'valueLabel' |
+        tupleTemplate = '{{valueLabel.value}} ({{count.value}})'
+     }}
+  }} | 
+  datasets={{
+    {{value='http://www.researchspace.org/BM'|label='British Museum'}}|
+    {{value='http://www.researchspace.org/RK'|label='Rijksmuseum'}}|
+  }} 
+}}
+  
