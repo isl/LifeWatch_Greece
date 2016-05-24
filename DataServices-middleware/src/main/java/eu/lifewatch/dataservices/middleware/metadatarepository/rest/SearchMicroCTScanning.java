@@ -64,8 +64,8 @@ public class SearchMicroCTScanning extends HttpServlet {
         if(!params.hasMoreElements()){
             LOGGER.info("The user didn't provide any attributes. Showing the HTML page with instructions.");
             InstructionsPage.showHtmlPageWithInstructions(response);
-        }else if(speciesNameReceived==null && specimenNameReceived==null){
-            LOGGER.info("The user didn't provide any values for either \"species\" or \"specimen\". Showing the HTML page with instructions.");
+        }else if(speciesNameReceived==null && specimenNameReceived==null && scanningIdReceived==null){
+            LOGGER.info("The user didn't provide any values for either \"species\" or \"specimen\" or \"scanning\". Showing the HTML page with instructions.");
             InstructionsPage.showHtmlPageWithInstructions(response);
         }else{   
             if(returnType==null){

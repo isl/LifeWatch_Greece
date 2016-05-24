@@ -2008,7 +2008,7 @@ public class MetadataRepositoryService implements Service {
     
      public List<OutgoingNodeStruct> selectOutgoing(String resourceURI) throws QueryExecutionException {
 
-        String queryString = "SELECT ?predicate ?object ?objectType ?objectName"
+        String queryString = "SELECT DISTINCT ?predicate ?object ?objectType ?objectName"
                 + " WHERE { "
                 + "  <" + resourceURI + "> ?predicate ?object ."
                 + " OPTIONAL { ?object <"+Resources.rdfsLabel+"> ?objectName } ."
@@ -2039,7 +2039,7 @@ public class MetadataRepositoryService implements Service {
     
      public List<OutgoingNodeStruct> selectOutgoing(String resourceURI, String directoryGraph, String metadataRepositoryGraph) throws QueryExecutionException {
 
-        String queryString = "SELECT ?predicate ?object ?objectType ?objectName"
+        String queryString = "SELECT DISTINCT ?predicate ?object ?objectType ?objectName"
                 + " FROM <"+directoryGraph+"> "
                 + " FROM <"+metadataRepositoryGraph+"> "
                 + " WHERE { "
@@ -2072,7 +2072,7 @@ public class MetadataRepositoryService implements Service {
      
       public List<IncomingNodeStruct> selectIncoming(String resourceURI) throws QueryExecutionException {
 
-        String queryString = "SELECT ?predicate ?subject ?subjectType ?subjectName"
+        String queryString = "SELECT DISTINCT ?predicate ?subject ?subjectType ?subjectName"
                 + " WHERE { "
                 + " ?subject ?predicate <" + resourceURI + "> ."
                 + " OPTIONAL { ?subject <" + Resources.rdfsLabel+"> ?subjectName } ."
@@ -2103,7 +2103,7 @@ public class MetadataRepositoryService implements Service {
       
       public List<IncomingNodeStruct> selectIncoming(String resourceURI, String directoryGraph, String metadataRepositoryGraph) throws QueryExecutionException {
 
-        String queryString = "SELECT ?predicate ?subject ?subjectType ?subjectName"
+        String queryString = "SELECT DISTINCT ?predicate ?subject ?subjectType ?subjectName"
                 + " FROM <"+directoryGraph+"> "
                 + " FROM <"+metadataRepositoryGraph+"> "
                 + " WHERE { "
