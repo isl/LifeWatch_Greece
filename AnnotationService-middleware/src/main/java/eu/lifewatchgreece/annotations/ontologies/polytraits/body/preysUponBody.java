@@ -58,6 +58,8 @@ public abstract class preysUponBody implements PolytraitsBody {
             case POLYTRAITS.preysUpon_TF_FLAG:
             /* foraminiferans: Foraminiferans as food source. */
             case POLYTRAITS.preysUpon_TF_FORAM:
+            /* mollusks: Mollusks as food source. */
+            case POLYTRAITS.preysUpon_TF_MOLL:
             /* detritus: Particles of organic material from dead and decomposing organisms as food source.*/
             case POLYTRAITS.preysUpon_TF_OM:
             /* sediment: Unselective ingestion of sediment.*/

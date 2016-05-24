@@ -54,6 +54,8 @@ public abstract class DZBody implements PolytraitsBody {
             case POLYTRAITS.DZ_SUB:
             /* bathyal zone: The steep descent zone from 200 m to 4000 m depth. */
             case POLYTRAITS.DZ_BAT:
+            /* abyssal zone: The zone between 4000 - 6000 m depth */
+            case POLYTRAITS.DZ_ABY:
             /* hadal zone: The sea floor deeper than 6000 m, such as that of the oceanic trenches. */
             case POLYTRAITS.DZ_ENVO_01000028:
                 return true;

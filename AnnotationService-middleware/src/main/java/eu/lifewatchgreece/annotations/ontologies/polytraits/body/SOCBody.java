@@ -64,6 +64,8 @@ public abstract class SOCBody implements PolytraitsBody {
             case POLYTRAITS.SOC_BRAN:
             /* echinoderms: Species that interact/live with echinoderms.*/
             case POLYTRAITS.SOC_ECHI:
+            /* cnidarians: Species that interact/live with cnidarians.*/
+            case POLYTRAITS.SOC_ANTH:
             /* bryozans:Species that interact/live with bryozoans.*/
             case POLYTRAITS.SOC_BRY:
             /* entoproctans:Species that interact/live with entoproctans.*/

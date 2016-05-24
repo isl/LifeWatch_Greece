@@ -106,6 +106,8 @@ public class POLYTRAITS {
     public final static String DZ_SUB = "http://polytraits.lifewatchgreece.eu/terms/DZ_SUB";
     /* bathyal zone: The steep descent zone from 200 m to 4000 m depth. */
     public final static String DZ_BAT = "http://polytraits.lifewatchgreece.eu/terms/DZ_BAT";
+    /* abyssal zone: The zone between 4000 - 6000 m depth */
+    public final static String DZ_ABY = "http://polytraits.lifewatchgreece.eu/terms/DZ_ABY";
     /* hadal zone: The sea floor deeper than 6000 m, such as that of the oceanic trenches. */
     public final static String DZ_ENVO_01000028 = "http://purl.obolibrary.org/obo/ENVO_01000028";
 
@@ -115,7 +117,7 @@ public class POLYTRAITS {
      * water column. Usually defined based on ecological features of the
      * zonation.
      */
-    public final static String DZP = " 	http://polytraits.lifewatchgreece.eu/terms/DZP";
+    public final static String DZP = "http://polytraits.lifewatchgreece.eu/terms/DZP";
     /**
      * Modalities for DZP
      */
@@ -494,7 +496,9 @@ public class POLYTRAITS {
     public final static String SOC_BRAN = "http://polytraits.lifewatchgreece.eu/terms/SOC_BRAN";
     /* echinoderms: Species that interact/live with echinoderms.*/
     public final static String SOC_ECHI = "http://polytraits.lifewatchgreece.eu/terms/SOC_ECHI";
-    /* cnidarians: Species that interact/live with poriferans.*/
+    /* cnidarians: Species that interact/live with cnidarians.*/
+    public final static String SOC_ANTH = "http://polytraits.lifewatchgreece.eu/terms/SOC_ANTH";
+    /* poriferans: Species that interact/live with poriferans.*/
     public final static String SOC_POR = "http://polytraits.lifewatchgreece.eu/terms/SOC_POR";
     /* bryozans:Species that interact/live with bryozoans.*/
     public final static String SOC_BRY = "http://polytraits.lifewatchgreece.eu/terms/SOC_BRY";
@@ -658,6 +662,8 @@ public class POLYTRAITS {
     public final static String preysUpon_TF_FLAG = "http://polytraits.lifewatchgreece.eu/terms/TF_FLAG";
     /* foraminiferans: Foraminiferans as food source. */
     public final static String preysUpon_TF_FORAM = "http://polytraits.lifewatchgreece.eu/terms/TF_FORAM";
+    /* mollusks: Mollusks as food source. */
+    public final static String preysUpon_TF_MOLL = "http://polytraits.lifewatchgreece.eu/terms/TF_MOLL";
     /* detritus: Particles of organic material from dead and decomposing organisms as food source.*/
     public final static String preysUpon_TF_OM = "http://polytraits.lifewatchgreece.eu/terms/TF_OM";
     /* sediment: Unselective ingestion of sediment.*/
@@ -876,7 +882,7 @@ public class POLYTRAITS {
     /* cold waters : Reproduction in cold water environments (<0 - 10 °C).*/
     public final static String RT_COLD = "http://polytraits.lifewatchgreece.eu/terms/RT_COLD";
     /* warm/ temperate/ subtropical waters : Reproduction in environments of average temperatures (10-25°C).*/
-    public final static String RT_TMP = "http://polytraits.lifewatchgreece.eu/terms/RT_TMP";
+    public final static String RT_TMP = "http://polytraits.lifewatchgreece.eu/terms/RT_TEMP";
     /* tropical waters: Reproduction in warm water environments (>25 °C). */
     public final static String RT_WARM = "http://polytraits.lifewatchgreece.eu/terms/RT_WARM";
     /*==================================================================================*/
