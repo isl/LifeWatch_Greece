@@ -86,7 +86,7 @@ var anno = (function () {
             width: 300,
             push: false,
             position: "right",
-            zIndex: 1000000,    // Make sure that panel is not hidden by bootstrap nav bar 
+            zIndex: 1000000,    // Make sure that panel is not hidden by bootstrap nav bar
             // speed: 600,
             trigger: $(".handle"),
             // autoEscape: false,
@@ -1213,7 +1213,6 @@ var anno = (function () {
 
         // if this is an annotation object, get all relevant information
         // Have to be rather careful with the names!
-        console.log(jsonld);
         if (jsonld["@type"] && jsonld["@type"] === "oa:Annotation") {
             anno.id = jsonld["@id"].substr(jsonld["@id"].lastIndexOf('/') + 1);    // id of anno
             anno.URI = jsonld["@id"];   // URI of anno
@@ -1350,8 +1349,9 @@ var anno = (function () {
                 "http://polytraits.lifewatchgreece.eu/terms/MAT_6M": "2 - 6 months",
                 "http://polytraits.lifewatchgreece.eu/terms/MAT_1Y": "6 months - 1 year",
                 "http://polytraits.lifewatchgreece.eu/terms/MAT_2Y": "1 year - 2 years",
-                "http://polytraits.lifewatchgreece.eu/terms/MAT_3Y": "2 year - 3 years",
-                "http://polytraits.lifewatchgreece.eu/terms/MAT_4Y": "&ge; 4 years"
+                "http://polytraits.lifewatchgreece.eu/terms/MAT_3Y": "2 years - 3 years",
+                "http://polytraits.lifewatchgreece.eu/terms/MAT_4Y": "3 years - 4 years",
+                "http://polytraits.lifewatchgreece.eu/terms/MAT_MANY": "&ge; 4 years"
             }
         }, {
             type: "http://purl.obolibrary.org/obo/CMO_0000013",
@@ -1497,7 +1497,7 @@ var anno = (function () {
             modalities: {
                 // 8 modalities
                 "http://eol.org/schema/terms/predator": "predator",
-                "http://eol.org/schema/terms/suspensionFeeder": "predator",
+                "http://eol.org/schema/terms/suspensionFeeder": "suspension feeder",
                 "http://polytraits.lifewatchgreece.eu/terms/FEED_NSD": "non-selective deposit feeder",
                 "http://polytraits.lifewatchgreece.eu/terms/FEED_SD": "selective deposit feeder",
                 "http://polytraits.lifewatchgreece.eu/terms/FEED_D": "deposit feeder (selective or non selective)",
@@ -1540,7 +1540,7 @@ var anno = (function () {
             modalities: {
                 // 14 modalities
                 "http://polytraits.lifewatchgreece.eu/terms/HAB_ALG": "algae",
-                "http://polytraits.lifewatchgreece.eu/terms/HAB_REEF": "biogenic reef",
+                "http://polytraits.lifewatchgreece.eu/terms/HAB_BIO": "biogenic reef",
                 "http://polytraits.lifewatchgreece.eu/terms/HAB_CAVE": "caves",
                 "http://polytraits.lifewatchgreece.eu/terms/HAB_CREV": "crevices/ fissures",
                 "http://polytraits.lifewatchgreece.eu/terms/HAB_MAERL": "maerl/ coralligenous habitats",
@@ -1754,7 +1754,7 @@ var anno = (function () {
             desc: "Sperm type",
             modalities: {
                 // 3 modalities
-                "http://polytraits.lifewatchgreece.eu/terms/SETTL_HARD": "hard substrates",
+                "http://polytraits.lifewatchgreece.eu/terms/SPERM_ECT": "ect - aquasperm",
                 "http://polytraits.lifewatchgreece.eu/terms/SPERM_ENT": "ent - aquasperm",
                 "http://polytraits.lifewatchgreece.eu/terms/SPERM_INTRO": "introsperm"
             }
@@ -1864,7 +1864,7 @@ var anno = (function () {
             desc: "Tube / burrow material",
             modalities: {
                 // 7 modalities
-                "http://purl.obolibrary.org/obo/ENVO_01000120": "clay",
+                "http://purl.obolibrary.org/obo/ENVO_00002982": "clay",
                 "http://purl.obolibrary.org/obo/ENVO_01000018": "gravel",
                 "http://purl.obolibrary.org/obo/ENVO_01000017": "sand",
                 "http://polytraits.lifewatchgreece.eu/terms/TUBE_BIO": "biogenic detritus",
