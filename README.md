@@ -26,44 +26,44 @@ The Data Services offer the functions to:
 
   e) query the triple store
 
-The triple store that the API has been extendedly used is Openlink’s Virtuoso, but it has also been tested with ontotext’s OWLIM.
-
+  The triple store that the API has been extendedly used is Openlink’s Virtuoso, but it has also been tested with ontotext’s OWLIM.
+  
 2. Biodiversity Data Transformations
 The Data Services API contains a number of functions that transform biodiversity data from csv format to turtle format (rdf). The code takes as input specific csv templates that are filled with biodiversity data, and transforms it to rdf format based on CRM family event centric semantic models. The produced triples can be imported to a triple store. The biodiversity data that can be transformed belongs to the categories below:
 
--Data Collection metadata
+  -Data Collection metadata
 
--Occurrences Events data
+  -Occurrences Events data
 
--Identification Events data
+  -Identification Events data
 
--Occurrences Statistics 
+  -Occurrences Statistics 
 
--Statistical data
+  -Statistical data
 
--Morphometrics data
+  -Morphometrics data
 
--Morphological Characteristics data
+  -Morphological Characteristics data
 
--Micro CT Scanning data
+  -Micro CT Scanning data
 
--Micro CT Specimen data
+  -Micro CT Specimen data
 
--Micro CT Recostruction data
+  -Micro CT Recostruction data
 
--Micro CT Post Processing data
+  -Micro CT Post Processing data
 
--DNA sampling and sequencing data
+  -DNA sampling and sequencing data
 
--Scientific Naming data
+  -Scientific Naming data
 
--Common Naming data
+  -Common Naming data
 
--Synonyms data
+  -Synonyms data
 
--Taxonomy data
+  -Taxonomy data
 
--Environmental data
+  -Environmental data
 
 3. Biodiversity Data Querying
 The Data Services API, except the generic semantic graph querying functionalities, includes a number of biodiversity domain specific querying functions that return biodiversity data that is stored in triple stores and belongs to one of the meain metadata categories. Furthermore, offset and limit can be used to limit the number of returned results enabling for example paging implementations.
