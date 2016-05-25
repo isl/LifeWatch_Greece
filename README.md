@@ -6,7 +6,7 @@ Data Services provide the users with tools in order to:
 * publish their datasets and make them available to the community by providing information that allows a user to locate and access the resource and its curator/creator,
 * import their datasets to the Lifewatch Greece Infrastructure,
 * search about datasets of interest by providing an efficient way of querying semantic networks,
-* annotate species using morphological traits
+* annotate species using morphological traits,
 * perform biodiversity data and information quality improvement. 
 
 The schema of the data that is provided by the users is mapped to the semantic model of the LWI and the data is transformed to LWI format before it is stored to the Infrastructure. The semantic model is based on CIDOC CRM (http://www.cidoc-crm.org/), CRM dig, CRM geo, CRM sci and MarineTLO (http://www.ics.forth.gr/isl/MarineTLO/).
@@ -15,32 +15,55 @@ Specifically, the main functionalities that are provided by the API are:
 
 1. Semantic Repository Actions
 The Data Services offer the functions to:
-*	connect to a semantic triple store
-*	import data to the triple store
-*	update the triple store contents
-*	delete data from the triple store
-*	query the triple store
-The triple store that the API has been extendedly used is Openlink’s Virtuoso, but it has also been tested with ontotext’s OWLIM .
+
+  a) connect to a semantic triple store
+
+  b) import data to the triple store
+
+  c) update the triple store contents
+
+  d) delete data from the triple store
+
+  e) query the triple store
+
+The triple store that the API has been extendedly used is Openlink’s Virtuoso, but it has also been tested with ontotext’s OWLIM.
 
 2. Biodiversity Data Transformations
 The Data Services API contains a number of functions that transform biodiversity data from csv format to turtle format (rdf). The code takes as input specific csv templates that are filled with biodiversity data, and transforms it to rdf format based on CRM family event centric semantic models. The produced triples can be imported to a triple store. The biodiversity data that can be transformed belongs to the categories below:
-*	Data Collection metadata
-*	Occurrences Events data
-*	Identification Events data
-*	Occurrences Statistics 
-*	Statistical data
-*	Morphometrics data
-*	Morphological Characteristics data
-*	Micro CT Scanning data
-*	Micro CT Specimen data
-*	Micro CT Recostruction data
-*	Micro CT Post Processing data
-*	DNA sampling and sequencing data
-*	Scientific Naming data
-*	Common Naming data
-*	Synonyms data
-*	Taxonomy data
-*	Environmental data
+
+-Data Collection metadata
+
+-Occurrences Events data
+
+-Identification Events data
+
+-Occurrences Statistics 
+
+-Statistical data
+
+-Morphometrics data
+
+-Morphological Characteristics data
+
+-Micro CT Scanning data
+
+-Micro CT Specimen data
+
+-Micro CT Recostruction data
+
+-Micro CT Post Processing data
+
+-DNA sampling and sequencing data
+
+-Scientific Naming data
+
+-Common Naming data
+
+-Synonyms data
+
+-Taxonomy data
+
+-Environmental data
 
 3. Biodiversity Data Querying
 The Data Services API, except the generic semantic graph querying functionalities, includes a number of biodiversity domain specific querying functions that return biodiversity data that is stored in triple stores and belongs to one of the meain metadata categories. Furthermore, offset and limit can be used to limit the number of returned results enabling for example paging implementations.
@@ -61,6 +84,8 @@ In many cases the contents of a semantic graph need to be materialized based on 
 The Data Services API contains a function that takes as input a Scientific Name of a species and by using standard templates, produces a textual (wikipage like) description, integrating information coming from different datasets and providers.
 
 The API and the services have been designed, developed and used in the context of the project LifeWatch Greece (National Strategic Reference Framework, 2012-2015), https://www.lifewatchgreece.eu/
+
+The API and the Services have been used in the Data Services of the LifeWatch Greece Infrastructure and their functionalities are exposed in http://metacatalogue.portal.lifewatchgreece.eu/.
 
 ## The Components
 
