@@ -17,11 +17,11 @@ Specifically, the main functionalities that are provided by the API are:
 
 The Data Services offer the functions to:
 
-a. connect to a semantic triple store
-b. import data to the triple store
-c. update the triple store contents
-d. delete data from the triple store
-e. query the triple store
+1. connect to a semantic triple store
+2. import data to the triple store
+3. update the triple store contents
+4. delete data from the triple store
+5. query the triple store
 
   The triple store that the API has been extendedly used is Openlink’s Virtuoso, but it has also been tested with ontotext’s OWLIM.
   
