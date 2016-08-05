@@ -26,6 +26,9 @@ import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.impl.MetadataRepositoryService;
 import gr.forth.ics.isl.timer.TimeUnit;
 import gr.forth.ics.isl.timer.Timer;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -1242,6 +1245,95 @@ public class MetadataCatalogUsageExample {
         }catch(QueryExecutionException ex){
             ex.printStackTrace();
         }
+        return this;
+    }
+    
+    public MetadataCatalogUsageExample exportStructs() throws IOException{
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("commonNames.ntriples")));
+        for(CommonNameStruct struct : this.commonNameStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("environmental.ntriples")));
+        for(EnvironmentalStruct struct : this.environmentalStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("identification.ntriples")));
+        for(IdentificationStruct struct : this.identificationStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("mesaurement.ntriples")));
+        for(MeasurementStruct struct : this.measurementStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("microctpostprocessing.ntriples")));
+        for(MicroCTPostProcessingStruct struct : this.microCTPostProcessingStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("microctreconstruction.ntriples")));
+        for(MicroCTReconstructionStruct struct : this.microCTReconstructionStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("microctscanning.ntriples")));
+        for(MicroCTScanningStruct struct : this.microCTScanningStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("morphometrics.ntriples")));
+        for(MorphometricsStruct struct : this.morphometricsStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("occurence.ntriples")));
+        for(OccurrenceStruct struct : this.occurrenceStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("scientificName.ntriples")));
+        for(ScientificNamingStruct struct : this.scientificNameStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("specimen.ntriples")));
+        for(SpecimenStruct struct : this.specimenStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("stats.ntriples")));
+        for(StatsStruct struct : this.statsStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("synonyms.ntriples")));
+        for(SynonymStruct struct : this.synonymStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+        bw = new BufferedWriter(new FileWriter(new File("microctspecimen.ntriples")));
+        for(MicroCTSpecimenStruct struct : this.microCTSpecimenStructs){
+            bw.write(struct.toNtriples());
+        }
+        bw.flush();
+        bw.close();
+            
         return this;
     }
     
