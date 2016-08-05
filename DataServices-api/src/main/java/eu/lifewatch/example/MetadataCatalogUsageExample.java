@@ -1,7 +1,5 @@
 package eu.lifewatch.example;
 
-import eu.lifewatch.service.impl.DirectoryService;
-import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.CommonNameStruct;
 import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.core.model.EnvironmentalStruct;
@@ -23,12 +21,12 @@ import eu.lifewatch.core.model.SpecimenStruct;
 import eu.lifewatch.core.model.StatsStruct;
 import eu.lifewatch.core.model.SynonymStruct;
 import eu.lifewatch.core.model.TaxonomyStruct;
-import eu.lifewatch.core.model.Triple;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.impl.MetadataRepositoryService;
 import gr.forth.ics.isl.timer.TimeUnit;
 import gr.forth.ics.isl.timer.Timer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.ApplicationContext;
@@ -66,7 +64,7 @@ public class MetadataCatalogUsageExample {
     private List<SpecimenCollectionStruct> specimenCollectionStructs;
     private List<TaxonomyStruct> taxonomyStructs;
     private List<DirectoryStruct> directoryStructs;
-    private final static int SIZE=1;
+    private final static int SIZE=10000;
     
     public MetadataCatalogUsageExample createMetadataCatalogClient(){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -196,6 +194,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withDimensionUnit("dimension unit "+i)
                                                                 .withDimensionValue("dimension value "+i)
                                                                 .withMeasurementEventURI("http://localhost/measurementEvent"+i)
+                                                                .withMeasurementEvent("measurement event "+i)
                                                                 .withPlaceName("place "+i)
                                                                 .withPlaceURI("http://localhost/place"+i)
                                                                 .withStationName("station name "+i)
@@ -213,9 +212,11 @@ public class MetadataCatalogUsageExample {
                                                                 .withDatasetTitle("dataset "+i)
                                                                 .withActor("http://localhost/actor"+i, "actor "+i)
                                                                 .withIdentificationEventURI("http://localhost/identificationEvent"+i)
+                                                                .withIdentificationEvent("identification "+i)
                                                                 .withIdentificationReferencesName("identification reference "+i)
                                                                 .withIdentificationReferencesURI("http://localhost/identificationReference"+i)
                                                                 .withIndividualURI("http://localhost/individual"+i)
+                                                                .withIndividualLabel("individual "+i)
                                                                 .withLocalityName("locality "+i)
                                                                 .withLocalityURI("http://localhost/locality"+i)
                                                                 .withSpeciesName("species "+i)
@@ -258,6 +259,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withDescription("description "+i)
                                                                 .withInput("http://localhost/reconstructionproduct"+i, "reconstructionproduct "+i)
                                                                 .withPostProcessingURI("http://localhost/postprocessing"+i)
+                                                                .withPostProcessing("post processing "+i)
                                                                 .withProduct("http://localhost/finalproduct"+i, "finalproduct "+i);            
             retList.add(struct);
         }
@@ -274,6 +276,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withDescription("description "+i)
                                                                 .withInput("http://localhost/scaninput"+i, "scaninput "+i)
                                                                 .withReconstructionURI("http://localhost/reconstruction"+i)
+                                                                .withReconstruction("reconstruction "+i)
                                                                 .withTimespan("timespan "+i)
                                                                 .withProduct("http://localhost/reconstructionproduct"+i, "reconstructionproduct "+i);
             retList.add(struct);
@@ -288,17 +291,25 @@ public class MetadataCatalogUsageExample {
                                                                 .withDatasetName("dataset "+i)
                                                                 .withActorName("actor "+i)
                                                                 .withActorURI("http://localhost/actor"+i)
+                                                                .withContrastMethod("contrast "+i)
                                                                 .withDescription("description "+i)
                                                                 .withDeviceName("device "+i)
                                                                 .withDeviceType("device type "+i)
                                                                 .withDeviceURI("http://localhost/device"+i)
                                                                 .withEquipmentURI("http://localhost/equipment"+i)
+                                                                .withEquipment("equipment "+i)
+                                                                .withExposureTime("exposure time "+i)
+                                                                .withFilter("filter "+i)
                                                                 .withTimespan("timespan "+i)
                                                                 .withMethodName("method "+i)
                                                                 .withMethodURI("http://localhost/method"+i)
                                                                 .withScanningURI("http://localhost/scanning"+i)
+                                                                .withScanning("scanning "+i)
+                                                                .withScanningLabel("scanning label "+i)
                                                                 .withSpecimenName("specimen "+i)
                                                                 .withSpecimenURI("http://localhost/specimen"+i)
+                                                                .withVoltage("voltage "+i)
+                                                                .withZoom("zoom "+i)
                                                                 .withProduct("http://localhost/scaninput"+i, "scaninput "+i);
             retList.add(struct);
         }
@@ -312,6 +323,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withDatasetName("dataset "+i)
                                                                 .withActor("http://localhost/actor"+i, "actor "+i)
                                                                 .withAttributeAssignmentEventURI("http://localhost/attributeAssignmentEvent"+i)
+                                                                .withAttributeAssignmentEvent("attribute assignment event "+i)
                                                                 .withDimensionName("dimension "+i)
                                                                 .withDimensionType("http://localhost/dimensionType"+i)
                                                                 .withDimensionURI("http://localhost/dimension"+i)
@@ -346,6 +358,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withHabitatName("habitat "+i)
                                                                 .withHabitatURI("http://localhost/habitat"+i)
                                                                 .withIndividualURI("http://localhost/individual"+i)
+                                                                .withIndividualLabel("individual "+i)
                                                                 .withLatitude("latitude "+i)
                                                                 .withLocalityName("locality "+i)
                                                                 .withLocalityURI("http://localhost/locality"+i)
@@ -353,6 +366,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withMaximumDepth("maximum depth "+i)
                                                                 .withMinimumDepth("minimum depth "+i)
                                                                 .withOccurrenceEventURI("http://localhost/occurrenceEvent"+i)
+                                                                .withOccurrenceEvent("occurrence event "+i)
                                                                 .withSamplingProtocol("sampling protocol "+i)
                                                                 .withSamplingProtocolURI("http://localhost/samplingProtocol"+i)
                                                                 .withStationNotes("station notes "+i)
@@ -379,6 +393,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withNomenclaturalCodeName("nomenclatural code name "+i)
                                                                 .withNomenclaturalCodeURI("http://localhost/nomenclaturalcodename"+i)
                                                                 .withScientificNameAssignmentEventURI("http://localhost/scientificnameassignment"+i)
+                                                                .withScientificNameAssignmentEvent("scientificnameassignment "+i)
                                                                 .withSpeciesName("species "+i)
                                                                 .withSpeciesURI("http://localhost/species"+i)
                                                                 .withTimeSpan("timespan "+i);
@@ -401,6 +416,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withSpecimenName("specimen "+i)
                                                                 .withSpecimenURI("http://localhost/specimen"+i)
                                                                 .withTransformationEventURI("http://localhost/transformationEvent"+i)
+                                                                .withTransformationEvent("transformation "+i)
                                                                 .withSpeciesName("species "+i)
                                                                 .withSpeciesURI("http://localhost/species"+i)
                                                                 .withTimeSpan("timespan "+i);
@@ -416,6 +432,7 @@ public class MetadataCatalogUsageExample {
                                                                 .withDatasetName("dataset "+i)
                                                                 .withActor("http://localhost/actor"+i, "actor "+i)
                                                                 .withDataEvaluationURI("http://localhost/dataEvaluation"+i)
+                                                                .withDataEvaluation("dataEvaluation "+i)
                                                                 .withDescription("description "+i)
                                                                 .withDimensionName("dimension "+i)
                                                                 .withDimensionType("http://localhost/dimensionType"+i)
@@ -715,12 +732,14 @@ public class MetadataCatalogUsageExample {
 //             addDirectoryStructs();
     }
     
+
+    
     public MetadataCatalogUsageExample addCommonNameStructs(){
         System.out.print("Adding CommonNameStructs...");
         int cnt=0;
         for(CommonNameStruct struct : this.commonNameStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -735,7 +754,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(EnvironmentalStruct struct : this.environmentalStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -750,7 +769,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(IdentificationStruct struct : this.identificationStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -765,7 +784,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MeasurementStruct struct : this.measurementStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -780,7 +799,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MicroCTPostProcessingStruct struct : this.microCTPostProcessingStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -795,7 +814,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MicroCTReconstructionStruct struct : this.microCTReconstructionStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -810,7 +829,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MicroCTScanningStruct struct : this.microCTScanningStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -825,7 +844,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MorphometricsStruct struct : this.morphometricsStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -840,7 +859,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(OccurrenceStruct struct : this.occurrenceStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -855,7 +874,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(ScientificNamingStruct struct : this.scientificNameStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -870,7 +889,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(SpecimenStruct struct : this.specimenStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -885,7 +904,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(StatsStruct struct : this.statsStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -900,7 +919,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(SynonymStruct struct : this.synonymStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -915,7 +934,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(GensDatasetStruct struct : this.gensDatasetStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -930,7 +949,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(GensSampleStruct struct : this.gensSampleStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -945,7 +964,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(OccurrenceStatsTempStruct struct : this.occurrenceStatsTempStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -960,7 +979,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(MicroCTSpecimenStruct struct : this.microCTSpecimenStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -975,7 +994,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(OccurrenceStatsAbundanceStruct struct : this.occurrenceStatsAbundanceStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -990,7 +1009,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(SpecimenCollectionStruct struct : this.specimenCollectionStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -1005,7 +1024,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(TaxonomyStruct struct : this.taxonomyStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -1020,7 +1039,7 @@ public class MetadataCatalogUsageExample {
         int cnt=0;
         for(DirectoryStruct struct : this.directoryStructs){
             try{
-                this.mrService.insertStruct(struct, "http://UNUSED_GRAPHSPACE");
+                this.mrService.insertStruct(struct, "http://lifewatchgreece.com");
                 cnt+=1;
             }catch(QueryExecutionException | URIValidationException ex){
                 ex.printStackTrace();
@@ -1034,7 +1053,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for CommonName structs. ");
         try{
-            List<CommonNameStruct> results=this.mrService.searchCommonName("species", "common name","place", "language", "","http://UNUSED_GRAPHSPACE");
+            List<CommonNameStruct> results=this.mrService.searchCommonName("species", "common name","place", "language", "","http://lifewatchgreece.com");
             for(CommonNameStruct struct : results){
                 System.out.println(struct.getCommonName());
             }
@@ -1048,7 +1067,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Measurement structs. ");
         try{
-            List<MeasurementStruct> results=this.mrService.searchMeasurement("specimen", "species","dimension","", "http://UNUSED_GRAPHSPACE");
+            List<MeasurementStruct> results=this.mrService.searchMeasurement("specimen", "species","dimension","", "http://lifewatchgreece.com");
             for(MeasurementStruct struct : results)
                 System.out.println(struct.getMeasurementEventURI());
             
@@ -1062,7 +1081,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Occurrence structs. ");
         try{
-            List<OccurrenceStruct> results=this.mrService.searchOccurrence("species", "locality", "timespan","", "http://UNUSED_GRAPHSPACE");
+            List<OccurrenceStruct> results=this.mrService.searchOccurrence("species", "locality", "timespan","", "http://lifewatchgreece.com");
             for(OccurrenceStruct struct : results)
                 System.out.println(struct);
             
@@ -1076,7 +1095,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Environmental structs. ");
         try{
-            List<EnvironmentalStruct> results=this.mrService.searchEnvironmental("dimension", "place","", "http://UNUSED_GRAPHSPACE");
+            List<EnvironmentalStruct> results=this.mrService.searchEnvironmental("dimension", "place","", "http://lifewatchgreece.com");
             for(EnvironmentalStruct struct : results){
                 System.out.println(struct.getPlaceName());
             }
@@ -1090,7 +1109,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Identification structs. ");
         try{
-            List<IdentificationStruct> results=this.mrService.searchIdentification("species", "timespan", "actor", "locality", "individual","", "http://UNUSED_GRAPHSPACE");
+            List<IdentificationStruct> results=this.mrService.searchIdentification("species", "timespan", "actor", "locality", "individual","", "http://lifewatchgreece.com");
             for(IdentificationStruct struct : results){
                 System.out.println(struct.getIdentificationEventURI());
             }
@@ -1104,7 +1123,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for MicroCTPostProcessingStructs structs. ");
         try{
-            List<MicroCTPostProcessingStruct> results=this.mrService.searchMicroCTPostProcessing("species", "specimen", "reconstruction", "","http://UNUSED_GRAPHSPACE");
+            List<MicroCTPostProcessingStruct> results=this.mrService.searchMicroCTPostProcessing("species", "specimen", "reconstruction", "","http://lifewatchgreece.com");
             for(MicroCTPostProcessingStruct struct : results){
                 System.out.println(struct.getPostProcessingURI());
             }
@@ -1118,7 +1137,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for MicroCTReconstruction structs. ");
         try{
-            List<MicroCTReconstructionStruct> results=this.mrService.searchMicroCTReconstruction("species", "specimen", "input", "","http://UNUSED_GRAPHSPACE");
+            List<MicroCTReconstructionStruct> results=this.mrService.searchMicroCTReconstruction("species", "specimen", "input", "","http://lifewatchgreece.com");
             for(MicroCTReconstructionStruct struct : results){
                 System.out.println(struct.getReconstructionURI());
             }
@@ -1132,7 +1151,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for MicroCTSpecimen structs.");
         try{
-            List<MicroCTSpecimenStruct> results=this.mrService.searchMicroCTSpecimen("specimen", "collection", "species", "provider", "","http://UNUSED_GRAPHSPACE");
+            List<MicroCTSpecimenStruct> results=this.mrService.searchMicroCTSpecimen("specimen", "collection", "species", "provider", "","http://lifewatchgreece.com");
             for(MicroCTSpecimenStruct struct : results){
                 System.out.println(struct.getSpecimenName());
             }
@@ -1146,7 +1165,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for MicroCTScanning structs.");
         try{
-            List<MicroCTScanningStruct> results=this.mrService.searchMicroCTScanning("device", "specimen", "species","","","", "http://UNUSED_GRAPHSPACE");
+            List<MicroCTScanningStruct> results=this.mrService.searchMicroCTScanning("device", "specimen", "species","","","", "http://lifewatchgreece.com");
             for(MicroCTScanningStruct struct : results){
                 System.out.println(struct.getScanningURI());
             }
@@ -1160,7 +1179,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Morphometrics structs.");
         try{
-            List<MorphometricsStruct> results=this.mrService.searchMorphometrics("species", "dimension","", "http://UNUSED_GRAPHSPACE");
+            List<MorphometricsStruct> results=this.mrService.searchMorphometrics("species", "dimension","", "http://lifewatchgreece.com");
             for(MorphometricsStruct struct : results){
                 System.out.println(struct.getAttributeAssignmentEventURI());
             }
@@ -1174,7 +1193,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for ScientificNaming structs.");
         try{
-            List<ScientificNamingStruct> results=this.mrService.searchScientificNaming("species", "timespan", "actor", "appellation","", "http://UNUSED_GRAPHSPACE");
+            List<ScientificNamingStruct> results=this.mrService.searchScientificNaming("species", "timespan", "actor", "dataset","", "http://lifewatchgreece.com");
             for(ScientificNamingStruct struct : results){
                 System.out.println(struct.getScientificNameAssignmentEventURI());
             }
@@ -1188,7 +1207,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Specimen structs.");
         try{
-            List<SpecimenStruct> results=this.mrService.searchSpecimen("specimen", "species", "collection", "","http://UNUSED_GRAPHSPACE");
+            List<SpecimenStruct> results=this.mrService.searchSpecimen("specimen", "species", "collection", "","http://lifewatchgreece.com");
             for(SpecimenStruct struct : results){
                 System.out.println(struct.getSpecimenURI());
             }
@@ -1202,7 +1221,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Stats structs.");
         try{
-            List<StatsStruct> results=this.mrService.searchStats("species", "dimension","", "http://UNUSED_GRAPHSPACE");
+            List<StatsStruct> results=this.mrService.searchStats("species", "dimension","", "http://lifewatchgreece.com");
             for(StatsStruct struct : results){
                 System.out.println(struct.getDataEvaluationURI());
             }
@@ -1216,7 +1235,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Synonym structs.");
         try{
-            List<SynonymStruct> results=this.mrService.searchSynonym("species", "scientific", "synonym","", "http://UNUSED_GRAPHSPACE");
+            List<SynonymStruct> results=this.mrService.searchSynonym("species", "appellation", "synonym","", "http://lifewatchgreece.com");
             for(SynonymStruct struct : results){
                 System.out.println(struct.getAppellation());
             }
@@ -1226,7 +1245,7 @@ public class MetadataCatalogUsageExample {
         return this;
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         MetadataCatalogUsageExample mcExample=new MetadataCatalogUsageExample().
                                                   createMetadataCatalogClient().
                                                   deleteOldData().
@@ -1284,11 +1303,9 @@ public class MetadataCatalogUsageExample {
                                                   Timer.stop("stats");
                                                   System.out.println("in "+Timer.report("stats", TimeUnit.MILLISECONDS)+" msec");
                                                   Timer.start("syn");
-                                                  mcExample.searchStats();
+                                                  mcExample.searchSynonym();
                                                   Timer.stop("syn");
-                                                  System.out.println("in "+Timer.report("syn", TimeUnit.MILLISECONDS)+" msec");
-                                                 
-                                                    
+                                                  System.out.println("in "+Timer.report("syn", TimeUnit.MILLISECONDS)+" msec");                                                    
     }
    
     private void printSeparator(){
