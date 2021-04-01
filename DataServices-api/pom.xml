@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.lifewatch</groupId>
     <artifactId>DataServices-api</artifactId>
-    <version>2.5-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -83,9 +83,22 @@
             <url>http://repository.gbif.org/content/repositories/releases/</url>
         </repository>
         <repository>
-            <id>forth-public-maven-repo</id>
-            <name>forth-public-maven-repo</name>
-            <url>http://www.ics.forth.gr/isl/maven</url>
+            <id>FORTH-ISL-releases</id>
+            <name>FORTH ISL Nexus repository - Releases</name>
+            <url>https://isl.ics.forth.gr/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>FORTH-ISL-third-party</id>
+            <name>FORTH ISL Nexus repository - third party releases</name>
+            <url>https://isl.ics.forth.gr/maven-third-party/</url>
+        </repository>
+        <repository>
+            <id>FORTH-ISL-snapshots</id>
+            <name>FORTH ISL Nexus repository - Snapshots</name>
+            <url>https://isl.ics.forth.gr/maven-snapshots/</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
     
