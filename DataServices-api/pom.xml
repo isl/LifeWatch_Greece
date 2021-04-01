@@ -130,12 +130,6 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.gbif</groupId>
-            <artifactId>dwca-reader</artifactId>
-            <version>1.10</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>

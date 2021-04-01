@@ -1,21 +1,14 @@
 package eu.lifewatch.core.impl;
 
 import eu.lifewatch.common.Resources;
-import eu.lifewatch.core.model.Pair;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
-import org.gbif.dwc.terms.DwcTerm;
-import org.gbif.dwc.text.Archive;
-import org.gbif.dwc.text.ArchiveFactory;
-import org.gbif.dwc.text.StarRecord;
+
 
 /**
  * STATUS = UNCOMPLETED
