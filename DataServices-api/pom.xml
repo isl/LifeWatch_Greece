@@ -15,7 +15,7 @@
         <repository>
             <id>gbif-releases</id>
             <name>gbif-realeses</name>
-            <url>http://repository.gbif.org/content/repositories/releases/</url>
+            <url>http://repository.gbif.org/content/groups/gbif</url>
         </repository>
         <repository>
             <id>FORTH-ISL-releases</id>
@@ -153,6 +153,11 @@
             <artifactId>timer</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.gbif</groupId>
+            <artifactId>dwca-io</artifactId>
+            <version>2.10</version>
+          </dependency>
     </dependencies>
     <name>DataServices-api</name>
 </project>
