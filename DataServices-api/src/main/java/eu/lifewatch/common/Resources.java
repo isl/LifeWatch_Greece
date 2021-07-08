@@ -165,4 +165,19 @@ public class Resources {
     
     /*the folder containing the materialization queries*/
     public static final String materializationQueriesFolder = "MaterializationQueries";
+    
+    /* DWCA Resources */
+    public static final String ALTERNATE_IDENTIFIER="alternateIdentifier";
+    public static final String ASSOCIATED_PARTY="associatedParty";
+    public static final String CONTACT="contact";
+    public static final String CREATOR="creator";
+    public static final String INDIVIDUAL_NAME="individualName";
+    public static final String INTELLECTUAL_RIGHTS="intellectualRights";
+    public static final String KEYWORD="keyword";
+    public static final String KEYWORD_SET="keywordSet";
+    public static final String KEYWORD_THESAURUS="keywordThesaurus";
+    public static final String PUB_DATE="pubDate";
+    public static final String TITLE="title";
+    
+    public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
 }

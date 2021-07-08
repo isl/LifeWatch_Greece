@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.Repository;
@@ -80,5 +81,9 @@ public class Utils {
         System.out.println("SOUT"+struct.toNtriples().toString());
         String subTriples=Utils.removeIndirectTriples(struct.toNtriples(), Arrays.asList("http://localhost/commonName"));
         System.out.println(subTriples);
+    }
+    
+    public static String hashUri(String prefix, String hierarchy, String contents){
+        return prefix+"/"+hierarchy+"/"+UUID.nameUUIDFromBytes(contents.getBytes());
     }
 }
