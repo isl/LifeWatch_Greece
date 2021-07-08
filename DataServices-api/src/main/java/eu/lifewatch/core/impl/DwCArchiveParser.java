@@ -2,17 +2,19 @@ package eu.lifewatch.core.impl;
 
 import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.DirectoryStruct;
+import eu.lifewatch.core.model.EnvironmentalStruct;
 import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
 import eu.lifewatch.core.model.OccurrenceStruct;
 import eu.lifewatch.core.model.ScientificNamingStruct;
 import eu.lifewatch.core.model.TaxonomyStruct;
+import eu.lifewatch.exception.QueryExecutionException;
+import eu.lifewatch.exception.URIValidationException;
+import eu.lifewatch.service.impl.DirectoryService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.gbif.dwc.Archive;
@@ -22,42 +24,53 @@ import org.gbif.dwc.MetadataException;
 import org.gbif.dwc.record.Record;
 import org.gbif.dwc.record.StarRecord;
 import org.gbif.dwc.terms.DwcTerm;
-import org.gbif.dwc.terms.DwcaTerm;
-import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author Yannis Marketakis (marketak 'at' ics 'dot' forth 'dot' gr)
  */
 public class DwCArchiveParser {
     private static final Logger log=Logger.getLogger(DwCArchiveParser.class);
+    private DirectoryService dsManager;
     private Archive dwcArchive;
     private String datasetURI;
     private String datasetTitle;
     
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
+    
     public DwCArchiveParser(File archive) throws IOException{
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        this.dsManager=context.getBean(DirectoryService.class);
+        
         Path myArchiveFile = Paths.get(archive.getAbsolutePath());
         Path extractToFolder = Paths.get("arch");
         this.dwcArchive = DwcFiles.fromCompressed(myArchiveFile, extractToFolder);
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
     } 
     
-    public void parseData() throws IOException, MetadataException{
+    public void parseData() throws IOException, MetadataException, URIValidationException, QueryExecutionException{
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
-        System.out.println(directoryStruct);
-        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
+        log.debug("Core dataset metadata: "+directoryStruct);
+        log.info("Importing dataset metadata");
+        this.importDatasetInfo(directoryStruct);
         
+        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
                     parseOccurrenceArchive(this.dwcArchive, null);
                     break;
             case "ExtendedMeasurementOrFact":
                 parseMeasurementArchive(this.dwcArchive, null);
+                break;
+            case "Event":
+                parseEventArchive(this.dwcArchive, null);
                 break;
             default:
                 log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
@@ -71,10 +84,17 @@ public class DwCArchiveParser {
             case "ExtendedMeasurementOrFact":
                     parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
                     break;
+            case "Event":
+                    parseEventArchive(this.dwcArchive, archiveFile.getRowType());
+                    break;
             default:
                 log.error("No parser for "+archiveFile.getRowType().simpleName());     
             }
         }
+    }
+    
+    private void importDatasetInfo(DirectoryStruct directoryStruct) throws URIValidationException, QueryExecutionException{
+        this.dsManager.insertStruct(directoryStruct, GRAPHSPACE_DIRECTORY);
     }
     
     private DirectoryStruct parseDatasetMetadata(String metadataContents){
@@ -104,6 +124,8 @@ public class DwCArchiveParser {
                 directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
                 directoryStruct.setKeeperName(creatorNameElements.get(0).text());
                 directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
+                directoryStruct.setCuratorName(creatorNameElements.get(0).text());
+                directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
             }
         }
         Elements contributorElements=metadataDoc.getElementsByTag(Resources.ASSOCIATED_PARTY);
@@ -135,6 +157,8 @@ public class DwCArchiveParser {
                 }
             }
         }
+        directoryStruct.withAccessMethodURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "access_method", "available from http://ipt.medobis.eu"));
+        directoryStruct.withAccessMethod("available from http://ipt.medobis.eu");
         return directoryStruct;
     }
     
@@ -174,6 +198,20 @@ public class DwCArchiveParser {
             for(StarRecord rec : dwcArchive){
                 MeasurementStruct measurementStruct=this.retrieveMeasurement(rec.core());
 //                System.out.println(measurementStruct);
+            }
+        }
+    }
+    
+    private void parseEventArchive(Archive dwcArchive, Term term){
+        if(term!=null){
+            for(Record rec : dwcArchive.getExtension(term)){
+                EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec);
+//                System.out.println(environmentalStruct);
+            }
+        }else{
+            for(StarRecord rec : dwcArchive){
+                EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec.core());
+//                System.out.println(environmentalStruct);
             }
         }
     }
@@ -335,8 +373,8 @@ public class DwCArchiveParser {
                     .withDatasetName(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);    
         if(rec.column(0)!=null && rec.value(DwcTerm.measurementID)!=null){
-            measurementStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.column(0)+"-"+rec.value(DwcTerm.measurementID)));
-            measurementStruct.withMeasurementEvent("Measurement "+rec.column(0)+"-"+rec.value(DwcTerm.measurementID));
+            measurementStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.column(0)));
+            measurementStruct.withMeasurementEvent("Measurement "+rec.column(0));
             measurementStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_dimension", rec.column(0)+"-"+rec.value(DwcTerm.measurementID)));
         }
         if(rec.value(DwcTerm.measurementType)!=null){
@@ -356,9 +394,48 @@ public class DwCArchiveParser {
         return measurementStruct;
     }
     
-    public static void main(String[] args) throws IOException, MetadataException{
-//        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-1.16.zip")).parseData();
-        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-zoobenthos_in_amvrakikos_wetlands-v1.17.zip")).parseData();
+    private EnvironmentalStruct retrieveEnvironmental(Record rec){
+        EnvironmentalStruct environmentalStruct=new EnvironmentalStruct()
+                    .withDatasetName(this.datasetTitle)
+                    .withDatasetURI(this.datasetURI);    
+        if(rec.value(DwcTerm.eventID)!=null){
+            environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.value(DwcTerm.eventID)));
+            environmentalStruct.withMeasurementEvent("Measurement "+rec.value(DwcTerm.eventID));
+        }
+        if(rec.value(DwcTerm.eventDate)!=null){
+            environmentalStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
+        }
+        if(rec.value(DwcTerm.locationID)!=null){
+            environmentalStruct.withPlaceURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locationID)));
+        }else if(rec.value(DwcTerm.locality)!=null){
+            environmentalStruct.withPlaceURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locality)));
+        }
+        if(rec.value(DwcTerm.locality)!=null){
+            environmentalStruct.withPlaceName(rec.value(DwcTerm.locality));
+        }
+        if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
+            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", "min depth in meters"+rec.value(DwcTerm.minimumDepthInMeters)));
+            environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension_type", "min depth in meters"));
+            environmentalStruct.withDimensionName("Minimum Depth in Meters : "+rec.value(DwcTerm.minimumDepthInMeters));
+            environmentalStruct.withDimensionUnit("Meters");
+            environmentalStruct.withDimensionValue(rec.value(DwcTerm.minimumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
+            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", "max depth in meters"+rec.value(DwcTerm.maximumDepthInMeters)));
+            environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension_type", "max depth in meters"));
+            environmentalStruct.withDimensionName("Maximum Depth in Meters : "+rec.value(DwcTerm.maximumDepthInMeters));
+            environmentalStruct.withDimensionUnit("Meters");
+            environmentalStruct.withDimensionValue(rec.value(DwcTerm.maximumDepthInMeters));
+        }
+        
+       
+        
+        return environmentalStruct;
+    }
+    
+    public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
+        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-1.16.zip")).parseData();
+//        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-zoobenthos_in_amvrakikos_wetlands-v1.17.zip")).parseData();
     }
     
 }
