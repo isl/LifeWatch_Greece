@@ -2,6 +2,7 @@ package eu.lifewatch.core.impl;
 
 import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.DirectoryStruct;
+import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
 import eu.lifewatch.core.model.OccurrenceStruct;
 import eu.lifewatch.core.model.ScientificNamingStruct;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.gbif.dwc.Archive;
@@ -19,6 +22,7 @@ import org.gbif.dwc.MetadataException;
 import org.gbif.dwc.record.Record;
 import org.gbif.dwc.record.StarRecord;
 import org.gbif.dwc.terms.DwcTerm;
+import org.gbif.dwc.terms.DwcaTerm;
 import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
 import org.jsoup.Jsoup;
@@ -47,11 +51,14 @@ public class DwCArchiveParser {
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         System.out.println(directoryStruct);
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
-
+        
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
                     parseOccurrenceArchive(this.dwcArchive, null);
                     break;
+            case "ExtendedMeasurementOrFact":
+                parseMeasurementArchive(this.dwcArchive, null);
+                break;
             default:
                 log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
         }
@@ -61,9 +68,12 @@ public class DwCArchiveParser {
             case "Occurrence":
                     parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
                     break;
+            case "ExtendedMeasurementOrFact":
+                    parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
+                    break;
             default:
-                log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
-        }
+                log.error("No parser for "+archiveFile.getRowType().simpleName());     
+            }
         }
     }
     
@@ -135,10 +145,10 @@ public class DwCArchiveParser {
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec);
                 OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec);
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);
-                System.out.println(taxonomyStruct);
-                System.out.println(scNameStruct);
-                System.out.println(occurenceTempStruct);
-                System.out.println(occurenceStruct);
+//                System.out.println(taxonomyStruct);
+//                System.out.println(scNameStruct);
+//                System.out.println(occurenceTempStruct);
+//                System.out.println(occurenceStruct);
             }
         }else{
             for(StarRecord rec : dwcArchive){
@@ -146,10 +156,24 @@ public class DwCArchiveParser {
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec.core());
                 OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec.core());
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
-                System.out.println(taxonomyStruct);
-                System.out.println(scNameStruct);
-                System.out.println(occurenceTempStruct);
-                System.out.println(occurenceStruct);
+//                System.out.println(taxonomyStruct);
+//                System.out.println(scNameStruct);
+//                System.out.println(occurenceTempStruct);
+//                System.out.println(occurenceStruct);
+            }
+        }
+    }
+    
+    private void parseMeasurementArchive(Archive dwcArchive, Term term){
+        if(term!=null){
+            for(Record rec : dwcArchive.getExtension(term)){
+                MeasurementStruct measurementStruct=this.retrieveMeasurement(rec);
+//                System.out.println(measurementStruct);
+            }
+        }else{
+            for(StarRecord rec : dwcArchive){
+                MeasurementStruct measurementStruct=this.retrieveMeasurement(rec.core());
+//                System.out.println(measurementStruct);
             }
         }
     }
@@ -304,6 +328,32 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withNumberOfParts(rec.value(DwcTerm.individualCount));
         }
         return occurrenceTempStruct;
+    }
+    
+    private MeasurementStruct retrieveMeasurement(Record rec){
+        MeasurementStruct measurementStruct=new MeasurementStruct()
+                    .withDatasetName(this.datasetTitle)
+                    .withDatasetURI(this.datasetURI);    
+        if(rec.column(0)!=null && rec.value(DwcTerm.measurementID)!=null){
+            measurementStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.column(0)+"-"+rec.value(DwcTerm.measurementID)));
+            measurementStruct.withMeasurementEvent("Measurement "+rec.column(0)+"-"+rec.value(DwcTerm.measurementID));
+            measurementStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_dimension", rec.column(0)+"-"+rec.value(DwcTerm.measurementID)));
+        }
+        if(rec.value(DwcTerm.measurementType)!=null){
+            measurementStruct.withDimensionType(Utils.hashUri(Resources.defaultNamespaceForURIs,"dimension_type", rec.value(DwcTerm.measurementType)));
+            measurementStruct.withDimensionName(rec.value(DwcTerm.measurementType));
+        }
+        if(rec.value(DwcTerm.measurementValue)!=null){
+            measurementStruct.withDimensionValue(rec.value(DwcTerm.measurementValue));
+        }
+        if(rec.value(DwcTerm.measurementUnit)!=null){
+            measurementStruct.withDimensionUnit(rec.value(DwcTerm.measurementUnit));
+        }
+        if(rec.value(DwcTerm.measurementDeterminedBy)!=null){
+            measurementStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", rec.value(DwcTerm.measurementDeterminedBy)), rec.value(DwcTerm.measurementDeterminedBy));
+        }
+        
+        return measurementStruct;
     }
     
     public static void main(String[] args) throws IOException, MetadataException{
