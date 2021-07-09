@@ -167,6 +167,7 @@ public class Resources {
     public static final String materializationQueriesFolder = "MaterializationQueries";
     
     /* DWCA Resources */
+    public static final String ABSTRACT="abstract";
     public static final String ALTERNATE_IDENTIFIER="alternateIdentifier";
     public static final String ASSOCIATED_PARTY="associatedParty";
     public static final String CONTACT="contact";

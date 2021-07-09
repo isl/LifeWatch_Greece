@@ -58,8 +58,9 @@ public class DwCArchiveParser {
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         log.debug("Core dataset metadata: "+directoryStruct);
-        log.info("Importing dataset metadata");
-        this.importDatasetInfo(directoryStruct);
+        System.out.println(directoryStruct.toNtriples());
+//        log.info("Importing dataset metadata");
+//        this.importDatasetInfo(directoryStruct);
         
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
@@ -113,6 +114,10 @@ public class DwCArchiveParser {
         if(titleElements!=null){
             this.datasetTitle=titleElements.get(0).text();
             directoryStruct.setDatasetName(this.datasetTitle);
+        }
+        Elements abstractElements=metadataDoc.getElementsByTag(Resources.ABSTRACT);
+        if(abstractElements!=null){
+            directoryStruct.withDescription(abstractElements.text());
         }
         Elements creatorElements=metadataDoc.getElementsByTag(Resources.CREATOR);
         if(creatorElements!=null){

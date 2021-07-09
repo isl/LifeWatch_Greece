@@ -1,12 +1,15 @@
 package eu.lifewatch.core.impl;
 
 import eu.lifewatch.common.Resources;
+import eu.lifewatch.exception.QueryExecutionException;
+import eu.lifewatch.exception.URIValidationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
+import org.gbif.dwc.MetadataException;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 
@@ -59,11 +62,14 @@ public class DwCAHarvester {
         }
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
         Collection<File> archives=new DwCAHarvester("D:/temp/ipt/resources").locateDwCaArchives();
         System.out.println(archives.size());
         for(File file : archives){
             System.out.println(file.getAbsolutePath());
+            new DwCArchiveParser(file).parseData();
         }
+        
+        
     }
 }
