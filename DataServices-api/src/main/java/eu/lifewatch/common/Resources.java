@@ -171,6 +171,7 @@ public class Resources {
     public static final String ASSOCIATED_PARTY="associatedParty";
     public static final String CONTACT="contact";
     public static final String CREATOR="creator";
+    public static final String EML_VERSION="emlVersion";
     public static final String INDIVIDUAL_NAME="individualName";
     public static final String INTELLECTUAL_RIGHTS="intellectualRights";
     public static final String KEYWORD="keyword";
@@ -178,6 +179,9 @@ public class Resources {
     public static final String KEYWORD_THESAURUS="keywordThesaurus";
     public static final String PUB_DATE="pubDate";
     public static final String TITLE="title";
-    
     public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
+    
+    public static final String MEDOBIS_FILE_RESOURCE_XML="resource.xml";
+    public static final String DWCA_FILENAME_PREFIX="dwca-";
+    public static final String DWCA_FILE_EXTENSION=".zip";
 }
