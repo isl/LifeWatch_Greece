@@ -67,7 +67,7 @@ public class DwCAHarvester {
         System.out.println(archives.size());
         for(File file : archives){
             System.out.println(file.getAbsolutePath());
-            new DwCArchiveParser(file).parseData();
+            new DwCArchiveParser(file,true).parseData();
         }
         
         

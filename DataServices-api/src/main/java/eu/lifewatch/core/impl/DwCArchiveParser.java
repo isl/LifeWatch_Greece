@@ -11,6 +11,7 @@ import eu.lifewatch.core.model.TaxonomyStruct;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.impl.DirectoryService;
+import eu.lifewatch.service.impl.MetadataRepositoryService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,30 +39,40 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class DwCArchiveParser {
     private static final Logger log=Logger.getLogger(DwCArchiveParser.class);
     private DirectoryService dsManager;
+    private MetadataRepositoryService mrManager;
+    private final boolean importDatasets;
     private Archive dwcArchive;
     private String datasetURI;
     private String datasetTitle;
     
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
     
-    public DwCArchiveParser(File archive) throws IOException{
+    public DwCArchiveParser(File archive, boolean importInTriplestore) throws IOException{
+        log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         this.dsManager=context.getBean(DirectoryService.class);
+        this.mrManager=context.getBean(MetadataRepositoryService.class);
         
         Path myArchiveFile = Paths.get(archive.getAbsolutePath());
         Path extractToFolder = Paths.get("arch");
         this.dwcArchive = DwcFiles.fromCompressed(myArchiveFile, extractToFolder);
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
         this.dwcArchive.getCore().setEncoding("UTF-8");
+        this.importDatasets=importInTriplestore;
     } 
     
     public void parseData() throws IOException, MetadataException, URIValidationException, QueryExecutionException{
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         log.debug("Core dataset metadata: "+directoryStruct);
+        if(this.importDatasets){
+            log.info("Importing dataset metadata");
+            this.importDatasetInfo(directoryStruct);
+        }else{
+            log.info("Skipping dataset metadata import. Import in triplestore is disabled");
+        }
         
-//        log.info("Importing dataset metadata");
-//        this.importDatasetInfo(directoryStruct);
         
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
@@ -168,18 +179,29 @@ public class DwCArchiveParser {
         return directoryStruct;
     }
     
-    private void parseOccurrenceArchive(Archive dwcArchive, Term term){
+    private void parseOccurrenceArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 TaxonomyStruct taxonomyStruct=this.retrieveTaxonomy(rec);
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec);
                 OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec);
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);
-//                System.out.println(taxonomyStruct);
-//                System.out.println(scNameStruct);
-//                System.out.println(occurenceTempStruct);
-//                System.out.println(occurenceStruct);
-            
+                log.debug("Taxonomy struct: "+taxonomyStruct);
+                log.debug("Scientific name struct: "+scNameStruct);
+                log.debug("Occurence temp struct: "+occurenceTempStruct);
+                log.debug("Occurence struct: "+occurenceStruct);
+                if(this.importDatasets){
+                    log.info("Importing taxonomy struct");
+                    this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing scientific name struct");
+                    this.mrManager.insertStruct(scNameStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurence temp struct");
+                    this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurence struct");
+                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }else{
             for(StarRecord rec : dwcArchive){
@@ -187,38 +209,74 @@ public class DwCArchiveParser {
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec.core());
                 OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec.core());
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
-//                System.out.println(taxonomyStruct);
-//                System.out.println(scNameStruct);
-//                System.out.println(occurenceTempStruct);
-//                System.out.println(occurenceStruct);
+                log.debug("Taxonomy struct: "+taxonomyStruct);
+                log.debug("Scientific name struct: "+scNameStruct);
+                log.debug("Occurence temp struct: "+occurenceTempStruct);
+                log.debug("Occurence struct: "+occurenceStruct);
+                if(this.importDatasets){
+                    log.info("Importing taxonomy struct");
+                    this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing scientific name struct");
+                    this.mrManager.insertStruct(scNameStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurence temp struct");
+                    this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurence struct");
+                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }
     }
     
-    private void parseMeasurementArchive(Archive dwcArchive, Term term){
+    private void parseMeasurementArchive(Archive dwcArchive, Term term) throws QueryExecutionException, URIValidationException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 MeasurementStruct measurementStruct=this.retrieveMeasurement(rec);
-//                System.out.println(measurementStruct);
+                log.debug("Measurement struct: "+measurementStruct);
+                if(this.importDatasets){
+                    log.info("Importing measurement struct");
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }else{
             for(StarRecord rec : dwcArchive){
                 MeasurementStruct measurementStruct=this.retrieveMeasurement(rec.core());
-//                System.out.println(measurementStruct);
+                log.debug("Measurement struct: "+measurementStruct);
+                if(this.importDatasets){
+                    log.info("Importing measurement struct");
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }
     }
     
-    private void parseEventArchive(Archive dwcArchive, Term term){
+    private void parseEventArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec);
-//                System.out.println(environmentalStruct);
+                log.debug("Environmental struct: "+environmentalStruct);
+                if(this.importDatasets){
+                    log.info("Importing environmental struct");
+                    this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }else{
             for(StarRecord rec : dwcArchive){
                 EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec.core());
-//                System.out.println(environmentalStruct);
+                log.debug("Environmental struct: "+environmentalStruct);
+                if(this.importDatasets){
+                    log.info("Importing environmental struct");
+                    this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
+                }else{
+                    log.info("Skipping metadata import. Import in triplestore is disabled");
+                }
             }
         }
     }
@@ -441,7 +499,7 @@ public class DwCArchiveParser {
     }
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip")).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-zoobenthos_in_amvrakikos_wetlands-v1.17.zip")).parseData();
     }
     
