@@ -63,7 +63,7 @@ public class DwCAHarvester {
     }
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
-        Collection<File> archives=new DwCAHarvester("D:/temp/ipt/resources").locateDwCaArchives();
+        Collection<File> archives=new DwCAHarvester("D:/temp/ipt/resources_from_hcmr").locateDwCaArchives();
         System.out.println(archives.size());
         for(File file : archives){
             System.out.println(file.getAbsolutePath());

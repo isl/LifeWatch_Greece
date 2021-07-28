@@ -676,7 +676,7 @@ public class DirectoryStruct {
             }
 
             if (!this.description.isEmpty()) {
-                retTriples += "<" + this.datasetURI + "> <" + Resources.hasNote + "> \"" + this.description + "\" .\n";
+                retTriples += "<" + this.datasetURI + "> <" + Resources.hasNote + "> \"" + this.description.replaceAll("\"", "\'") + "\" .\n";
             }
             if (!this.locationURL.isEmpty()) {
                 retTriples += "<" + this.datasetURI + "> <" + Resources.isLocatedAt + "> <" + this.locationURL + "> .\n"
