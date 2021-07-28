@@ -52,13 +52,14 @@ public class DwCArchiveParser {
         Path extractToFolder = Paths.get("arch");
         this.dwcArchive = DwcFiles.fromCompressed(myArchiveFile, extractToFolder);
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
+        this.dwcArchive.getCore().setEncoding("UTF-8");
     } 
     
     public void parseData() throws IOException, MetadataException, URIValidationException, QueryExecutionException{
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         log.debug("Core dataset metadata: "+directoryStruct);
-        System.out.println(directoryStruct.toNtriples());
+        
 //        log.info("Importing dataset metadata");
 //        this.importDatasetInfo(directoryStruct);
         
@@ -178,6 +179,7 @@ public class DwCArchiveParser {
 //                System.out.println(scNameStruct);
 //                System.out.println(occurenceTempStruct);
 //                System.out.println(occurenceStruct);
+            
             }
         }else{
             for(StarRecord rec : dwcArchive){
@@ -439,7 +441,7 @@ public class DwCArchiveParser {
     }
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
-        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-1.16.zip")).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip")).parseData();
 //        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-zoobenthos_in_amvrakikos_wetlands-v1.17.zip")).parseData();
     }
     
