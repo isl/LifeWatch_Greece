@@ -185,4 +185,13 @@ public class Resources {
     public static final String MEDOBIS_FILE_RESOURCE_XML="resource.xml";
     public static final String DWCA_FILENAME_PREFIX="dwca-";
     public static final String DWCA_FILE_EXTENSION=".zip";
+    
+    public static final String LOCAL_DATASET_INSTANCES="local";
+    public static final String DIRECTORY_N3_FILENAME="directory.n3";
+    public static final String TAXONOMY_N3_FILENAME="taxomomy.n3";
+    public static final String SC_NAME_N3_FILENAME="sc_name.n3";
+    public static final String OCCURRENCE_TEMP_N3_FILENAME="occurence_temp.n3";
+    public static final String OCCURENCE_N3_FILENAME="occurence.n3";
+    public static final String MEASUREMENT_N3_FILENAME="measurement.n3";
+    public static final String ENVIRONMENTAL_N3_FILENAME="environmental.n3";
 }

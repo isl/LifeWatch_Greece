@@ -13,10 +13,15 @@ import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.impl.DirectoryService;
 import eu.lifewatch.service.impl.MetadataRepositoryService;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.gbif.dwc.Archive;
 import org.gbif.dwc.ArchiveFile;
@@ -44,6 +49,7 @@ public class DwCArchiveParser {
     private Archive dwcArchive;
     private String datasetURI;
     private String datasetTitle;
+    private String archiveFolderName;
     
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
     private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
@@ -60,6 +66,10 @@ public class DwCArchiveParser {
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
         this.dwcArchive.getCore().setEncoding("UTF-8");
         this.importDatasets=importInTriplestore;
+        this.archiveFolderName=archive.getParentFile().getName();
+        if(!importInTriplestore){
+            this.createLocalFolder();
+        }
     } 
     
     public void parseData() throws IOException, MetadataException, URIValidationException, QueryExecutionException{
@@ -71,6 +81,7 @@ public class DwCArchiveParser {
             this.importDatasetInfo(directoryStruct);
         }else{
             log.info("Skipping dataset metadata import. Import in triplestore is disabled");
+            this.storeLocally(directoryStruct);
         }
         
         
@@ -108,6 +119,55 @@ public class DwCArchiveParser {
     
     private void importDatasetInfo(DirectoryStruct directoryStruct) throws URIValidationException, QueryExecutionException{
         this.dsManager.insertStruct(directoryStruct, GRAPHSPACE_DIRECTORY);
+    }
+    
+    private void storeLocally(DirectoryStruct directoryStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.DIRECTORY_N3_FILENAME)), "UTF-8");
+        writer.append(directoryStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(TaxonomyStruct taxonomyStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.TAXONOMY_N3_FILENAME),true), "UTF-8");
+        writer.append(taxonomyStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(ScientificNamingStruct scNameStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.SC_NAME_N3_FILENAME),true), "UTF-8");
+        writer.append(scNameStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(OccurrenceStatsTempStruct occurenceTempStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.OCCURRENCE_TEMP_N3_FILENAME),true), "UTF-8");
+        writer.append(occurenceTempStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(OccurrenceStruct occurenceStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.OCCURENCE_N3_FILENAME),true), "UTF-8");
+        writer.append(occurenceStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(EnvironmentalStruct environmentalStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.ENVIRONMENTAL_N3_FILENAME),true), "UTF-8");
+        writer.append(environmentalStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(MeasurementStruct measurementStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.MEASUREMENT_N3_FILENAME),true), "UTF-8");
+        writer.append(measurementStruct.toNtriples());
+        writer.flush();
+        writer.close();
     }
     
     private DirectoryStruct parseDatasetMetadata(String metadataContents){
@@ -179,7 +239,7 @@ public class DwCArchiveParser {
         return directoryStruct;
     }
     
-    private void parseOccurrenceArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException{
+    private void parseOccurrenceArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 TaxonomyStruct taxonomyStruct=this.retrieveTaxonomy(rec);
@@ -201,6 +261,10 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(taxonomyStruct);
+                    this.storeLocally(scNameStruct);
+                    this.storeLocally(occurenceTempStruct);
+                    this.storeLocally(occurenceStruct);
                 }
             }
         }else{
@@ -224,12 +288,16 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(taxonomyStruct);
+                    this.storeLocally(scNameStruct);
+                    this.storeLocally(occurenceTempStruct);
+                    this.storeLocally(occurenceStruct);
                 }
             }
         }
     }
     
-    private void parseMeasurementArchive(Archive dwcArchive, Term term) throws QueryExecutionException, URIValidationException{
+    private void parseMeasurementArchive(Archive dwcArchive, Term term) throws QueryExecutionException, URIValidationException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 MeasurementStruct measurementStruct=this.retrieveMeasurement(rec);
@@ -239,6 +307,7 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(measurementStruct);
                 }
             }
         }else{
@@ -250,12 +319,13 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(measurementStruct);
                 }
             }
         }
     }
     
-    private void parseEventArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException{
+    private void parseEventArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
                 EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec);
@@ -265,6 +335,7 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(environmentalStruct);
                 }
             }
         }else{
@@ -276,6 +347,7 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
                 }else{
                     log.info("Skipping metadata import. Import in triplestore is disabled");
+                    this.storeLocally(environmentalStruct);
                 }
             }
         }
@@ -492,15 +564,22 @@ public class DwCArchiveParser {
             environmentalStruct.withDimensionUnit("Meters");
             environmentalStruct.withDimensionValue(rec.value(DwcTerm.maximumDepthInMeters));
         }
-        
-       
-        
         return environmentalStruct;
     }
     
+    private void createLocalFolder() throws IOException{
+        new File(Resources.LOCAL_DATASET_INSTANCES).mkdir();
+        if(!new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName).exists()){
+            new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName).mkdir();
+        }else{
+            FileUtils.deleteDirectory(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName));
+            new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName).mkdir();
+        }
+    }
+    
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
+//        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
         new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-//        new DwCArchiveParser(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/dwca-zoobenthos_in_amvrakikos_wetlands-v1.17.zip")).parseData();
     }
     
 }
