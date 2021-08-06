@@ -26,6 +26,7 @@ public class Resources {
     public static final String physicalObjectLabel = cidocCrmNamespace + "E19_Physical_Object";
     public static final String institutionLabel = cidocCrmNamespace + "E40_Legal_Body";
     public static final String appellationLabel = cidocCrmNamespace + "E41_Appellation";
+    public static final String typeLabel = cidocCrmNamespace + "E55_Type";
     public static final String languageLabel = cidocCrmNamespace + "E56_Language";
     public static final String collectionLabel = cidocCrmNamespace + "E78_Collection";
     public static final String placeLabel = cidocCrmNamespace + "E53_Place";
@@ -128,6 +129,7 @@ public class Resources {
 
     public static final String belongsTo = tloNamespace + "LC10_belongs_to";
     public static final String belongsToType = tloNamespace + "LT8_belongs_to";
+    public static final String LC12_wasAttributedBy = tloNamespace + "LC12_was_attributed_by";
 
     /*new classes and properties*/
     public static final String rdfTypeLabel = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
@@ -165,6 +167,10 @@ public class Resources {
     
     /*the folder containing the materialization queries*/
     public static final String materializationQueriesFolder = "MaterializationQueries";
+    
+    /* various instances and labels  */
+    public static final String fixationLabel="fixation";
+    public static final String preservationMediumLabel="preservation medium";
     
     /* DWCA Resources */
     public static final String ABSTRACT="abstract";

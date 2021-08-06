@@ -3528,7 +3528,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
      public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
-                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description "
+                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -3545,6 +3545,16 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + "?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName.  "
                 + "?dimensionURI <" + Resources.hasValue + "> ?dimensionValue.  "
                 + "?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  "
+                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?fixationUri. "
+                + "?fixationUri <"+Resources.hasType+"> ?fixationTypeUri. "
+                + "?fixationUri <"+Resources.rdfsLabel+"> ?fixation. "
+                + "?fixationTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
+                + "?fixationTypeUri <"+Resources.rdfsLabel+"> \""+Resources.fixationLabel+"\". "
+                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?preservationMediumUri. "
+                + "?preservationMediumUri <"+Resources.hasType+"> ?preservationMediumTypeUri. "
+                + "?preservationMediumUri <"+Resources.rdfsLabel+"> ?preservationMedium. "
+                + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
+                + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
                 + "OPTIONAL { "
                     + "?specimenURI <" + Resources.formsPartOf + "> ?collectionURI. "
                     + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
@@ -3631,6 +3641,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
 
             if (result.getValue("dimensionTypeURI") != null) {
                 struct.withDimensionTypeURI(result.getValue("dimensionTypeURI").stringValue());
+            }
+            
+            if (result.getValue("fixation") != null) {
+                struct.withFixationType(result.getValue("fixation").stringValue());
+            }
+            if (result.getValue("preservationMedium") != null) {
+                struct.withPreservationType(result.getValue("preservationMedium").stringValue());
             }
 
             results.add(struct);

@@ -330,6 +330,16 @@ public class MicroCTSpecimenStruct {
         this.dimensionTypeURI = dimensionTypeURI;
         return this;
     }
+    
+    public MicroCTSpecimenStruct  withFixationType(String fixationValue) {
+        this.fixationType = fixationValue  ;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct  withPreservationType(String preservationMediumValue) {
+        this.preservationType = preservationMediumValue  ;
+        return this;
+    }
    
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
