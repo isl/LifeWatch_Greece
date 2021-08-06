@@ -3598,10 +3598,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
                     .withSpecimenName(result.getValue("specimenName").stringValue())
-                    .withSpeciesURI(result.getValue("speciesURI").stringValue())
-                    .withSpeciesName(result.getValue("speciesName").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetName(result.getValue("datasetName").stringValue());
+            if(result.getValue("speciesURI")!=null){
+                struct.withSpeciesURI(result.getValue("speciesURI").stringValue())
+                      .withSpeciesName(result.getValue("speciesName").stringValue());
+            }
             if (result.getValue("collectionName") != null) {
                 struct.withCollectionName(result.getValue("collectionName").stringValue());
             }
