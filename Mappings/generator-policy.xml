@@ -13,5 +13,9 @@
         <pattern>{hierarchy}/{term}/</pattern>
     </generator>
     
+    <generator name="LocalUri-uuid" prefix="ent" uuid="yes">
+        <pattern>{hierarchy}/</pattern>
+    </generator>
+    
 
 </generator_policy>
