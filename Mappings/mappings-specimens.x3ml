@@ -83,7 +83,7 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <exists>text()</exists>                                
                         </if>
                         <relationship>crm:P5_forms_part_of</relationship>
                     </target_relation>
@@ -378,11 +378,11 @@
                 <range>
                     <source_node>FixationType</source_node>
                     <target_node>
-                        <entity variable="fixation">
+                        <entity>
                             <type>tlo:BC45_Observation</type>
-                            <instance_generator name="LocalTermURI-uuid">
-                                <arg name="hierarchy" type="constant">specimen</arg>
-                                <arg name="term" type="constant">fixation</arg>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_fixation</arg>
+                                <arg name="term" type="xpath">lower-case(text())</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -411,14 +411,21 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../FixationType/text()</exists>                                    
+                                </if>
+                            </and>
                         </if>
                         <relationship>tlo:LC12_was_attributed_by</relationship>
-                        <entity variable="fixation">
+                        <entity>
                             <type>tlo:BC45_Observation</type>
-                            <instance_generator name="LocalTermURI-uuid">
-                                <arg name="hierarchy" type="constant">specimen</arg>
-                                <arg name="term" type="constant">fixation</arg>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_fixation</arg>
+                                <arg name="term" type="xpath">lower-case(../FixationType/text())</arg>
                             </instance_generator>
                         </entity>
                         <relationship>crm:P3_has_note</relationship>
@@ -453,9 +460,9 @@
                     <target_node>
                         <entity>
                             <type>tlo:BC45_Observation</type>
-                            <instance_generator name="LocalTermURI-uuid">
-                                <arg name="hierarchy" type="constant">specimen</arg>
-                                <arg name="term" type="constant">preservation</arg>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_preservation</arg>
+                                <arg name="term" type="xpath">lower-case(text())</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
