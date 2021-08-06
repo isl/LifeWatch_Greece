@@ -164,7 +164,7 @@
                             <type>crm:E21_Person</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">person</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -194,7 +194,7 @@
                             <type>crm:E21_Person</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">person</arg>
-                                <arg name="term" type="xpath">lower-case(../SpecimenProvider/text())</arg>
+                                <arg name="term" type="xpath">../SpecimenProvider/text()</arg>
                             </instance_generator>
                         </entity>
                         <relationship>crm:P107_is_current_member_of</relationship>
@@ -207,7 +207,7 @@
                             <type>crm:E40_Legal_Body</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">organization</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
