@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator_policy>
+    
+    <generator name="LocalTermURI" prefix="ent">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="LocalTermURI-hashed" prefix="ent" shorten="yes">
+        <pattern>{hierarchy}/{term}</pattern>
+    </generator>
+    
+    <generator name="LocalTermURI-uuid" prefix="ent" uuid="yes">
+        <pattern>{hierarchy}/{term}/</pattern>
+    </generator>
+    
+
+</generator_policy>
