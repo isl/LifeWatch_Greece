@@ -3553,12 +3553,23 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 //                            +" OPTIONAL { ?dimensionTypeURI <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionTypeLabel+". } "
                 + "  ?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName.  "
                 + "  ?dimensionURI <" + Resources.hasValue + "> ?dimensionValue.  "
-                + "  ?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  } "
-                + " FILTER regex(?collectionName,'" + collection + "',\"i\") "
-                + " FILTER regex(?providerName,'" + provider + "',\"i\") "
-                + " FILTER regex(?specimenName,'" + specimen + "',\"i\") "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?speciesName,'" + species + "',\"i\")}";
+                + "  ?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  } ";
+        if(collection!=null && !collection.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?collectionName),\""+collection.toLowerCase()+"\"). ";
+        }
+        if(provider!=null && !provider.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?providerName),\""+provider.toLowerCase()+"\"). ";
+        }
+        if(specimen!=null && !specimen.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?specimenName),\""+specimen.toLowerCase()+"\"). ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?datasetURI),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        if(species!=null && !species.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
