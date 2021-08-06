@@ -423,7 +423,7 @@
                             <type>tlo:BC45_Observation</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">specimen_fixation</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -466,7 +466,7 @@
                             <type>tlo:BC45_Observation</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">specimen_fixation</arg>
-                                <arg name="term" type="xpath">lower-case(../FixationType/text())</arg>
+                                <arg name="term" type="xpath">../FixationType/text()</arg>
                             </instance_generator>
                         </entity>
                         <relationship>crm:P3_has_note</relationship>
@@ -503,7 +503,7 @@
                             <type>tlo:BC45_Observation</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">specimen_preservation</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -541,7 +541,7 @@
                     <source_node>StoragePlace</source_node>
                     <target_node>
                         <entity>
-                            <type>tlo:BC3_Place</type>
+                            <type>crm:E53_Place</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">storage_place</arg>
                                 <arg name="term" type="xpath">text()</arg>
