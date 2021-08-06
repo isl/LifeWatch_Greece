@@ -690,6 +690,106 @@
                     </target_node>
                 </range>
             </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Instrument</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>text()</exists>
+                        </if>
+                        <relationship>crmdig:L21F_happened_on_device</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Instrument</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crmdig:D8_Digital_Device</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">device</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">device_type</arg>
+                                        <arg name="term" type="constant">scanning_device</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scanning device</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Voltage_kV</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>text()</exists>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Voltage_kV</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_voltage</arg>
+                                <arg name="term" type="constant">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Voltage_kV: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">voltage</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">voltage</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="constant">kV</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
         </mapping>
     </mappings>
 </x3ml>
