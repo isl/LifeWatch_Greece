@@ -36,6 +36,7 @@ public class MicroCTSpecimenStruct {
     private String institutionName;
     private String datasetURI;
     private String datasetName;
+    private String storagePlace;
     
     private static final Logger logger=Logger.getLogger(MicroCTSpecimenStruct.class);
     /**Creates a new instance by initializing 
@@ -61,6 +62,7 @@ public class MicroCTSpecimenStruct {
         institutionName="";
         fixationType="";
         preservationType="";
+        storagePlace="";
     }
 
     public String getCollectionURI() {
@@ -145,6 +147,10 @@ public class MicroCTSpecimenStruct {
     
     public String getPreservationType() {
         return preservationType;
+    }
+    
+    public String getStoragePlace() {
+        return storagePlace;
     }
      
     public void setSpecimenName(String specimenName) {
@@ -233,6 +239,10 @@ public class MicroCTSpecimenStruct {
 
     public void setDatasetName(String datasetName) {
         this.datasetName = datasetName;
+    }
+    
+    public void setStoragePlace(String storagePlace) {
+        this.storagePlace = storagePlace;
     }
     
     public MicroCTSpecimenStruct withSpeciesURI(String speciesURI) {
@@ -338,6 +348,11 @@ public class MicroCTSpecimenStruct {
     
     public MicroCTSpecimenStruct  withPreservationType(String preservationMediumValue) {
         this.preservationType = preservationMediumValue  ;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct withStoragePlace(String storagePlace){
+        this.storagePlace = storagePlace;
         return this;
     }
    
@@ -481,7 +496,8 @@ public class MicroCTSpecimenStruct {
               +"InstitutionURI: "+institutionURI+"\t"
               +"InstitutionName: "+institutionName+"\t"
               +"FixationType: "+fixationType+"\t"
-              +"PreservationType: "+preservationType;
+              +"PreservationType: "+preservationType+"\t"
+              +"StoragePlace: "+storagePlace;
     }
     
     @Override

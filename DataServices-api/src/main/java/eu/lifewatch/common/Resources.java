@@ -130,6 +130,7 @@ public class Resources {
     public static final String belongsTo = tloNamespace + "LC10_belongs_to";
     public static final String belongsToType = tloNamespace + "LT8_belongs_to";
     public static final String LC12_wasAttributedBy = tloNamespace + "LC12_was_attributed_by";
+    public static final String hasSection = tloNamespace + "LC27_has_section";
 
     /*new classes and properties*/
     public static final String rdfTypeLabel = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";

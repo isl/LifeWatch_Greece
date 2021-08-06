@@ -3528,7 +3528,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
      public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
-                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium "
+                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -3555,6 +3555,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + "?preservationMediumUri <"+Resources.rdfsLabel+"> ?preservationMedium. "
                 + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
                 + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
+                + "OPTIONAL { "
+                    + "?specimenURI <"+Resources.hasSection+"> ?storagePlaceUri. "
+                    + "?storagePlaceUri <"+Resources.rdfsLabel+"> ?storagePlace. "
+                +" } "
                 + "OPTIONAL { "
                     + "?specimenURI <" + Resources.formsPartOf + "> ?collectionURI. "
                     + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
@@ -3648,6 +3652,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             }
             if (result.getValue("preservationMedium") != null) {
                 struct.withPreservationType(result.getValue("preservationMedium").stringValue());
+            }
+            if (result.getValue("storagePlace") != null) {
+                struct.withStoragePlace(result.getValue("storagePlace").stringValue());
             }
 
             results.add(struct);
