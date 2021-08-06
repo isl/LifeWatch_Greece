@@ -10,6 +10,47 @@
     <mappings>
         <mapping>
             <domain>
+                <source_node>//root</source_node>
+                <target_node>
+                    <entity>
+                        <type>tlo:BC21_Dataset</type>
+                        <instance_generator name="LocalUri-uuid">
+                            <arg name="hierarchy" type="constant">dataset</arg>
+                        </instance_generator>
+                        <label_generator name="Literal">
+                            <arg name="text" type="constant">Micro-CT Specimens Dataset</arg>
+                        </label_generator>
+                    </entity>
+                </target_node>
+            </domain>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>row</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>SpecimenID/text()</exists>
+                        </if>
+                        <relationship>crm:P67_refers_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>row</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC53_Specimen</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">specimen</arg>
+                                <arg name="term">SpecimenID/text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+        <mapping>
+            <domain>
                 <source_node>//row</source_node>
                 <target_node>
                     <if>
@@ -95,7 +136,7 @@
                             <type>crm:E78_Collection</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">specimen_collection</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -156,7 +197,7 @@
                                 <arg name="term" type="xpath">lower-case(../SpecimenProvider/text())</arg>
                             </instance_generator>
                         </entity>
-                        <relationship>tlo:P107_is_current_member_of</relationship>
+                        <relationship>crm:P107_is_current_member_of</relationship>
                     </target_relation>
                 </path>
                 <range>
