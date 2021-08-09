@@ -72,7 +72,19 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>../SpecimenLabel/text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>../SpecimenLabel/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenLabel/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                                
                         </if>
                         <relationship>rdfs:label</relationship>
                     </target_relation>
@@ -96,11 +108,19 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <not>
+                            <or>
                                 <if>
-                                    <exists>../SpecimenLabel/text()</exists>                                    
+                                    <not>
+                                        <if>
+                                            <exists>../SpecimenLabel/text()</exists>                                    
+                                        </if>
+                                    </not>
                                 </if>
-                            </not>
+                                <if>
+                                    <equals value="NULL">../SpecimenLabel/text()</equals>
+                                </if>
+                            </or>
+                            
                         </if>
                         <relationship>rdfs:label</relationship>
                     </target_relation>
@@ -124,7 +144,19 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                            
                         </if>
                         <relationship>crm:P5_forms_part_of</relationship>
                     </target_relation>
@@ -152,7 +184,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>                                   
                         </if>
                         <relationship>tlo:P_was_provided_by</relationship>
                     </target_relation>
@@ -185,7 +228,18 @@
                                     <exists>text()</exists>                                    
                                 </if>
                                 <if>
-                                    <exists>../SpecimenProvider/text()</exists>                                    
+                                    <and>
+                                        <if>
+                                            <exists>../SpecimenProvider/text()</exists>
+                                        </if>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <equals value="NULL">../SpecimenProvider/text()</equals>
+                                                </if>
+                                            </not>
+                                        </if>
+                                    </and>
                                 </if>
                             </and>
                         </if>
@@ -196,6 +250,57 @@
                                 <arg name="hierarchy" type="constant">person</arg>
                                 <arg name="term" type="xpath">../SpecimenProvider/text()</arg>
                             </instance_generator>
+                        </entity>
+                        <relationship>crm:P107_is_current_member_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ProviderInstitute</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E40_Legal_Body</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">organization</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ProviderInstitute</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../SpecimenProvider/text()</exists>                                                    
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../SpecimenProvider/text()</equals>
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:P_was_provided_by</relationship>
+                        <entity>
+                            <type>crm:E21_Person</type>
+                            <instance_generator name="UUID"/>
                         </entity>
                         <relationship>crm:P107_is_current_member_of</relationship>
                     </target_relation>
@@ -324,7 +429,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>tlo:LC10_belongs_to</relationship>
                     </target_relation>
@@ -336,7 +452,7 @@
                             <type>tlo:BT27_Species</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">species</arg>
-                                <arg name="term" type="xpath">lower-case(text())</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
@@ -352,7 +468,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P43_has_dimension</relationship>
                     </target_relation>
@@ -411,7 +538,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>tlo:LC12_was_attributed_by</relationship>
                     </target_relation>
@@ -459,6 +597,13 @@
                                 <if>
                                     <exists>../FixationType/text()</exists>                                    
                                 </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../FixationType/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
                             </and>
                         </if>
                         <relationship>tlo:LC12_was_attributed_by</relationship>
@@ -491,7 +636,19 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                                
                         </if>
                         <relationship>tlo:LC12_was_attributed_by</relationship>
                     </target_relation>
@@ -532,7 +689,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>     
                         </if>
                         <relationship>tlo:LC27_has_section</relationship>
                     </target_relation>
