@@ -161,7 +161,7 @@ public class Resources {
     public static final String rdfDefaultExtension = ".rdf";
 
     /*A default namespace to be used*/
-    public static final String defaultNamespaceForURIs = "http://localhost/directory_service";
+    public static final String defaultNamespaceForURIs = "http://www.lifewatchgreece.eu/entity";
 
     /*the folder containing the fundamental queries*/
     public static final String fundamentalQueriesFolder = "FundamentalQueries";
