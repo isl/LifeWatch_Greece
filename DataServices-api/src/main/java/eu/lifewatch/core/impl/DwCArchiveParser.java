@@ -170,7 +170,7 @@ public class DwCArchiveParser {
         writer.close();
     }
     
-    private DirectoryStruct parseDatasetMetadata(String metadataContents){
+    private DirectoryStruct parseDatasetMetadata(String metadataContents) throws UnsupportedEncodingException{
         DirectoryStruct directoryStruct=new DirectoryStruct();
         Document metadataDoc=Jsoup.parse(metadataContents);
         Elements idElements=metadataDoc.getElementsByTag(Resources.ALTERNATE_IDENTIFIER);
@@ -353,16 +353,12 @@ public class DwCArchiveParser {
         }
     }
     
-    private TaxonomyStruct retrieveTaxonomy(Record rec){
+    private TaxonomyStruct retrieveTaxonomy(Record rec) throws UnsupportedEncodingException{
         TaxonomyStruct taxonomyStruct=new TaxonomyStruct()
                     .withDatasetName(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
-            if(rec.value(DwcTerm.scientificNameID)!=null){
-                    taxonomyStruct.withSpeciesURI(rec.value(DwcTerm.scientificNameID));
-            }else if(rec.value(DwcTerm.scientificName)!=null){
-                taxonomyStruct.withSpeciesName(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
-            }
             if(rec.value(DwcTerm.scientificName)!=null){
+                taxonomyStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
                 taxonomyStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
             }
             if(rec.value(DwcTerm.kingdom)!=null){
@@ -392,16 +388,12 @@ public class DwCArchiveParser {
             return taxonomyStruct;
     }
     
-    private ScientificNamingStruct retrieveScName(Record rec){
+    private ScientificNamingStruct retrieveScName(Record rec) throws UnsupportedEncodingException{
         ScientificNamingStruct scNameStruct=new ScientificNamingStruct()
                     .withDatasetName(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
-        if(rec.value(DwcTerm.scientificNameID)!=null){
-            scNameStruct.withSpeciesURI(rec.value(DwcTerm.scientificNameID));
-        }else if(rec.value(DwcTerm.scientificName)!=null){
-            scNameStruct.withSpeciesName(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
-        }
         if(rec.value(DwcTerm.scientificName)!=null){
+            scNameStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             scNameStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
             scNameStruct.withScientificNameAssignmentEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "scientific_name_assignment_event", rec.value(DwcTerm.scientificName)));
             scNameStruct.withScientificNameAssignmentEvent("Assignment of Scientific name for species "+rec.value(DwcTerm.scientificName));
@@ -431,7 +423,7 @@ public class DwCArchiveParser {
         return scNameStruct;
     }
     
-    private OccurrenceStruct retrieveOccurence(Record rec){
+    private OccurrenceStruct retrieveOccurence(Record rec) throws UnsupportedEncodingException{
         OccurrenceStruct occurrenceStruct=new OccurrenceStruct()
                     .withDatasetTitle(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
@@ -448,20 +440,14 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.decimalLongitude)!=null){
             occurrenceStruct.withLongitude(rec.value(DwcTerm.decimalLongitude));
         }
-        if(rec.value(DwcTerm.scientificNameID)!=null){
-            occurrenceStruct.withSpeciesURI(rec.value(DwcTerm.scientificNameID));
-        }else if(rec.value(DwcTerm.scientificName)!=null){
-            occurrenceStruct.withSpeciesName(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
-        }
         if(rec.value(DwcTerm.scientificName)!=null){
+            occurrenceStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
         }
-        
-        
         return occurrenceStruct;
     }
     
-    private OccurrenceStatsTempStruct retrieveOccurenceTemp(Record rec){
+    private OccurrenceStatsTempStruct retrieveOccurenceTemp(Record rec) throws UnsupportedEncodingException{
         OccurrenceStatsTempStruct occurrenceTempStruct=new OccurrenceStatsTempStruct()
                     .withDatasetTitle(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
@@ -482,12 +468,8 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withLatitude(rec.value(DwcTerm.decimalLatitude));
             placeCoordinates+="Latitude: "+rec.value(DwcTerm.decimalLatitude);
         }
-        if(rec.value(DwcTerm.scientificNameID)!=null){
-            occurrenceTempStruct.withSpeciesURI(rec.value(DwcTerm.scientificNameID));
-        }else if(rec.value(DwcTerm.scientificName)!=null){
-            occurrenceTempStruct.withSpeciesName(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
-        }
         if(rec.value(DwcTerm.scientificName)!=null){
+            occurrenceTempStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceTempStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
             occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate",rec.value(DwcTerm.scientificName)));
             occurrenceTempStruct.withTemporaryAggregate("Temporary Aggregate of species "+rec.value(DwcTerm.scientificName));
@@ -505,7 +487,7 @@ public class DwCArchiveParser {
         return occurrenceTempStruct;
     }
     
-    private MeasurementStruct retrieveMeasurement(Record rec){
+    private MeasurementStruct retrieveMeasurement(Record rec) throws UnsupportedEncodingException{
         MeasurementStruct measurementStruct=new MeasurementStruct()
                     .withDatasetName(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);    
@@ -531,7 +513,7 @@ public class DwCArchiveParser {
         return measurementStruct;
     }
     
-    private EnvironmentalStruct retrieveEnvironmental(Record rec){
+    private EnvironmentalStruct retrieveEnvironmental(Record rec) throws UnsupportedEncodingException{
         EnvironmentalStruct environmentalStruct=new EnvironmentalStruct()
                     .withDatasetName(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);    
@@ -580,6 +562,5 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
         new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-    }
-    
+    }   
 }

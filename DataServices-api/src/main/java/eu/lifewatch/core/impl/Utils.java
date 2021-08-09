@@ -4,6 +4,7 @@ import eu.lifewatch.core.model.CommonNameStruct;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,7 +84,8 @@ public class Utils {
         System.out.println(subTriples);
     }
     
-    public static String hashUri(String prefix, String hierarchy, String contents){
-        return prefix+"/"+hierarchy+"/"+UUID.nameUUIDFromBytes(contents.getBytes());
+    public static String hashUri(String prefix, String hierarchy, String contents) throws UnsupportedEncodingException{
+        String encodedContents=java.net.URLEncoder.encode(contents, "UTF-8").replace("+", "%20");
+        return prefix+"/"+hierarchy+"/"+UUID.nameUUIDFromBytes(encodedContents.getBytes()).toString().toUpperCase();
     }
 }
