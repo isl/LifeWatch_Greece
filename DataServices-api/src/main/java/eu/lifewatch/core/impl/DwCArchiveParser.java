@@ -46,6 +46,7 @@ public class DwCArchiveParser {
     private DirectoryService dsManager;
     private MetadataRepositoryService mrManager;
     private final boolean importDatasets;
+    private final boolean storeLocally;
     private Archive dwcArchive;
     private String datasetURI;
     private String datasetTitle;
@@ -54,7 +55,7 @@ public class DwCArchiveParser {
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
     private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
     
-    public DwCArchiveParser(File archive, boolean importInTriplestore) throws IOException{
+    public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         this.dsManager=context.getBean(DirectoryService.class);
@@ -66,6 +67,7 @@ public class DwCArchiveParser {
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
         this.dwcArchive.getCore().setEncoding("UTF-8");
         this.importDatasets=importInTriplestore;
+        this.storeLocally=storeLocally;
         this.archiveFolderName=archive.getParentFile().getName();
         if(!importInTriplestore){
             this.createLocalFolder();
@@ -79,7 +81,8 @@ public class DwCArchiveParser {
         if(this.importDatasets){
             log.info("Importing dataset metadata");
             this.importDatasetInfo(directoryStruct);
-        }else{
+        }
+        if(this.storeLocally){
             log.info("Skipping dataset metadata import. Import in triplestore is disabled");
             this.storeLocally(directoryStruct);
         }
@@ -259,7 +262,8 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
                     log.info("Importing occurence struct");
                     this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(taxonomyStruct);
                     this.storeLocally(scNameStruct);
@@ -286,7 +290,8 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
                     log.info("Importing occurence struct");
                     this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(taxonomyStruct);
                     this.storeLocally(scNameStruct);
@@ -305,7 +310,8 @@ public class DwCArchiveParser {
                 if(this.importDatasets){
                     log.info("Importing measurement struct");
                     this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(measurementStruct);
                 }
@@ -317,7 +323,8 @@ public class DwCArchiveParser {
                 if(this.importDatasets){
                     log.info("Importing measurement struct");
                     this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(measurementStruct);
                 }
@@ -333,7 +340,8 @@ public class DwCArchiveParser {
                 if(this.importDatasets){
                     log.info("Importing environmental struct");
                     this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(environmentalStruct);
                 }
@@ -345,7 +353,8 @@ public class DwCArchiveParser {
                 if(this.importDatasets){
                     log.info("Importing environmental struct");
                     this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
-                }else{
+                }
+                if(this.storeLocally){
                     log.info("Skipping metadata import. Import in triplestore is disabled");
                     this.storeLocally(environmentalStruct);
                 }
@@ -561,6 +570,6 @@ public class DwCArchiveParser {
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false,true).parseData();
     }   
 }
