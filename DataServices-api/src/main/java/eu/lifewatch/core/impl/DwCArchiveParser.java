@@ -196,20 +196,20 @@ public class DwCArchiveParser {
             Elements creatorNameElements=creatorElements.get(0).getElementsByTag(Resources.INDIVIDUAL_NAME);
             if(creatorNameElements!=null){
                 directoryStruct.setCreatorName(creatorNameElements.get(0).text());
-                directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
+                directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setOwnerName(creatorNameElements.get(0).text());
-                directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
+                directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setKeeperName(creatorNameElements.get(0).text());
-                directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
+                directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setCuratorName(creatorNameElements.get(0).text());
-                directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", creatorNameElements.get(0).text()));
+                directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
             }
         }
         Elements contributorElements=metadataDoc.getElementsByTag(Resources.ASSOCIATED_PARTY);
         for(Element contributorElement : contributorElements){
             Elements contributorNameElements=contributorElement.getElementsByTag(Resources.INDIVIDUAL_NAME);
             if(contributorNameElements!=null){
-                directoryStruct.withContributor(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", contributorNameElements.get(0).text()), contributorNameElements.get(0).text());
+                directoryStruct.withContributor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", contributorNameElements.get(0).text()), contributorNameElements.get(0).text());
             }
         }
         Elements pubDateElements=metadataDoc.getElementsByTag(Resources.PUB_DATE);
@@ -362,27 +362,27 @@ public class DwCArchiveParser {
                 taxonomyStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
             }
             if(rec.value(DwcTerm.kingdom)!=null){
-                taxonomyStruct.withKingdomURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_kingdom", rec.value(DwcTerm.kingdom)))
+                taxonomyStruct.withKingdomURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "kingdom", rec.value(DwcTerm.kingdom)))
                               .withKingdomName(rec.value(DwcTerm.kingdom));
             }
             if(rec.value(DwcTerm.phylum)!=null){
-                taxonomyStruct.withPhylumURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_phylum", rec.value(DwcTerm.phylum)))
+                taxonomyStruct.withPhylumURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "phylum", rec.value(DwcTerm.phylum)))
                               .withPhylumName(rec.value(DwcTerm.phylum));
             }
             if(rec.value(DwcTerm.class_)!=null){
-                taxonomyStruct.withClassURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_class", rec.value(DwcTerm.class_)))
+                taxonomyStruct.withClassURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "class", rec.value(DwcTerm.class_)))
                               .withClassName(rec.value(DwcTerm.class_));
             }
             if(rec.value(DwcTerm.order)!=null){
-                taxonomyStruct.withOrderURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_order", rec.value(DwcTerm.order)))
+                taxonomyStruct.withOrderURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "order", rec.value(DwcTerm.order)))
                               .withOrderName(rec.value(DwcTerm.order));
             }
             if(rec.value(DwcTerm.family)!=null){
-                taxonomyStruct.withFamilyURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_family", rec.value(DwcTerm.family)))
+                taxonomyStruct.withFamilyURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "family", rec.value(DwcTerm.family)))
                               .withFamilyName(rec.value(DwcTerm.family));
             }
             if(rec.value(DwcTerm.genus)!=null){
-                taxonomyStruct.withGenusURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species_genus", rec.value(DwcTerm.genus)))
+                taxonomyStruct.withGenusURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "genus", rec.value(DwcTerm.genus)))
                               .withGenusName(rec.value(DwcTerm.genus));
             }
             return taxonomyStruct;
@@ -411,7 +411,7 @@ public class DwCArchiveParser {
             if(commaCharIndex>0){
                 String authorshipName=trimmedScNameAuthorship.substring(0,commaCharIndex).trim();
                 String authorshipYear=trimmedScNameAuthorship.substring(commaCharIndex+1).trim();
-                scNameStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", authorshipName), authorshipName);
+                scNameStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", authorshipName), authorshipName);
                 scNameStruct.withTimeSpan(authorshipYear);
             }
             
