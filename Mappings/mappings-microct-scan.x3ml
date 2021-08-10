@@ -129,7 +129,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P_has_contrast_method</relationship>
                     </target_relation>
@@ -153,7 +164,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P_has_protocol</relationship>
                     </target_relation>
@@ -183,6 +205,20 @@
                                 </if>
                                 <if>
                                     <exists>../BeginOfPreparationTime/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../BeginOfPreparationTime/text()</equals>
+                                        </if>
+                                    </not>
                                 </if>
                             </and>
                         </if>
@@ -238,9 +274,23 @@
                                 <if>
                                     <not>
                                         <if>
-                                            <exists>../BeginOfPreparationTime/text()</exists>                                            
+                                            <equals value="NULL">text()</equals>
                                         </if>
                                     </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../BeginOfPreparationTime/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../BeginOfPreparationTime/text()</equals>                                            
+                                        </if>
+                                    </or>
                                 </if>
                             </and>
                         </if>
@@ -296,6 +346,20 @@
                                 <if>
                                     <exists>../EndOfPreparationTime/text()</exists>                                    
                                 </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../EndOfPreparationTime/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
                             </and>
                         </if>
                         <relationship>crm:P4_has_timespan</relationship>
@@ -350,9 +414,23 @@
                                 <if>
                                     <not>
                                         <if>
-                                            <exists>../EndOfPreparationTime/text()</exists>
+                                            <equals value="NULL">text()</equals>
                                         </if>
                                     </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../EndOfPreparationTime/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../EndOfPreparationTime/text()</equals>                                            
+                                        </if>
+                                    </or>
                                 </if>
                             </and>
                         </if>
@@ -406,7 +484,21 @@
                                     <exists>text()</exists>                                    
                                 </if>
                                 <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
                                     <exists>../ScanNotes/text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../ScanNotes/text()</equals>
+                                        </if>
+                                    </not>
                                 </if>
                             </and>
                         </if>
@@ -439,9 +531,23 @@
                                 <if>
                                     <not>
                                         <if>
-                                            <exists>../ScanNotes/text()</exists>                                            
+                                            <equals value="NULL">text()</equals>
                                         </if>
                                     </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../ScanNotes/text()</exists>                                            
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../ScanNotes/text()</equals>
+                                        </if>
+                                    </or>
                                 </if>
                             </and>
                         </if>
@@ -474,9 +580,23 @@
                                 <if>
                                     <not>
                                         <if>
-                                            <exists>../PreparationNotes/text()</exists>                                            
+                                            <equals value="NULL">text()</equals>
                                         </if>
                                     </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../PreparationNotes/text()</exists>                                            
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../PreparationNotes/text()</equals>
+                                        </if>
+                                    </or>
                                 </if>
                             </and>
                         </if>
@@ -502,7 +622,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P_using_sample_holder</relationship>
                     </target_relation>
@@ -530,7 +661,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P_using_scanning_medium</relationship>
                     </target_relation>
@@ -558,7 +700,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P2_has_type</relationship>
                     </target_relation>
@@ -599,7 +752,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P14_carried_out_by</relationship>
                     </target_relation>
@@ -627,7 +791,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P4_has_timespan</relationship>
                         <entity>
@@ -674,7 +849,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>                                    
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P4_has_timespan</relationship>
                         <entity>
@@ -725,7 +911,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crmdig:L21F_happened_on_device</relationship>
                     </target_relation>
@@ -766,7 +963,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -778,7 +986,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_voltage</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Voltage_kV: ",text()),'')</arg>
@@ -829,7 +1037,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -841,7 +1060,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_current</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Current_uA: ",text()),'')</arg>
@@ -892,7 +1111,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -904,7 +1134,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_filter</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Filter: ",text()),'')</arg>
@@ -942,7 +1172,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -954,7 +1195,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_zoom</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Zoom um: ",text()),'')</arg>
@@ -1005,7 +1246,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1017,7 +1269,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_camera_resolution</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Camera Resolution: ",text()),'')</arg>
@@ -1055,7 +1307,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1067,7 +1330,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_frame_averaging</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Frame averaging: ",text()),'')</arg>
@@ -1105,7 +1368,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1117,7 +1391,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_random_movement</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Random movement: ",text()),'')</arg>
@@ -1155,7 +1429,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1167,7 +1452,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_degree</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Scan degrees: ",text()),'')</arg>
@@ -1205,7 +1490,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1217,7 +1513,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_exposure_time</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Exposure time ms: ",text()),'')</arg>
@@ -1268,7 +1564,18 @@
                     </source_relation>
                     <target_relation>
                         <if>
-                            <exists>text()</exists>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
                         </if>
                         <relationship>crm:P40_observed_dimension</relationship>
                     </target_relation>
@@ -1280,7 +1587,7 @@
                             <type>crm:E54_Dimension</type>
                             <instance_generator name="LocalTermURI-hashed">
                                 <arg name="hierarchy" type="constant">scanning_oversize_settings</arg>
-                                <arg name="term" type="constant">text()</arg>
+                                <arg name="term" type="xpath">text()</arg>
                             </instance_generator>
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">string-join(("Oversize Settings: ",text()),'')</arg>
@@ -1336,7 +1643,11 @@
                                     <exists>text()</exists>
                                 </if>
                                 <if>
-                                    <exists>../ScanID/text()</exists>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
                                 </if>
                             </and>
                         </if>
@@ -1379,7 +1690,11 @@
                                     <exists>text()</exists>
                                 </if>
                                 <if>
-                                    <exists>../ScanID/text()</exists>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
                                 </if>
                             </and>
                         </if>
