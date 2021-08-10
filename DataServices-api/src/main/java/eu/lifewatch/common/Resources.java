@@ -46,6 +46,10 @@ public class Resources {
     public static final String isSubjectTo = cidocCrmNamespace + "P104_is_subject_to";
     public static final String isComposedOf = cidocCrmNamespace + "P46_is_composed_of";
     public static final String hasTimespan = cidocCrmNamespace + "P4_has_timespan";
+    public static final String atSomeTimeWithin = cidocCrmNamespace + "P82_at_some_time_within";
+    public static final String hadAtMostDuration = cidocCrmNamespace + "P84_had_at_most_duration";
+    public static final String beginOfTheBegin = cidocCrmNamespace + "P82a_begin_of_the_begin";
+    public static final String endOfTheEnd = cidocCrmNamespace + "P82b_end_of_the_end";
     public static final String usedObjectOfType = cidocCrmNamespace + "P125_used_object_of_type";
     public static final String isIdentifiedBy = cidocCrmNamespace + "P1_is_identified_by";
     public static final String isDepictedBy = cidocCrmNamespace + "P62_is_depicted_by";
@@ -93,6 +97,9 @@ public class Resources {
     public static final String hasCurrentLocation = crmDigNamespace + "L21F_happened_on_device";
     public static final String happenedOnDevice = crmDigNamespace + "L21F_happened_on_device";
     public static final String createdDerivative = crmDigNamespace + "L22F_created_derivative";
+    public static final String hadOutput = crmDigNamespace + "L11_had_output";
+    public static final String isStoredOn = crmDigNamespace + "L19i_is_stored_on";
+    public static final String hasComment = crmDigNamespace + "L47_has_comment";
     public static final String wasDerivationSourceFor = crmDigNamespace + "L21B_was_derivation_source_for";
 
     /*crm-sci classes and properties*/
@@ -148,6 +155,9 @@ public class Resources {
     public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";
     public static final String hasFilter = cidocCrmNamespace + "P_has_filter";
     public static final String hasExposureTime = cidocCrmNamespace + "P_has_exposure_time";
+    public static final String hasProtocol = cidocCrmNamespace + "P_has_protocol";
+    public static final String usingSampleHolder = cidocCrmNamespace + "P_using_sample_holder";
+    public static final String usingScanningMedium = cidocCrmNamespace + "P_using_scanning_medium";
 
     public static final String rdfsLabel = rdfsNamespace + "label";
 
@@ -172,6 +182,20 @@ public class Resources {
     /* various instances and labels  */
     public static final String fixationLabel="fixation";
     public static final String preservationMediumLabel="preservation medium";
+    public static final String CAMERA_RESOLUTION_CONSTANT_VALUE="camera resolution";
+    public static final String CURRENT_CONSTANT_VALUE="current";
+    public static final String EXPOSURE_TIME_CONSTANT_VALUE="exposure time";
+    public static final String FILTER_CONSTANT_VALUE="filter";
+    public static final String FRAME_AVERAGING_CONSTANT_VALUE="frame averaging";
+    public static final String OVERSIZE_SETTINGS_CONSTANT_VALUE="οversize settings";
+    public static final String PREPARATION_TIME_CONSTANT_VALUE="preparation time";
+    public static final String RANDOM_MOVEMENT_CONSTANT_VALUE="random movement";
+    public static final String SCAN_DEGREES_CONSTANT_VALUE="scan degrees";
+    public static final String SCANNED_PART_CONSTANT_VALUE="scanned part";
+    public static final String SCANNING_CONSTANT_VALUE="scanning";
+    public static final String SCANNING_DURATION_CONSTANT_VALUE="scanning duration";
+    public static final String VOLTAGE_CONSTANT_VALUE="voltage";
+    public static final String ZOOM_CONSTANT_VALUE="zoom";
     
     /* DWCA Resources */
     public static final String ABSTRACT="abstract";
