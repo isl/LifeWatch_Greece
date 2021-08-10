@@ -1601,7 +1601,7 @@
                                         <arg name="term" type="constant">oversize_settings</arg>
                                     </instance_generator>
                                     <label_generator name="Literal">
-                                        <arg name="text" type="constant">Oversize settings</arg>
+                                        <arg name="text" type="constant">οversize settings</arg>
                                     </label_generator>
                                 </entity>
                             </additional>
