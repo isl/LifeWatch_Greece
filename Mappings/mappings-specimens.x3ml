@@ -334,7 +334,14 @@
                                 </if>
                                 <if>
                                     <exists>../SpecimenNotes/text()</exists>                                    
-                                </if>                                
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </not>
+                                </if>
                             </and>
                         </if>
                         <relationship>crm:P3_has_note</relationship>
@@ -364,11 +371,18 @@
                                     <exists>text()</exists>                                    
                                 </if>
                                 <if>
-                                    <not>
+                                    <or>
                                         <if>
-                                            <exists>../SpecimenNotes/text()</exists>                                            
+                                            <not>
+                                                <if>
+                                                    <exists>../SpecimenNotes/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
                                         </if>
-                                    </not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </or>
                                 </if>                                
                             </and>
                         </if>
@@ -397,6 +411,13 @@
                             <and>
                                 <if>
                                     <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </not>
                                 </if>
                                 <if>
                                     <not>
