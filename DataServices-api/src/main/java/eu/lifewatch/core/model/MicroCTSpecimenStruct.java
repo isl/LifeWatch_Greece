@@ -25,7 +25,9 @@ public class MicroCTSpecimenStruct {
     private String specimenType;
     private String speciesURI;
     private String speciesName;
+    private String taxonomicGroup;
     private String fixationType;
+    private String material;
     private String preservationType;
     private String dimensionUnit;
     private String dimensionValue;
@@ -63,6 +65,8 @@ public class MicroCTSpecimenStruct {
         fixationType="";
         preservationType="";
         storagePlace="";
+        material="";
+        taxonomicGroup="";
     }
 
     public String getCollectionURI() {
@@ -151,6 +155,22 @@ public class MicroCTSpecimenStruct {
     
     public String getStoragePlace() {
         return storagePlace;
+    }
+    
+    public String getTaxonomicGroup() {
+        return taxonomicGroup;
+    }
+    
+    public String getMaterial() {
+        return material;
+    }
+     
+    public void setTaxonomicGroup(String taxonomicGroup) {
+        this.taxonomicGroup = taxonomicGroup;
+    }
+     
+    public void setMaterial(String material) {
+        this.material = material;
     }
      
     public void setSpecimenName(String specimenName) {
@@ -355,6 +375,16 @@ public class MicroCTSpecimenStruct {
         this.storagePlace = storagePlace;
         return this;
     }
+    
+    public MicroCTSpecimenStruct withTaxonomicGroup(String taxonomicGroup){
+        this.taxonomicGroup = taxonomicGroup;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct withMaterial(String material){
+        this.material = material;
+        return this;
+    }
    
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
@@ -485,6 +515,7 @@ public class MicroCTSpecimenStruct {
               +"SpecimenURI: "+specimenURI+"\t"
               +"DatasetURI: "+datasetURI+"\t"
               +"DatasetName: "+datasetName+"\t"
+              +"Material: "+material+"\t"
               +"SpeciesURI: "+speciesURI+"\t"
               +"SpeciesName: "+speciesName+"\t"
               +"Description: "+description+"\t"
@@ -497,7 +528,8 @@ public class MicroCTSpecimenStruct {
               +"InstitutionName: "+institutionName+"\t"
               +"FixationType: "+fixationType+"\t"
               +"PreservationType: "+preservationType+"\t"
-              +"StoragePlace: "+storagePlace;
+              +"StoragePlace: "+storagePlace+"\t"
+              +"TaxonomicGroup: "+taxonomicGroup;
     }
     
     @Override
