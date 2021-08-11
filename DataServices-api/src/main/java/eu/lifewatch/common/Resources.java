@@ -120,6 +120,7 @@ public class Resources {
     public static final String bioticElementLabel = tloNamespace + "BC38_Biotic_Element";
     public static final String ecosystemEnvironmentLabel = tloNamespace + "BC14_Ecosystem_Environment";
     public static final String ecosystemLabel = tloNamespace + "BC12_Ecosystem";
+    public static final String bioticElementTypeLabel = tloNamespace + "BT10_Biotic_Element_Type";
     public static final String equipmentTypeLabel = tloNamespace + "BT11_Equipment_Type";
     public static final String datasetLabel = tloNamespace + "BC21_Dataset";
     public static final String waterAreaLabel = tloNamespace + "BC15_Water_Area";
@@ -138,6 +139,7 @@ public class Resources {
     public static final String belongsToType = tloNamespace + "LT8_belongs_to";
     public static final String LC12_wasAttributedBy = tloNamespace + "LC12_was_attributed_by";
     public static final String hasSection = tloNamespace + "LC27_has_section";
+    public static final String LC16_isComposedOf = tloNamespace + "LC16_is_composed_of";
 
     /*new classes and properties*/
     public static final String rdfTypeLabel = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";

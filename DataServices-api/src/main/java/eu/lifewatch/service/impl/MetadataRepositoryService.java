@@ -3529,6 +3529,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                 + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
+                + " ?material ?taxonomic_group "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -3556,6 +3557,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
                 + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
                 + "OPTIONAL { "
+                    + "?specimenURI <"+Resources.LC16_isComposedOf+"> ?material_uri. "
+                    + "?material_uri <"+Resources.rdfsLabel+"> ?material. "
+                +" } "
+                + "OPTIONAL { "
                     + "?specimenURI <"+Resources.hasSection+"> ?storagePlaceUri. "
                     + "?storagePlaceUri <"+Resources.rdfsLabel+"> ?storagePlace. "
                 +" } "
@@ -3568,6 +3573,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                     + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
                     + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                     + "?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
+                + "} "
+                + "OPTIONAL { "
+                    + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
+                    + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . " 
+                    + "?speciesURI <" + Resources.belongsTo + "> ?taxonomic_group_uri . " 
+                    + "?taxonomic_group_uri <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementTypeLabel + "> . " 
+                    + "?taxonomic_group_uri <" + Resources.rdfsLabel + "> ?taxonomic_group . " 
                 + "} "
                 + "OPTIONAL { "
                     + "?providerURI <" + Resources.isCurrentMemberOf + "> ?institutionURI. "
@@ -3658,6 +3670,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             if (result.getValue("storagePlace") != null) {
                 struct.withStoragePlace(result.getValue("storagePlace").stringValue());
             }
+            if (result.getValue("material") != null) {
+                struct.withMaterial(result.getValue("material").stringValue());
+            }
+            if (result.getValue("taxonomic_group") != null) {
+                struct.withTaxonomicGroup(result.getValue("taxonomic_group").stringValue());
+            }
             results.add(struct);
         }
         return results;
@@ -3667,6 +3685,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                 + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
+                + " ?material ?taxonomic_group "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
                 + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
@@ -3694,6 +3713,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
                 + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
                 + "OPTIONAL { "
+                    + "?specimenURI <"+Resources.LC16_isComposedOf+"> ?material_uri. "
+                    + "?material_uri <"+Resources.rdfsLabel+"> ?material. "
+                +" } "
+                + "OPTIONAL { "
                     + "?specimenURI <"+Resources.hasSection+"> ?storagePlaceUri. "
                     + "?storagePlaceUri <"+Resources.rdfsLabel+"> ?storagePlace. "
                 +" } "
@@ -3706,6 +3729,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                     + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
                     + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
                     + "?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
+                + "} "
+                + "OPTIONAL { "
+                    + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
+                    + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . " 
+                    + "?speciesURI <" + Resources.belongsTo + "> ?taxonomic_group_uri . " 
+                    + "?taxonomic_group_uri <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementTypeLabel + "> . " 
+                    + "?taxonomic_group_uri <" + Resources.rdfsLabel + "> ?taxonomic_group . " 
                 + "} "
                 + "OPTIONAL { "
                     + "?providerURI <" + Resources.isCurrentMemberOf + "> ?institutionURI. "
@@ -3796,6 +3826,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             }
             if (result.getValue("storagePlace") != null) {
                 struct.withStoragePlace(result.getValue("storagePlace").stringValue());
+            }
+            if (result.getValue("material") != null) {
+                struct.withMaterial(result.getValue("material").stringValue());
+            }
+            if (result.getValue("taxonomic_group") != null) {
+                struct.withTaxonomicGroup(result.getValue("taxonomic_group").stringValue());
             }
             results.add(struct);
         }
