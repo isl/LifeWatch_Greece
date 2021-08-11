@@ -96,13 +96,12 @@ public class Utils {
         return prefix+"/"+hierarchy+"/"+UUID.nameUUIDFromBytes(encodedContents.getBytes()).toString().toUpperCase();
     }
     
-    public static String exportXmlToFile(Document document, File file) throws TransformerException {
+    public static void exportXmlToFile(Document document, File file) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         StreamResult result = new StreamResult(file);
         DOMSource source = new DOMSource(document);
         transformer.transform(source, result);
-        return result.getWriter().toString();
     }
 }
