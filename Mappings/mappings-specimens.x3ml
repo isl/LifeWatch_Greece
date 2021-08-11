@@ -446,6 +446,45 @@
             <link>
                 <path>
                     <source_relation>
+                        <relation>Material</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:LC16_is_composed_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Material</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC51_Physical_Object</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_material</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
                         <relation>ScientificName</relation>
                     </source_relation>
                     <target_relation>
@@ -738,6 +777,76 @@
                             <label_generator name="Literal">
                                 <arg name="text" type="xpath">text()</arg>
                             </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>TaxonomicGroup</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../ScientificName/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../ScientificName/text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>     
+                        </if>
+                        <relationship>tlo:LC10_belongs_to</relationship>
+                        <entity>
+                            <type>tlo:BT27_Species</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">species</arg>
+                                <arg name="term" type="xpath">../ScientificName/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>tlo:LC10_belongs_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>TaxonomicGroup</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BT10_Biotic_Element_Type</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">taxonomic_group</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">biotioc_element_type</arg>
+                                        <arg name="term" type="constant">taxonomic_group</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">taxonomic group</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
                         </entity>
                     </target_node>
                 </range>
