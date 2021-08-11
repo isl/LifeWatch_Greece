@@ -2,13 +2,19 @@ package eu.lifewatch.core.impl;
 
 import eu.lifewatch.core.model.CommonNameStruct;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.Repository;
@@ -23,6 +29,7 @@ import org.openrdf.rio.RDFWriter;
 import org.openrdf.rio.Rio;
 import org.openrdf.sail.inferencer.fc.ForwardChainingRDFSInferencer;
 import org.openrdf.sail.memory.MemoryStore;
+import org.w3c.dom.Document;
 
 /**
  * This class contains auxiliary methods that can be exploited for 
@@ -87,5 +94,15 @@ public class Utils {
     public static String hashUri(String prefix, String hierarchy, String contents) throws UnsupportedEncodingException{
         String encodedContents=java.net.URLEncoder.encode(contents, "UTF-8").replace("+", "%20");
         return prefix+"/"+hierarchy+"/"+UUID.nameUUIDFromBytes(encodedContents.getBytes()).toString().toUpperCase();
+    }
+    
+    public static String exportXmlToFile(Document document, File file) throws TransformerException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        StreamResult result = new StreamResult(file);
+        DOMSource source = new DOMSource(document);
+        transformer.transform(source, result);
+        return result.getWriter().toString();
     }
 }
