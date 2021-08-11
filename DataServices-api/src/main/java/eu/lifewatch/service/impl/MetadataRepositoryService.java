@@ -3658,7 +3658,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             if (result.getValue("storagePlace") != null) {
                 struct.withStoragePlace(result.getValue("storagePlace").stringValue());
             }
-
             results.add(struct);
         }
         return results;
@@ -3667,39 +3666,69 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
       public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
-                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description "
+                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
                 + "FROM <" + repositoryGraph + "> "
                 + "WHERE{ "
-                + " ?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
-                + " ?specimenURI <" + Resources.rdfsLabel + "> ?specimenName. "
-                + " ?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
-                + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
-                + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
+                + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
+                + "?specimenURI <" + Resources.rdfsLabel + "> ?specimenName. "
+                + "?specimenURI <" + Resources.hasNote + "> ?description. "
                 + "?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
                 + "?datasetURI <" + Resources.refersTo + "> ?specimenURI . "
                 + "?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " OPTIONAL { ?specimenURI <" + Resources.formsPartOf + "> ?collectionURI. "
-                + " ?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
-                + " ?collectionURI <" + Resources.rdfsLabel + "> ?collectionName.} "
-                + " OPTIONAL { ?specimenURI <" + Resources.hasNote + "> ?description. } "
-                + " ?specimenURI <" + Resources.wasProvidedBy + "> ?providerURI . "
-                + " ?providerURI <" + Resources.rdfsLabel + "> ?providerName. "
-                + " OPTIONAL { ?providerURI <" + Resources.isCurrentMemberOf + "> ?institutionURI. "
-                + " ?institutionURI <" + Resources.rdfsLabel + "> ?institutionName. } "
-                + " OPTIONAL { ?specimenURI <" + Resources.hasDimension + "> ?dimensionURI . "
-                + "  ?dimensionURI <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> . "
-                + "  ?dimensionURI <" + Resources.hasType + "> ?dimensionTypeURI. "
-                //                            +" OPTIONAL { ?dimensionTypeURI <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionTypeLabel+". } "
-                + "  ?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName.  "
-                + "  ?dimensionURI <" + Resources.hasValue + "> ?dimensionValue.  "
-                + "  ?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  } "
-                + " FILTER regex(?collectionName,'" + collection + "',\"i\") "
-                + " FILTER regex(?providerName,'" + provider + "',\"i\") "
-                + " FILTER regex(?specimenName,'" + specimen + "',\"i\") "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?speciesName,'" + species + "',\"i\")}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
+                + "?specimenURI <" + Resources.wasProvidedBy + "> ?providerURI . "
+                + "?providerURI <" + Resources.rdfsLabel + "> ?providerName. "
+                + "?specimenURI <" + Resources.hasDimension + "> ?dimensionURI . "
+                + "?dimensionURI <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> . "
+                + "?dimensionURI <" + Resources.hasType + "> ?dimensionTypeURI. "
+                + "?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName.  "
+                + "?dimensionURI <" + Resources.hasValue + "> ?dimensionValue.  "
+                + "?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  "
+                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?fixationUri. "
+                + "?fixationUri <"+Resources.hasType+"> ?fixationTypeUri. "
+                + "?fixationUri <"+Resources.rdfsLabel+"> ?fixation. "
+                + "?fixationTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
+                + "?fixationTypeUri <"+Resources.rdfsLabel+"> \""+Resources.fixationLabel+"\". "
+                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?preservationMediumUri. "
+                + "?preservationMediumUri <"+Resources.hasType+"> ?preservationMediumTypeUri. "
+                + "?preservationMediumUri <"+Resources.rdfsLabel+"> ?preservationMedium. "
+                + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
+                + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
+                + "OPTIONAL { "
+                    + "?specimenURI <"+Resources.hasSection+"> ?storagePlaceUri. "
+                    + "?storagePlaceUri <"+Resources.rdfsLabel+"> ?storagePlace. "
+                +" } "
+                + "OPTIONAL { "
+                    + "?specimenURI <" + Resources.formsPartOf + "> ?collectionURI. "
+                    + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
+                    + "?collectionURI <" + Resources.rdfsLabel + "> ?collectionName."
+                + "} "
+                + "OPTIONAL { "
+                    + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
+                    + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
+                    + "?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
+                + "} "
+                + "OPTIONAL { "
+                    + "?providerURI <" + Resources.isCurrentMemberOf + "> ?institutionURI. "
+                    + "?institutionURI <" + Resources.rdfsLabel + "> ?institutionName. "
+                + "} ";
+        if(collection!=null && !collection.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?collectionName),\""+collection.toLowerCase()+"\"). ";
+        }
+        if(provider!=null && !provider.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?providerName),\""+provider.toLowerCase()+"\"). ";
+        }
+        if(specimen!=null && !specimen.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?specimenName),\""+specimen.toLowerCase()+"\"). ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        if(species!=null && !species.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
+        }
+        queryString+=" LIMIT " + limit
+                    +" OFFSET " + offset
+                    +"} ";
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
@@ -3708,10 +3737,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
                     .withSpecimenName(result.getValue("specimenName").stringValue())
-                    .withSpeciesURI(result.getValue("speciesURI").stringValue())
-                    .withSpeciesName(result.getValue("speciesName").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetName(result.getValue("datasetName").stringValue());
+            if(result.getValue("speciesURI")!=null){
+                struct.withSpeciesURI(result.getValue("speciesURI").stringValue())
+                      .withSpeciesName(result.getValue("speciesName").stringValue());
+            }
             if (result.getValue("collectionName") != null) {
                 struct.withCollectionName(result.getValue("collectionName").stringValue());
             }
@@ -3756,7 +3787,16 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             if (result.getValue("dimensionTypeURI") != null) {
                 struct.withDimensionTypeURI(result.getValue("dimensionTypeURI").stringValue());
             }
-
+            
+            if (result.getValue("fixation") != null) {
+                struct.withFixationType(result.getValue("fixation").stringValue());
+            }
+            if (result.getValue("preservationMedium") != null) {
+                struct.withPreservationType(result.getValue("preservationMedium").stringValue());
+            }
+            if (result.getValue("storagePlace") != null) {
+                struct.withStoragePlace(result.getValue("storagePlace").stringValue());
+            }
             results.add(struct);
         }
         return results;
