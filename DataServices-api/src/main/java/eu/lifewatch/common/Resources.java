@@ -64,6 +64,7 @@ public class Resources {
     public static final String measured = cidocCrmNamespace + "P39_measured";
     public static final String observedDimension = cidocCrmNamespace + "P40_observed_dimension";
     public static final String hasValue = cidocCrmNamespace + "P90_has_value";
+    public static final String hadSpecificPurpose = cidocCrmNamespace + "P20_had_specific_purpose";
     public static final String wasCreatedBy = cidocCrmNamespace + "P94_was_created_by";
     public static final String hasUnit = cidocCrmNamespace + "P91_has_unit";
     public static final String formsPartOf = cidocCrmNamespace + "P5_forms_part_of";

@@ -3846,7 +3846,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                                             +"?random_movement ?scan_degrees ?exposure_time "
                                             +"?product_uri ?product_name ?file_location ?dataset_uri ?dataset_name "
                                             +"?protocol ?timespan_preparation_start ?timespan_preparation_end "
-                                            +"?prep_scan_notes ?oversize_settings ?product_status "
+                                            +"?prep_scan_notes ?oversize_settings ?product_status ?scope_of_scan "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?scanning_uri <"+Resources.rdfTypeLabel+"> <"+Resources.digitizationProcessLabel+"> . "
@@ -3918,6 +3918,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"?dataset_uri <"+Resources.rdfsLabel+"> ?dataset_name. "
                 +"OPTIONAL{ "
                     +"?scanning_uri  <"+Resources.hasProtocol+"> ?protocol . "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?scanning_uri  <"+Resources.hadSpecificPurpose+"> ?scope_of_scan_uri . "
+                    +"?scope_of_scan_uri <"+Resources.rdfsLabel+"> ?scope_of_scan . "
                 +"} "
                 +"OPTIONAL{ "
                     +"?scanning_uri  <"+Resources.observedDimension+"> ?timespan_preparation . "
@@ -4003,6 +4007,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 if (result.getValue("protocol") != null) {
                     struct.withProtocol(result.getValue("protocol").stringValue());
                 }
+                if (result.getValue("scope_of_scan") != null) {
+                    struct.withScopeOfScan(result.getValue("scope_of_scan").stringValue());
+                }
                 if (result.getValue("timespan_preparation_start") != null) {
                     struct.withPreparationTimestampStart(result.getValue("timespan_preparation_start").stringValue());
                 }
@@ -4036,7 +4043,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                                             +"?random_movement ?scan_degrees ?exposure_time "
                                             +"?product_uri ?product_name ?file_location ?dataset_uri ?dataset_name "
                                             +"?protocol ?timespan_preparation_start ?timespan_preparation_end "
-                                            +"?prep_scan_notes ?oversize_settings ?product_status "
+                                            +"?prep_scan_notes ?oversize_settings ?product_status ?scope_of_scan "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?scanning_uri <"+Resources.rdfTypeLabel+"> <"+Resources.digitizationProcessLabel+"> . "
@@ -4108,6 +4115,10 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"?dataset_uri <"+Resources.rdfsLabel+"> ?dataset_name. "
                 +"OPTIONAL{ "
                     +"?scanning_uri  <"+Resources.hasProtocol+"> ?protocol . "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?scanning_uri  <"+Resources.hadSpecificPurpose+"> ?scope_of_scan_uri . "
+                    +"?scope_of_scan_uri <"+Resources.rdfsLabel+"> ?scope_of_scan . "
                 +"} "
                 +"OPTIONAL{ "
                     +"?scanning_uri  <"+Resources.observedDimension+"> ?timespan_preparation . "
@@ -4192,6 +4203,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                         
                 if (result.getValue("protocol") != null) {
                     struct.withProtocol(result.getValue("protocol").stringValue());
+                }
+                if (result.getValue("scope_of_scan") != null) {
+                    struct.withScopeOfScan(result.getValue("scope_of_scan").stringValue());
                 }
                 if (result.getValue("timespan_preparation_start") != null) {
                     struct.withPreparationTimestampStart(result.getValue("timespan_preparation_start").stringValue());
