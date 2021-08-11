@@ -3584,7 +3584,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             queryString+="FILTER CONTAINS(LCASE(?specimenName),\""+specimen.toLowerCase()+"\"). ";
         }
         if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?datasetURI),\""+datasetURI.toLowerCase()+"\"). ";
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
         }
         if(species!=null && !species.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
@@ -3884,7 +3884,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             queryString+="FILTER CONTAINS(LCASE(?scanning_label),\""+scanning.toLowerCase()+"\"). ";
         }
         if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?dataset_uri),\""+datasetURI.toLowerCase()+"\"). ";
+            queryString+="FILTER CONTAINS(LCASE(STR(?dataset_uri)),\""+datasetURI.toLowerCase()+"\"). ";
         }
         queryString+="} ";
                 
@@ -4074,7 +4074,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             queryString+="FILTER CONTAINS(LCASE(?scanning_label),\""+scanning.toLowerCase()+"\"). ";
         }
         if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?dataset_uri),\""+datasetURI.toLowerCase()+"\"). ";
+            queryString+="FILTER CONTAINS(LCASE(STR(?dataset_uri)),\""+datasetURI.toLowerCase()+"\"). ";
         }
         queryString+="LIMIT "+limit+" "
                     +"OFFSET "+offset+" } ";
