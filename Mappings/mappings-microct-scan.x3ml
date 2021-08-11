@@ -618,6 +618,45 @@
             <link>
                 <path>
                     <source_relation>
+                        <relation>ScopeOfScan</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P20_had_specific_purpose</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScopeOfScan</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E5_Event</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scan_scope</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
                         <relation>SampleHolder</relation>
                     </source_relation>
                     <target_relation>
