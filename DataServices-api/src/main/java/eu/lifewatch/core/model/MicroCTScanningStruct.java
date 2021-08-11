@@ -59,6 +59,7 @@ public class MicroCTScanningStruct {
     private String scanningDuration;
     private String preparationTimestampStart;
     private String preparationTimestampEnd;
+    private String scopeOfScan;
     
     private static final Logger logger=Logger.getLogger(MicroCTScanningStruct.class);
     
@@ -104,6 +105,7 @@ public class MicroCTScanningStruct {
         scanDate="";
         preparationTimestampStart="";
         preparationTimestampEnd="";
+        scopeOfScan="";
     }
     
     public String getSpecimenURI() {
@@ -217,6 +219,10 @@ public class MicroCTScanningStruct {
     public String getActorURI() {
         return actorURI;
     }
+      
+    public String getScopeOfScan() {
+        return this.scopeOfScan;
+    }
      
      public void setSpecimenURI(String specimenURI) {
         this.specimenURI = specimenURI;
@@ -312,6 +318,10 @@ public class MicroCTScanningStruct {
 
     public void setProducts(List<Pair> products) {
         this.products = products;
+    }
+
+    public void setScopeOfScan(String scope) {
+        this.scopeOfScan = scope;
     }
        
     public MicroCTScanningStruct withSpecimenURI(String specimenURI) {
@@ -515,6 +525,11 @@ public class MicroCTScanningStruct {
         this.productStatus = status;
         return this;
     }
+    
+    public MicroCTScanningStruct withScopeOfScan(String scope) {
+        this.scopeOfScan = scope;
+        return this;
+    }
      
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
@@ -640,6 +655,7 @@ public class MicroCTScanningStruct {
               +"BeginOfPreparationTimestamp: "+this.preparationTimestampStart+"\t"
               +"EndOfPreparationTimestamp: "+this.preparationTimestampEnd+"\t"
               +"Notes: "+this.description+"\t"
+              +"ScopeOfScan: "+this.scopeOfScan+"\t"
               +"SampleHolder: "+this.sampleHolder+"\t"
               +"ScanningMedium: "+this.scanningMedium+"\t"
               +"ScannedPart: "+this.scannedPart+"\t"
