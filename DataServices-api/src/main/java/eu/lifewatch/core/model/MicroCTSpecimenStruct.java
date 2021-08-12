@@ -25,7 +25,9 @@ public class MicroCTSpecimenStruct {
     private String specimenType;
     private String speciesURI;
     private String speciesName;
+    private String taxonomicGroup;
     private String fixationType;
+    private String material;
     private String preservationType;
     private String dimensionUnit;
     private String dimensionValue;
@@ -36,6 +38,7 @@ public class MicroCTSpecimenStruct {
     private String institutionName;
     private String datasetURI;
     private String datasetName;
+    private String storagePlace;
     
     private static final Logger logger=Logger.getLogger(MicroCTSpecimenStruct.class);
     /**Creates a new instance by initializing 
@@ -61,6 +64,9 @@ public class MicroCTSpecimenStruct {
         institutionName="";
         fixationType="";
         preservationType="";
+        storagePlace="";
+        material="";
+        taxonomicGroup="";
     }
 
     public String getCollectionURI() {
@@ -145,6 +151,26 @@ public class MicroCTSpecimenStruct {
     
     public String getPreservationType() {
         return preservationType;
+    }
+    
+    public String getStoragePlace() {
+        return storagePlace;
+    }
+    
+    public String getTaxonomicGroup() {
+        return taxonomicGroup;
+    }
+    
+    public String getMaterial() {
+        return material;
+    }
+     
+    public void setTaxonomicGroup(String taxonomicGroup) {
+        this.taxonomicGroup = taxonomicGroup;
+    }
+     
+    public void setMaterial(String material) {
+        this.material = material;
     }
      
     public void setSpecimenName(String specimenName) {
@@ -233,6 +259,10 @@ public class MicroCTSpecimenStruct {
 
     public void setDatasetName(String datasetName) {
         this.datasetName = datasetName;
+    }
+    
+    public void setStoragePlace(String storagePlace) {
+        this.storagePlace = storagePlace;
     }
     
     public MicroCTSpecimenStruct withSpeciesURI(String speciesURI) {
@@ -328,6 +358,31 @@ public class MicroCTSpecimenStruct {
     
     public MicroCTSpecimenStruct  withDimensionTypeURI(String dimensionTypeURI) {
         this.dimensionTypeURI = dimensionTypeURI;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct  withFixationType(String fixationValue) {
+        this.fixationType = fixationValue  ;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct  withPreservationType(String preservationMediumValue) {
+        this.preservationType = preservationMediumValue  ;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct withStoragePlace(String storagePlace){
+        this.storagePlace = storagePlace;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct withTaxonomicGroup(String taxonomicGroup){
+        this.taxonomicGroup = taxonomicGroup;
+        return this;
+    }
+    
+    public MicroCTSpecimenStruct withMaterial(String material){
+        this.material = material;
         return this;
     }
    
@@ -460,6 +515,7 @@ public class MicroCTSpecimenStruct {
               +"SpecimenURI: "+specimenURI+"\t"
               +"DatasetURI: "+datasetURI+"\t"
               +"DatasetName: "+datasetName+"\t"
+              +"Material: "+material+"\t"
               +"SpeciesURI: "+speciesURI+"\t"
               +"SpeciesName: "+speciesName+"\t"
               +"Description: "+description+"\t"
@@ -471,7 +527,9 @@ public class MicroCTSpecimenStruct {
               +"InstitutionURI: "+institutionURI+"\t"
               +"InstitutionName: "+institutionName+"\t"
               +"FixationType: "+fixationType+"\t"
-              +"PreservationType: "+preservationType;
+              +"PreservationType: "+preservationType+"\t"
+              +"StoragePlace: "+storagePlace+"\t"
+              +"TaxonomicGroup: "+taxonomicGroup;
     }
     
     @Override

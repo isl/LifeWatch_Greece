@@ -676,7 +676,7 @@ public class DirectoryStruct {
             }
 
             if (!this.description.isEmpty()) {
-                retTriples += "<" + this.datasetURI + "> <" + Resources.hasNote + "> \"" + this.description + "\" .\n";
+                retTriples += "<" + this.datasetURI + "> <" + Resources.hasNote + "> \"" + this.description.replaceAll("\"", "\'") + "\" .\n";
             }
             if (!this.locationURL.isEmpty()) {
                 retTriples += "<" + this.datasetURI + "> <" + Resources.isLocatedAt + "> <" + this.locationURL + "> .\n"
@@ -852,12 +852,15 @@ public class DirectoryStruct {
     public String toString() {
         return "Dataset URI: " + this.datasetURI + "\t"
                 + "Dataset name: " + this.datasetName + "\t"
+                + "Dataset ID: " + this.datasetID + "\t"
+                + "Dataset Type: " + this.datasetType + "\t"
                 + "Keeper URI: " + this.keeperURI + "\t"
                 + "Keeper name: " + this.keeperName + "\t"
                 + "Curator URI: " + this.curatorURI + "\t"
                 + "Curator name: " + this.curatorName + "\t"
                 + "Owner URI: " + this.ownerURI + "\t"
                 + "Owner name: " + this.ownerName + "\t"
+                + "Creator URI: " + this.creatorURI + "\t"
                 + "Creator name: " + this.creatorName + "\t"
                 + "License: " + this.accessRights + "\t"
                 + "License owner: " + this.rightsHolderName + "\t"

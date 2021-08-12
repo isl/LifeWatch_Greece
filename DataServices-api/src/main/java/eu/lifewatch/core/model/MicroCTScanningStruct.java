@@ -25,16 +25,22 @@ public class MicroCTScanningStruct {
     private String equipmentURI;
     private String equipment;
     private String contrastMethod;
+    private String protocol;
     private String voltage;
+    private String current;
     private String filter;
     private String zoom;
+    private String cameraResolution;
+    private String averaging;
+    private String randomMovement;
+    private String scanDegrees;
     private String exposureTime;
+    private String oversizeSettings;
     private String methodName;
     private String methodURI;
     private String scanningURI;
     private String scanning;
     private String scanningLabel;
-    private String timespan;
     private String actorURI;
     private String actorName;
     private String deviceURI;
@@ -44,6 +50,16 @@ public class MicroCTScanningStruct {
     private String datasetURI;
     private String datasetName;
     private List<Pair> products;
+    private String productStatus;
+    private String fileLocation;
+    private String sampleHolder;
+    private String scanningMedium;
+    private String scannedPart;
+    private String scanDate;
+    private String scanningDuration;
+    private String preparationTimestampStart;
+    private String preparationTimestampEnd;
+    private String scopeOfScan;
     
     private static final Logger logger=Logger.getLogger(MicroCTScanningStruct.class);
     
@@ -56,16 +72,22 @@ public class MicroCTScanningStruct {
         equipmentURI="";
         equipment="";
         contrastMethod = "";
+        protocol = "";
         voltage = "";
+        current = "";
         filter = "";
         zoom = "";
+        cameraResolution = "";
+        averaging = "";
+        randomMovement = "";
+        scanDegrees = "";
         exposureTime = "";
+        oversizeSettings = "";
         methodName="";
         methodURI="";
         scanningURI="";
         scanning="";
         scanningLabel="";
-        timespan="";
         deviceURI="";
         deviceName="";
         datasetURI="";
@@ -74,6 +96,16 @@ public class MicroCTScanningStruct {
         actorName="";
         actorURI="";
         products=new ArrayList<>();
+        productStatus="";
+        fileLocation="";
+        sampleHolder="";
+        scanningMedium="";
+        scannedPart="";
+        scanningDuration="";
+        scanDate="";
+        preparationTimestampStart="";
+        preparationTimestampEnd="";
+        scopeOfScan="";
     }
     
     public String getSpecimenURI() {
@@ -123,9 +155,9 @@ public class MicroCTScanningStruct {
     public List<Pair> getProducts(){
         return this.products;
     }
-     
+    
     public String getTimespan() {
-        return timespan;
+        return this.scanDate;
     }
     
     public String getDeviceName() {
@@ -187,6 +219,10 @@ public class MicroCTScanningStruct {
     public String getActorURI() {
         return actorURI;
     }
+      
+    public String getScopeOfScan() {
+        return this.scopeOfScan;
+    }
      
      public void setSpecimenURI(String specimenURI) {
         this.specimenURI = specimenURI;
@@ -245,7 +281,7 @@ public class MicroCTScanningStruct {
     }
 
     public void setTimespan(String timespan) {
-        this.timespan = timespan;
+        this.scanDate = timespan;
     }
 
     public void setActorURI(String actorURI) {
@@ -283,6 +319,10 @@ public class MicroCTScanningStruct {
     public void setProducts(List<Pair> products) {
         this.products = products;
     }
+
+    public void setScopeOfScan(String scope) {
+        this.scopeOfScan = scope;
+    }
        
     public MicroCTScanningStruct withSpecimenURI(String specimenURI) {
         this.specimenURI = specimenURI;
@@ -293,9 +333,9 @@ public class MicroCTScanningStruct {
         this.specimenName= specimenName;
         return this;
     }
-    
+        
     public MicroCTScanningStruct withTimespan(String timespan) {
-        this.timespan= timespan;
+        this.scanDate= timespan;
         return this;
     }
         
@@ -376,8 +416,18 @@ public class MicroCTScanningStruct {
         return this;
     }
     
+    public MicroCTScanningStruct withCurrent(String current) {
+        this.current= current;
+        return this;
+    }
+    
     public MicroCTScanningStruct withExposureTime(String exposureTime) {
         this.exposureTime= exposureTime;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withOversizeSettings(String oversizeSettings) {
+        this.oversizeSettings= oversizeSettings;
         return this;
     }
     
@@ -405,6 +455,81 @@ public class MicroCTScanningStruct {
         this.actorURI = actorURI;
         return this;
     }
+    
+    public MicroCTScanningStruct withSampleHolder(String sampleHolder) {
+        this.sampleHolder = sampleHolder;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScanningMedium(String scanningMedium) {
+        this.scanningMedium = scanningMedium;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScannedPart(String scannedPart) {
+        this.scannedPart = scannedPart;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScanDate(String scanDate) {
+        this.scanDate = scanDate;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withPreparationTimestampStart(String prepTimestamp) {
+        this.preparationTimestampStart = prepTimestamp;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withPreparationTimestampEnd(String prepTimestamp) {
+        this.preparationTimestampEnd = prepTimestamp;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScanningDuration(String duration) {
+        this.scanningDuration = duration;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withCameraResolution(String cameraResolution) {
+        this.cameraResolution = cameraResolution;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withAveraging(String averaging) {
+        this.averaging = averaging;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withRandomMovement(String randomMovement) {
+        this.randomMovement = randomMovement;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScanDegrees(String scanDegrees) {
+        this.scanDegrees = scanDegrees;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withProtocol(String protocol) {
+        this.protocol = protocol;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withProductStatus(String status) {
+        this.productStatus = status;
+        return this;
+    }
+    
+    public MicroCTScanningStruct withScopeOfScan(String scope) {
+        this.scopeOfScan = scope;
+        return this;
+    }
      
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
@@ -422,9 +547,6 @@ public class MicroCTScanningStruct {
             if(!deviceURI.isEmpty()){
                 retTriples+= "<"+scanningURI+"> <"+Resources.happenedOnDevice+"> <"+deviceURI+"> .\n";
             } 
-            if(!timespan.isEmpty()){
-                retTriples+= "<"+scanningURI+"> <"+Resources.hasTimespan+"> \""+timespan+"\" .\n";
-            }
             if(!actorURI.isEmpty()){
                 retTriples+= "<"+scanningURI+"> <"+Resources.carriedOutBy+"> <"+actorURI+"> .\n";
             }
@@ -523,21 +645,40 @@ public class MicroCTScanningStruct {
     public String toString(){
 
         return "ScanningURI: "+this.scanningURI+"\t"
+              +"ScanningLabel: "+this.scanningLabel+"\t"
               +"DatasetURI: "+this.datasetURI+"\t"
               +"DatasetTitle: "+this.datasetName+"\t"
+              +"SpecimenURI: "+this.specimenURI+"\t"
+              +"SpecimenName: "+this.specimenName+"\t"
+              +"ContrastEnhancementMethod: "+this.contrastMethod+"\t"
+              +"Protocol: "+this.protocol+"\t"
+              +"BeginOfPreparationTimestamp: "+this.preparationTimestampStart+"\t"
+              +"EndOfPreparationTimestamp: "+this.preparationTimestampEnd+"\t"
+              +"Notes: "+this.description+"\t"
+              +"ScopeOfScan: "+this.scopeOfScan+"\t"
+              +"SampleHolder: "+this.sampleHolder+"\t"
+              +"ScanningMedium: "+this.scanningMedium+"\t"
+              +"ScannedPart: "+this.scannedPart+"\t"
+              +"ActorURI: "+this.actorURI+"\t"
+              +"ActorName: "+this.actorName+"\t"
+              +"ScanDate: "+this.scanDate+"\t"
+              +"ScanDuration: "+this.scanningDuration+"\t"
               +"DeviceURI: "+this.deviceURI+"\t"
               +"DeviceName: "+this.deviceName+"\t"
               +"DeviceType: "+this.deviceType+"\t"
-              +"SpecimenURI: "+this.specimenURI+"\t"
-              +"SpecimenName: "+this.specimenName+"\t"
-              +"ActorURI: "+this.actorURI+"\t"
-              +"ActorName: "+this.actorName+"\t"
+              +"Voltage_kV: "+this.voltage+"\t"
+              +"Current_uA: "+this.current+"\t"
+              +"Filter: "+this.filter+"\t"
+              +"Zoom_um: "+this.zoom+"\t"
+              +"CameraResolution: "+this.cameraResolution+"\t"
+              +"Averaging: "+this.averaging+"\t"
+              +"RandomMovement: "+this.randomMovement+"\t"
+              +"ScanDegrees: "+this.scanDate+"\t"
+              +"ExposureTime_ms: "+this.exposureTime+"\t"
+              +"OversizeSettings: "+this.oversizeSettings+"\t"
+              +"FileLocation: "+this.fileLocation+"\t"
               +"Products: "+this.products+"\t"
-              +"Description: "+this.description+"\t"
-              +"EquipmentURI: "+this.equipmentURI+"\t"
-              +"MethodURI: "+this.methodURI+"\t"
-              +"MethodName: "+this.methodName+"\t"
-              +"Timespan: "+this.timespan;
+              +"ProductStatus: "+this.productStatus;
     }
     
     @Override

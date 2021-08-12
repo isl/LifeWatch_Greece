@@ -26,6 +26,7 @@ public class Resources {
     public static final String physicalObjectLabel = cidocCrmNamespace + "E19_Physical_Object";
     public static final String institutionLabel = cidocCrmNamespace + "E40_Legal_Body";
     public static final String appellationLabel = cidocCrmNamespace + "E41_Appellation";
+    public static final String typeLabel = cidocCrmNamespace + "E55_Type";
     public static final String languageLabel = cidocCrmNamespace + "E56_Language";
     public static final String collectionLabel = cidocCrmNamespace + "E78_Collection";
     public static final String placeLabel = cidocCrmNamespace + "E53_Place";
@@ -45,6 +46,10 @@ public class Resources {
     public static final String isSubjectTo = cidocCrmNamespace + "P104_is_subject_to";
     public static final String isComposedOf = cidocCrmNamespace + "P46_is_composed_of";
     public static final String hasTimespan = cidocCrmNamespace + "P4_has_timespan";
+    public static final String atSomeTimeWithin = cidocCrmNamespace + "P82_at_some_time_within";
+    public static final String hadAtMostDuration = cidocCrmNamespace + "P84_had_at_most_duration";
+    public static final String beginOfTheBegin = cidocCrmNamespace + "P82a_begin_of_the_begin";
+    public static final String endOfTheEnd = cidocCrmNamespace + "P82b_end_of_the_end";
     public static final String usedObjectOfType = cidocCrmNamespace + "P125_used_object_of_type";
     public static final String isIdentifiedBy = cidocCrmNamespace + "P1_is_identified_by";
     public static final String isDepictedBy = cidocCrmNamespace + "P62_is_depicted_by";
@@ -59,6 +64,7 @@ public class Resources {
     public static final String measured = cidocCrmNamespace + "P39_measured";
     public static final String observedDimension = cidocCrmNamespace + "P40_observed_dimension";
     public static final String hasValue = cidocCrmNamespace + "P90_has_value";
+    public static final String hadSpecificPurpose = cidocCrmNamespace + "P20_had_specific_purpose";
     public static final String wasCreatedBy = cidocCrmNamespace + "P94_was_created_by";
     public static final String hasUnit = cidocCrmNamespace + "P91_has_unit";
     public static final String formsPartOf = cidocCrmNamespace + "P5_forms_part_of";
@@ -92,6 +98,9 @@ public class Resources {
     public static final String hasCurrentLocation = crmDigNamespace + "L21F_happened_on_device";
     public static final String happenedOnDevice = crmDigNamespace + "L21F_happened_on_device";
     public static final String createdDerivative = crmDigNamespace + "L22F_created_derivative";
+    public static final String hadOutput = crmDigNamespace + "L11_had_output";
+    public static final String isStoredOn = crmDigNamespace + "L19i_is_stored_on";
+    public static final String hasComment = crmDigNamespace + "L47_has_comment";
     public static final String wasDerivationSourceFor = crmDigNamespace + "L21B_was_derivation_source_for";
 
     /*crm-sci classes and properties*/
@@ -112,6 +121,7 @@ public class Resources {
     public static final String bioticElementLabel = tloNamespace + "BC38_Biotic_Element";
     public static final String ecosystemEnvironmentLabel = tloNamespace + "BC14_Ecosystem_Environment";
     public static final String ecosystemLabel = tloNamespace + "BC12_Ecosystem";
+    public static final String bioticElementTypeLabel = tloNamespace + "BT10_Biotic_Element_Type";
     public static final String equipmentTypeLabel = tloNamespace + "BT11_Equipment_Type";
     public static final String datasetLabel = tloNamespace + "BC21_Dataset";
     public static final String waterAreaLabel = tloNamespace + "BC15_Water_Area";
@@ -128,6 +138,9 @@ public class Resources {
 
     public static final String belongsTo = tloNamespace + "LC10_belongs_to";
     public static final String belongsToType = tloNamespace + "LT8_belongs_to";
+    public static final String LC12_wasAttributedBy = tloNamespace + "LC12_was_attributed_by";
+    public static final String hasSection = tloNamespace + "LC27_has_section";
+    public static final String LC16_isComposedOf = tloNamespace + "LC16_is_composed_of";
 
     /*new classes and properties*/
     public static final String rdfTypeLabel = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
@@ -145,6 +158,9 @@ public class Resources {
     public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";
     public static final String hasFilter = cidocCrmNamespace + "P_has_filter";
     public static final String hasExposureTime = cidocCrmNamespace + "P_has_exposure_time";
+    public static final String hasProtocol = cidocCrmNamespace + "P_has_protocol";
+    public static final String usingSampleHolder = cidocCrmNamespace + "P_using_sample_holder";
+    public static final String usingScanningMedium = cidocCrmNamespace + "P_using_scanning_medium";
 
     public static final String rdfsLabel = rdfsNamespace + "label";
 
@@ -155,14 +171,66 @@ public class Resources {
     /*proper suffixes for files to be imported */
     public static final String ntriplesDefaultExtension1 = ".ntriples";
     public static final String ntriplesDefaultExtension2 = ".ttl";
+    public static final String N3_EXTENSION = ".n3";
     public static final String rdfDefaultExtension = ".rdf";
 
     /*A default namespace to be used*/
-    public static final String defaultNamespaceForURIs = "http://localhost/directory_service";
+    public static final String defaultNamespaceForURIs = "http://www.lifewatchgreece.eu/entity";
 
     /*the folder containing the fundamental queries*/
     public static final String fundamentalQueriesFolder = "FundamentalQueries";
     
     /*the folder containing the materialization queries*/
     public static final String materializationQueriesFolder = "MaterializationQueries";
+    
+    /* various instances and labels  */
+    public static final String fixationLabel="fixation";
+    public static final String preservationMediumLabel="preservation medium";
+    public static final String CAMERA_RESOLUTION_CONSTANT_VALUE="camera resolution";
+    public static final String CURRENT_CONSTANT_VALUE="current";
+    public static final String EXPOSURE_TIME_CONSTANT_VALUE="exposure time";
+    public static final String FILTER_CONSTANT_VALUE="filter";
+    public static final String FRAME_AVERAGING_CONSTANT_VALUE="frame averaging";
+    public static final String OVERSIZE_SETTINGS_CONSTANT_VALUE="οversize settings";
+    public static final String PREPARATION_TIME_CONSTANT_VALUE="preparation time";
+    public static final String RANDOM_MOVEMENT_CONSTANT_VALUE="random movement";
+    public static final String SCAN_DEGREES_CONSTANT_VALUE="scan degrees";
+    public static final String SCANNED_PART_CONSTANT_VALUE="scanned part";
+    public static final String SCANNING_CONSTANT_VALUE="scanning";
+    public static final String SCANNING_DURATION_CONSTANT_VALUE="scanning duration";
+    public static final String VOLTAGE_CONSTANT_VALUE="voltage";
+    public static final String ZOOM_CONSTANT_VALUE="zoom";
+    
+    /* DWCA Resources */
+    public static final String ABSTRACT="abstract";
+    public static final String ALTERNATE_IDENTIFIER="alternateIdentifier";
+    public static final String ASSOCIATED_PARTY="associatedParty";
+    public static final String CONTACT="contact";
+    public static final String CREATOR="creator";
+    public static final String EML_VERSION="emlVersion";
+    public static final String INDIVIDUAL_NAME="individualName";
+    public static final String INTELLECTUAL_RIGHTS="intellectualRights";
+    public static final String KEYWORD="keyword";
+    public static final String KEYWORD_SET="keywordSet";
+    public static final String KEYWORD_THESAURUS="keywordThesaurus";
+    public static final String PUB_DATE="pubDate";
+    public static final String TITLE="title";
+    public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
+    
+    public static final String MEDOBIS_FILE_RESOURCE_XML="resource.xml";
+    public static final String DWCA_FILENAME_PREFIX="dwca-";
+    public static final String DWCA_FILE_EXTENSION=".zip";
+    
+    public static final String LOCAL_DATASET_INSTANCES="local";
+    public static final String DIRECTORY_N3_FILENAME="directory.n3";
+    public static final String TAXONOMY_N3_FILENAME="taxomomy.n3";
+    public static final String SC_NAME_N3_FILENAME="sc_name.n3";
+    public static final String OCCURRENCE_TEMP_N3_FILENAME="occurence_temp.n3";
+    public static final String OCCURENCE_N3_FILENAME="occurence.n3";
+    public static final String MEASUREMENT_N3_FILENAME="measurement.n3";
+    public static final String ENVIRONMENTAL_N3_FILENAME="environmental.n3";
+    
+    public static final String DIRECTORY_CONSOLIDATED_N3_FILENAME="directory_cons.n3";
+    public static final String DIRECTORY_CONSOLIDATED_N3_FOLDER_NAME="_directory";
+    public static final String METADATA_CONSOLIDATED_N3_FILENAME="metadata.n3";
 }

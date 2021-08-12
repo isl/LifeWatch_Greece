@@ -324,7 +324,9 @@ public class TaxonomyStruct {
             }
         }   
         if(!kingdomName.isEmpty()){
-            retTriples+= "<"+phylumURI+"> <"+Resources.belongsTo+"> <"+kingdomURI+"> .\n";
+            if(!phylumURI.isEmpty()){
+                retTriples+= "<"+phylumURI+"> <"+Resources.belongsTo+"> <"+kingdomURI+"> .\n";
+            }
             retTriples+= "<"+kingdomURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+"> .\n";
             retTriples+= "<"+kingdomURI+"> <"+Resources.rdfsLabel+"> \""+kingdomName+"\" .\n";
         }
