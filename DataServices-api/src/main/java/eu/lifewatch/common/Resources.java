@@ -171,6 +171,7 @@ public class Resources {
     /*proper suffixes for files to be imported */
     public static final String ntriplesDefaultExtension1 = ".ntriples";
     public static final String ntriplesDefaultExtension2 = ".ttl";
+    public static final String N3_EXTENSION = ".n3";
     public static final String rdfDefaultExtension = ".rdf";
 
     /*A default namespace to be used*/
@@ -228,4 +229,8 @@ public class Resources {
     public static final String OCCURENCE_N3_FILENAME="occurence.n3";
     public static final String MEASUREMENT_N3_FILENAME="measurement.n3";
     public static final String ENVIRONMENTAL_N3_FILENAME="environmental.n3";
+    
+    public static final String DIRECTORY_CONSOLIDATED_N3_FILENAME="directory_cons.n3";
+    public static final String DIRECTORY_CONSOLIDATED_N3_FOLDER_NAME="_directory";
+    public static final String METADATA_CONSOLIDATED_N3_FILENAME="metadata.n3";
 }

@@ -1,14 +1,24 @@
 package eu.lifewatch.core.impl;
 
+import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.CommonNameStruct;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -75,21 +85,6 @@ public class Utils {
             return nTriples;
         }
     }
-              
-    public static void main(String[] args){
-        CommonNameStruct struct=new CommonNameStruct().withDatasetURI("http://localhost/commonName/dataset")
-                                                          .withDatasetName("dataset ")
-                                                          .withCommonName("common name ")
-                                                          .withCommonNameURI("http://localhost/commonName")
-                                                          .withLanguage("language ")
-                                                          .withLanguageURI("http://localhost/language")
-                                                          .withPlace("http://localhost/place", "place ")
-                                                          .withSpeciesName("species ")
-                                                          .withSpeciesURI("http://localhost/species");
-        System.out.println("SOUT"+struct.toNtriples().toString());
-        String subTriples=Utils.removeIndirectTriples(struct.toNtriples(), Arrays.asList("http://localhost/commonName"));
-        System.out.println(subTriples);
-    }
     
     public static String hashUri(String prefix, String hierarchy, String contents) throws UnsupportedEncodingException{
         String encodedContents=java.net.URLEncoder.encode(contents, "UTF-8").replace("+", "%20");
@@ -103,5 +98,77 @@ public class Utils {
         StreamResult result = new StreamResult(file);
         DOMSource source = new DOMSource(document);
         transformer.transform(source, result);
+    }
+    
+    public static void consolidateIptMedobisTransformedResources(File rootFolder, File targetFolder) throws IOException{
+        logger.info("Consolidating directory dataset resources");
+        List<Path> directoryResources;
+        try(Stream<Path> walk = Files.walk(Paths.get(rootFolder.getAbsolutePath()))){
+            directoryResources=walk.filter(Files::isRegularFile)
+                                   .filter(Files::isReadable)
+                                   .filter(p -> p.getFileName().toString().equals(Resources.DIRECTORY_N3_FILENAME))
+                                   .collect(Collectors.toList());
+        }
+        File dirFolder=new File(targetFolder.getAbsolutePath()+"/"+Resources.DIRECTORY_CONSOLIDATED_N3_FOLDER_NAME);
+        dirFolder.mkdir();
+        StringBuilder directoryResourcesBuilder=new StringBuilder();
+        for(Path dirPath : directoryResources){
+            for(String line : Files.readAllLines(dirPath, Charset.forName("UTF-8"))){
+                directoryResourcesBuilder.append(line)
+                                         .append("\n");
+            }
+        }
+        File outputFile=new File(dirFolder.getAbsolutePath()+"/"+Resources.DIRECTORY_CONSOLIDATED_N3_FILENAME);
+        logger.info("Export consolidated file with directory medatata "+outputFile.getAbsolutePath());
+        BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile),"UTF-8"));
+        writer.append(directoryResourcesBuilder.toString());
+        writer.flush();
+        writer.close();
+        
+        logger.info("Consolidating dataset metadata resources");
+        List<Path> metadataResources;
+        for(File folder : rootFolder.listFiles(file -> file.isDirectory())){
+            int fileCounter=1;
+            try(Stream<Path> walk = Files.walk(Paths.get(folder.getAbsolutePath()))){
+                metadataResources=walk.filter(Files::isRegularFile)
+                                      .filter(Files::isReadable)
+                                      .filter(p -> !p.getFileName().toString().equals(Resources.DIRECTORY_N3_FILENAME))
+                                      .collect(Collectors.toList());
+            }
+            File medatataFolder=new File(targetFolder.getAbsolutePath()+"/"+folder.getName());
+            medatataFolder.mkdir();
+            StringBuilder metadataResourcesBuilder=new StringBuilder();
+            for(Path metPath : metadataResources){
+                if(Files.size(metPath)>6*1024*1024){
+                    Files.copy(metPath, Paths.get(targetFolder.getAbsolutePath()+"/"+folder.getName()+"/"+metPath.getFileName()));
+                }else{
+                    for(String line : Files.readAllLines(metPath, Charset.forName("UTF-8"))){
+                        metadataResourcesBuilder.append(line)
+                                                .append("\n");
+                    }
+                    if(metadataResourcesBuilder.length()>=8*1024*1024){
+                        outputFile=new File(targetFolder.getAbsolutePath()+"/"+folder.getName()+"/"+Resources.METADATA_CONSOLIDATED_N3_FILENAME+"-"+fileCounter+Resources.N3_EXTENSION);
+                        logger.info("Export consolidated file with meradata "+outputFile.getAbsolutePath());
+                        writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile),"UTF8"));
+                        writer.append(metadataResourcesBuilder.toString());
+                        writer.flush();
+                        writer.close();
+                        fileCounter+=1;
+                        metadataResourcesBuilder=new StringBuilder();
+                    }
+                }
+            }
+            outputFile=new File(targetFolder.getAbsolutePath()+"/"+folder.getName()+"/"+Resources.METADATA_CONSOLIDATED_N3_FILENAME+"-"+fileCounter+Resources.N3_EXTENSION);
+            logger.info("Export consolidated file with meradata "+outputFile.getAbsolutePath());
+            writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile),"UTF8"));
+            writer.append(metadataResourcesBuilder.toString());
+            writer.flush();
+            writer.close();
+        }
+    }
+    
+    public static void main(String[] args) throws IOException{
+        consolidateIptMedobisTransformedResources(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/local"), new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/consolidated"));
+        
     }
 }
