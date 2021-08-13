@@ -233,7 +233,7 @@ public class DwCArchiveParser {
         if(keywordSets!=null){
             for(Element keywordSet : keywordSets){
                 if(keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS)!=null && keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS).text().contains(Resources.GBIF_THESAURUS_KEYWORD)){
-                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text());
+                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text()+" Dataset");
                 }
             }
         }
