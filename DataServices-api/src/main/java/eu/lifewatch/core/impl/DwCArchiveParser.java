@@ -481,7 +481,7 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceTempStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
             occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate",rec.value(DwcTerm.scientificName)));
-            occurrenceTempStruct.withTemporaryAggregate("Temporary Aggregate of species "+rec.value(DwcTerm.scientificName));
+            occurrenceTempStruct.withTemporaryAggregate("Temporary Aggregate of species "+rec.value(DwcTerm.occurrenceID));
         }
         if(rec.value(DwcTerm.locationID)!=null){
             occurrenceTempStruct.withStationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locationID)));
