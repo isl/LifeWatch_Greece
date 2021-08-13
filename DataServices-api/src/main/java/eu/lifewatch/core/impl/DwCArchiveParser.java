@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
     
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v2";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v2";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v3";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v3";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -461,6 +461,28 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.scientificName)!=null){
             occurrenceStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
+        }
+        if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
+            occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.minimumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
+            occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.maximumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.locality)!=null){
+            occurrenceStruct.withLocalityURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "locality",rec.value(DwcTerm.locality)));
+            occurrenceStruct.withLocalityName(rec.value(DwcTerm.locality));
+        }
+        if(rec.value(DwcTerm.samplingProtocol)!=null){
+            occurrenceStruct.withSamplingProtocolURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "sampling_protocol",rec.value(DwcTerm.samplingProtocol)));
+            occurrenceStruct.withSamplingProtocol(rec.value(DwcTerm.samplingProtocol));
+        }
+        if(rec.value(DwcTerm.habitat)!=null){
+            occurrenceStruct.withHabitatURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "habitat",rec.value(DwcTerm.habitat)));
+            occurrenceStruct.withHabitatName(rec.value(DwcTerm.habitat));
+        }
+        if(rec.value(DwcTerm.identificationReferences)!=null){
+            occurrenceStruct.withBibliographicCitationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "bibliographic_citation",rec.value(DwcTerm.identificationReferences)));
+            occurrenceStruct.withBibliographicCitation(rec.value(DwcTerm.identificationReferences));
         }
         return occurrenceStruct;
     }
