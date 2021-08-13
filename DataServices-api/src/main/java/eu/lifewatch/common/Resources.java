@@ -19,6 +19,7 @@ public class Resources {
     public static final String measurementEventLabel = cidocCrmNamespace + "E16_Measurement";
     public static final String creationEventLabel = cidocCrmNamespace + "E65_Creation";
     public static final String dimensionLabel = cidocCrmNamespace + "E54_Dimension";
+    public static final String measurementUnitLabel = cidocCrmNamespace + "E58_Measurement_Unit";
     public static final String identificationEventLabel = cidocCrmNamespace + "E17_Type_Assignment";
     public static final String transformationEventLabel = cidocCrmNamespace + "E81_Transformation";
     public static final String attributeAssignmentEventLabel = cidocCrmNamespace + "E13_Attribute_Assignment";
@@ -39,6 +40,7 @@ public class Resources {
 
     public static final String hasLanguage = cidocCrmNamespace + "P72_has_language";
     public static final String hasNote = cidocCrmNamespace + "P3_has_note";
+    public static final String consistsOf = cidocCrmNamespace + "P9_consists_of";
     public static final String hasCurrentKeeper = cidocCrmNamespace + "P49_has_current_keeper";
     public static final String hasCurrentOwner = cidocCrmNamespace + "P52_has_current_owner";
     public static final String hasContactPoint = cidocCrmNamespace + "P76_has_contact_point";

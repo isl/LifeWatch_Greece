@@ -111,73 +111,38 @@ public class DirectoryService implements Service {
     }
 
     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT "
-                + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
-                + "?ownerURI ?ownerName ?keeperURI ?keeperName "
-                + "?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
-                + "?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
-                + "?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
-                + "?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
-                + "?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + "?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + "?datasetURI <" + Resources.hasPreferredIdentifier + "> ?datasetName . "
-                + "?datasetURI <" + Resources.hasCurrentOwner + "> ?ownerURI . "
-                + "?datasetURI <" + Resources.hasType + "> ?datasetType . "
-                + "OPTIONAL { ?datasetURI <" + Resources.rdfsLabel + "> ?datasetID }. "
-                + "OPTIONAL {?datasetURI <" + Resources.isDepictedBy + "> ?imageURI} . "
-                + "?datasetURI <" + Resources.isReferredToBy + "> ?accessMethodURI.  "
-                + "?accessMethodURI <" + Resources.rdfTypeLabel + "> <" + Resources.procedureLabel + "> . "
-                + "?accessMethodURI <" + Resources.hasNote + "> ?accessMethod . "
-                //+ "?ownerURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?ownerURI <" + Resources.rdfsLabel + "> ?ownerName . "
-                + "?datasetURI <" + Resources.hasCurator + "> ?curatorURI. "
-                //+ "?curatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?curatorURI <" + Resources.rdfsLabel + "> ?curatorName.  "
-                + "?curatorURI <" + Resources.hasContactPoint + "> ?contactPoint.  "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasCurrentKeeper + "> ?keeperURI . "
-                //+ "?keeperURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + " ?keeperURI <" + Resources.rdfsLabel + "> ?keeperName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?publicationEventURI.  "
-                + "?publicationEventURI <" + Resources.carriedOutBy + "> ?publisherURI.  "
-                + "?publicationEventURI <" + Resources.rdfsLabel + "> ?publicationEventLabel.  "
-                + "?publicationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationEventLabel + "> . "
-                + "?publicationEventURI <" + Resources.hasTimespan + "> ?publicationDate.  "
-                //+ "?publisherURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?publisherURI <" + Resources.rdfsLabel+ "> ?publisherName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasContributor + "> ?contributorURI . "
-                // + "?contributorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?contributorURI <" + Resources.rdfsLabel + "> ?contributorName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?creationEventURI . "
-                + "?creationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.creationEventLabel + "> . "
-                + " ?creationEventURI <" + Resources.carriedOutBy + "> ?creatorURI . "
-                + " ?creationEventURI <" + Resources.rdfsLabel + "> ?creationEventLabel.  "
-                //+ "?creatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
-                + "?creatorURI <" + Resources.rdfsLabel + "> ?creatorName . "
-                + " ?creationEventURI <" + Resources.hasTimespan + "> ?creationDate }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasAttributedBy + "> ?attributeAssignmentEventURI . "
-                + "?attributeAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.attributeAssignmentEventLabel + "> . "
-                + "?attributeAssignmentEventURI <" + Resources.hasTimespan + "> ?embargoPeriod . "
-                + " ?attributeAssignmentEventURI <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel.  "
-                + "?attributeAssignmentEventURI <" + Resources.assigned + "> ?embargoState }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.isSubjectTo + "> ?accessRightsURI.  "
-                //+ "?accessRightsURI <"+Resources.rdfTypeLabel+"> <"+Resources.accessRightsLabel+"> . "
-                + "?accessRightsURI <" + Resources.rdfsLabel + "> ?accessRights . "
-                + "?datasetURI <" + Resources.isPossessedBy + "> ?rightsHolderURI .  "
-                //+ "?rightsHolder <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
-                + "?rightsHolderURI <" + Resources.rdfsLabel + "> ?rightsHolderName}. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasNote + "> ?description}. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.isLocatedAt + "> ?locationURL. "
-                + "?locationURL <" + Resources.hasType + "> \"URL\" }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.formsPartOf + "> ?parentDatasetURI . "
-                //+ "?parentDatasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> . " 
-                + "?parentDatasetURI <" + Resources.rdfsLabel + "> ?parentDatasetName}. "
-                + "FILTER regex(?datasetURI,'" + datasetURI + "',\"i\") "
-                + "FILTER regex(?ownerName,'" + ownerName + "',\"i\") "
-                + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
-                + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}";
+        return searchDataset(datasetName, ownerName, datasetURI, datasetType, -1, -1, repositoryGraph);
+    }
 
+     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+        logger.info("Request for dataset search with parameters "
+                   +"datasetName: ["+datasetName+"], "
+                   +"ownerName: ["+ownerName+"], "
+                   +"datasetUri: ["+datasetURI+"], "
+                   +"datasetType: ["+datasetType+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString=this.sparqlDataset(repositoryGraph);
+        if(datasetName!=null && !datasetName.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?datasetName),\""+datasetName.toLowerCase()+"\"). ";
+        }
+        if(ownerName!=null && !ownerName.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?ownerName),\""+ownerName.toLowerCase()+"\"). ";
+        }
+        if(datasetType!=null && !datasetType.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?datasetType),\""+datasetType.toLowerCase()+"\"). ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
+        if(limit>0){
+            queryString+=" LIMIT "+limit;
+        }
+        if(offset>0){
+            queryString+=" OFFSET "+offset;
+        }
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -195,7 +160,6 @@ public class DirectoryService implements Service {
                 if (result.getValue("datasetID") != null) {
                     struct.withDatasetID(result.getValue("datasetID").stringValue());
                 }
-
                 if (result.getValue("imageURI") != null) {
                     struct.withImageURI(result.getValue("imageURI").stringValue());
                 }
@@ -279,278 +243,94 @@ public class DirectoryService implements Service {
                 structsMap.put(struct.getDatasetURI(), struct);
             } else {
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-
                 if (result.getValue("contributorURI") != null) {
                     String contributorURI = result.getValue("contributorURI").stringValue();
                     String contributorName = result.getValue("contributorName").stringValue();
                     struct.withContributor(contributorURI, contributorName);
                 }
-
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
         return new ArrayList<>(structsMap.values());
     }
-
-     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT "
-                + "?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
-                + "?ownerURI ?ownerName ?keeperURI ?keeperName "
-                + "?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
-                + "?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
-                + "?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
-                + "?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
-                + "?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + "?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + "?datasetURI <" + Resources.hasPreferredIdentifier + "> ?datasetName . "
-                + "?datasetURI <" + Resources.hasCurrentOwner + "> ?ownerURI . "
-                + "?datasetURI <" + Resources.hasType + "> ?datasetType . "
-                + "OPTIONAL { ?datasetURI <" + Resources.rdfsLabel + "> ?datasetID }. "
-                + "OPTIONAL {?datasetURI <" + Resources.isDepictedBy + "> ?imageURI} . "
-                + "?datasetURI <" + Resources.isReferredToBy + "> ?accessMethodURI.  "
-                + "?accessMethodURI <" + Resources.rdfTypeLabel + "> <" + Resources.procedureLabel + "> . "
-                + "?accessMethodURI <" + Resources.hasNote + "> ?accessMethod . "
-                //+ "?ownerURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?ownerURI <" + Resources.rdfsLabel + "> ?ownerName . "
-                + "?datasetURI <" + Resources.hasCurator + "> ?curatorURI. "
-                //+ "?curatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?curatorURI <" + Resources.rdfsLabel + "> ?curatorName.  "
-                + "?curatorURI <" + Resources.hasContactPoint + "> ?contactPoint.  "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasCurrentKeeper + "> ?keeperURI . "
-                //+ "?keeperURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + " ?keeperURI <" + Resources.rdfsLabel + "> ?keeperName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?publicationEventURI.  "
-                + "?publicationEventURI <" + Resources.carriedOutBy + "> ?publisherURI.  "
-                + "?publicationEventURI <" + Resources.rdfsLabel + "> ?publicationEventLabel .  "
-                + "?publicationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.publicationEventLabel + "> . "
-                + "?publicationEventURI <" + Resources.hasTimespan + "> ?publicationDate.  "
-                //+ "?publisherURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?publisherURI <" + Resources.rdfsLabel+ "> ?publisherName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasContributor + "> ?contributorURI . "
-                // + "?contributorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + "?contributorURI <" + Resources.rdfsLabel + "> ?contributorName }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasCreatedBy + "> ?creationEventURI . "
-                + "?creationEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.creationEventLabel + "> . "
-                + " ?creationEventURI <" + Resources.carriedOutBy + "> ?creatorURI . "
-                + " ?creationEventURI <" + Resources.rdfsLabel + "> ?creationEventLabel.  "
-                //+ "?creatorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
-                + "?creatorURI <" + Resources.rdfsLabel + "> ?creatorName . "
-                + " ?creationEventURI <" + Resources.hasTimespan + "> ?creationDate }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.wasAttributedBy + "> ?attributeAssignmentEventURI . "
-                + "?attributeAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.attributeAssignmentEventLabel + "> . "
-                + "?attributeAssignmentEventURI<" + Resources.hasTimespan + "> ?embargoPeriod . "
-                + " ?attributeAssignmentEventURI <" + Resources.rdfsLabel + "> ?attributeAssignmentEventLabel.  "
-                + "?attributeAssignmentEventURI <" + Resources.assigned + "> ?embargoState }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.isSubjectTo + "> ?accessRightsURI.  "
-                //+ "?accessRightsURI <"+Resources.rdfTypeLabel+"> <"+Resources.accessRightsLabel+"> . "
-                + "?accessRightsURI <" + Resources.rdfsLabel + "> ?accessRights . "
-                + "?datasetURI <" + Resources.isPossessedBy + "> ?rightsHolderURI .  "
-                //+ "?rightsHolder <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . " 
-                + "?rightsHolderURI <" + Resources.rdfsLabel + "> ?rightsHolderName}. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.hasNote + "> ?description}. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.isLocatedAt + "> ?locationURL. "
-                + "?locationURL <" + Resources.hasType + "> \"URL\" }. "
-                + "OPTIONAL{ ?datasetURI <" + Resources.formsPartOf + "> ?parentDatasetURI . "
-                //+ "?parentDatasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> . " 
-                + "?parentDatasetURI <" + Resources.rdfsLabel + "> ?parentDatasetName}. "
-                + "FILTER regex(?datasetURI,'" + datasetURI + "',\"i\") "
-                + "FILTER regex(?ownerName,'" + ownerName + "',\"i\") "
-                + "FILTER regex(?datasetType,'" + datasetType + "',\"i\") "
-                + "FILTER regex(?datasetName,'" + datasetName + "',\"i\")}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
-
-        logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
-       // Map<String, DirectoryStruct> structsMap = new HashMap<>();
-        List<DirectoryStruct> results = new ArrayList();
-        for (BindingSet result : sparqlresults) {
-           // if (!structsMap.containsKey(result.getValue("datasetURI").stringValue())) {
-                DirectoryStruct struct = new DirectoryStruct().withDatasetURI(result.getValue("datasetURI").stringValue())
-                        .withDatasetName(result.getValue("datasetName").stringValue())
-                        .withDatasetType(result.getValue("datasetType").stringValue())
-                        .withOwnerURI(result.getValue("ownerURI").stringValue())
-                        .withOwnerName(result.getValue("ownerName").stringValue())
-                        .withCuratorURI(result.getValue("curatorURI").stringValue())
-                        .withCuratorName(result.getValue("curatorName").stringValue())
-                        .withContactPoint(result.getValue("contactPoint").stringValue());
-                if (result.getValue("datasetID") != null) {
-                    struct.withDatasetID(result.getValue("datasetID").stringValue());
-                }
-
-                if (result.getValue("imageURI") != null) {
-                    struct.withImageURI(result.getValue("imageURI").stringValue());
-                }
-                if (result.getValue("keeperURI") != null) {
-                    struct.withKeeperURI(result.getValue("keeperURI").stringValue());
-                }
-                if (result.getValue("keeperName") != null) {
-                    struct.withKeeperName(result.getValue("keeperName").stringValue());
-                }
-                if (result.getValue("publisherURI") != null) {
-                    struct.withPublisherURI(result.getValue("publisherURI").stringValue());
-                }
-                if (result.getValue("publisherName") != null) {
-                    struct.withPublisherName(result.getValue("publisherName").stringValue());
-                }
-                if (result.getValue("publicationDate") != null) {
-                    struct.withPublicationDate(result.getValue("publicationDate").stringValue());
-                }
-                if (result.getValue("publicationEventURI") != null) {
-                    struct.withPublicationEventURI(result.getValue("publicationEventURI").stringValue());
-                    struct.withPublicationEvent(result.getValue("publicationEventLabel").stringValue());
-                }
-                if (result.getValue("attributeAssignmentEventURI") != null) {
-                    struct.withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue());
-                    struct.withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue());
-               
-                }
-                if (result.getValue("embargoState") != null) {
-                    struct.withEmbargoState(result.getValue("embargoState").stringValue());
-                }
-                if (result.getValue("embargoPeriod") != null) {
-                    struct.withEmbargoPeriod(result.getValue("embargoPeriod").stringValue());
-                }
-                if (result.getValue("contributorURI") != null) {
-                    String contributorURI = result.getValue("contributorURI").stringValue();
-                    String contributorName = result.getValue("contributorName").stringValue();
-                    struct.withContributor(contributorURI, contributorName);
-                }
-                if (result.getValue("rightsHolderURI") != null) {
-                    struct.withRightsHolderURI(result.getValue("rightsHolderURI").stringValue());
-                }
-                if (result.getValue("rightsHolderName") != null) {
-                    struct.withRightsHolderName(result.getValue("rightsHolderName").stringValue());
-                }
-                if (result.getValue("creatorURI") != null) {
-                    struct.withCreatorURI(result.getValue("creatorURI").stringValue());
-                }
-                if (result.getValue("creatorName") != null) {
-                    struct.withCreatorName(result.getValue("creatorName").stringValue());
-                }
-                if (result.getValue("accessRightsURI") != null) {
-                    struct.withAccessRightsURI(result.getValue("accessRightsURI").stringValue());
-                }
-                if (result.getValue("accessRights") != null) {
-                    struct.withAccessRights(result.getValue("accessRights").stringValue());
-                }
-                if (result.getValue("creationEventURI") != null) {
-                    struct.withCreationEventURI(result.getValue("creationEventURI").stringValue());
-                    struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
-                }
-                if (result.getValue("creationDate") != null) {
-                    struct.withCreationDate(result.getValue("creationDate").stringValue());
-                }
-                if (result.getValue("accessMethod") != null) {
-                    struct.withAccessMethod(result.getValue("accessMethod").stringValue());
-                }
-                if (result.getValue("accessMethodURI") != null) {
-                    struct.withAccessMethodURI(result.getValue("accessMethodURI").stringValue());
-                }
-                if (result.getValue("description") != null) {
-                    struct.withDescription(result.getValue("description").stringValue());
-                }
-                if (result.getValue("locationURL") != null) {
-                    struct.withLocationURL(result.getValue("locationURL").stringValue());
-                }
-                if (result.getValue("parentDatasetURI") != null) {
-                    struct.withParentDatasetURI(result.getValue("parentDatasetURI").stringValue());
-                }
-                if (result.getValue("parentDatasetName") != null) {
-                    struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
-                }
-                results.add(struct);
-//                structsMap.put(struct.getDatasetURI(), struct);
-//            } else {
-//                DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
-//
-//                if (result.getValue("contributorURI") != null) {
-//                    String contributorURI = result.getValue("contributorURI").stringValue();
-//                    String contributorName = result.getValue("contributorName").stringValue();
-//                    struct.withContributor(contributorURI, contributorName);
-//                }
-//
-//                structsMap.put(struct.getDatasetURI(), struct);
-//            }
-        }
-         return results;
-       // return new ArrayList<>(structsMap.values());
+     
+    private String sparqlDataset(String namedgraph){
+        return "SELECT DISTINCT ?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
+                +"?ownerURI ?ownerName ?keeperURI ?keeperName "
+                +"?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
+                +"?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
+                +"?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
+                +"?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
+                +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
+                +"FROM <"+namedgraph+"> "
+                +"WHERE{ "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.hasPreferredIdentifier+"> ?datasetName. "
+                +"?datasetURI <"+Resources.hasCurrentOwner+"> ?ownerURI. "
+                +"?datasetURI <"+Resources.hasType+"> ?datasetType. "
+                +"?datasetURI <"+Resources.isReferredToBy+"> ?accessMethodURI. "
+                +"?accessMethodURI <"+Resources.rdfTypeLabel+"> <"+Resources.procedureLabel+">. "
+                +"?accessMethodURI <"+Resources.hasNote+"> ?accessMethod. "
+                +"?ownerURI <"+Resources.rdfsLabel+"> ?ownerName. "
+                +"?datasetURI <"+Resources.hasCurator+"> ?curatorURI. "
+                +"?curatorURI <"+Resources.rdfsLabel+"> ?curatorName. "
+                +"?curatorURI <"+Resources.hasContactPoint+"> ?contactPoint. "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetID. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.isDepictedBy+"> ?imageURI. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.hasCurrentKeeper+"> ?keeperURI. "
+                    +"?keeperURI <"+Resources.rdfsLabel+"> ?keeperName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?publicationEventURI. "
+                    +"?publicationEventURI <"+Resources.carriedOutBy+"> ?publisherURI. "
+                    +"?publicationEventURI <"+Resources.rdfsLabel+"> ?publicationEventLabel. "
+                    +"?publicationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.publicationEventLabel+">. "
+                    +"?publicationEventURI <"+Resources.hasTimespan+"> ?publicationDate. "
+                    +"?publisherURI <"+Resources.rdfsLabel+ "> ?publisherName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.hasContributor+"> ?contributorURI. "
+                    +"?contributorURI <"+Resources.rdfsLabel+"> ?contributorName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?creationEventURI. "
+                    +"?creationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.creationEventLabel+">. "
+                    +"?creationEventURI <"+Resources.carriedOutBy+"> ?creatorURI. "
+                    +"?creationEventURI <"+Resources.rdfsLabel+"> ?creationEventLabel.  "
+                    +"?creatorURI <"+Resources.rdfsLabel+"> ?creatorName. "
+                    +"?creationEventURI <"+Resources.hasTimespan+"> ?creationDate. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.wasAttributedBy+"> ?attributeAssignmentEventURI. "
+                    +"?attributeAssignmentEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.attributeAssignmentEventLabel+">. "
+                    +"?attributeAssignmentEventURI <"+Resources.hasTimespan+"> ?embargoPeriod. "
+                    +"?attributeAssignmentEventURI <"+Resources.rdfsLabel+"> ?attributeAssignmentEventLabel. "
+                    +"?attributeAssignmentEventURI <"+Resources.assigned+"> ?embargoState. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.isSubjectTo+"> ?accessRightsURI. "
+                    +"?accessRightsURI <"+Resources.rdfsLabel+"> ?accessRights. "
+                    +"?datasetURI <"+Resources.isPossessedBy+"> ?rightsHolderURI. "
+                    +"?rightsHolderURI <"+Resources.rdfsLabel+"> ?rightsHolderName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.hasNote+"> ?description. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.isLocatedAt+"> ?locationURL. "
+                    +"?locationURL <"+Resources.hasType+"> \"URL\". "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.formsPartOf+"> ?parentDatasetURI. "
+                    +"?parentDatasetURI <"+Resources.rdfsLabel+"> ?parentDatasetName. "
+                +"} ";
     }
-    
-    
-//     public List<Struct> searchDataset(DirectoryStruct structName, String repositoryGraph) throws QueryExecutionException{
-//        String queryString="SELECT DISTINCT ?d_uri ?d_name ?k_uri ?k_name ?o_uri ?o_name ?c_uri ?c_name ?contact_point ?acc_method ?license_owner ?license ?note ?located ?p_uri "
-//                          +"FROM <"+repositoryGraph+"> "
-//                          +"WHERE{ "
-//                          +"?d_uri <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> . "
-//                          +"?d_uri  <"+Resources.isIdentifiedBy+"> ?d_name . "
-//                          +"?d_uri <"+Resources.hasCurrentOwner+"> ?o_uri . "
-//                          +"?o_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-//                          +"?o_uri <"+Resources.isIdentifiedBy+"> ?o_name . "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurrentKeeper+"> ?k_uri }. "
-//                          +"OPTIONAL{ ?k_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
-//                          +"OPTIONAL{ ?k_uri <"+Resources.isIdentifiedBy+"> ?k_name}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasCurator+"> ?c_uri }. "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> }. "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.isIdentifiedBy+"> ?c_name}.  "
-//                          +"OPTIONAL{ ?c_uri <"+Resources.hasContactPoint+"> ?contact_point}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasAccessMethod+"> ?acc_method}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.rightsHeldBy+"> ?license_owner}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.isSubjectTo+"> ?license}.  "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.hasNote+"> ?note}. "
-//                          +"OPTIONAL{ ?d_uri <"+Resources.isLocatedAt+"> ?located}. "
-//                          +"OPTIONAL{ ?p_uri <"+Resources.isComposedOf+"> ?d_uri}. "
-//                          +"FILTER regex(?k_name,'"+structName.getKeeperName()+"',\"i\") "
-//                          +"FILTER regex(?d_name,'"+structName.getDatasetName()+"',\"i\")}";
-//        logger.debug("Submitting the query: \""+queryString+"\"");
-//        List<BindingSet> sparqlresults=this.repoManager.query(queryString);
-//        logger.debug("The result returned "+sparqlresults.size()+" results");
-//        List<Struct> results=new ArrayList<>();
-//        for(BindingSet result : sparqlresults){
-//            DirectoryStruct struct=new DirectoryStruct().withDatasetURI(result.getValue("d_uri").stringValue())
-//                                      .withDatasetName(result.getValue("d_name").stringValue())
-//                                      .withOwnerURI(result.getValue("o_uri").stringValue())
-//                                      .withOwnerName(result.getValue("o_name").stringValue());
-//            if(result.getValue("k_uri")!=null){
-//                struct.withOwnerURI(result.getValue("k_uri").stringValue());
-//            }      
-//            if(result.getValue("k_name")!=null){
-//                struct.withOwnerName(result.getValue("k_name").stringValue());
-//            }
-//            if(result.getValue("c_uri")!=null){
-//                struct.withCuratorURI(result.getValue("c_uri").stringValue());
-//            }      
-//            if(result.getValue("c_name")!=null){
-//                struct.withCuratorName(result.getValue("c_name").stringValue());
-//            }
-//            if(result.getValue("contact_point")!=null){
-//                struct.withContactPoint(result.getValue("contact_point").stringValue());
-//            }
-//            if(result.getValue("acc_method")!=null){
-//                struct.withAccessMethod(result.getValue("acc_method").stringValue());
-//            }
-//            if(result.getValue("license_owner")!=null){
-//                struct.withRightsHolderURI(result.getValue("license_owner").stringValue());
-//            }
-//            if(result.getValue("license")!=null){
-//                struct.withAccessRightsURI(result.getValue("license").stringValue());
-//            }
-//            if(result.getValue("note")!=null){
-//                struct.withNote(result.getValue("note").stringValue());
-//            }
-//            if(result.getValue("located")!=null){
-//                struct.withLocation(result.getValue("located").stringValue());
-//            }
-//            if(result.getValue("p_uri")!=null){
-//                struct.withParentDatasetURI(result.getValue("p_uri").stringValue());
-//            }            
-//            results.add(struct);
-//        }
-//        return results;
-//    }
+ 
     /**
      * Searches for triples containing the given resource. In particular it
      * searches the repository, under the given graphspace, for triples

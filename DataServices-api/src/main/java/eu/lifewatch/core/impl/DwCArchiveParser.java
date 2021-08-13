@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
     
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v5";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v5";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -233,7 +233,7 @@ public class DwCArchiveParser {
         if(keywordSets!=null){
             for(Element keywordSet : keywordSets){
                 if(keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS)!=null && keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS).text().contains(Resources.GBIF_THESAURUS_KEYWORD)){
-                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text());
+                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text()+" Dataset");
                 }
             }
         }
@@ -443,6 +443,15 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.eventDate)!=null){
             occurrenceStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
         }
+        if(rec.value(DwcTerm.identifiedBy)!=null){
+            String[] actors=rec.value(DwcTerm.identifiedBy).split(",");
+            for(String actor : actors){
+                actor=actor.trim();
+                if(!actor.isEmpty()){
+                    occurrenceStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", actor),actor);
+                }
+            }   
+        }
         if(rec.value(DwcTerm.decimalLatitude)!=null){
             occurrenceStruct.withLatitude(rec.value(DwcTerm.decimalLatitude));
         }
@@ -452,6 +461,28 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.scientificName)!=null){
             occurrenceStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
+        }
+        if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
+            occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.minimumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
+            occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.maximumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.locality)!=null){
+            occurrenceStruct.withLocalityURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "locality",rec.value(DwcTerm.locality)));
+            occurrenceStruct.withLocalityName(rec.value(DwcTerm.locality));
+        }
+        if(rec.value(DwcTerm.samplingProtocol)!=null){
+            occurrenceStruct.withSamplingProtocolURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "sampling_protocol",rec.value(DwcTerm.samplingProtocol)));
+            occurrenceStruct.withSamplingProtocol(rec.value(DwcTerm.samplingProtocol));
+        }
+        if(rec.value(DwcTerm.habitat)!=null){
+            occurrenceStruct.withHabitatURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "habitat",rec.value(DwcTerm.habitat)));
+            occurrenceStruct.withHabitatName(rec.value(DwcTerm.habitat));
+        }
+        if(rec.value(DwcTerm.identificationReferences)!=null){
+            occurrenceStruct.withBibliographicCitationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "bibliographic_citation",rec.value(DwcTerm.identificationReferences)));
+            occurrenceStruct.withBibliographicCitation(rec.value(DwcTerm.identificationReferences));
         }
         return occurrenceStruct;
     }
@@ -480,7 +511,7 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.scientificName)!=null){
             occurrenceTempStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceTempStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
-            occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate",rec.value(DwcTerm.scientificName)));
+            occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate",rec.value(DwcTerm.occurrenceID)));
             occurrenceTempStruct.withTemporaryAggregate("Temporary Aggregate of species "+rec.value(DwcTerm.scientificName));
         }
         if(rec.value(DwcTerm.locationID)!=null){
@@ -570,6 +601,6 @@ public class DwCArchiveParser {
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
     }   
 }
