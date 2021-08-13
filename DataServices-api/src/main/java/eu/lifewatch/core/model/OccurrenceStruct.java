@@ -638,20 +638,20 @@ public class OccurrenceStruct {
                                +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
                                +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \"<"+unitMetersValue+"\". ";
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
-                if(!maxDepthTypeValue.isEmpty()){
+                if(!maximumDepth.isEmpty()){
                     String maxDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
                     retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+maxDimensionUuid+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Maximum depth in meters: "+maximumDepth+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.typeLabel+"> <"+maxDepthTypeUri+">. "
-                               +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
-                               +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
+                               +"<"+maxDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
+                               +"<"+maxDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
                                +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \"<"+unitMetersValue+"\". ";
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
             }
         }
