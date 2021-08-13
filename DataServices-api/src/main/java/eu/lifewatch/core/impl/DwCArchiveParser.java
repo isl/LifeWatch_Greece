@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
     
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v5";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v5";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v7";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v7";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -466,7 +466,7 @@ public class DwCArchiveParser {
             occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.minimumDepthInMeters));
         }
         if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
-            occurrenceStruct.withMinimumDepth(rec.value(DwcTerm.maximumDepthInMeters));
+            occurrenceStruct.withMaximumDepth(rec.value(DwcTerm.maximumDepthInMeters));
         }
         if(rec.value(DwcTerm.locality)!=null){
             occurrenceStruct.withLocalityURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "locality",rec.value(DwcTerm.locality)));
