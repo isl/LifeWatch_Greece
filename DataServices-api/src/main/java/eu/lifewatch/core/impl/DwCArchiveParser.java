@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
     
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v2";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v2";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -443,6 +443,15 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.eventDate)!=null){
             occurrenceStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
         }
+        if(rec.value(DwcTerm.identifiedBy)!=null){
+            String[] actors=rec.value(DwcTerm.identifiedBy).split(",");
+            for(String actor : actors){
+                actor=actor.trim();
+                if(!actor.isEmpty()){
+                    occurrenceStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", actor),actor);
+                }
+            }   
+        }
         if(rec.value(DwcTerm.decimalLatitude)!=null){
             occurrenceStruct.withLatitude(rec.value(DwcTerm.decimalLatitude));
         }
@@ -570,6 +579,6 @@ public class DwCArchiveParser {
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
     }   
 }
