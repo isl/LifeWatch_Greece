@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -586,9 +587,9 @@ public class OccurrenceStruct {
             if (!stationURI.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasFoundAt + "> <" + stationURI + "> .\n";
             }
-//            if (!localityURI.isEmpty()) {
-//                retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasFoundAt + "> <" + localityURI + "> .\n";
-//            }
+            if (!localityURI.isEmpty()) {
+                retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasFoundAt + "> <" + localityURI + "> .\n";
+            }
             if (!equipmentTypeURI.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.usedObjectOfType + "> <" + equipmentTypeURI + "> .\n";
             }
@@ -613,10 +614,46 @@ public class OccurrenceStruct {
             if (!description.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasNote + "> \"" + description + "\" .\n";
             }
-             if (!occurrenceEvent.isEmpty()) {
+            if (!occurrenceEvent.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfsLabel + "> \"" + occurrenceEvent + "\" .\n";
             }
-            
+            if(!minimumDepth.isEmpty() || !maximumDepth.isEmpty()){
+                String measurementEvent="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                String unitMetersUri="http://metadata_constants/unit/meters";
+                String unitMetersValue="meters";
+                String maxDepthTypeUri="http://metadata_constants/dimension_type/max_depth";
+                String minDepthTypeUri="http://metadata_constants/dimension_type/min_depth";
+                String maxDepthTypeValue="maximum depth";
+                String minDepthTypeValue="minimum depth";
+                retTriples+="<"+occurrenceEventURI+"> <"+Resources.consistsOf+"> <"+measurementEvent+">. "
+                           +"<"+measurementEvent+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. ";
+                if(!minimumDepth.isEmpty()){
+                    String minDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+minDimensionUuid+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Minimum depth in meters: "+minimumDepth+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.typeLabel+"> <"+minDepthTypeUri+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+minDepthTypeValue+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \"<"+unitMetersValue+"\". ";
+                }
+                if(!maxDepthTypeValue.isEmpty()){
+                    String maxDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+maxDimensionUuid+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Maximum depth in meters: "+maximumDepth+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.typeLabel+"> <"+maxDepthTypeUri+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \"<"+unitMetersValue+"\". ";
+                }
+            }
         }
         if (!equipmentTypeURI.isEmpty()) {
             retTriples += "<" + equipmentTypeURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.equipmentTypeLabel + "> .\n";
