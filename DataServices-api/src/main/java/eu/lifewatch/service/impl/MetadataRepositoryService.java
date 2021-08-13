@@ -3756,9 +3756,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         if(species!=null && !species.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
         }
-        queryString+=" LIMIT " + limit
-                    +" OFFSET " + offset
-                    +"} ";
+        queryString+=" } "
+                    +" LIMIT " + limit
+                    +" OFFSET " + offset;
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
@@ -4163,8 +4163,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         if(datasetURI!=null && !datasetURI.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(STR(?dataset_uri)),\""+datasetURI.toLowerCase()+"\"). ";
         }
-        queryString+="LIMIT "+limit+" "
-                    +"OFFSET "+offset+" } ";
+        queryString+="} LIMIT "+limit+" "
+                    +"OFFSET "+offset ;
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
