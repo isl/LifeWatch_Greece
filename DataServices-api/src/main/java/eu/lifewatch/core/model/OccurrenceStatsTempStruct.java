@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -735,7 +736,7 @@ public class OccurrenceStatsTempStruct {
             for (Pair pair : this.actors) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.carriedOutBy + "> <" + pair.getKey() + "> .\n";
             }
-             if(!physicalObjectURI.isEmpty()){
+            if(!physicalObjectURI.isEmpty()){
                 retTriples+= "<"+occurrenceEventURI+"> <"+Resources.hasFoundObject+"> <"+physicalObjectURI+"> .\n";
             }
             if (!datasetURI.isEmpty()) {
@@ -823,9 +824,9 @@ public class OccurrenceStatsTempStruct {
             if (!waterAreaURI.isEmpty()) {
                 retTriples += "<" + stationURI  + "> <" + Resources.fallsWithin + "> <" + waterAreaURI + "> .\n";
             }
-            if (!habitatURI.isEmpty()) {
-                retTriples += "<" + stationURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
-            }
+//            if (!habitatURI.isEmpty()) {
+//                retTriples += "<" + stationURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
+//            }
 //            if (!countryURI.isEmpty()) {
 //                retTriples += "<" + localityURI + "> <" + Resources.fallsWithin + "> <" + countryURI + "> .\n";
 //            }
@@ -851,9 +852,9 @@ public class OccurrenceStatsTempStruct {
             if (!waterAreaURI.isEmpty()) {
                 retTriples += "<" + localityURI + "> <" + Resources.fallsWithin + "> <" + waterAreaURI + "> .\n";
             }
-//            if (!habitatURI.isEmpty()) {
-//                retTriples += "<" + localityURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
-//            }
+            if (!habitatURI.isEmpty()) {
+                retTriples += "<" + localityURI + "> <" + Resources.hasType + "> <" + habitatURI + "> .\n";
+            }
         }
         if (!habitatURI.isEmpty()) {
             retTriples += "<" + habitatURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.ecosystemTypeLabel + "> .\n";
@@ -896,6 +897,43 @@ public class OccurrenceStatsTempStruct {
                 retTriples += "<" + datasetURI + "> <" + Resources.rdfsLabel + "> \"" + datasetTitle + "\" .\n";
             }
         }
+        if(!minimumDepth.isEmpty() || !maximumDepth.isEmpty()){
+                String measurementEvent="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                String unitMetersUri="http://metadata_constants/unit/meters";
+                String unitMetersValue="meters";
+                String maxDepthTypeUri="http://metadata_constants/dimension_type/max_depth";
+                String minDepthTypeUri="http://metadata_constants/dimension_type/min_depth";
+                String maxDepthTypeValue="maximum depth";
+                String minDepthTypeValue="minimum depth";
+                retTriples+="<"+occurrenceEventURI+"> <"+Resources.consistsOf+"> <"+measurementEvent+">. "
+                           +"<"+measurementEvent+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. ";
+                if(!minimumDepth.isEmpty()){
+                    String minDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+minDimensionUuid+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Minimum depth in meters: "+minimumDepth+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.typeLabel+"> <"+minDepthTypeUri+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
+                               +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+minDepthTypeValue+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
+                }
+                if(!maximumDepth.isEmpty()){
+                    String maxDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+maxDimensionUuid+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Maximum depth in meters: "+maximumDepth+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.typeLabel+"> <"+maxDepthTypeUri+">. "
+                               +"<"+maxDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
+                               +"<"+maxDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
+                }
+            }
         logger.debug("Struct in NTriples format: \n" + retTriples);
         return retTriples;
     }

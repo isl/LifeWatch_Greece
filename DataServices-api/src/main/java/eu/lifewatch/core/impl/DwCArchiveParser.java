@@ -22,8 +22,6 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -91,7 +89,6 @@ public class DwCArchiveParser {
             this.storeLocally(directoryStruct);
         }
         
-        
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
@@ -101,7 +98,7 @@ public class DwCArchiveParser {
                 parseMeasurementArchive(this.dwcArchive, null);
                 break;
             case "Event":
-                parseEventArchive(this.dwcArchive, null);
+                parseOccurrenceTemporaryAggregate(this.dwcArchive, null);
                 break;
             default:
                 log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
@@ -116,7 +113,7 @@ public class DwCArchiveParser {
                 parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
                 break;
             case "Event":
-                parseEventArchive(this.dwcArchive, archiveFile.getRowType());
+                parseOccurrenceTemporaryAggregate(this.dwcArchive, archiveFile.getRowType());
                 break;
             default:
                 log.error("No parser for "+archiveFile.getRowType().simpleName());     
@@ -258,56 +255,56 @@ public class DwCArchiveParser {
             for(Record rec : dwcArchive.getExtension(term)){
                 TaxonomyStruct taxonomyStruct=this.retrieveTaxonomy(rec);
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec);
-                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec);
-                OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);
+                OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);                
+//                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec);
                 log.debug("Taxonomy struct: "+taxonomyStruct);
                 log.debug("Scientific name struct: "+scNameStruct);
-                log.debug("Occurence temp struct: "+occurenceTempStruct);
-                log.debug("Occurence struct: "+occurenceStruct);
+                log.debug("Occurence temporary aggregate struct: "+occurenceTempStruct);
+//                log.debug("Occurence struct: "+occurenceStruct);
                 if(this.importDatasets){
-                    log.info("Importing taxonomy struct");
+                    log.info("Importing taxonomy struct with species URI "+taxonomyStruct.getSpeciesURI());
                     this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing scientific name struct");
+                    log.info("Importing scientific name struct with species URI "+scNameStruct.getSpeciesURI());
                     this.mrManager.insertStruct(scNameStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing occurence temp struct");
+                    log.info("Importing Occurence temporary aggregate struct with URI: "+occurenceTempStruct.getTemporaryAggregateURI());
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing occurence struct");
-                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+//                    log.info("Importing occurence struct");
+//                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
                     this.storeLocally(taxonomyStruct);
                     this.storeLocally(scNameStruct);
                     this.storeLocally(occurenceTempStruct);
-                    this.storeLocally(occurenceStruct);
+//                    this.storeLocally(occurenceStruct);
                 }
             }
         }else{
             for(StarRecord rec : dwcArchive){
                 TaxonomyStruct taxonomyStruct=this.retrieveTaxonomy(rec.core());
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec.core());
-                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec.core());
+//                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec.core());
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
                 log.debug("Taxonomy struct: "+taxonomyStruct);
                 log.debug("Scientific name struct: "+scNameStruct);
                 log.debug("Occurence temp struct: "+occurenceTempStruct);
-                log.debug("Occurence struct: "+occurenceStruct);
+//                log.debug("Occurence struct: "+occurenceStruct);
                 if(this.importDatasets){
-                    log.info("Importing taxonomy struct");
+                    log.info("Importing taxonomy struct with species URI "+taxonomyStruct.getSpeciesURI());
                     this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing scientific name struct");
+                    log.info("Importing scientific name struct with species URI "+scNameStruct.getSpeciesURI());
                     this.mrManager.insertStruct(scNameStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing occurence temp struct");
+                    log.info("Importing Occurence temporary aggregate struct with URI: "+occurenceTempStruct.getTemporaryAggregateURI());
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
-                    log.info("Importing occurence struct");
-                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+//                    log.info("Importing occurence struct");
+//                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
                     this.storeLocally(taxonomyStruct);
                     this.storeLocally(scNameStruct);
                     this.storeLocally(occurenceTempStruct);
-                    this.storeLocally(occurenceStruct);
+//                    this.storeLocally(occurenceStruct);
                 }
             }
         }
@@ -343,31 +340,31 @@ public class DwCArchiveParser {
         }
     }
     
-    private void parseEventArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException, UnsupportedEncodingException, IOException{
+    private void parseOccurrenceTemporaryAggregate(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
-                EventStruct eventStruct=this.retrieveOccurrenceEventDetails(rec);
-                log.debug("Occurence event struct: "+eventStruct);
+                OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);
+                log.debug("Occurrence temporary aggregate struct: "+occurenceTempStruct);
                 if(this.importDatasets){
-                    log.info("Occurence event struct");
-                    this.mrManager.insertStruct(eventStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurrence temporary aggregate struct with URI "+occurenceTempStruct.getOccurrenceEventURI());
+                    this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
-                    log.info("Storing locally metadata");
-                    this.storeLocally(eventStruct);
+                    log.info("Storing locally metadata occurrence temporary aggregate with URI "+occurenceTempStruct.getOccurrenceEventURI());
+                    this.storeLocally(occurenceTempStruct);
                 }
             }
         }else{
             for(StarRecord rec : dwcArchive){
-                EventStruct eventStruct=this.retrieveOccurrenceEventDetails(rec.core());
-                log.debug("Occurence event struct: "+eventStruct);
+                OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
+                log.debug("Occurrence temporary aggregate struct: "+occurenceTempStruct);
                 if(this.importDatasets){
-                    log.info("Importing environmental struct");
-                    this.mrManager.insertStruct(eventStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing occurrence temporary aggregate struct with URI "+occurenceTempStruct.getOccurrenceEventURI());
+                    this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
-                    log.info("Storing locally metadata");
-                    this.storeLocally(eventStruct);
+                    log.info("Storing locally metadata occurrence temporary aggregate with URI "+occurenceTempStruct.getOccurrenceEventURI());
+                    this.storeLocally(occurenceTempStruct);
                 }
             }
         }
@@ -508,13 +505,38 @@ public class DwCArchiveParser {
                     .withDatasetTitle(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
         String placeCoordinates="";
-        if(rec.value(DwcTerm.occurrenceID)!=null){
-            occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.occurrenceID)));
-            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));
-            occurrenceTempStruct.withPhysicalObjectURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "biotic_element", rec.value(DwcTerm.occurrenceID)));
+        if(rec.value(DwcTerm.eventID)!=null){
+            occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
+            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.eventID));
+            occurrenceTempStruct.withPhysicalObjectURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "physical_object", rec.value(DwcTerm.eventID)));
         }
         if(rec.value(DwcTerm.eventDate)!=null){
             occurrenceTempStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
+        }
+        if(rec.value(DwcTerm.samplingProtocol)!=null){
+            occurrenceTempStruct.withSamplingProtocolURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "sampling_protocol",rec.value(DwcTerm.samplingProtocol)));
+            occurrenceTempStruct.withSamplingProtocolName(rec.value(DwcTerm.samplingProtocol));
+        }
+        if(rec.value(DwcTerm.habitat)!=null){
+            occurrenceTempStruct.withHabitatURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "habitat",rec.value(DwcTerm.habitat)));
+            occurrenceTempStruct.withHabitatName(rec.value(DwcTerm.habitat));
+        }
+        if(rec.value(DwcTerm.eventRemarks)!=null){
+            occurrenceTempStruct.withDescription(rec.value(DwcTerm.eventRemarks));
+        }
+        if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
+            occurrenceTempStruct.withMinimumDepth(rec.value(DwcTerm.minimumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
+            occurrenceTempStruct.withMaximumDepth(rec.value(DwcTerm.maximumDepthInMeters));
+        }
+        if(rec.value(DwcTerm.locality)!=null){
+            occurrenceTempStruct.withLocalityURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "locality",rec.value(DwcTerm.locality)));
+            occurrenceTempStruct.withLocalityName(rec.value(DwcTerm.locality));
+        }      
+        if(rec.value(DwcTerm.occurrenceID)!=null){
+            occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.occurrenceID)));
+            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));    
         }
         if(rec.value(DwcTerm.decimalLongitude)!=null){
             occurrenceTempStruct.withLongitude(rec.value(DwcTerm.decimalLongitude));
@@ -524,12 +546,6 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withLatitude(rec.value(DwcTerm.decimalLatitude));
             placeCoordinates+="Latitude: "+rec.value(DwcTerm.decimalLatitude);
         }
-        if(rec.value(DwcTerm.scientificName)!=null){
-            occurrenceTempStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
-            occurrenceTempStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
-            occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate",rec.value(DwcTerm.occurrenceID)));
-            occurrenceTempStruct.withTemporaryAggregate("Temporary Aggregate of species "+rec.value(DwcTerm.scientificName));
-        }
         if(rec.value(DwcTerm.locationID)!=null){
             occurrenceTempStruct.withStationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locationID)));
             occurrenceTempStruct.withCoordinates(rec.value(DwcTerm.locationID));
@@ -537,8 +553,29 @@ public class DwCArchiveParser {
                 occurrenceTempStruct.withStationNotes(placeCoordinates);
             }
         }
+        if(rec.value(DwcTerm.occurrenceID)!=null){
+            occurrenceTempStruct.withTemporaryAggregateURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "temporary_aggregate", rec.value(DwcTerm.occurrenceID)));
+            occurrenceTempStruct.withTemporaryAggregate(rec.value(DwcTerm.occurrenceID));
+        }
         if(rec.value(DwcTerm.individualCount)!=null){
             occurrenceTempStruct.withNumberOfParts(rec.value(DwcTerm.individualCount));
+        }
+        if(rec.value(DwcTerm.identifiedBy)!=null){
+            String[] actors=rec.value(DwcTerm.identifiedBy).split(",");
+            for(String actor : actors){
+                actor=actor.trim();
+                if(!actor.isEmpty()){
+                    occurrenceTempStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", actor),actor);
+                }
+            }
+        }
+        if(rec.value(DwcTerm.scientificName)!=null){
+            occurrenceTempStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
+            occurrenceTempStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
+        }
+        if(rec.value(DwcTerm.identificationReferences)!=null){
+            occurrenceTempStruct.withBibliographicCitationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "bibliographic_citation",rec.value(DwcTerm.identificationReferences)));
+            occurrenceTempStruct.withBibliographicCitation(rec.value(DwcTerm.identificationReferences));
         }
         return occurrenceTempStruct;
     }
