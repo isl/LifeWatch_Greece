@@ -73,7 +73,7 @@ public class EventStruct {
                 retTriples+="<"+this.eventUri+"> <"+Resources.rdfsLabel+"> \""+this.eventTitle+"\". \n";
             }
             if(!this.timespan.isEmpty()){
-                retTriples+="<"+this.eventUri+"> <"+Resources.hasTimespan+"> \""+this.timespan+"\". \n";
+                retTriples+="<"+this.eventUri+"> <"+Resources.atSomeTimeWithin+"> \""+this.timespan+"\". \n";
             }
         }
         return retTriples;
