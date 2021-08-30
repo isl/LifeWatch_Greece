@@ -7,7 +7,6 @@ import eu.lifewatch.core.api.RepositoryManager;
 import eu.lifewatch.core.model.CommonNameStruct;
 import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.core.model.EnvironmentalStruct;
-import eu.lifewatch.core.model.EventStruct;
 import eu.lifewatch.core.model.GensDatasetStruct;
 import eu.lifewatch.core.model.GensSampleStruct;
 import eu.lifewatch.core.model.IdentificationStruct;
@@ -239,12 +238,12 @@ public class MetadataRepositoryService implements Service {
                 + " ?occurrenceEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
                 //+" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.personLabel+"> . "
                 //+" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-
+                
                 + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
                 + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
                 + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel  . "
                 // +" OPTIONAL {?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.bioticElementLabel+"> }. "
-
+                
                 + " ?individualURI <" + Resources.belongsTo + "> ?speciesURI . "
                 + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName . "
                 //+" ?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+"> . "
@@ -5025,13 +5024,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
      * during updating the repository
      */
     public void insertStruct(TaxonomyStruct struct, String directoryGraph) throws URIValidationException, QueryExecutionException {
-        struct.validateURIs();
-        String insertQuery = "INSERT INTO <" + directoryGraph + "> { " + struct.toNtriples() + " }";
-        logger.debug("Submitting the insert query: " + insertQuery);
-        this.repoManager.update(insertQuery);
-    }
-    
-    public void insertStruct(EventStruct struct, String directoryGraph) throws URIValidationException, QueryExecutionException {
         struct.validateURIs();
         String insertQuery = "INSERT INTO <" + directoryGraph + "> { " + struct.toNtriples() + " }";
         logger.debug("Submitting the insert query: " + insertQuery);

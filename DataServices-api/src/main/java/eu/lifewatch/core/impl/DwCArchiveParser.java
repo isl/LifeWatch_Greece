@@ -1,10 +1,8 @@
 package eu.lifewatch.core.impl;
 
-import com.google.common.collect.HashMultimap;
 import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.core.model.EnvironmentalStruct;
-import eu.lifewatch.core.model.EventStruct;
 import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
 import eu.lifewatch.core.model.OccurrenceStruct;
@@ -170,13 +168,6 @@ public class DwCArchiveParser {
     private void storeLocally(MeasurementStruct measurementStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.MEASUREMENT_N3_FILENAME),true), "UTF-8");
         writer.append(measurementStruct.toNtriples());
-        writer.flush();
-        writer.close();
-    }
-    
-    private void storeLocally(EventStruct eventStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
-        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.OCCURRENCE_EVENT_N3_FILENAME),true), "UTF-8");
-        writer.append(eventStruct.toNtriples());
         writer.flush();
         writer.close();
     }
@@ -604,17 +595,6 @@ public class DwCArchiveParser {
         }
         
         return measurementStruct;
-    }
-    
-    private EventStruct retrieveOccurrenceEventDetails(Record rec) throws UnsupportedEncodingException{
-        EventStruct eventStruct=new EventStruct();
-        if(rec.value(DwcTerm.eventID)!=null){
-            eventStruct.withEventUri(Utils.hashUri(Resources.defaultNamespaceForURIs, "event_timespan", rec.value(DwcTerm.eventID)));
-        }
-        if(rec.value(DwcTerm.eventDate)!=null){
-            eventStruct.withTimespan(rec.value(DwcTerm.eventDate));
-        }
-        return eventStruct;
     }
     
     private void createLocalFolder() throws IOException{
