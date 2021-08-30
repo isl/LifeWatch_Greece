@@ -1,8 +1,10 @@
 package eu.lifewatch.core.impl;
 
+import com.google.common.collect.HashMultimap;
 import eu.lifewatch.common.Resources;
 import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.core.model.EnvironmentalStruct;
+import eu.lifewatch.core.model.EventStruct;
 import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
 import eu.lifewatch.core.model.OccurrenceStruct;
@@ -20,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -51,7 +55,7 @@ public class DwCArchiveParser {
     private String datasetURI;
     private String datasetTitle;
     private String archiveFolderName;
-    
+       
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v7";
     private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v7";
     
@@ -91,8 +95,8 @@ public class DwCArchiveParser {
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
-                    parseOccurrenceArchive(this.dwcArchive, null);
-                    break;
+                parseOccurrenceArchive(this.dwcArchive, null);
+                break;
             case "ExtendedMeasurementOrFact":
                 parseMeasurementArchive(this.dwcArchive, null);
                 break;
@@ -106,14 +110,14 @@ public class DwCArchiveParser {
         for(ArchiveFile archiveFile : this.dwcArchive.getExtensions()){
             switch(archiveFile.getRowType().simpleName()){
             case "Occurrence":
-                    parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
-                    break;
+                parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
             case "ExtendedMeasurementOrFact":
-                    parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
-                    break;
+                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
             case "Event":
-                    parseEventArchive(this.dwcArchive, archiveFile.getRowType());
-                    break;
+                parseEventArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
             default:
                 log.error("No parser for "+archiveFile.getRowType().simpleName());     
             }
@@ -169,6 +173,13 @@ public class DwCArchiveParser {
     private void storeLocally(MeasurementStruct measurementStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
         OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.MEASUREMENT_N3_FILENAME),true), "UTF-8");
         writer.append(measurementStruct.toNtriples());
+        writer.flush();
+        writer.close();
+    }
+    
+    private void storeLocally(EventStruct eventStruct) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+        OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName+"/"+Resources.OCCURRENCE_EVENT_N3_FILENAME),true), "UTF-8");
+        writer.append(eventStruct.toNtriples());
         writer.flush();
         writer.close();
     }
@@ -335,28 +346,28 @@ public class DwCArchiveParser {
     private void parseEventArchive(Archive dwcArchive, Term term) throws URIValidationException, QueryExecutionException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
-                EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec);
-                log.debug("Environmental struct: "+environmentalStruct);
+                EventStruct eventStruct=this.retrieveOccurrenceEventDetails(rec);
+                log.debug("Occurence event struct: "+eventStruct);
                 if(this.importDatasets){
-                    log.info("Importing environmental struct");
-                    this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
+                    log.info("Occurence event struct");
+                    this.mrManager.insertStruct(eventStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
-                    this.storeLocally(environmentalStruct);
+                    this.storeLocally(eventStruct);
                 }
             }
         }else{
             for(StarRecord rec : dwcArchive){
-                EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec.core());
-                log.debug("Environmental struct: "+environmentalStruct);
+                EventStruct eventStruct=this.retrieveOccurrenceEventDetails(rec.core());
+                log.debug("Occurence event struct: "+eventStruct);
                 if(this.importDatasets){
                     log.info("Importing environmental struct");
-                    this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
+                    this.mrManager.insertStruct(eventStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
-                    this.storeLocally(environmentalStruct);
+                    this.storeLocally(eventStruct);
                 }
             }
         }
@@ -450,7 +461,7 @@ public class DwCArchiveParser {
                 if(!actor.isEmpty()){
                     occurrenceStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", actor),actor);
                 }
-            }   
+            }
         }
         if(rec.value(DwcTerm.decimalLatitude)!=null){
             occurrenceStruct.withLatitude(rec.value(DwcTerm.decimalLatitude));
@@ -459,6 +470,8 @@ public class DwCArchiveParser {
             occurrenceStruct.withLongitude(rec.value(DwcTerm.decimalLongitude));
         }
         if(rec.value(DwcTerm.scientificName)!=null){
+            occurrenceStruct.withIndividualURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "individual_biotic_element",rec.value(DwcTerm.scientificName)));
+            occurrenceStruct.withIndividualLabel("Individual instance of species "+rec.value(DwcTerm.scientificName));
             occurrenceStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
             occurrenceStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
         }
@@ -483,6 +496,9 @@ public class DwCArchiveParser {
         if(rec.value(DwcTerm.identificationReferences)!=null){
             occurrenceStruct.withBibliographicCitationURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "bibliographic_citation",rec.value(DwcTerm.identificationReferences)));
             occurrenceStruct.withBibliographicCitation(rec.value(DwcTerm.identificationReferences));
+        }
+        if(rec.value(DwcTerm.eventID)!=null){
+            occurrenceStruct.withTimeSpanURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "event_timespan",rec.value(DwcTerm.eventID)));
         }
         return occurrenceStruct;
     }
@@ -553,40 +569,15 @@ public class DwCArchiveParser {
         return measurementStruct;
     }
     
-    private EnvironmentalStruct retrieveEnvironmental(Record rec) throws UnsupportedEncodingException{
-        EnvironmentalStruct environmentalStruct=new EnvironmentalStruct()
-                    .withDatasetName(this.datasetTitle)
-                    .withDatasetURI(this.datasetURI);    
+    private EventStruct retrieveOccurrenceEventDetails(Record rec) throws UnsupportedEncodingException{
+        EventStruct eventStruct=new EventStruct();
         if(rec.value(DwcTerm.eventID)!=null){
-            environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.value(DwcTerm.eventID)));
-            environmentalStruct.withMeasurementEvent("Measurement "+rec.value(DwcTerm.eventID));
+            eventStruct.withEventUri(Utils.hashUri(Resources.defaultNamespaceForURIs, "event_timespan", rec.value(DwcTerm.eventID)));
         }
         if(rec.value(DwcTerm.eventDate)!=null){
-            environmentalStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
+            eventStruct.withTimespan(rec.value(DwcTerm.eventDate));
         }
-        if(rec.value(DwcTerm.locationID)!=null){
-            environmentalStruct.withPlaceURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locationID)));
-        }else if(rec.value(DwcTerm.locality)!=null){
-            environmentalStruct.withPlaceURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "place", rec.value(DwcTerm.locality)));
-        }
-        if(rec.value(DwcTerm.locality)!=null){
-            environmentalStruct.withPlaceName(rec.value(DwcTerm.locality));
-        }
-        if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
-            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", "min depth in meters"+rec.value(DwcTerm.minimumDepthInMeters)));
-            environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension_type", "min depth in meters"));
-            environmentalStruct.withDimensionName("Minimum Depth in Meters : "+rec.value(DwcTerm.minimumDepthInMeters));
-            environmentalStruct.withDimensionUnit("Meters");
-            environmentalStruct.withDimensionValue(rec.value(DwcTerm.minimumDepthInMeters));
-        }
-        if(rec.value(DwcTerm.maximumDepthInMeters)!=null){
-            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", "max depth in meters"+rec.value(DwcTerm.maximumDepthInMeters)));
-            environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension_type", "max depth in meters"));
-            environmentalStruct.withDimensionName("Maximum Depth in Meters : "+rec.value(DwcTerm.maximumDepthInMeters));
-            environmentalStruct.withDimensionUnit("Meters");
-            environmentalStruct.withDimensionValue(rec.value(DwcTerm.maximumDepthInMeters));
-        }
-        return environmentalStruct;
+        return eventStruct;
     }
     
     private void createLocalFolder() throws IOException{
