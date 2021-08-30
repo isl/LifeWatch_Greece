@@ -32,6 +32,7 @@ public class OccurrenceStruct {
     private String individualLabel;
     private List<Pair> actors;
     private String timeSpan;
+    private String timeSpanURI;
     private String localityName;
     private String localityURI;
     private String countryName;
@@ -73,6 +74,7 @@ public class OccurrenceStruct {
         actors = new ArrayList<>();
         speciesName = "";
         speciesURI = "";
+        timeSpanURI = "";
         timeSpan = "";
         localityName = "";
         localityURI = "";
@@ -150,6 +152,10 @@ public class OccurrenceStruct {
         return this.actors;
     }
 
+    public String getTimeSpanURI() {
+        return timeSpanURI;
+    }
+    
     public String getTimeSpan() {
         return timeSpan;
     }
@@ -293,6 +299,10 @@ public class OccurrenceStruct {
         this.actors = actors;
     }
 
+    public void setTimeSpanURI(String timeSpanUri) {
+        this.timeSpanURI = timeSpanUri;
+    }
+    
     public void setTimeSpan(String timeSpan) {
         this.timeSpan = timeSpan;
     }
@@ -448,6 +458,11 @@ public class OccurrenceStruct {
         return this;
     }
 
+    public OccurrenceStruct withTimeSpanURI(String timeSpanUri) {
+        this.timeSpanURI = timeSpanUri;
+        return this;
+    }
+    
     public OccurrenceStruct withTimeSpan(String timeSpan) {
         this.timeSpan = timeSpan;
         return this;
@@ -581,8 +596,8 @@ public class OccurrenceStruct {
         String retTriples = "";
         if (!occurrenceEventURI.isEmpty()) {
             retTriples += "<" + occurrenceEventURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> .\n";
-            if (!timeSpan.isEmpty()) {
-                retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasTimespan + "> \"" + timeSpan + "\" .\n";
+            if (!timeSpanURI.isEmpty()) {
+                retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasTimespan + "> <" + timeSpanURI + "> .\n";
             }
             if (!stationURI.isEmpty()) {
                 retTriples += "<" + occurrenceEventURI + "> <" + Resources.hasFoundAt + "> <" + stationURI + "> .\n";
@@ -772,6 +787,12 @@ public class OccurrenceStruct {
                 retTriples += "<" + countryURI + "> <" + Resources.rdfsLabel + "> \"" + countryName + "\" .\n";
             }
         }
+        if (!timeSpanURI.isEmpty()) {
+            retTriples += "<" + timeSpanURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.timespanLabel + "> .\n";
+            if (!timeSpan.isEmpty()) {
+                retTriples += "<" + timeSpanURI + "> <" + Resources.rdfsLabel + "> \"" + timeSpan + "\" .\n";
+            }
+        }
         if (!waterAreaURI.isEmpty()) {
             retTriples += "<" + waterAreaURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.waterAreaLabel + "> .\n";
             if (!waterAreaName.isEmpty()) {
@@ -841,6 +862,7 @@ public class OccurrenceStruct {
                 + "SpeciesName: " + this.speciesName + "\t"
                 + "IndividualURI: " + this.individualURI + "\t"
                 + "Actors: " + this.actors + "\t"
+                + "TimespanURI: " + this.timeSpanURI + "\t"
                 + "Timespan: " + this.timeSpan + "\t"
                 + "Locality Name: " + this.localityName + "\t"
                 + "Locality URI: " + this.localityURI + "\t"
