@@ -898,7 +898,7 @@ public class OccurrenceStatsTempStruct {
             }
         }
         if(!minimumDepth.isEmpty() || !maximumDepth.isEmpty()){
-                String measurementEvent="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                String measurementEvent="urn:uuid:"+UUID.nameUUIDFromBytes(this.occurrenceEventURI.getBytes()).toString().toUpperCase();
                 String unitMetersUri="http://metadata_constants/unit/meters";
                 String unitMetersValue="meters";
                 String maxDepthTypeUri="http://metadata_constants/dimension_type/max_depth";

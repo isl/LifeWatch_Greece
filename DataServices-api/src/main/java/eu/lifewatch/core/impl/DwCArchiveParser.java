@@ -526,7 +526,7 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withLocalityName(rec.value(DwcTerm.locality));
         }      
         if(rec.value(DwcTerm.occurrenceID)!=null){
-            occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.occurrenceID)));
+            occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
             occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));    
         }
         if(rec.value(DwcTerm.decimalLongitude)!=null){
