@@ -500,6 +500,7 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
             occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.eventID));
             occurrenceTempStruct.withPhysicalObjectURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "physical_object", rec.value(DwcTerm.eventID)));
+            occurrenceTempStruct.withPhysicalObject("Object found in event with ID "+rec.value(DwcTerm.eventID));
         }
         if(rec.value(DwcTerm.eventDate)!=null){
             occurrenceTempStruct.withTimeSpan(rec.value(DwcTerm.eventDate));

@@ -908,11 +908,11 @@ public class OccurrenceStatsTempStruct {
                 retTriples+="<"+occurrenceEventURI+"> <"+Resources.consistsOf+"> <"+measurementEvent+">. "
                            +"<"+measurementEvent+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. ";
                 if(!minimumDepth.isEmpty()){
-                    String minDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    String minDimensionUuid="urn:uuid:"+UUID.nameUUIDFromBytes((this.occurrenceEventURI+"minimumdepth").getBytes()).toString().toUpperCase();
                     retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+minDimensionUuid+">. "
                                +"<"+minDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
                                +"<"+minDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Minimum depth in meters: "+minimumDepth+"\". "
-                               +"<"+minDimensionUuid+"> <"+Resources.typeLabel+"> <"+minDepthTypeUri+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasType+"> <"+minDepthTypeUri+">. "
                                +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
                                +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+minDepthTypeValue+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
@@ -921,11 +921,11 @@ public class OccurrenceStatsTempStruct {
                                +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
                 if(!maximumDepth.isEmpty()){
-                    String maxDimensionUuid="urn:uuid:"+UUID.randomUUID().toString().toUpperCase();
+                    String maxDimensionUuid="urn:uuid:"+UUID.nameUUIDFromBytes((this.occurrenceEventURI+"maximumdepth").getBytes()).toString().toUpperCase();
                     retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+maxDimensionUuid+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Maximum depth in meters: "+maximumDepth+"\". "
-                               +"<"+maxDimensionUuid+"> <"+Resources.typeLabel+"> <"+maxDepthTypeUri+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasType+"> <"+maxDepthTypeUri+">. "
                                +"<"+maxDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
                                +"<"+maxDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
@@ -988,7 +988,10 @@ public class OccurrenceStatsTempStruct {
               +"DatasetURI: "+this.datasetURI+"\t"
               +"DatasetTitle: "+this.datasetTitle+"\t"
               +"IndividualURI: "+this.physicalObjectURI+"\t"
-             
+              +"IndividualName: "+this.physicalObject+"\t"
+              +"SpeciesURI: "+this.speciesURI+"\t"
+              +"SpeciesName: "+this.speciesName+"\t"
+              +"NumberOfParts: "+this.numberOfParts+"\t"
               +"Actors: "+this.actors+"\t"
               +"Timespan: "+this.timeSpan+"\t"
               +"Locality Name: "+this.localityName+"\t"
@@ -1003,12 +1006,13 @@ public class OccurrenceStatsTempStruct {
               +"EcosystemURI: "+this.ecosystemURI+"\t"
               +"EquipmentTypeName: "+this.equipmentTypeName+"\t"
               +"EquipmentTypeURI: "+this.equipmentTypeURI+"\t"
-              +"Latitude: "+this.latitude+"\t"
-              +"Longitude: "+this.longitude+"\t"
+              +"StationURI: "+this.stationURI+"\t"
+              +"StationNotes: "+this.stationNotes+"\t"
               +"maximumDepth: "+this.maximumDepth+"\t"
               +"minimumDepth: "+this.minimumDepth+"\t"
               +"SamplingProtocalName: "+this.samplingProtocolName+"\t"
               +"SamplingProtocolURI:"+this.samplingProtocolURI+"\t"
+
               +"Geodetic Datum: "+this.geodeticDatum+"\t"
               +"Bibliographic Citation: "+this.bibliographicCitation;
     }
