@@ -635,9 +635,9 @@ public class MetadataRepositoryService implements Service {
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+speciesName.toLowerCase()+"\"). ";
         }
         if(place!=null && !place.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?localityName),\""+place.toLowerCase()+"\"). ";
-            queryString+="FILTER CONTAINS(LCASE(?countryName),\""+place.toLowerCase()+"\"). ";
-            queryString+="FILTER CONTAINS(LCASE(?waterAreaName),\""+place.toLowerCase()+"\"). ";
+            queryString+="FILTER (CONTAINS(LCASE(?localityName),\""+place.toLowerCase()+"\") ";
+            queryString+="|| CONTAINS(LCASE(?countryName),\""+place.toLowerCase()+"\") ";
+            queryString+="|| CONTAINS(LCASE(?waterAreaName),\""+place.toLowerCase()+"\") ). ";
         }
         if(datasetURI!=null && !datasetURI.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
