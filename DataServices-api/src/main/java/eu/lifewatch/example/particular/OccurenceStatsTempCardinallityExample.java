@@ -127,7 +127,7 @@ public class OccurenceStatsTempCardinallityExample {
     
     public OccurenceStatsTempCardinallityExample search(){
         try{
-            List<OccurrenceStatsTempStruct> structs=this.mrService.searchOccurenceStatsTemp("species 3", "locality 3", "timespan 3", "num 3","", defaultGraphspace);
+            List<OccurrenceStatsTempStruct> structs=this.mrService.searchOccurenceStatsTemp("species 3", "locality 3", "timespan 3", "num 3","", 0,0,defaultGraphspace);
             System.out.println("Found "+structs.size()+" structs");
             for(OccurrenceStatsTempStruct struct : structs){
                 System.out.println(struct);
