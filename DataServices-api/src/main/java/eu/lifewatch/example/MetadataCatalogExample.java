@@ -3,6 +3,7 @@ package eu.lifewatch.example;
 import eu.lifewatch.core.model.MicroCTScanningStruct;
 import eu.lifewatch.core.model.MicroCTSpecimenStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
+import eu.lifewatch.core.model.OccurrenceStruct;
 import eu.lifewatch.core.model.ScientificNamingStruct;
 import eu.lifewatch.core.model.TaxonomyStruct;
 import eu.lifewatch.exception.QueryExecutionException;
@@ -54,13 +55,16 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }                
 
-        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1982", "", "", "", 0, 0, GRAPHSPACE_METADATA);
+//        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1982", "", "", "", 0, 0, GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(ScientificNamingStruct struct : results){
+//            System.out.println(struct);
+//        }                
+        List<OccurrenceStruct> results=mrManager.searchOccurrence("Syllis garciai", "", "", "", 0, 0,GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
-        for(ScientificNamingStruct struct : results){
+        for(OccurrenceStruct struct : results){
             System.out.println(struct);
         }                
-
-        
     }
     
 

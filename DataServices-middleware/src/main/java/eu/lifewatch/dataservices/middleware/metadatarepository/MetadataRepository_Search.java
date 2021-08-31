@@ -573,7 +573,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchOccurrence(speciesName, place, date, datasetURI, repositoryGraph);
+            retList=api.searchOccurrence(speciesName, place, date, datasetURI, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for occurrence metadata. Returning an empty list.\n", ex);

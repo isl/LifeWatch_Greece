@@ -1084,7 +1084,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for Occurrence structs. ");
         try{
-            List<OccurrenceStruct> results=this.mrService.searchOccurrence("species", "locality", "timespan","", "http://lifewatchgreece.com");
+            List<OccurrenceStruct> results=this.mrService.searchOccurrence("species", "locality", "timespan","",0,0,"http://lifewatchgreece.com");
             for(OccurrenceStruct struct : results)
                 System.out.println(struct);
             

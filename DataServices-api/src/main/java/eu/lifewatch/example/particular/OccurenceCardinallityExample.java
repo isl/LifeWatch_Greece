@@ -101,7 +101,7 @@ public class OccurenceCardinallityExample {
     
     public OccurenceCardinallityExample search(){
         try{
-            List<OccurrenceStruct> structs=this.mrService.searchOccurrence("species", "locality", "timespan","", defaultGraphspace);
+            List<OccurrenceStruct> structs=this.mrService.searchOccurrence("species", "locality", "timespan","",0,0,defaultGraphspace);
             System.out.println("Found "+structs.size()+" structs");
             for(OccurrenceStruct struct : structs){
                 System.out.println(struct);
