@@ -850,12 +850,11 @@ public class MetadataRepositoryService implements Service {
         if(numberOfParts!=null && !numberOfParts.isEmpty()){
             queryString+="FILTER (?numberOfParts=\""+numberOfParts+"\"). ";
         }
-        
-        if(limit>0 && offset>0){
+        queryString+="} ";
+        if(limit>0 && offset>=0){
             queryString+="LIMIT "+limit+" "
                         +"OFFSET "+offset+" ";
         }
-        queryString+="}";
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
