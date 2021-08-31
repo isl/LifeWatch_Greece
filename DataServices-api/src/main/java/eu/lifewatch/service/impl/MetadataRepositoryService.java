@@ -535,12 +535,21 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+        logger.info("Request for occurrenceStatsTemp search with parameters "
+                   +"speciesName: ["+speciesName+"], "
+                   +"place(locality OR country OR waterarea): ["+place+"], "
+                   +"date: ["+date+"], "
+                   +"numberOfParts: ["+numberOfParts+"], "
+                   +"datasetURI: ["+datasetURI+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
         String queryString="SELECT DISTINCT ?occurrenceEventURI ?occurrenceEventLabel ?datasetURI ?datasetName "
-                +"?speciesURI ?speciesName ?individualURI ?individualLabel "
-                +"?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
-                +"?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description "
-                +"?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI "
-                +"?stationNotes ?ecosystemURI ?ecosystemName ?tempURI ?tempName ?numberOfParts ?min_depth ?max_depth "
+                                          +"?speciesURI ?speciesName ?individualURI ?individualLabel "
+                                          +"?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
+                                          +"?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description "
+                                          +"?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI "
+                                          +"?stationNotes ?ecosystemURI ?ecosystemName ?tempURI ?tempName ?numberOfParts ?min_depth ?max_depth "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?occurrenceEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.encounterEventLabel+">. "
@@ -1727,118 +1736,79 @@ public class MetadataRepositoryService implements Service {
         }
         return results;
     }
-
-    public List<TaxonomyStruct> searchTaxonomy(String species, String genus, String family, String order,
-            String classs, String kingdom, String phylum,String datasetURI, String repositoryGraph) throws QueryExecutionException {
-
-        String queryString = "SELECT DISTINCT ?speciesURI ?speciesName  "
-                + " ?genusName ?familyName ?orderName ?className ?kingdomName ?phylumName "
-                + " ?genusURI ?familyURI ?orderURI ?classURI ?kingdomURI ?phylumURI "
-                + " ?datasetURI ?datasetName "
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
-                + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
-                + " ?speciesURI <" + Resources.belongsTo + "> ?genusURI. "
-                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + " ?datasetURI <" + Resources.refersTo + "> ?speciesURI . "
-                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " ?genusURI <" + Resources.rdfTypeLabel + "> <" + Resources.genusLabel + "> . "
-                + " ?genusURI <" + Resources.rdfsLabel + "> ?genusName. "
-                + " ?genusURI <" + Resources.belongsTo + "> ?familyURI. "
-                + " ?familyURI <" + Resources.rdfTypeLabel + "> <" + Resources.familyLabel + "> . "
-                + " ?familyURI <" + Resources.rdfsLabel + "> ?familyName. "
-                + " ?familyURI <" + Resources.belongsTo + "> ?orderURI. "
-                + " ?orderURI <" + Resources.rdfTypeLabel + "> <" + Resources.orderLabel + "> . "
-                + " ?orderURI <" + Resources.rdfsLabel + "> ?orderName. "
-                + " ?orderURI <" + Resources.belongsTo + "> ?classURI. "
-                + " ?classURI <" + Resources.rdfTypeLabel + "> <" + Resources.classLabel + "> . "
-                + " ?classURI <" + Resources.rdfsLabel + "> ?className. "
-                + " ?classURI <" + Resources.belongsTo + "> ?phylumURI. "
-                + " ?phylumURI <" + Resources.rdfTypeLabel + "> <" + Resources.phylumLabel + "> . "
-                + " ?phylumURI <" + Resources.rdfsLabel + "> ?phylumName. "
-                + " ?phylumURI <" + Resources.belongsTo + "> ?kingdomURI. "
-                + " ?kingdomURI <" + Resources.rdfTypeLabel + "> <" + Resources.kingdomLabel + "> . "
-                + " ?kingdomURI <" + Resources.rdfsLabel + "> ?kingdomName. "
-                + " FILTER regex(?speciesName,'" + species + "',\"i\") "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?genusName,'" + genus + "',\"i\") "
-                + " FILTER regex(?familyName,'" + family + "',\"i\") "
-                + " FILTER regex(?orderName,'" + order + "',\"i\") "
-                + " FILTER regex(?className,'" + classs + "',\"i\") "
-                + " FILTER regex(?phylumName,'" + phylum + "',\"i\") "
-                + " FILTER regex(?kingdomName,'" + kingdom + "',\"i\")}";
-
-        logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
-        List<TaxonomyStruct> results = new ArrayList<>();
-        for (BindingSet result : sparqlresults) {
-            TaxonomyStruct struct = new TaxonomyStruct()
-                    .withSpeciesName(result.getValue("speciesName").stringValue())
-                    .withSpeciesURI(result.getValue("speciesURI").stringValue())
-                    .withGenusName(result.getValue("genusName").stringValue())
-                    .withGenusURI(result.getValue("genusURI").stringValue())
-                    .withFamilyName(result.getValue("familyName").stringValue())
-                    .withFamilyURI(result.getValue("familyURI").stringValue())
-                    .withOrderName(result.getValue("orderName").stringValue())
-                    .withOrderURI(result.getValue("orderURI").stringValue())
-                    .withDatasetName(result.getValue("datasetName").stringValue())
-                    .withDatasetURI(result.getValue("datasetURI").stringValue())
-                    .withClassName(result.getValue("className").stringValue())
-                    .withClassURI(result.getValue("classURI").stringValue())
-                    .withPhylumName(result.getValue("phylumName").stringValue())
-                    .withPhylumURI(result.getValue("phylumURI").stringValue())
-                    .withKingdomName(result.getValue("kingdomName").stringValue())
-                    .withKingdomURI(result.getValue("kingdomURI").stringValue());
-            results.add(struct);
-        }
-        return results;
-    }
     
-     public List<TaxonomyStruct> searchTaxonomy(String species, String genus, String family, String order,
-            String classs, String kingdom, String phylum,String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-
-        String queryString = "SELECT DISTINCT ?speciesURI ?speciesName  "
-                + " ?genusName ?familyName ?orderName ?className ?kingdomName ?phylumName "
-                + " ?genusURI ?familyURI ?orderURI ?classURI ?kingdomURI ?phylumURI "
-                + " ?datasetURI ?datasetName "
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + " ?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
-                + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
-                + " ?speciesURI <" + Resources.belongsTo + "> ?genusURI. "
-                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + " ?datasetURI <" + Resources.refersTo + "> ?speciesURI . "
-                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " ?genusURI <" + Resources.rdfTypeLabel + "> <" + Resources.genusLabel + "> . "
-                + " ?genusURI <" + Resources.rdfsLabel + "> ?genusName. "
-                + " ?genusURI <" + Resources.belongsTo + "> ?familyURI. "
-                + " ?familyURI <" + Resources.rdfTypeLabel + "> <" + Resources.familyLabel + "> . "
-                + " ?familyURI <" + Resources.rdfsLabel + "> ?familyName. "
-                + " ?familyURI <" + Resources.belongsTo + "> ?orderURI. "
-                + " ?orderURI <" + Resources.rdfTypeLabel + "> <" + Resources.orderLabel + "> . "
-                + " ?orderURI <" + Resources.rdfsLabel + "> ?orderName. "
-                + " ?orderURI <" + Resources.belongsTo + "> ?classURI. "
-                + " ?classURI <" + Resources.rdfTypeLabel + "> <" + Resources.classLabel + "> . "
-                + " ?classURI <" + Resources.rdfsLabel + "> ?className. "
-                + " ?classURI <" + Resources.belongsTo + "> ?phylumURI. "
-                + " ?phylumURI <" + Resources.rdfTypeLabel + "> <" + Resources.phylumLabel + "> . "
-                + " ?phylumURI <" + Resources.rdfsLabel + "> ?phylumName. "
-                + " ?phylumURI <" + Resources.belongsTo + "> ?kingdomURI. "
-                + " ?kingdomURI <" + Resources.rdfTypeLabel + "> <" + Resources.kingdomLabel + "> . "
-                + " ?kingdomURI <" + Resources.rdfsLabel + "> ?kingdomName. "
-                + " FILTER regex(?speciesName,'" + species + "',\"i\") "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?genusName,'" + genus + "',\"i\") "
-                + " FILTER regex(?familyName,'" + family + "',\"i\") "
-                + " FILTER regex(?orderName,'" + order + "',\"i\") "
-                + " FILTER regex(?className,'" + classs + "',\"i\") "
-                + " FILTER regex(?phylumName,'" + phylum + "',\"i\") "
-                + " FILTER regex(?kingdomName,'" + kingdom + "',\"i\")}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
-
+    public List<TaxonomyStruct> searchTaxonomy(String species, String genus, String family, String order, String classs, String kingdom, String phylum,
+                                               String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+        logger.info("Request for taxonomy search with parameters "
+                   +"species: ["+species+"], "
+                   +"genus: ["+genus+"], "
+                   +"family: ["+family+"], "
+                   +"order: ["+order+"], "
+                   +"class: ["+classs+"], "
+                   +"kingdom: ["+kingdom+"], "
+                   +"phylum: ["+phylum+"], "
+                   +"datasetURI: ["+datasetURI+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString = "SELECT DISTINCT ?speciesURI ?speciesName ?genusName ?familyName ?orderName ?className ?kingdomName ?phylumName "
+                                            +"?genusURI ?familyURI ?orderURI ?classURI ?kingdomURI ?phylumURI ?datasetURI ?datasetName "
+                +"FROM <" + repositoryGraph + "> "
+                +"WHERE{ "
+                +"?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+">. "
+                +"?speciesURI <"+Resources.rdfsLabel+"> ?speciesName. "
+                +"?speciesURI <"+Resources.belongsTo+"> ?genusURI. "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.refersTo+"> ?speciesURI. "
+                +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
+                +"?genusURI <"+ Resources.rdfTypeLabel+"> <"+Resources.genusLabel+">. "
+                +"?genusURI <"+ Resources.rdfsLabel+"> ?genusName. "
+                +"?genusURI <"+ Resources.belongsTo+"> ?familyURI. "
+                +"?familyURI <"+ Resources.rdfTypeLabel+"> <"+Resources.familyLabel+">. "
+                +"?familyURI <"+ Resources.rdfsLabel+"> ?familyName. "
+                +"?familyURI <"+ Resources.belongsTo+"> ?orderURI. "
+                +"?orderURI <"+ Resources.rdfTypeLabel+"> <"+Resources.orderLabel+">. "
+                +"?orderURI <"+ Resources.rdfsLabel+"> ?orderName. "
+                +"?orderURI <"+ Resources.belongsTo+"> ?classURI. "
+                +"?classURI <"+ Resources.rdfTypeLabel+"> <"+Resources.classLabel+">. "
+                +"?classURI <"+ Resources.rdfsLabel+"> ?className. "
+                +"?classURI <"+ Resources.belongsTo+"> ?phylumURI. "
+                +"?phylumURI <"+ Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+">. "
+                +"?phylumURI <"+ Resources.rdfsLabel+"> ?phylumName. "
+                +"?phylumURI <"+ Resources.belongsTo+"> ?kingdomURI. "
+                +"?kingdomURI <"+ Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+">. "
+                +"?kingdomURI <"+ Resources.rdfsLabel+"> ?kingdomName. ";
+        
+        if(species!=null && !species.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
+        }
+        if(genus!=null && !genus.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?genusName),\""+genus.toLowerCase()+"\"). ";
+        }
+        if(family!=null && !family.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?familyName),\""+family.toLowerCase()+"\"). ";
+        }
+        if(order!=null && !order.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?orderName),\""+order.toLowerCase()+"\"). ";
+        }
+        if(classs!=null && !classs.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?className),\""+classs.toLowerCase()+"\"). ";
+        }
+        if(phylum!=null && !phylum.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?phylumName),\""+phylum.toLowerCase()+"\"). ";
+        }
+        if(kingdom!=null && !kingdom.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?kingdomName),\""+kingdom.toLowerCase()+"\"). ";
+        }        
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
+        if(limit>0 && offset>=0){
+            queryString+="LIMIT "+limit+" "
+                        +"OFFSET "+offset;
+        }
+        
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The result returned " + sparqlresults.size() + " results");
@@ -1999,7 +1969,7 @@ public class MetadataRepositoryService implements Service {
          String fullInfo = "";
          
             List<TaxonomyStruct> TaxonomyResults = searchTaxonomy(species,"","","",
-                   "","","","",repositoryGraph);
+                   "","","","",0,0,repositoryGraph);
            
             String TaxonomyInfo = "";
             

@@ -827,7 +827,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, repositoryGraph);
+            retList=api.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI,0,0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for taxonomy metadata. Returning an empty list.\n", ex);
@@ -853,7 +853,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, repositoryGraph);
+            retList=api.searchTaxonomy(speciesName, genus, family, order, classs, kingdom, phylum, datasetURI, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for taxonomy metadata. Returning an empty list.\n", ex);

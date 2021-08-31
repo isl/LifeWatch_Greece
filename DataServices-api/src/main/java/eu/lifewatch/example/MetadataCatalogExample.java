@@ -41,11 +41,19 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }        
 
-        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);
+//        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(OccurrenceStatsTempStruct struct : results){
+//            System.out.println(struct);
+//        }                
+
+        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "Myrianida", "", "", "", "animalia", "", "", 0, 0, GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
-        for(OccurrenceStatsTempStruct struct : results){
+        for(TaxonomyStruct struct : results){
             System.out.println(struct);
         }                
+
+        
     }
     
 
