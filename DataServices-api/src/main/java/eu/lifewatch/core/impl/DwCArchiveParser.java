@@ -528,7 +528,7 @@ public class DwCArchiveParser {
         }      
         if(rec.value(DwcTerm.occurrenceID)!=null){
             occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
-            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));    
+//            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));        // to avoid the construction of several labels
         }
         if(rec.value(DwcTerm.decimalLongitude)!=null){
             occurrenceTempStruct.withLongitude(rec.value(DwcTerm.decimalLongitude));
