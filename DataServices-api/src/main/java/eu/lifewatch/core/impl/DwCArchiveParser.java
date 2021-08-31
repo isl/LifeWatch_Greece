@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v7";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v7";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v8";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v8";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -248,10 +248,12 @@ public class DwCArchiveParser {
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec);
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);                
 //                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec);
+                MeasurementStruct measurementStruct=this.retrieveMeasurementEvent(rec);
                 log.debug("Taxonomy struct: "+taxonomyStruct);
                 log.debug("Scientific name struct: "+scNameStruct);
                 log.debug("Occurence temporary aggregate struct: "+occurenceTempStruct);
 //                log.debug("Occurence struct: "+occurenceStruct);
+                log.debug("Measurement struct: "+measurementStruct);
                 if(this.importDatasets){
                     log.info("Importing taxonomy struct with species URI "+taxonomyStruct.getSpeciesURI());
                     this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
@@ -261,6 +263,8 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
 //                    log.info("Importing occurence struct");
 //                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing measurement struct with URI "+measurementStruct.getMeasurementEventURI());
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
@@ -268,6 +272,7 @@ public class DwCArchiveParser {
                     this.storeLocally(scNameStruct);
                     this.storeLocally(occurenceTempStruct);
 //                    this.storeLocally(occurenceStruct);
+                    this.storeLocally(measurementStruct);
                 }
             }
         }else{
@@ -276,10 +281,12 @@ public class DwCArchiveParser {
                 ScientificNamingStruct scNameStruct=this.retrieveScName(rec.core());
 //                OccurrenceStruct occurenceStruct=this.retrieveOccurence(rec.core());
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
+                MeasurementStruct measurementStruct=this.retrieveMeasurementEvent(rec.core());
                 log.debug("Taxonomy struct: "+taxonomyStruct);
                 log.debug("Scientific name struct: "+scNameStruct);
                 log.debug("Occurence temp struct: "+occurenceTempStruct);
 //                log.debug("Occurence struct: "+occurenceStruct);
+                log.debug("Measurement struct: "+measurementStruct);
                 if(this.importDatasets){
                     log.info("Importing taxonomy struct with species URI "+taxonomyStruct.getSpeciesURI());
                     this.mrManager.insertStruct(taxonomyStruct, GRAPHSPACE_METADATA);
@@ -289,6 +296,8 @@ public class DwCArchiveParser {
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
 //                    log.info("Importing occurence struct");
 //                    this.mrManager.insertStruct(occurenceStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing measurement struct with URI "+measurementStruct.getMeasurementEventURI());
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
@@ -296,6 +305,7 @@ public class DwCArchiveParser {
                     this.storeLocally(scNameStruct);
                     this.storeLocally(occurenceTempStruct);
 //                    this.storeLocally(occurenceStruct);
+                    this.storeLocally(measurementStruct);
                 }
             }
         }
@@ -336,26 +346,38 @@ public class DwCArchiveParser {
             for(Record rec : dwcArchive.getExtension(term)){
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec);
                 log.debug("Occurrence temporary aggregate struct: "+occurenceTempStruct);
+                MeasurementStruct measurementStruct=this.retrieveMeasurementEvent(rec);
+                log.debug("Measurement struct: "+measurementStruct);
                 if(this.importDatasets){
                     log.info("Importing occurrence temporary aggregate struct with URI "+occurenceTempStruct.getOccurrenceEventURI());
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing measurement struct with URI "+measurementStruct.getMeasurementEventURI());
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata occurrence temporary aggregate with URI "+occurenceTempStruct.getOccurrenceEventURI());
                     this.storeLocally(occurenceTempStruct);
+                    log.info("Storing locally metadata measurement with URI "+measurementStruct.getMeasurementEventURI());
+                    this.storeLocally(measurementStruct);
                 }
             }
         }else{
             for(StarRecord rec : dwcArchive){
                 OccurrenceStatsTempStruct occurenceTempStruct=this.retrieveOccurenceTemp(rec.core());
                 log.debug("Occurrence temporary aggregate struct: "+occurenceTempStruct);
+                MeasurementStruct measurementStruct=this.retrieveMeasurementEvent(rec.core());
+                log.debug("Measurement struct: "+measurementStruct);
                 if(this.importDatasets){
                     log.info("Importing occurrence temporary aggregate struct with URI "+occurenceTempStruct.getOccurrenceEventURI());
                     this.mrManager.insertStruct(occurenceTempStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing measurement struct with URI "+measurementStruct.getMeasurementEventURI());
+                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata occurrence temporary aggregate with URI "+occurenceTempStruct.getOccurrenceEventURI());
                     this.storeLocally(occurenceTempStruct);
+                    log.info("Storing locally metadata measurement with URI "+measurementStruct.getMeasurementEventURI());
+                    this.storeLocally(measurementStruct);
                 }
             }
         }
@@ -598,6 +620,35 @@ public class DwCArchiveParser {
         return measurementStruct;
     }
     
+    private MeasurementStruct retrieveMeasurementEvent(Record rec) throws UnsupportedEncodingException{
+        MeasurementStruct measurementStruct=new MeasurementStruct()
+                    .withDatasetName(this.datasetTitle)
+                    .withDatasetURI(this.datasetURI);    
+        if(rec.column(0)!=null){
+            measurementStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"measurement_event", rec.column(0)));
+            measurementStruct.withMeasurementEvent("Measurement "+rec.column(0));
+            measurementStruct.withSpecimenURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"specimen", rec.column(0)));
+            measurementStruct.withSpecimenName("Specimen with ID "+rec.column(0));
+        }
+        if(rec.value(DwcTerm.eventDate)!=null){
+            measurementStruct.withTimeSpan(rec.value(DwcTerm.eventDate));
+        }
+        if(rec.value(DwcTerm.identifiedBy)!=null){
+            String[] actors=rec.value(DwcTerm.identifiedBy).split(",");
+            for(String actor : actors){
+                actor=actor.trim();
+                if(!actor.isEmpty()){
+                    measurementStruct.withActor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", actor),actor);
+                }
+            }
+        }
+        if(rec.value(DwcTerm.scientificName)!=null){
+            measurementStruct.withSpeciesURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "species",rec.value(DwcTerm.scientificName)));
+            measurementStruct.withSpeciesName(rec.value(DwcTerm.scientificName));
+        }
+        return measurementStruct;
+    }
+    
     private void createLocalFolder() throws IOException{
         new File(Resources.LOCAL_DATASET_INSTANCES).mkdir();
         if(!new File(Resources.LOCAL_DATASET_INSTANCES+"/"+this.archiveFolderName).exists()){
@@ -610,6 +661,7 @@ public class DwCArchiveParser {
     
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
+//        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/saronicos_1980/dwca-1.12.zip"),true,true).parseData();
     }   
 }

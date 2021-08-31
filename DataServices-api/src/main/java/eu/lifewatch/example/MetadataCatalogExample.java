@@ -1,5 +1,6 @@
 package eu.lifewatch.example;
 
+import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.MicroCTScanningStruct;
 import eu.lifewatch.core.model.MicroCTSpecimenStruct;
 import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
@@ -19,7 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v7";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v8";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -60,9 +61,14 @@ public class MetadataCatalogExample {
 //        for(ScientificNamingStruct struct : results){
 //            System.out.println(struct);
 //        }                
-        List<OccurrenceStruct> results=mrManager.searchOccurrence("Syllis garciai", "", "", "", 0, 0,GRAPHSPACE_METADATA);
+//        List<OccurrenceStruct> results=mrManager.searchOccurrence("Syllis garciai", "", "", "", 0, 0,GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(OccurrenceStruct struct : results){
+//            System.out.println(struct);
+//        }                
+        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
-        for(OccurrenceStruct struct : results){
+        for(MeasurementStruct struct : results){
             System.out.println(struct);
         }                
     }
