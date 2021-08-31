@@ -742,91 +742,128 @@ public class MetadataRepositoryService implements Service {
     }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?occurrenceEventURI ?occurrenceEventLabel ?datasetURI ?datasetName"
-                + " ?speciesURI ?speciesName ?individualURI ?individualLabel "
-                + " ?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
-                + " ?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description"
-                + " ?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI"
-                + " ?coordinates ?stationNotes ?ecosystemURI ?ecosystemName ?tempURI ?tempName ?numberOfParts "
-                + "FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + " ?occurrenceEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.encounterEventLabel + "> . "
-                + " ?occurrenceEventURI <" + Resources.hasFoundAt + "> ?stationURI . "
-                + " ?occurrenceEventURI <" + Resources.rdfsLabel + "> ?occurrenceEventLabel . "
-//                + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
-//                + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . "
-                + " OPTIONAL {?stationURI <" + Resources.hasNote + "> ?stationNotes . }"
-                + " OPTIONAL {?stationURI <" + Resources.isIdentifiedBy + "> ?coordinates . }"
-                + " OPTIONAL {?occurrenceEventURI <" + Resources.hasNote + "> ?description . }"
-                //             +" ?localityURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+"> . "
-                + " ?occurrenceEventURI <" + Resources.hasTimespan + "> ?timespan . "
-                + " ?occurrenceEventURI <" + Resources.carriedOutBy + "> ?actorURI . "
-                //             +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.personLabel+"> . "
-                //             +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-
-                + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName . "
-                + " ?occurrenceEventURI <" + Resources.hasFoundObject + "> ?individualURI . "
-                + " ?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+"> . "
-                + " ?individualURI <" + Resources.rdfsLabel + "> ?individualLabel . "
-                + " ?individualURI <" + Resources.isComposedOf + "> ?tempURI. "
-                + " ?tempURI <" + Resources.belongsTo + "> ?speciesURI . "
-                + " ?tempURI <" + Resources.rdfsLabel + "> ?tempName . "
-                
-                + " OPTIONAL {?tempURI <" + Resources.hasNumberOfParts + "> ?numberOfParts. } "
-
-             
-                + " ?speciesURI <" + Resources.rdfsLabel + "> ?speciesName . "
-                //             +" ?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+"> . "
-                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + " ?datasetURI <" + Resources.refersTo + "> ?occurrenceEventURI . "
-                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " OPTIONAL {?occurrenceEventURI <" + Resources.usedObjectOfType + "> ?equipmentURI . "
-                //             +" ?equipmentURI <"+Resources.rdfTypeLabel+"> <"+Resources.equipmentTypeLabel+"> . "
-                + " ?equipmentURI <" + Resources.rdfsLabel + "> ?equipmentName }. "
-                + " OPTIONAL {?occurrenceEventURI <" + Resources.usedSpecificTechnique + "> ?samplingProtocolURI . "
-                //             +" ?equipmentURI <"+Resources.rdfTypeLabel+"> <"+Resources.equipmentTypeLabel+"> . "
-                + " ?samplingProtocolURI <" + Resources.rdfsLabel + "> ?samplingProtocol }. "
-                + " OPTIONAL {?occurrenceEventURI <" + Resources.isReferredToBy + "> ?bibliographicCitationURI . "
-                + " ?bibliographicCitationURI <" + Resources.rdfTypeLabel + "> <" + Resources.conceptualObjectLabel + "> . "
-                + " ?bibliographicCitationURI <" + Resources.rdfsLabel + "> ?bibliographicCitation }. "
-                
-                
-                 + " OPTIONAL {?stationURI <" + Resources.hasType + "> ?habitatURI ."
-                + " ?habitatURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemTypeLabel+"> ."
-                + " ?habitatURI <" + Resources.rdfsLabel + "> ?habitatName .} "
-                 
-                + " OPTIONAL {"
-                + " ?stationURI <" + Resources.fallsWithin + "> ?localityURI . "
-                +"  ?localityURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+"> . "
-                + " ?localityURI <" + Resources.rdfsLabel + "> ?localityName . }"
-                
-  
-                + " OPTIONAL {?stationURI <" + Resources.fallsWithin + "> ?countryURI . "
-                + " ?countryURI <" + Resources.rdfTypeLabel + "> <" + Resources.countryLabel + "> . "
-                + " ?countryURI <" + Resources.rdfsLabel + "> ?countryName . }"
-                
-                + " OPTIONAL {?stationURI <" + Resources.fallsWithin + "> ?ecosystemURI . "
-                + " ?ecosystemURI <" + Resources.rdfTypeLabel + "> <" + Resources.ecosystemLabel + "> . "
-                + " ?ecosystemURI <" + Resources.rdfsLabel + "> ?ecosystemName . }"
-                
-                + " OPTIONAL {?stationURI <" + Resources.fallsWithin + "> ?waterAreaURI . "
-                + " ?waterAreaURI <" + Resources.rdfTypeLabel + "> <" + Resources.waterAreaLabel + "> .  "
-                + " ?waterAreaURI <" + Resources.rdfsLabel + "> ?waterAreaName . } "
-                + " FILTER regex(?timespan,'" + date + "',\"i\") "
-                + " FILTER regex(?speciesName,'" + speciesName + "',\"i\") "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?numberOfParts,'" + numberOfParts + "',\"i\") "
-                +  "FILTER (regex(?localityName,'" + place + "',\"i\")||regex(?countryName,'" + place + "',\"i\")|| regex(?waterAreaName,'" + place + "',\"i\"))}"
-                + " LIMIT "+limit
-                + " OFFSET "+offset;
+        String queryString="SELECT DISTINCT ?occurrenceEventURI ?occurrenceEventLabel ?datasetURI ?datasetName "
+                +"?speciesURI ?speciesName ?individualURI ?individualLabel "
+                +"?localityURI ?localityName ?countryURI ?countryName ?waterAreaURI ?waterAreaName "
+                +"?habitatURI ?habitatName ?equipmentURI ?equipmentName ?actorURI ?actorName ?description "
+                +"?timespan ?stationURI ?samplingProtocol ?samplingProtocolURI ?bibliographicCitation ?bibliographicCitationURI "
+                +"?stationNotes ?ecosystemURI ?ecosystemName ?tempURI ?tempName ?numberOfParts ?min_depth ?max_depth "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?occurrenceEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.encounterEventLabel+">. "
+                +"?occurrenceEventURI <"+Resources.hasFoundAt+"> ?stationURI. "
+                +"?occurrenceEventURI <"+Resources.rdfsLabel+"> ?occurrenceEventLabel. "
+                +"?occurrenceEventURI <"+Resources.hasTimespan+"> ?timespan. "
+                +"?occurrenceEventURI <"+Resources.carriedOutBy+"> ?actorURI. "
+                +"?actorURI <"+Resources.rdfsLabel+"> ?actorName. "
+                +"?occurrenceEventURI <"+Resources.hasFoundObject+"> ?individualURI. "
+                +"?individualURI <"+Resources.rdfTypeLabel+"> <"+Resources.physicalObjectLabel+">. "
+                +"?individualURI <"+Resources.rdfsLabel+"> ?individualLabel. "
+                +"?individualURI <"+Resources.isComposedOf+"> ?tempURI. "
+                +"?tempURI <"+Resources.belongsTo+"> ?speciesURI. "
+                +"?tempURI <"+Resources.rdfsLabel+"> ?tempName. "
+                +"?speciesURI <"+Resources.rdfsLabel+"> ?speciesName. "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.refersTo+"> ?occurrenceEventURI. "
+                +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.consistsOf+"> ?measurement_uri. "
+                    +"?measurement_uri <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. "
+                    +"?measurement_uri <"+Resources.observedDimension+"> ?min_dimension_uri. "
+                    +"?min_dimension_uri <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                    +"?min_dimension_uri <"+Resources.rdfsLabel+"> ?min_depth. "
+                    +"?min_dimension_uri <"+Resources.hasType+"> ?min_type_uri. "
+                    +"?min_type_uri <"+Resources.rdfsLabel+"> \"minimum depth\". "
+                +"} "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.consistsOf+"> ?measurement_uri. "
+                    +"?measurement_uri <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. "
+                    +"?measurement_uri <"+Resources.observedDimension+"> ?max_dimension_uri. "
+                    +"?max_dimension_uri <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                    +"?max_dimension_uri <"+Resources.rdfsLabel+"> ?max_depth. "
+                    +"?max_dimension_uri <"+Resources.hasType+"> ?max_type_uri. "
+                    +"?max_type_uri <"+Resources.rdfsLabel+"> \"maximum depth\". "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <"+Resources.hasNote+"> ?stationNotes. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.hasNote+"> ?description. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?tempURI <"+Resources.hasNumberOfParts+"> ?numberOfParts. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.usedObjectOfType+"> ?equipmentURI. "
+                    +"?equipmentURI <"+Resources.rdfsLabel+"> ?equipmentName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.usedSpecificTechnique+"> ?samplingProtocolURI. "
+                    +"?samplingProtocolURI <"+Resources.rdfsLabel+"> ?samplingProtocol. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?occurrenceEventURI <"+Resources.isReferredToBy+"> ?bibliographicCitationURI. "
+                    +"?bibliographicCitationURI <"+Resources.rdfTypeLabel+"> <"+Resources.conceptualObjectLabel+">. "
+                    +"?bibliographicCitationURI <"+Resources.rdfsLabel+"> ?bibliographicCitation. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <" + Resources.fallsWithin + "> ?localityURI. "
+                    +"?localityURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+">. "
+                    +"?localityURI <" + Resources.rdfsLabel + "> ?localityName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <" + Resources.fallsWithin + "> ?localityURI. "
+                    +"?localityURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemEnvironmentLabel+">. "
+                    +"?localityURI <"+Resources.hasType+"> ?habitatURI. "
+                    +"?habitatURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemTypeLabel+">. "
+                    +"?habitatURI <"+Resources.rdfsLabel+"> ?habitatName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <"+Resources.fallsWithin+"> ?countryURI. "
+                    +"?countryURI <"+Resources.rdfTypeLabel+"> <"+Resources.countryLabel+">. "
+                    +"?countryURI <"+Resources.rdfsLabel+"> ?countryName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <"+Resources.fallsWithin+"> ?ecosystemURI. "
+                    +"?ecosystemURI <"+Resources.rdfTypeLabel+"> <"+Resources.ecosystemLabel+">. "
+                    +"?ecosystemURI <"+Resources.rdfsLabel+"> ?ecosystemName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?stationURI <"+Resources.fallsWithin+"> ?waterAreaURI. "
+                    +"?waterAreaURI <"+Resources.rdfTypeLabel+"> <"+Resources.waterAreaLabel+">.  "
+                    +"?waterAreaURI <"+Resources.rdfsLabel+"> ?waterAreaName. "
+                +"} ";
+        if(date!=null && !date.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?timespan),\""+date.toLowerCase()+"\"). ";
+        }
+        if(speciesName!=null && !speciesName.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+speciesName.toLowerCase()+"\"). ";
+        }
+        if(place!=null && !place.isEmpty()){
+            queryString+="FILTER (CONTAINS(LCASE(?localityName),\""+place.toLowerCase()+"\") ";
+            queryString+="|| CONTAINS(LCASE(?countryName),\""+place.toLowerCase()+"\") ";
+            queryString+="|| CONTAINS(LCASE(?waterAreaName),\""+place.toLowerCase()+"\") ). ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        if(numberOfParts!=null && !numberOfParts.isEmpty()){
+            queryString+="FILTER (?numberOfParts=\""+numberOfParts+"\"). ";
+        }
+        
+        if(limit>0 && offset>0){
+            queryString+="LIMIT "+limit+" "
+                        +"OFFSET "+offset+" ";
+        }
+        queryString+="}";
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-        //Map<String, OccurrenceStatsTempStruct> map = new HashMap<>();
+        Map<String, OccurrenceStatsTempStruct> map = new HashMap<>();
         List<OccurrenceStatsTempStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-           // if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
+            if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
                 OccurrenceStatsTempStruct struct = new OccurrenceStatsTempStruct()
                         .withOccurrenceEventURI(result.getValue("occurrenceEventURI").stringValue())
                         .withOccurrenceEvent(result.getValue("occurrenceEventLabel").stringValue())
@@ -851,13 +888,18 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("waterAreaName") != null) {
                     struct.withWaterAreaName(result.getValue("waterAreaName").stringValue());
                 }
-                
-                  if (result.getValue("tempName") != null) {
+                if (result.getValue("tempName") != null) {
                     struct.withTemporaryAggregate(result.getValue("tempName").stringValue());
                 }
                 if (result.getValue("numberOfParts") != null) {
                     struct.withNumberOfParts(result.getValue("numberOfParts").stringValue());
-                }             
+                }
+                if (result.getValue("min_depth") != null) {
+                    struct.withMinimumDepth(result.getValue("min_depth").stringValue());
+                }
+                if (result.getValue("max_depth") != null) {
+                    struct.withMaximumDepth(result.getValue("max_depth").stringValue());
+                }
                 if (result.getValue("countryURI") != null) {
                     struct.withCountryURI(result.getValue("countryURI").stringValue());
                 }
@@ -885,14 +927,12 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("timespan") != null) {
                     struct.withTimeSpan(result.getValue("timespan").stringValue());
                 }
-
                 if (result.getValue("bibliographicCitationURI") != null) {
                     struct.withBibliographicCitationURI(result.getValue("bibliographicCitationURI").stringValue());
                 }
                 if (result.getValue("bibliographicCitation") != null) {
                     struct.withBibliographicCitation(result.getValue("bibliographicCitation").stringValue());
                 }
-
                 if (result.getValue("samplingProtocolURI") != null) {
                     struct.withSamplingProtocolURI(result.getValue("samplingProtocolURI").stringValue());
                 }
@@ -902,20 +942,14 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("stationNotes") != null) {
                     struct.withStationNotes(result.getValue("stationNotes").stringValue());
                 }
-                if (result.getValue("coordinates") != null) {
-                    struct.withCoordinates(result.getValue("coordinates").stringValue());
-                }
-                
-                results.add(struct);
-//                map.put(struct.getOccurrenceEventURI(), struct);
-//            } else {
-//                OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
-//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-//                map.put(struct.getOccurrenceEventURI(), struct);
-//            }
+                map.put(struct.getOccurrenceEventURI(), struct);
+            } else {
+                OccurrenceStatsTempStruct struct = map.get(result.getValue("occurrenceEventURI").stringValue());
+                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
+                map.put(struct.getOccurrenceEventURI(), struct);
+            }
         }
-        return results;
-        //return new ArrayList<>(map.values());
+        return new ArrayList<>(map.values());
     }
 
 //    public List<OccurrenceStatsAbundanceStruct> searchOccurenceStatsAbundance(String speciesName, String temp, String repositoryGraph) throws QueryExecutionException {
