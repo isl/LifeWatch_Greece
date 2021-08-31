@@ -2010,7 +2010,7 @@ public class MetadataRepositoryService implements Service {
             }
 
             
-            List<ScientificNamingStruct> SNameResults = searchScientificNaming("","","","",species,repositoryGraph);
+            List<ScientificNamingStruct> SNameResults = searchScientificNaming("","","","",species,0,0,repositoryGraph);
           
             String SNameInfo = "";
             
@@ -2180,132 +2180,71 @@ public class MetadataRepositoryService implements Service {
             return true;
         
     }  
-     
-     
-    public List<ScientificNamingStruct> searchScientificNaming(String species, String date, String actor,String datasetURI, String sname, String repositoryGraph)
-            throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT"
-                + " ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel  ?speciesURI ?actorURI ?actorName "
-                + " ?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName "
-                + " ?sname ?snameURI "
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + " ?scientificNameAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.scientificNameAssignmentEventLabel + "> .  "
-                + " ?scientificNameAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
-                + " ?scientificNameAssignmentEventURI   <" + Resources.assigned + "> ?snameURI .  "
-                + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
-                + " ?scientificNameAssignmentEventURI <" + Resources.rdfsLabel + "> ?scientificNameAssignmentEventLabel . "
-                + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.hasTimespan + "> ?date .}  "
-                + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.usedSpecificTechnique + "> ?ncodeURI .  "
-                + " ?ncodeURI   <" + Resources.rdfsLabel + "> ?ncodeName .}  "
-                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + " ?datasetURI <" + Resources.refersTo + "> ?scientificNameAssignmentEventURI. "
-                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " ?snameURI <" + Resources.rdfsLabel + "> ?sname.  "
-                + " ?snameURI <" + Resources.rdfTypeLabel + "> <" + Resources.appellationLabel + "> .  "
-                //                          +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
-                + " FILTER regex(?sname,'" + sname + "',\"i\")  "
-                + " FILTER regex(?date,'" + date + "',\"i\")  "
-                + " FILTER regex(?actorName,'" + actor + "',\"i\")  "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?speciesURI,'" + species + "',\"i\")}";
-        logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, ScientificNamingStruct> map = new HashMap<>();
-        for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
-                ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
-                        .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
-                        .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
-                        .withAppellation(result.getValue("sname").stringValue())
-                        .withAppellationURI(result.getValue("snameURI").stringValue())
-                        .withSpeciesURI(result.getValue("speciesURI").stringValue())
-                        .withDatasetURI(result.getValue("datasetURI").stringValue())
-                        .withDatasetName(result.getValue("datasetName").stringValue());
-                if (result.getValue("date") != null) {
-                    struct.withTimeSpan(result.getValue("date").stringValue());
-                }
-                if (result.getValue("ncodeURI") != null) {
-                    struct.withNomenclaturalCodeURI(result.getValue("ncodeURI").stringValue());
-                }
-                if (result.getValue("ncodeName") != null) {
-                    struct.withNomenclaturalCodeName(result.getValue("ncodeName").stringValue());
-                }
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            } else {
-                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            }
-        }
-        if (!map.isEmpty()) {
-            String query = "SELECT DISTINCT ?scientificNameAssignmentEventURI ?actorURI ?actorName"
-                    + " FROM <" + repositoryGraph + "> "
-                    + "WHERE{ "
-                    + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
-                    + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
-                    + "FILTER( ";
-            for (ScientificNamingStruct struct : map.values()) {
-                query += " ?scientificNameAssignmentEventURI = <" + struct.getScientificNameAssignmentEventURI() + "> || ";
-            }
-            query = query.substring(0, query.length() - 3) + ")}";
-            logger.debug("Getting more actors using the query: \"" + query + "\"");
-            sparqlresults = this.repoManager.query(query);
-            logger.debug("The inner query returned " + sparqlresults.size() + " results");
-            for (BindingSet result : sparqlresults) {
-                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-            }
-        }
-        return new ArrayList<>(map.values());
-    }
 
-     public List<ScientificNamingStruct> searchScientificNaming(String species, String date, String actor,String datasetURI, String sname, int offset, int limit, String repositoryGraph)
-            throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT"
-                + " ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel ?speciesURI ?actorURI ?actorName "
-                + " ?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName "
-                + " ?sname ?snameURI "
-                + " FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + " ?scientificNameAssignmentEventURI <" + Resources.rdfTypeLabel + "> <" + Resources.scientificNameAssignmentEventLabel + "> .  "
-                + " ?scientificNameAssignmentEventURI <" + Resources.assignedAttributeTo + "> ?speciesURI .  "
-                + " ?scientificNameAssignmentEventURI   <" + Resources.assigned + "> ?snameURI .  "
-                + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
-                + " ?scientificNameAssignmentEventURI <" + Resources.rdfsLabel + "> ?scientificNameAssignmentEventLabel . "
-                + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.hasTimespan + "> ?date .}  "
-                + " OPTIONAL { ?scientificNameAssignmentEventURI   <" + Resources.usedSpecificTechnique + "> ?ncodeURI .  "
-                + " ?ncodeURI   <" + Resources.rdfsLabel + "> ?ncodeName .}  "
-                + " ?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + " ?datasetURI <" + Resources.refersTo + "> ?scientificNameAssignmentEventURI. "
-                + " ?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + " ?snameURI <" + Resources.rdfsLabel + "> ?sname.  "
-                + " ?snameURI <" + Resources.rdfTypeLabel + "> <" + Resources.appellationLabel + "> .  "
-                //                          +" ?actorURI <"+Resources.rdfTypeLabel+"> <"+Resources.actorLabel+"> . "
-                + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
-                + " FILTER regex(?sname,'" + sname + "',\"i\")  "
-                + " FILTER regex(?date,'" + date + "',\"i\")  "
-                + " FILTER regex(?actorName,'" + actor + "',\"i\")  "
-                + " FILTER regex(?datasetURI,'" + datasetURI + "',\"i\")  "
-                + " FILTER regex(?speciesURI,'" + species + "',\"i\")}"
-                + " LIMIT " + limit
-                + " OFFSET " + offset;
+    public List<ScientificNamingStruct> searchScientificNaming(String speciesUri, String date, String actor,String datasetURI, String sname, int offset, int limit, String repositoryGraph)throws QueryExecutionException {
+        logger.info("Request for scientificNaming search with parameters "
+                   +"speciesURI: ["+speciesUri+"], "
+                   +"date: ["+date+"], "
+                   +"actor: ["+actor+"], "
+                   +"datasetURI: ["+datasetURI+"], "
+                   +"scientificName: ["+sname+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString="SELECT DISTINCT ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel ?speciesURI ?actorURI ?actorName "
+                                          +"?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName ?sname ?snameURI "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?scientificNameAssignmentEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.scientificNameAssignmentEventLabel+">.  "
+                +"?scientificNameAssignmentEventURI <"+Resources.assignedAttributeTo+"> ?speciesURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.assigned+"> ?snameURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.carriedOutBy+"> ?actorURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.rdfsLabel+"> ?scientificNameAssignmentEventLabel. "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.refersTo+"> ?scientificNameAssignmentEventURI. "
+                +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
+                +"?snameURI <"+Resources.rdfsLabel+"> ?sname. "
+                +"?snameURI <"+Resources.rdfTypeLabel+"> <"+Resources.appellationLabel+">.  "
+                +"?actorURI <"+Resources.rdfsLabel+"> ?actorName. "
+                +"OPTIONAL { "
+                    +"?scientificNameAssignmentEventURI <"+Resources.hasTimespan+"> ?date. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?scientificNameAssignmentEventURI <"+Resources.usedSpecificTechnique+"> ?ncodeURI. "
+                    +"?ncodeURI <"+Resources.rdfsLabel+"> ?ncodeName. "
+                +"} ";
+        if(sname!=null && !sname.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?sname),\""+sname.toLowerCase()+"\"). ";
+        }
+        if(date!=null && !date.isEmpty()){
+            queryString+="FILTER (?date=\""+date+"\"). ";
+        }
+        if(actor!=null && !actor.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?actorName),\""+actor.toLowerCase()+"\"). ";
+        }
+        if(speciesUri!=null && !speciesUri.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?speciesURI)),\""+speciesUri.toLowerCase()+"\"). ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
+        if(limit>0 && offset>=0){
+            queryString+="LIMIT "+limit+" "
+                        +"OFFSET "+offset;
+        }
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The query returned " + sparqlresults.size() + " results");
-       // Map<String, ScientificNamingStruct> map = new HashMap<>();
         List<ScientificNamingStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
-            //if (!map.containsKey(result.getValue("scientificNameAssignmentEventURI").stringValue())) {
                 ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
                         .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
                         .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
                         .withAppellation(result.getValue("sname").stringValue())
                         .withAppellationURI(result.getValue("snameURI").stringValue())
                         .withSpeciesURI(result.getValue("speciesURI").stringValue())
+                        .withSpeciesName(result.getValue("sname").stringValue())
                         .withDatasetURI(result.getValue("datasetURI").stringValue())
                         .withDatasetName(result.getValue("datasetName").stringValue());
                 if (result.getValue("date") != null) {
@@ -2317,37 +2256,9 @@ public class MetadataRepositoryService implements Service {
                 if (result.getValue("ncodeName") != null) {
                     struct.withNomenclaturalCodeName(result.getValue("ncodeName").stringValue());
                 }
-                
                 results.add(struct);
-//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-//            } else {
-//                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-//            }
-//        }
-//        if (!map.isEmpty()) {
-//            String query = "SELECT DISTINCT ?scientificNameAssignmentEventURI ?actorURI ?actorName"
-//                    + " FROM <" + repositoryGraph + "> "
-//                    + "WHERE{ "
-//                    + " ?scientificNameAssignmentEventURI   <" + Resources.carriedOutBy + "> ?actorURI .  "
-//                    + " ?actorURI <" + Resources.rdfsLabel + "> ?actorName.  "
-//                    + "FILTER( ";
-//            for (ScientificNamingStruct struct : map.values()) {
-//                query += " ?scientificNameAssignmentEventURI = <" + struct.getScientificNameAssignmentEventURI() + "> || ";
-//            }
-//            query = query.substring(0, query.length() - 3) + ")}";
-//            logger.debug("Getting more actors using the query: \"" + query + "\"");
-//            sparqlresults = this.repoManager.query(query);
-//            logger.debug("The inner query returned " + sparqlresults.size() + " results");
-//            for (BindingSet result : sparqlresults) {
-//                ScientificNamingStruct struct = map.get(result.getValue("scientificNameAssignmentEventURI").stringValue());
-//                struct.withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue());
-//                map.put(struct.getScientificNameAssignmentEventURI(), struct);
-//            }
         }
         return results;
-        //return new ArrayList<>(map.values());
     }
 
     public List<CommonNameStruct> searchCommonName(String species, String commonName, String place, String language, String datasetURI, String repositoryGraph)

@@ -1196,7 +1196,7 @@ public class MetadataCatalogUsageExample {
         this.printSeparator();
         System.out.println("Searching for ScientificNaming structs.");
         try{
-            List<ScientificNamingStruct> results=this.mrService.searchScientificNaming("species", "timespan", "actor", "dataset","", "http://lifewatchgreece.com");
+            List<ScientificNamingStruct> results=this.mrService.searchScientificNaming("species", "timespan", "actor", "dataset","", 0,0, "http://lifewatchgreece.com");
             for(ScientificNamingStruct struct : results){
                 System.out.println(struct.getScientificNameAssignmentEventURI());
             }

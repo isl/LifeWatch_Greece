@@ -66,7 +66,7 @@ public class ScientificNameCardinallityExample {
     
     public ScientificNameCardinallityExample search(){
         try{
-            List<ScientificNamingStruct> structs=this.mrService.searchScientificNaming("species", "timespan", "actor", "appellation", "",defaultGraphspace);
+            List<ScientificNamingStruct> structs=this.mrService.searchScientificNaming("species", "timespan", "actor", "appellation", "",0,0,defaultGraphspace);
             System.out.println("Found "+structs.size()+" structs");
             for(ScientificNamingStruct struct : structs){
                 System.out.println(struct);

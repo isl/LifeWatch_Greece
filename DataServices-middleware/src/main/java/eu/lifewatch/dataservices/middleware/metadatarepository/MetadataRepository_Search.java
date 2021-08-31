@@ -616,7 +616,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchScientificNaming(speciesName, date, actor, datasetURI, scientificName, repositoryGraph);
+            retList=api.searchScientificNaming(speciesName, date, actor, datasetURI, scientificName, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for scientific naming metadata. Returning an empty list.\n", ex);
