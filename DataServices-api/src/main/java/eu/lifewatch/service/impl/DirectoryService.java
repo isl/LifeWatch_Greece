@@ -12,7 +12,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.net.URI;
 import eu.lifewatch.common.Resources;
-import eu.lifewatch.core.model.OccurrenceStruct;
 import eu.lifewatch.core.model.Triple;
 import eu.lifewatch.exception.DataImportException;
 import eu.lifewatch.exception.QueryExecutionException;
