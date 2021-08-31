@@ -646,7 +646,7 @@ public class MetadataRepositoryService implements Service {
         queryString+="} ";
         if(limit>0 && offset>=0){
             queryString+="LIMIT "+limit+" "
-                        +"OFFSET "+offset+" ";
+                        +"OFFSET "+offset;
         }
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
@@ -3383,165 +3383,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             results.add(struct);
         }
         return results;
-    }
-    
-     public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
-                + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
-                + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
-                + " ?material ?taxonomic_group "
-                + "FROM <" + repositoryGraph + "> "
-                + "WHERE{ "
-                + "?specimenURI <" + Resources.rdfTypeLabel + "> <" + Resources.specimenLabel + "> . "
-                + "?specimenURI <" + Resources.rdfsLabel + "> ?specimenName. "
-                + "?specimenURI <" + Resources.hasNote + "> ?description. "
-                + "?datasetURI <" + Resources.rdfTypeLabel + "> <" + Resources.datasetLabel + "> . "
-                + "?datasetURI <" + Resources.refersTo + "> ?specimenURI . "
-                + "?datasetURI <" + Resources.rdfsLabel + "> ?datasetName . "
-                + "?specimenURI <" + Resources.wasProvidedBy + "> ?providerURI . "
-                + "?providerURI <" + Resources.rdfsLabel + "> ?providerName. "
-                + "?specimenURI <" + Resources.hasDimension + "> ?dimensionURI . "
-                + "?dimensionURI <" + Resources.rdfTypeLabel + "> <" + Resources.dimensionLabel + "> . "
-                + "?dimensionURI <" + Resources.hasType + "> ?dimensionTypeURI. "
-                + "?dimensionTypeURI <" + Resources.rdfsLabel + "> ?dimensionName.  "
-                + "?dimensionURI <" + Resources.hasValue + "> ?dimensionValue.  "
-                + "?dimensionURI <" + Resources.hasUnit + "> ?dimensionUnit.  "
-                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?fixationUri. "
-                + "?fixationUri <"+Resources.hasType+"> ?fixationTypeUri. "
-                + "?fixationUri <"+Resources.rdfsLabel+"> ?fixation. "
-                + "?fixationTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
-                + "?fixationTypeUri <"+Resources.rdfsLabel+"> \""+Resources.fixationLabel+"\". "
-                + "?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?preservationMediumUri. "
-                + "?preservationMediumUri <"+Resources.hasType+"> ?preservationMediumTypeUri. "
-                + "?preservationMediumUri <"+Resources.rdfsLabel+"> ?preservationMedium. "
-                + "?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
-                + "?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
-                + "OPTIONAL { "
-                    + "?specimenURI <"+Resources.LC16_isComposedOf+"> ?material_uri. "
-                    + "?material_uri <"+Resources.rdfsLabel+"> ?material. "
-                +" } "
-                + "OPTIONAL { "
-                    + "?specimenURI <"+Resources.hasSection+"> ?storagePlaceUri. "
-                    + "?storagePlaceUri <"+Resources.rdfsLabel+"> ?storagePlace. "
-                +" } "
-                + "OPTIONAL { "
-                    + "?specimenURI <" + Resources.formsPartOf + "> ?collectionURI. "
-                    + "?collectionURI <" + Resources.rdfTypeLabel + "> <" + Resources.collectionLabel + "> . "
-                    + "?collectionURI <" + Resources.rdfsLabel + "> ?collectionName."
-                + "} "
-                + "OPTIONAL { "
-                    + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
-                    + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . "
-                    + "?speciesURI <" + Resources.rdfsLabel + "> ?speciesName. "
-                + "} "
-                + "OPTIONAL { "
-                    + "?specimenURI <" + Resources.belongsTo + "> ?speciesURI. "
-                    + "?speciesURI <" + Resources.rdfTypeLabel + "> <" + Resources.speciesLabel + "> . " 
-                    + "?speciesURI <" + Resources.belongsTo + "> ?taxonomic_group_uri . " 
-                    + "?taxonomic_group_uri <" + Resources.rdfTypeLabel + "> <" + Resources.bioticElementTypeLabel + "> . " 
-                    + "?taxonomic_group_uri <" + Resources.rdfsLabel + "> ?taxonomic_group . " 
-                + "} "
-                + "OPTIONAL { "
-                    + "?providerURI <" + Resources.isCurrentMemberOf + "> ?institutionURI. "
-                    + "?institutionURI <" + Resources.rdfsLabel + "> ?institutionName. "
-                + "} ";
-        
-        if(collection!=null && !collection.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?collectionName),\""+collection.toLowerCase()+"\"). ";
-        }
-        if(provider!=null && !provider.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?providerName),\""+provider.toLowerCase()+"\"). ";
-        }
-        if(specimen!=null && !specimen.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?specimenName),\""+specimen.toLowerCase()+"\"). ";
-        }
-        if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
-        }
-        if(species!=null && !species.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
-        }
-        queryString+="} ";
-
-        logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
-        List<MicroCTSpecimenStruct> results = new ArrayList<>();
-        for (BindingSet result : sparqlresults) {
-            MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
-                    .withSpecimenName(result.getValue("specimenName").stringValue())
-                    .withDatasetURI(result.getValue("datasetURI").stringValue())
-                    .withDatasetName(result.getValue("datasetName").stringValue());
-            if(result.getValue("speciesURI")!=null){
-                struct.withSpeciesURI(result.getValue("speciesURI").stringValue())
-                      .withSpeciesName(result.getValue("speciesName").stringValue());
-            }
-            if (result.getValue("collectionName") != null) {
-                struct.withCollectionName(result.getValue("collectionName").stringValue());
-            }
-            if (result.getValue("collectionURI") != null) {
-                struct.withCollectionURI(result.getValue("collectionURI").stringValue());
-            }
-
-            if (result.getValue("providerName") != null) {
-                struct.withProviderName(result.getValue("providerName").stringValue());
-            }
-            if (result.getValue("providerURI") != null) {
-                struct.withProviderURI(result.getValue("providerURI").stringValue());
-            }
-
-            if (result.getValue("institutionName") != null) {
-                struct.withInstitutionName(result.getValue("institutionName").stringValue());
-            }
-            if (result.getValue("institutionURI") != null) {
-                struct.withInstitutionURI(result.getValue("institutionURI").stringValue());
-            }
-
-            if (result.getValue("description") != null) {
-                struct.withDescription(result.getValue("description").stringValue());
-            }
-
-            if (result.getValue("dimensionName") != null) {
-                struct.withDimensionName(result.getValue("dimensionName").stringValue());
-            }
-
-            if (result.getValue("dimensionURI") != null) {
-                struct.withDimensionURI(result.getValue("dimensionURI").stringValue());
-            }
-
-            if (result.getValue("dimensionValue") != null) {
-                struct.withDimensionValue(result.getValue("dimensionValue").stringValue());
-            }
-
-            if (result.getValue("dimensionUnit") != null) {
-                struct.withDimensionUnit(result.getValue("dimensionUnit").stringValue());
-            }
-
-            if (result.getValue("dimensionTypeURI") != null) {
-                struct.withDimensionTypeURI(result.getValue("dimensionTypeURI").stringValue());
-            }
-            
-            if (result.getValue("fixation") != null) {
-                struct.withFixationType(result.getValue("fixation").stringValue());
-            }
-            if (result.getValue("preservationMedium") != null) {
-                struct.withPreservationType(result.getValue("preservationMedium").stringValue());
-            }
-            if (result.getValue("storagePlace") != null) {
-                struct.withStoragePlace(result.getValue("storagePlace").stringValue());
-            }
-            if (result.getValue("material") != null) {
-                struct.withMaterial(result.getValue("material").stringValue());
-            }
-            if (result.getValue("taxonomic_group") != null) {
-                struct.withTaxonomicGroup(result.getValue("taxonomic_group").stringValue());
-            }
-            results.add(struct);
-        }
-        return results;
-    }
-
-      public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+    }    
+     
+    public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
                 + " ?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                 + " ?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
@@ -3616,9 +3460,11 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         if(species!=null && !species.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
         }
-        queryString+=" } "
-                    +" LIMIT " + limit
-                    +" OFFSET " + offset;
+        queryString+=" } ";
+        if(limit>0 && offset>=0){
+            queryString+="LIMIT "+limit+" "
+                        +"OFFSET "+offset;
+        }
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
