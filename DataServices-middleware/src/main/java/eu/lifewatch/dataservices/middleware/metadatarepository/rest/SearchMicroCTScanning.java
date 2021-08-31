@@ -113,7 +113,7 @@ public class SearchMicroCTScanning extends HttpServlet {
             RepositoryData repoData=context.getBean(RepositoryData.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
             LOGGER.info("Searching for MicroCTScanning data with the following details: Species: "+species+",Specimen: "+specimen+",ScanningID: "+scanningID+", repositoryGraph: "+repoData.getRepositoryGraph());
-            retList=api.searchMicroCTScanning("", specimen, species, "", scanningID, "", repoData.getRepositoryGraph());
+            retList=api.searchMicroCTScanning("", specimen, species, "", scanningID, "", 0, 0, repoData.getRepositoryGraph());
             LOGGER.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             LOGGER.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);

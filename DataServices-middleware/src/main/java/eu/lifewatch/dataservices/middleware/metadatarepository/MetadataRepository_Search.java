@@ -401,7 +401,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, scanning, datasetURI, repositoryGraph);
+            retList=api.searchMicroCTScanning(deviceName, specimen, speciesName, contrastMethod, scanning, datasetURI, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for microCT scanning metadata. Returning an empty list.\n", ex);
@@ -446,7 +446,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchMicroCTSpecimen(specimen, collection, speciesName, provider, datasetURI, repositoryGraph);
+            retList=api.searchMicroCTSpecimen(specimen, collection, speciesName, provider, datasetURI, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for microCT specimen metadata. Returning an empty list.\n", ex);
@@ -530,7 +530,7 @@ public class MetadataRepository_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             MetadataRepositoryService api=new MetadataRepositoryService(repoManager);
-            retList=api.searchOccurenceStatsTemp(speciesName, place, date, numberOfParts, datasetURI, repositoryGraph);
+            retList=api.searchOccurenceStatsTemp(speciesName, place, date, numberOfParts, datasetURI, 0, 0, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for occurrence stats temp metadata. Returning an empty list.\n", ex);

@@ -2,6 +2,7 @@ package eu.lifewatch.example;
 
 import eu.lifewatch.core.model.MicroCTScanningStruct;
 import eu.lifewatch.core.model.MicroCTSpecimenStruct;
+import eu.lifewatch.core.model.OccurrenceStatsTempStruct;
 import eu.lifewatch.core.model.TaxonomyStruct;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.service.impl.MetadataRepositoryService;
@@ -16,7 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mctscan";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v7";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -33,12 +34,18 @@ public class MetadataCatalogExample {
 //        for(MicroCTSpecimenStruct struct : results){
 //            System.out.println(struct);
 //        }       
+//
+//        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "25.1.3.1667", "", "", "", "", GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(MicroCTScanningStruct struct : results){
+//            System.out.println(struct);
+//        }        
 
-        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "25.1.3.1667", "", "", "", "", GRAPHSPACE_METADATA);
+        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
-        for(MicroCTScanningStruct struct : results){
+        for(OccurrenceStatsTempStruct struct : results){
             System.out.println(struct);
-        }        
+        }                
     }
     
 

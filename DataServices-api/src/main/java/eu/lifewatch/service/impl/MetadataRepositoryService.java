@@ -2133,7 +2133,7 @@ public class MetadataRepositoryService implements Service {
             }
             
             
-            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "","",repositoryGraph);
+            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "","",0,0,repositoryGraph);
            
             String MicroCTInfo = "";
          
@@ -3544,203 +3544,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return results;
     }
 
-    public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String scanning, String datasetURI,String repositoryGraph) throws QueryExecutionException {
-        String queryString="SELECT DISTINCT ?scanning_uri ?scanning_label ?specimen_uri ?specimen_name ?species_name "
-                                            +"?contrast_method ?sample_holder ?scanning_medium ?scanned_part ?actor_uri ?actor_name "
-                                            +"?timespan_scan_date ?timespan_scan_duration ?device_uri ?device_name "
-                                            +"?voltage ?current ?filter ?zoom ?camera_resolution ?averaging "
-                                            +"?random_movement ?scan_degrees ?exposure_time "
-                                            +"?product_uri ?product_name ?file_location ?dataset_uri ?dataset_name "
-                                            +"?protocol ?timespan_preparation_start ?timespan_preparation_end "
-                                            +"?prep_scan_notes ?oversize_settings ?product_status ?scope_of_scan "
-                +"FROM <"+repositoryGraph+"> "
-                +"WHERE{ "
-                +"?scanning_uri <"+Resources.rdfTypeLabel+"> <"+Resources.digitizationProcessLabel+"> . "
-                +"?scanning_uri <"+Resources.rdfsLabel+"> ?scanning_label. "
-                +"?scanning_uri <"+Resources.digitized+"> ?specimen_uri . "
-                +"?specimen_uri <"+Resources.rdfsLabel+"> ?specimen_name. "
-                +"?specimen_uri <"+Resources.belongsTo+"> ?species_uri . "
-                +"?species_uri <"+Resources.rdfsLabel+"> ?species_name. "
-                +"?scanning_uri  <"+Resources.hasContrastMethod+"> ?contrast_method . "
-                +"?scanning_uri  <"+Resources.usingSampleHolder+"> ?sample_holder . "
-                +"?scanning_uri  <"+Resources.usingScanningMedium+"> ?scanning_medium . "
-                +"?scanning_uri  <"+Resources.hasType+"> ?scanned_part_uri. "
-                +"?scanned_part_uri  <"+Resources.rdfsLabel+"> ?scanned_part. "
-                +"?scanned_part_uri  <"+Resources.hasType+"> ?scanned_part_uri_const. "
-                +"?scanned_part_uri_const  <"+Resources.rdfsLabel+"> \""+Resources.SCANNED_PART_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.carriedOutBy+"> ?actor_uri. "
-                +"?actor_uri <"+Resources.rdfsLabel+"> ?actor_name. "
-                +"?scanning_uri <"+Resources.hasTimespan+"> ?timespan_scan_date_uri. "
-                +"?timespan_scan_date_uri <"+Resources.hasType+"> ?timespan_scan_date_type. "
-                +"?timespan_scan_date_type <"+Resources.rdfsLabel+"> \""+Resources.SCANNING_CONSTANT_VALUE+"\". "
-                +"?timespan_scan_date_uri <"+Resources.atSomeTimeWithin+"> ?timespan_scan_date. "
-                +"?scanning_uri <"+Resources.hasTimespan+"> ?timespan_scan_duration_uri. "
-                +"?timespan_scan_duration_uri <"+Resources.hasType+"> ?timespan_scan_duration_type. "
-                +"?timespan_scan_duration_type <"+Resources.rdfsLabel+"> \""+Resources.SCANNING_DURATION_CONSTANT_VALUE+"\". "
-                +"?timespan_scan_duration_uri <"+Resources.hadAtMostDuration+"> ?timespan_scan_duration. "
-                +"?scanning_uri <"+Resources.happenedOnDevice+"> ?device_uri. "
-                +"?device_uri <"+Resources.rdfsLabel+"> ?device_name. "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?voltage_uri. "
-                +"?voltage_uri <"+Resources.hasValue+"> ?voltage. "
-                +"?voltage_uri <"+Resources.hasType+"> ?voltage_uri_type. "
-                +"?voltage_uri_type <"+Resources.rdfsLabel+"> \""+Resources.VOLTAGE_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?current_uri. "
-                +"?current_uri <"+Resources.hasValue+"> ?current. "
-                +"?current_uri <"+Resources.hasType+"> ?current_uri_type. "
-                +"?current_uri_type <"+Resources.rdfsLabel+"> \""+Resources.CURRENT_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?filter_uri. "
-                +"?filter_uri <"+Resources.hasValue+"> ?filter. "
-                +"?filter_uri <"+Resources.hasType+"> ?filter_uri_type. "
-                +"?filter_uri_type <"+Resources.rdfsLabel+"> \""+Resources.FILTER_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?zoom_uri. "
-                +"?zoom_uri <"+Resources.hasValue+"> ?zoom. "
-                +"?zoom_uri <"+Resources.hasType+"> ?zoom_uri_type. "
-                +"?zoom_uri_type <"+Resources.rdfsLabel+"> \""+Resources.ZOOM_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?camera_resolution_uri. "
-                +"?camera_resolution_uri <"+Resources.hasValue+"> ?camera_resolution. "
-                +"?camera_resolution_uri <"+Resources.hasType+"> ?camera_resolution_uri_type. "
-                +"?camera_resolution_uri_type <"+Resources.rdfsLabel+"> \""+Resources.CAMERA_RESOLUTION_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?averaging_uri. "
-                +"?averaging_uri <"+Resources.hasValue+"> ?averaging. "
-                +"?averaging_uri <"+Resources.hasType+"> ?averaging_uri_type. "
-                +"?averaging_uri_type <"+Resources.rdfsLabel+"> \""+Resources.FRAME_AVERAGING_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?random_movement_uri. "
-                +"?random_movement_uri <"+Resources.hasValue+"> ?random_movement. "
-                +"?random_movement_uri <"+Resources.hasType+"> ?random_movement_uri_type. "
-                +"?random_movement_uri_type <"+Resources.rdfsLabel+"> \""+Resources.RANDOM_MOVEMENT_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?scan_degrees_uri. "
-                +"?scan_degrees_uri <"+Resources.hasValue+"> ?scan_degrees. "
-                +"?scan_degrees_uri <"+Resources.hasType+"> ?scan_degrees_uri_type. "
-                +"?scan_degrees_uri_type <"+Resources.rdfsLabel+"> \""+Resources.SCAN_DEGREES_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.observedDimension+"> ?exposure_time_uri. "
-                +"?exposure_time_uri <"+Resources.hasValue+"> ?exposure_time. "
-                +"?exposure_time_uri <"+Resources.hasType+"> ?exposure_time_uri_type. "
-                +"?exposure_time_uri_type <"+Resources.rdfsLabel+"> \""+Resources.EXPOSURE_TIME_CONSTANT_VALUE+"\". "
-                +"?scanning_uri <"+Resources.hadOutput+"> ?product_uri. "
-                +"?product_uri <"+Resources.rdfsLabel+"> ?product_name. "
-                +"?product_uri <"+Resources.isStoredOn+"> ?file_location_uri. "
-                +"?file_location_uri <"+Resources.rdfsLabel+"> ?file_location. "
-                +"?dataset_uri <"+Resources.refersTo+"> ?scanning_uri. "
-                +"?dataset_uri <"+Resources.rdfsLabel+"> ?dataset_name. "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.hasProtocol+"> ?protocol . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.hadSpecificPurpose+"> ?scope_of_scan_uri . "
-                    +"?scope_of_scan_uri <"+Resources.rdfsLabel+"> ?scope_of_scan . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.observedDimension+"> ?timespan_preparation . "
-                    +"?timespan_preparation  <"+Resources.hasType+"> ?timespan_preparation_type . "
-                    +"?timespan_preparation_type  <"+Resources.rdfsLabel+"> \""+Resources.PREPARATION_TIME_CONSTANT_VALUE+"\" . "
-                    +"?timespan_preparation  <"+Resources.beginOfTheBegin+"> ?timespan_preparation_start . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.observedDimension+"> ?timespan_preparation . "
-                    +"?timespan_preparation  <"+Resources.hasType+"> ?timespan_preparation_type . "
-                    +"?timespan_preparation_type  <"+Resources.rdfsLabel+"> \""+Resources.PREPARATION_TIME_CONSTANT_VALUE+"\" . "
-                    +"?timespan_preparation  <"+Resources.endOfTheEnd+"> ?timespan_preparation_end . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.hasNote+"> ?prep_scan_notes . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.observedDimension+"> ?oversize_settings_uri . "
-                    +"?oversize_settings_uri  <"+Resources.hasValue+"> ?oversize_settings . "
-                    +"?oversize_settings_uri  <"+Resources.hasType+"> ?oversize_settings_uri_type . "
-                    +"?oversize_settings_uri_type  <"+Resources.rdfsLabel+"> \""+Resources.OVERSIZE_SETTINGS_CONSTANT_VALUE+"\" . "
-                +"} "
-                +"OPTIONAL{ "
-                    +"?scanning_uri  <"+Resources.hasComment+"> ?product_status . "
-                +"} ";
-                
-        if(deviceName!=null && !deviceName.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?device_name),\""+deviceName.toLowerCase()+"\"). ";
-        }
-        if(specimen!=null && !specimen.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?specimen_name),\""+specimen.toLowerCase()+"\"). ";
-        }
-        if(species!=null && !species.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?species_name),\""+species.toLowerCase()+"\"). ";
-        }
-        if(contrastMethod!=null && !contrastMethod.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?contrast_method),\""+contrastMethod.toLowerCase()+"\"). ";
-        }
-        if(scanning!=null && !scanning.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?scanning_label),\""+scanning.toLowerCase()+"\"). ";
-        }
-        if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(STR(?dataset_uri)),\""+datasetURI.toLowerCase()+"\"). ";
-        }
-        queryString+="} ";
-                
-
-        logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
-        Map<String, MicroCTScanningStruct> map = new HashMap<>();
-        for (BindingSet result : sparqlresults) {
-            if (!map.containsKey(result.getValue("scanning_uri").stringValue())) {
-                MicroCTScanningStruct struct = new MicroCTScanningStruct().withScanningURI(result.getValue("scanning_uri").stringValue())
-                        .withScanningLabel(result.getValue("scanning_label").stringValue())
-                        .withSpecimenURI(result.getValue("specimen_uri").stringValue())
-                        .withSpecimenName(result.getValue("specimen_name").stringValue())
-                        .withContrastMethod(result.getValue("contrast_method").stringValue())
-                        .withSampleHolder(result.getValue("sample_holder").stringValue())
-                        .withScanningMedium(result.getValue("scanning_medium").stringValue())
-                        .withScannedPart(result.getValue("scanned_part").stringValue())
-                        .withActorURI(result.getValue("actor_uri").stringValue())
-                        .withActorName(result.getValue("actor_name").stringValue())
-                        .withScanDate(result.getValue("timespan_scan_date").stringValue())
-                        .withScanningDuration(result.getValue("timespan_scan_date").stringValue())
-                        .withDeviceURI(result.getValue("device_uri").stringValue())
-                        .withDeviceName(result.getValue("device_name").stringValue())
-                        .withDeviceType("MicroCT Scanner")
-                        .withVoltage(result.getValue("voltage").stringValue())
-                        .withCurrent(result.getValue("current").stringValue())
-                        .withFilter(result.getValue("filter").stringValue())
-                        .withZoom(result.getValue("zoom").stringValue())
-                        .withCameraResolution(result.getValue("camera_resolution").stringValue())
-                        .withAveraging(result.getValue("averaging").stringValue())
-                        .withRandomMovement(result.getValue("random_movement").stringValue())
-                        .withScanDegrees(result.getValue("scan_degrees").stringValue())
-                        .withExposureTime(result.getValue("exposure_time").stringValue())
-                        .withProduct(result.getValue("product_uri").stringValue(), result.getValue("product_name").stringValue())
-                        .withFileLocation(result.getValue("file_location").stringValue())
-                        .withDatasetURI(result.getValue("dataset_uri").stringValue())
-                        .withDatasetName(result.getValue("dataset_name").stringValue());
-                        
-                if (result.getValue("protocol") != null) {
-                    struct.withProtocol(result.getValue("protocol").stringValue());
-                }
-                if (result.getValue("scope_of_scan") != null) {
-                    struct.withScopeOfScan(result.getValue("scope_of_scan").stringValue());
-                }
-                if (result.getValue("timespan_preparation_start") != null) {
-                    struct.withPreparationTimestampStart(result.getValue("timespan_preparation_start").stringValue());
-                }
-                if (result.getValue("timespan_preparation_end") != null) {
-                    struct.withPreparationTimestampEnd(result.getValue("timespan_preparation_end").stringValue());
-                }
-                if (result.getValue("prep_scan_notes") != null) {
-                    struct.withDescription(result.getValue("prep_scan_notes").stringValue());
-                }
-                if (result.getValue("oversize_settings") != null) {
-                    struct.withOversizeSettings(result.getValue("oversize_settings").stringValue());
-                }
-                if (result.getValue("product_status") != null) {
-                    struct.withProductStatus(result.getValue("product_status").stringValue());
-                }
-                map.put(struct.getScanningURI(), struct);
-            } else {
-                MicroCTScanningStruct struct = map.get(result.getValue("scanning_uri").stringValue());
-                struct.withProduct(result.getValue("product_uri").stringValue(), result.getValue("product_name").stringValue());
-                map.put(struct.getScanningURI(), struct);
-            }
-        }
-        return new ArrayList<>(map.values());
-    }
-
     public List<MicroCTScanningStruct> searchMicroCTScanning(String deviceName, String specimen, String species, String contrastMethod, String scanning, String datasetURI,int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         String queryString="SELECT DISTINCT ?scanning_uri ?scanning_label ?specimen_uri ?specimen_name ?species_name "
                                             +"?contrast_method ?sample_holder ?scanning_medium ?scanned_part ?actor_uri ?actor_name "
@@ -3869,8 +3672,11 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         if(datasetURI!=null && !datasetURI.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(STR(?dataset_uri)),\""+datasetURI.toLowerCase()+"\"). ";
         }
-        queryString+="} LIMIT "+limit+" "
-                    +"OFFSET "+offset ;
+        queryString+="} ";
+        if(limit>0 && offset>=0){
+            queryString+="LIMIT "+limit+" "
+                        +"OFFSET "+offset;
+        }
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);

@@ -18,7 +18,7 @@ public class DirectoryServiceExample {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         DirectoryService dsManager=context.getBean(DirectoryService.class);
         
-        List<DirectoryStruct> results=dsManager.searchDataset("", "", "", "sampling", GRAPHSPACE_DIRECTORY);
+        List<DirectoryStruct> results=dsManager.searchDataset("Phytoplankton of coastal waters", "", "", "", GRAPHSPACE_DIRECTORY);
         System.out.println("Results: "+results.size());
         for(DirectoryStruct directoryStruct : results){
             System.out.println(directoryStruct);
