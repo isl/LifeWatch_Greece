@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v8";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v8";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v9";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v9";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -497,7 +497,7 @@ public class DwCArchiveParser {
         }
         if(rec.value(DwcTerm.samplingProtocol)!=null){
             occurrenceStruct.withSamplingProtocolURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "sampling_protocol",rec.value(DwcTerm.samplingProtocol)));
-            occurrenceStruct.withSamplingProtocol(rec.value(DwcTerm.samplingProtocol));
+            occurrenceStruct.withSamplingProtocol(rec.value(DwcTerm.samplingProtocol).replaceAll("\"", "'"));
         }
         if(rec.value(DwcTerm.habitat)!=null){
             occurrenceStruct.withHabitatURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "habitat",rec.value(DwcTerm.habitat)));
@@ -529,14 +529,14 @@ public class DwCArchiveParser {
         }
         if(rec.value(DwcTerm.samplingProtocol)!=null){
             occurrenceTempStruct.withSamplingProtocolURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "sampling_protocol",rec.value(DwcTerm.samplingProtocol)));
-            occurrenceTempStruct.withSamplingProtocolName(rec.value(DwcTerm.samplingProtocol));
+            occurrenceTempStruct.withSamplingProtocolName(rec.value(DwcTerm.samplingProtocol).replaceAll("\"", "'"));
         }
         if(rec.value(DwcTerm.habitat)!=null){
             occurrenceTempStruct.withHabitatURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "habitat",rec.value(DwcTerm.habitat)));
             occurrenceTempStruct.withHabitatName(rec.value(DwcTerm.habitat));
         }
         if(rec.value(DwcTerm.eventRemarks)!=null){
-            occurrenceTempStruct.withDescription(rec.value(DwcTerm.eventRemarks));
+            occurrenceTempStruct.withDescription(rec.value(DwcTerm.eventRemarks).replaceAll("\"", "'"));
         }
         if(rec.value(DwcTerm.minimumDepthInMeters)!=null){
             occurrenceTempStruct.withMinimumDepth(rec.value(DwcTerm.minimumDepthInMeters));
@@ -662,6 +662,6 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/saronicos_1980/dwca-1.12.zip"),true,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/thorexpeditionintroduction/dwca-1.6.zip"),true,true).parseData();
     }   
 }
