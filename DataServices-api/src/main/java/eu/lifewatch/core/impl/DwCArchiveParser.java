@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v9";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v9";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v9_issue_1";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v9_issue_1";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -86,7 +86,9 @@ public class DwCArchiveParser {
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
         }
-        
+        if(true){
+            return;
+        }
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
@@ -197,6 +199,8 @@ public class DwCArchiveParser {
         if(creatorElements!=null){
             Elements creatorNameElements=creatorElements.get(0).getElementsByTag(Resources.INDIVIDUAL_NAME);
             if(creatorNameElements!=null){
+                directoryStruct.setCreationEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "creation", this.datasetURI));
+                directoryStruct.setCreationEvent("Dataset creation");
                 directoryStruct.setCreatorName(creatorNameElements.get(0).text());
                 directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setOwnerName(creatorNameElements.get(0).text());
@@ -548,7 +552,7 @@ public class DwCArchiveParser {
             occurrenceTempStruct.withLocalityURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "locality",rec.value(DwcTerm.locality)));
             occurrenceTempStruct.withLocalityName(rec.value(DwcTerm.locality));
         }      
-        if(rec.value(DwcTerm.occurrenceID)!=null){
+        if(rec.value(DwcTerm.eventID)!=null){
             occurrenceTempStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
 //            occurrenceTempStruct.withOccurrenceEvent(rec.value(DwcTerm.occurrenceID));        // to avoid the construction of several labels
         }
@@ -662,6 +666,6 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/thorexpeditionintroduction/dwca-1.6.zip"),true,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/aegeanpolychaetes/dwca-1.16.zip"),true,true).parseData();
     }   
 }
