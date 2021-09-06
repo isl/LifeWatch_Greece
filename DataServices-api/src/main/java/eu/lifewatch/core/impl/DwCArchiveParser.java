@@ -52,8 +52,9 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v9_issue_1";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v9_issue_1";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v10";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v10";
+    private static final String HCMR_LABEL="Hellenic Center for Marine Research";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
@@ -231,6 +232,8 @@ public class DwCArchiveParser {
         if(intellectualRightsElements!=null){
             directoryStruct.setAccessRights(intellectualRightsElements.get(0).text());
             directoryStruct.setAccessRightsURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"accessrights",intellectualRightsElements.get(0).text()));
+            directoryStruct.setRightsHolderURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"rights_holder",HCMR_LABEL));
+            directoryStruct.setRightsHolderName(HCMR_LABEL);
         }
         Elements keywordSets=metadataDoc.getElementsByTag(Resources.KEYWORD_SET);
         if(keywordSets!=null){
