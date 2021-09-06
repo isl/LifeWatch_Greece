@@ -177,7 +177,7 @@ public class DirectoryService implements Service {
                 if (result.getValue("publicationDate") != null) {
                     struct.withPublicationDate(result.getValue("publicationDate").stringValue());
                 }
-                if (result.getValue("publicationEventURI") != null) {
+                if (result.getValue("publicationEventLabel") != null) {
                     struct.withPublicationEventURI(result.getValue("publicationEventURI").stringValue());
                     struct.withPublicationEvent(result.getValue("publicationEventLabel").stringValue());
                 }
@@ -260,7 +260,7 @@ public class DirectoryService implements Service {
                 +"?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
                 +"?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
                 +"?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
-                +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI"
+                +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI "
                 +"FROM <"+namedgraph+"> "
                 +"WHERE{ "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
@@ -286,10 +286,13 @@ public class DirectoryService implements Service {
                 +"} "
                 +"OPTIONAL{ "
                     +"?datasetURI <"+Resources.wasCreatedBy+"> ?publicationEventURI. "
-                    +"?publicationEventURI <"+Resources.carriedOutBy+"> ?publisherURI. "
-                    +"?publicationEventURI <"+Resources.rdfsLabel+"> ?publicationEventLabel. "
                     +"?publicationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.publicationEventLabel+">. "
                     +"?publicationEventURI <"+Resources.hasTimespan+"> ?publicationDate. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?publicationEventURI. "
+                    +"?publicationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.publicationEventLabel+">. "
+                    +"?publicationEventURI <"+Resources.carriedOutBy+"> ?publisherURI. "
                     +"?publisherURI <"+Resources.rdfsLabel+ "> ?publisherName. "
                 +"} "
                 +"OPTIONAL{ "
@@ -302,6 +305,10 @@ public class DirectoryService implements Service {
                     +"?creationEventURI <"+Resources.carriedOutBy+"> ?creatorURI. "
                     +"?creationEventURI <"+Resources.rdfsLabel+"> ?creationEventLabel.  "
                     +"?creatorURI <"+Resources.rdfsLabel+"> ?creatorName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?creationEventURI. "
+                    +"?creationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.creationEventLabel+">. "
                     +"?creationEventURI <"+Resources.hasTimespan+"> ?creationDate. "
                 +"} "
                 +"OPTIONAL{ "

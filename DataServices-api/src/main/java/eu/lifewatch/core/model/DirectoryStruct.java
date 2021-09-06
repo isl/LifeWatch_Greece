@@ -739,7 +739,7 @@ public class DirectoryStruct {
                 retTriples += "<" + this.creationEventURI + "> <" + Resources.hasTimespan + "> \"" + this.creationDate + "\" .\n";
             }
             if (!this.creationEvent.isEmpty()) {
-                retTriples += "<" + this.creationEventURI + "> <" + Resources.rdfTypeLabel+ "> \"" + this.creationEvent + "\" .\n";
+                retTriples += "<" + this.creationEventURI + "> <" + Resources.rdfsLabel+ "> \"" + this.creationEvent + "\" .\n";
             }
         }
         if (!this.creatorURI.isEmpty()) {
