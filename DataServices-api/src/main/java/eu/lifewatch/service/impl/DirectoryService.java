@@ -215,7 +215,7 @@ public class DirectoryService implements Service {
         if(limit>0){
             queryString+=" LIMIT "+limit;
         }
-        if(offset>0){
+        if(offset>=0){
             queryString+=" OFFSET "+offset;
         }
         logger.debug("Submitting the query: \"" + queryString + "\"");
