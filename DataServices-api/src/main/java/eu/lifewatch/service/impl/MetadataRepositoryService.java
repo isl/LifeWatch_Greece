@@ -258,7 +258,7 @@ public class MetadataRepositoryService implements Service {
         }
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, OccurrenceStruct> map = new HashMap<>();
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("occurrenceEventURI").stringValue())) {
@@ -344,6 +344,7 @@ public class MetadataRepositoryService implements Service {
                 map.put(struct.getOccurrenceEventURI(), struct);
             }
         }
+        logger.debug("The query returned "+map.values().size()+" occurrence objects");
         return new ArrayList<>(map.values());
     }
 
@@ -473,7 +474,7 @@ public class MetadataRepositoryService implements Service {
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, OccurrenceStatsTempStruct> map = new HashMap<>();
         List<OccurrenceStatsTempStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
@@ -563,6 +564,7 @@ public class MetadataRepositoryService implements Service {
                 map.put(struct.getOccurrenceEventURI(), struct);
             }
         }
+        logger.debug("The query returned "+map.values().size()+" occurrence stats temp objects");
         return new ArrayList<>(map.values());
     }
 
@@ -1624,7 +1626,7 @@ public class MetadataRepositoryService implements Service {
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         List<TaxonomyStruct> results = new ArrayList<>();
         for (BindingSet result : sparqlresults) {
             TaxonomyStruct struct = new TaxonomyStruct()
@@ -1646,6 +1648,7 @@ public class MetadataRepositoryService implements Service {
                     .withKingdomURI(result.getValue("kingdomURI").stringValue());
             results.add(struct);
         }
+        logger.debug("The query returned "+results.size()+" taxonomy objects");
         return results;
     }
     
@@ -2048,7 +2051,7 @@ public class MetadataRepositoryService implements Service {
         }
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         List<ScientificNamingStruct> results = new ArrayList();
         for (BindingSet result : sparqlresults) {
                 ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
@@ -2071,6 +2074,7 @@ public class MetadataRepositoryService implements Service {
                 }
                 results.add(struct);
         }
+        logger.debug("The query returned "+results.size()+" scientific naming objects");
         return results;
     }
 
@@ -3171,7 +3175,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
 
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         List<MicroCTSpecimenStruct> results = new ArrayList<>();
         for (BindingSet result : sparqlresults) {
             MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
@@ -3244,6 +3248,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             }
             results.add(struct);
         }
+        logger.debug("The query returned "+results.size()+" MicroCT specimen objects");
         return results;
     }
 
@@ -3390,10 +3395,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             queryString+="LIMIT "+limit+" "
                         +"OFFSET "+offset;
         }
-
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The query returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, MicroCTScanningStruct> map = new HashMap<>();
         for (BindingSet result : sparqlresults) {
             if (!map.containsKey(result.getValue("scanning_uri").stringValue())) {
@@ -3454,6 +3458,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 map.put(struct.getScanningURI(), struct);
             }
         }
+        logger.debug("The query returned "+map.values().size()+" MicroCT scanning objects");
         return new ArrayList<>(map.values());
     }
 

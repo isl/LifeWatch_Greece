@@ -40,7 +40,7 @@ public class DirectoryService_Search {
             ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
             VirtuosoRepositoryManager repoManager=context.getBean(VirtuosoRepositoryManager.class);
             DirectoryService api=new DirectoryService(repoManager);
-            retList=api.searchDataset(datasetName, ownerName, datasetURI, datasetType, repositoryGraph);
+            retList=api.searchDataset(datasetName, ownerName, datasetURI, datasetType, -1, -1, repositoryGraph);
             logger.info("Number of results that will be returned: "+retList.size());
         }catch(QueryExecutionException ex){
             logger.error("An error occured while searching for resources. Returning an empty list.\n", ex);

@@ -52,7 +52,7 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v10";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v11";
     private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v10";
     private static final String HCMR_LABEL="Hellenic Center for Marine Research";
     
@@ -86,6 +86,9 @@ public class DwCArchiveParser {
         if(this.storeLocally){
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
+        }
+        if(true){
+            return;
         }
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
@@ -214,6 +217,13 @@ public class DwCArchiveParser {
             Elements contributorNameElements=contributorElement.getElementsByTag(Resources.INDIVIDUAL_NAME);
             if(contributorNameElements!=null){
                 directoryStruct.withContributor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", contributorNameElements.get(0).text()), contributorNameElements.get(0).text());
+            }
+        }
+        Elements metadataProviderElements=metadataDoc.getElementsByTag(Resources.METADATA_PROVIDER);
+        for(Element metadataProviderElement : metadataProviderElements){
+            Elements metadataProviderNameElements=metadataProviderElement.getElementsByTag(Resources.INDIVIDUAL_NAME);
+            if(metadataProviderNameElements!=null){
+                directoryStruct.withContributor(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", metadataProviderNameElements.get(0).text()), metadataProviderNameElements.get(0).text());
             }
         }
         Elements pubDateElements=metadataDoc.getElementsByTag(Resources.PUB_DATE);
@@ -666,6 +676,6 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/aegeanpolychaetes/dwca-1.16.zip"),true,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/kerkyra/dwca-1.19.zip"),true,true).parseData();
     }   
 }
