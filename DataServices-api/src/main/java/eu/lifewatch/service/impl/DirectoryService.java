@@ -109,11 +109,7 @@ public class DirectoryService implements Service {
         }
     }
 
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String repositoryGraph) throws QueryExecutionException {
-        return searchDataset(datasetName, ownerName, datasetURI, datasetType, -1, -1, repositoryGraph);
-    }
-
-     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
                    +"datasetName: ["+datasetName+"], "
                    +"ownerName: ["+ownerName+"], "
