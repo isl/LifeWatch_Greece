@@ -220,7 +220,7 @@ public class DirectoryService implements Service {
         }
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
-        logger.debug("The result returned " + sparqlresults.size() + " results");
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, DirectoryStruct> structsMap = new HashMap<>();
         for (BindingSet result : sparqlresults) {
             if (!structsMap.containsKey(result.getValue("datasetURI").stringValue())) {
@@ -326,6 +326,7 @@ public class DirectoryService implements Service {
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
+        logger.debug("The query returned "+structsMap.values().size()+" datasets");
         return new ArrayList<>(structsMap.values());
     }
  
