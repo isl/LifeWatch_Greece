@@ -52,8 +52,8 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_v11";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v10";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
     private static final String HCMR_LABEL="Hellenic Center for Marine Research";
     
     public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
@@ -86,9 +86,6 @@ public class DwCArchiveParser {
         if(this.storeLocally){
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
-        }
-        if(true){
-            return;
         }
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
