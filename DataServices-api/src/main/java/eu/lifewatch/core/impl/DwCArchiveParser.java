@@ -201,12 +201,15 @@ public class DwCArchiveParser {
                 directoryStruct.setCreationEvent("Dataset creation");
                 directoryStruct.setCreatorName(creatorNameElements.get(0).text());
                 directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
-                directoryStruct.setOwnerName(creatorNameElements.get(0).text());
-                directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setKeeperName(creatorNameElements.get(0).text());
                 directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                 directoryStruct.setCuratorName(creatorNameElements.get(0).text());
                 directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
+                Elements organizationNameElements=creatorElements.get(0).getElementsByTag(Resources.ORGANIZATION_NAME);
+                if(organizationNameElements!=null){
+                    directoryStruct.setOwnerName(organizationNameElements.get(0).text());
+                    directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", organizationNameElements.get(0).text()));
+                }
             }
         }
         Elements contributorElements=metadataDoc.getElementsByTag(Resources.ASSOCIATED_PARTY);

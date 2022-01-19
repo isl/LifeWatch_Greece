@@ -217,6 +217,7 @@ public class Resources {
     public static final String KEYWORD_SET="keywordSet";
     public static final String KEYWORD_THESAURUS="keywordThesaurus";
     public static final String METADATA_PROVIDER="metadataProvider";
+    public static final String ORGANIZATION_NAME="organizationName";
     public static final String PUB_DATE="pubDate";
     public static final String RESOURCE_LOGO_URL="resourceLogoUrl";
     public static final String TITLE="title";
