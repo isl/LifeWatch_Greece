@@ -247,6 +247,11 @@ public class DwCArchiveParser {
                 }
             }
         }
+        Elements logoElements=metadataDoc.getElementsByTag(Resources.RESOURCE_LOGO_URL);
+        if(logoElements!=null){
+            directoryStruct.withImageURI(logoElements.text());
+            directoryStruct.withImageTitle(this.datasetTitle+" logo");
+        }
         directoryStruct.withAccessMethodURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "access_method", "available from http://ipt.medobis.eu"));
         directoryStruct.withAccessMethod("available from http://ipt.medobis.eu");
         return directoryStruct;
@@ -673,6 +678,6 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/kerkyra/dwca-1.19.zip"),true,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"),false,true).parseData();
     }   
 }
