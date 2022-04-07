@@ -52,11 +52,12 @@ public class DwCArchiveParser {
     private String datasetTitle;
     private String archiveFolderName;
        
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static String GRAPHSPACE_DIRECTORY;
+    private static String GRAPHSPACE_METADATA;
     private static final String HCMR_LABEL="Hellenic Center for Marine Research";
-    
-    public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally) throws IOException{
+
+
+    public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally,String directoryNamedgraph,String metadataNamedgraph) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         this.dsManager=context.getBean(DirectoryService.class);
@@ -70,6 +71,8 @@ public class DwCArchiveParser {
         this.importDatasets=importInTriplestore;
         this.storeLocally=storeLocally;
         this.archiveFolderName=archive.getParentFile().getName();
+        this.GRAPHSPACE_DIRECTORY=directoryNamedgraph;
+        this.GRAPHSPACE_METADATA=metadataNamedgraph;
         if(storeLocally){
             this.createLocalFolder();
         }
@@ -681,6 +684,10 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"),false,true).parseData();
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"),
+                false,
+                true,
+                "http://www.ics.forth.gr/isl/lifewatch/directory",
+                "http://www.ics.forth.gr/isl/lifewatch/metadata").parseData();
     }   
 }
