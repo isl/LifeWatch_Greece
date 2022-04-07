@@ -4,8 +4,16 @@ package eu.lifewatch.common;
  * @author Yannis Marketakis (marketak 'at' ics 'dot' forth 'dot' gr)
  */
 public class Resources {
-    /*labels for classes and properties */
+    /* beans-related resources */
+    public static final String SPRING_BEANS_FILENAME="beans.xml";
+    public static final String IPT_MEDOBIS_ROOT_FOLDER_BEAN="ipt-medobis-root-folder";
+    public static final String MICRO_CT_SPECIMENS_BEAN="microct-specimens-path";
+    public static final String MICRO_CT_SCANNING_BEAN="microct-scanning-path";
+    public static final String VIRTUOSO_REPOSITORY_MANAGER_BEAN="virtuosoRepoManager";
+    public static final String DIRECTORY_SERVICE_NAMEGRAPH_BEAN="directory-service-namedgraph";
+    public static final String METADATA_REPOSITORY_NAMEGRAPH_BEAN="metadata-repository-namedgraph";
 
+    /*labels for classes and properties */
     public static final String tloNamespace = "http://www.ics.forth.gr/isl/ontology/MarineTLO/";
     public static final String cidocCrmNamespace = "http://www.cidoc-crm.org/cidoc-crm/";
     public static final String crmSciNamespace = "http://www.ics.forth.gr/isl/CRMsci/";
@@ -227,7 +235,7 @@ public class Resources {
     public static final String DWCA_FILENAME_PREFIX="dwca-";
     public static final String DWCA_FILE_EXTENSION=".zip";
     
-    public static final String LOCAL_DATASET_INSTANCES="local";
+    public static final String LOCAL_DATASET_INSTANCES="workspace/ipt";
     public static final String DIRECTORY_N3_FILENAME="directory.n3";
     public static final String TAXONOMY_N3_FILENAME="taxomomy.n3";
     public static final String SC_NAME_N3_FILENAME="sc_name.n3";

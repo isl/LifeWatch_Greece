@@ -1,0 +1,1765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x3ml version="1.0" source_type="xpath">
+    <namespaces>
+        <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+        <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+        <namespace prefix="tlo" uri="http://www.ics.forth.gr/isl/ontology/MarineTLO/"/>
+        <namespace prefix="crmdig" uri="http://www.ics.forth.gr/isl/CRMdig/"/>
+        <namespace prefix="ent" uri="http://www.lifewatchgreece.eu/entity/"/>
+    </namespaces>
+    <mappings>
+        <mapping>
+            <domain>
+                <source_node>//root</source_node>
+                <target_node>
+                    <entity>
+                        <type>tlo:BC21_Dataset</type>
+                        <instance_generator name="LocalUri-uuid">
+                            <arg name="hierarchy" type="constant">dataset</arg>
+                        </instance_generator>
+                        <label_generator name="Literal">
+                            <arg name="text" type="constant">Micro-CT Scanning Dataset</arg>
+                        </label_generator>
+                    </entity>
+                </target_node>
+            </domain>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>row</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>ScanID/text()</exists>
+                        </if>
+                        <relationship>crm:P67_refers_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>row</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crmdig:D2_Digitization_Process</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">digitization_process</arg>
+                                <arg name="term">ScanID/text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+        <mapping>
+            <domain>
+                <source_node>//row</source_node>
+                <target_node>
+                    <if>
+                        <exists>ScanID/text()</exists>
+                    </if>
+                    <entity>
+                        <type>crmdig:D2_Digitization_Process</type>
+                        <instance_generator name="LocalTermURI">
+                            <arg name="hierarchy" type="constant">digitization_process</arg>
+                            <arg name="term">ScanID/text()</arg>
+                        </instance_generator>
+                        <label_generator name="Literal">
+                            <arg name="text" type="xpath">string-join(("MicroCT Scanning with ID",ScanID/text()),' ')</arg>
+                        </label_generator>
+                    </entity>
+                </target_node>
+            </domain>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenID</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>text()</exists>
+                        </if>
+                        <relationship>crmdig:D2_digitized</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenID</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC53_Specimen</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">specimen</arg>
+                                <arg name="term">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanID</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>text()</exists>
+                        </if>
+                        <relationship>crmdig:L11_had_output</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanID</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crmdig:D1_Digital_Object</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">scanned_product</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Scanned product",text()),' ')</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ContrastEnhancementMethod</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P_has_contrast_method</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ContrastEnhancementMethod</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Protocol</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P_has_protocol</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Protocol</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>BeginOfPreparationDate</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../BeginOfPreparationTime/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../BeginOfPreparationTime/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity variable="preparation">
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">preparation timestamp</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">preparation</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">preparation time</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P82a_begin_of_the_begin</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>BeginOfPreparationDate</source_node>
+                    <target_node>
+                        <entity>
+                            <type>xsd:dateTime</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join((text(),../BeginOfPreparationTime/text()),' ')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>BeginOfPreparationDate</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../BeginOfPreparationTime/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../BeginOfPreparationTime/text()</equals>                                            
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity variable="preparation">
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">timestamp of preparation</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">preparation</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">preparation time</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P82a_begin_of_the_begin</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>BeginOfPreparationDate</source_node>
+                    <target_node>
+                        <entity>
+                            <type>xsd:dateTime</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>EndOfPreparationDate</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../EndOfPreparationTime/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../EndOfPreparationTime/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity variable="preparation">
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">timestamp of preparation</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">preparation</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">preparation time</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P82b_end_of_the_end</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>EndOfPreparationDate</source_node>
+                    <target_node>
+                        <entity>
+                            <type>xsd:dateTime</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join((text(),../EndOfPreparationTime/text()),' ')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>EndOfPreparationDate</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../EndOfPreparationTime/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../EndOfPreparationTime/text()</equals>                                            
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity variable="preparation">
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">timestamp of preparation</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">preparation</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">preparation time</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P82b_end_of_the_end</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>EndOfPreparationDate</source_node>
+                    <target_node>
+                        <entity>
+                            <type>xsd:dateTime</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>PreparationNotes</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <exists>../ScanNotes/text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../ScanNotes/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>PreparationNotes</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Preparation Notes: ",text()," Scan Notes: ",../ScanNotes/text()),'')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>PreparationNotes</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../ScanNotes/text()</exists>                                            
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../ScanNotes/text()</equals>
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>PreparationNotes</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Preparation Notes: ",text()),'')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanNotes</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../PreparationNotes/text()</exists>                                            
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../PreparationNotes/text()</equals>
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanNotes</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Scan Notes: ",text()),'')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScopeOfScan</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P20_had_specific_purpose</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScopeOfScan</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E5_Event</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scan_scope</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SampleHolder</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P_using_sample_holder</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SampleHolder</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E22_Man-Made_Object</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">sample_holder</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanningMedium</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P_using_scanning_medium</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanningMedium</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E22_Man-Made_Object</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_medium</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScannedPart</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P2_has_type</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScannedPart</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E55_Type</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanned_part</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI-hashed">
+                                        <arg name="hierarchy" type="constant">scan_types</arg>
+                                        <arg name="term" type="constant">scanned_part</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scanned part</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScannedBy</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P14_carried_out_by</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScannedBy</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E21_Person</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">person</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanDate</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity>
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">scanning timestamp</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">scanning</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scanning</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P82_at_some_time_within</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanDate</source_node>
+                    <target_node>
+                        <entity>
+                            <type>xsd:date</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanningDuration</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P4_has_timespan</relationship>
+                        <entity>
+                            <type>crm:E52_Time-Span</type>
+                            <instance_generator name="LocalUri-uuid">
+                                <arg name="hierarchy" type="constant">timestamp</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">scanning duration timestamp</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">timespan_type</arg>
+                                        <arg name="term" type="constant">scanning_duration</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scanning duration</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                        <relationship>crm:P84_had_at_most_duration</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanningDuration</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">timespan_duration</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Instrument</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crmdig:L21F_happened_on_device</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Instrument</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crmdig:D8_Digital_Device</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">device</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">device_type</arg>
+                                        <arg name="term" type="constant">scanning_device</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scanning device</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Voltage_kV</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Voltage_kV</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_voltage</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Voltage_kV: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">voltage</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">voltage</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">unit</arg>
+                                        <arg name="term" type="constant">kv</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">kV</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Current_uA</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Current_uA</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_current</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Current_uA: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">current</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">current</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">unit</arg>
+                                        <arg name="term" type="constant">ua</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">uA</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Filter</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Filter</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_filter</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Filter: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">filter</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">filter</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Zoom_um</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Zoom_um</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_zoom</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Zoom um: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">zoom</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">zoom</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">unit</arg>
+                                        <arg name="term" type="constant">um</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">um</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>CameraResolution</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>CameraResolution</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_camera_resolution</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Camera Resolution: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">camera_resolution</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">camera resolution</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Averaging</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Averaging</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_frame_averaging</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Frame averaging: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">frame_averaging</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">frame averaging</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>RandomMovement</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>RandomMovement</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_random_movement</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Random movement: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">random_movement</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">random movement</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Scan360or180</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Scan360or180</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_degree</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Scan degrees: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">scan_degrees</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">scan degrees</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ExposureTime_ms</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ExposureTime_ms</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_exposure_time</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Exposure time ms: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">exposure_time</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">exposure time</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">unit</arg>
+                                        <arg name="term" type="constant">ms</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">ms</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>OversizeSettings</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P40_observed_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>OversizeSettings</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">scanning_oversize_settings</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">string-join(("Oversize Settings: ",text()),'')</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">oversize_settings</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">οversize settings</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">unit</arg>
+                                        <arg name="term" type="constant">part</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">part</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>FileLocation</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crmdig:L11_had_output</relationship>
+                        <entity>
+                            <type>crmdig:D1_Digital_Object</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">scanned_product</arg>
+                                <arg name="term" type="xpath">../ScanID/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>crmdig:L19i_is_stored_on</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>FileLocation</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crmdig:D13_Digital_Information_Carrier</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">scanning_storage_entity</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScanFileStatus</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crmdig:L11_had_output</relationship>
+                        <entity>
+                            <type>crmdig:D1_Digital_Object</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">scanned_product</arg>
+                                <arg name="term" type="xpath">../ScanID/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>crmdig:L47_has_comment</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScanFileStatus</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+    </mappings>
+</x3ml>

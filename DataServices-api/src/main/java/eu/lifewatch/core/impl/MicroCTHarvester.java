@@ -81,7 +81,7 @@ public class MicroCTHarvester {
         scanningColumnsMappings.put(30, "ScanFileStatus");
     }
     
-    private enum MicroCTResourceType {
+    public enum MicroCTResourceType {
         MicroCT_Specimens,
         MicroCT_Scanning
     }

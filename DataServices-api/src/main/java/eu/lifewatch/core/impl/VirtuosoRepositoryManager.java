@@ -44,9 +44,11 @@ import virtuoso.sesame2.driver.VirtuosoRepository;
 public class VirtuosoRepositoryManager implements RepositoryManager{
     private Repository repo;
     private static final Logger logger=Logger.getLogger(VirtuosoRepositoryManager.class);
+    private String connectionDetails;
     
     public VirtuosoRepositoryManager(String repositoryUrl, String port, String username, String password) throws RepositoryConnectionException{
         logger.debug("Connecting to Virtuoso["+repositoryUrl+","+port+","+username+","+password+"]");
+        this.connectionDetails="Virtuoso Connection details ["+repositoryUrl+","+port+","+username+","+password+"]";
         if(repositoryUrl.startsWith(Resources.defaultUrlPrefix)){
                 repositoryUrl=repositoryUrl.replace(Resources.defaultUrlPrefix, "");
             }
@@ -154,5 +156,9 @@ public class VirtuosoRepositoryManager implements RepositoryManager{
         }catch(RepositoryException ex){
             throw new QueryExecutionException("An error occured while droping the contents of the graphspace \""+graphspace+"\"",ex);
         }
+    }
+
+    public String connectionDetails(){
+        return this.connectionDetails;
     }
 }

@@ -67,7 +67,7 @@ public class DwCAHarvester {
         log.info("Found "+archives.size()+" archives");
         for(File file : archives){
             log.info("Parsing archive: "+file.getAbsolutePath());
-            new DwCArchiveParser(file,true, true).parseData();
+            new DwCArchiveParser(file,true, true,"http://www.ics.forth.gr/isl/lifewatch/directory","http://www.ics.forth.gr/isl/lifewatch/metadata").parseData();
         }
         
         
