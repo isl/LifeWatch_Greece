@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x3ml version="1.0" source_type="xpath">
+    <namespaces>
+        <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
+        <namespace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
+        <namespace prefix="tlo" uri="http://www.ics.forth.gr/isl/ontology/MarineTLO/"/>
+        <namespace prefix="ent" uri="http://www.lifewatchgreece.eu/entity/"/>
+    </namespaces>
+    <mappings>
+        <mapping>
+            <domain>
+                <source_node>//root</source_node>
+                <target_node>
+                    <entity>
+                        <type>tlo:BC21_Dataset</type>
+                        <instance_generator name="LocalUri-uuid">
+                            <arg name="hierarchy" type="constant">dataset</arg>
+                        </instance_generator>
+                        <label_generator name="Literal">
+                            <arg name="text" type="constant">Micro-CT Specimens Dataset</arg>
+                        </label_generator>
+                    </entity>
+                </target_node>
+            </domain>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>row</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <exists>SpecimenID/text()</exists>
+                        </if>
+                        <relationship>crm:P67_refers_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>row</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC53_Specimen</type>
+                            <instance_generator name="LocalTermURI">
+                                <arg name="hierarchy" type="constant">specimen</arg>
+                                <arg name="term">SpecimenID/text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+        <mapping>
+            <domain>
+                <source_node>//row</source_node>
+                <target_node>
+                    <if>
+                        <exists>SpecimenID/text()</exists>
+                    </if>
+                    <entity>
+                        <type>tlo:BC53_Specimen</type>
+                        <instance_generator name="LocalTermURI">
+							<arg name="hierarchy" type="constant">specimen</arg>
+                            <arg name="term">SpecimenID/text()</arg>
+						</instance_generator>
+                    </entity>
+                </target_node>
+            </domain>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenID</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>../SpecimenLabel/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenLabel/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                                
+                        </if>
+                        <relationship>rdfs:label</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenID</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text">../SpecimenLabel/text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenID</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <or>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <exists>../SpecimenLabel/text()</exists>                                    
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <equals value="NULL">../SpecimenLabel/text()</equals>
+                                </if>
+                            </or>
+                            
+                        </if>
+                        <relationship>rdfs:label</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenID</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+								<arg name="text">text()</arg>
+							</instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>CollectionCode</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                            
+                        </if>
+                        <relationship>crm:P5_forms_part_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>CollectionCode</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E78_Collection</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_collection</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenProvider</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>                                   
+                        </if>
+                        <relationship>tlo:P_was_provided_by</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenProvider</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E21_Person</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">person</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ProviderInstitute</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <and>
+                                        <if>
+                                            <exists>../SpecimenProvider/text()</exists>
+                                        </if>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <equals value="NULL">../SpecimenProvider/text()</equals>
+                                                </if>
+                                            </not>
+                                        </if>
+                                    </and>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:P_was_provided_by</relationship>
+                        <entity>
+                            <type>crm:E21_Person</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">person</arg>
+                                <arg name="term" type="xpath">../SpecimenProvider/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>crm:P107_is_current_member_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ProviderInstitute</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E40_Legal_Body</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">organization</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ProviderInstitute</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../SpecimenProvider/text()</exists>                                                    
+                                                </if>
+                                            </not>
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../SpecimenProvider/text()</equals>
+                                        </if>
+                                    </or>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:P_was_provided_by</relationship>
+                        <entity>
+                            <type>crm:E21_Person</type>
+                            <instance_generator name="UUID"/>
+                        </entity>
+                        <relationship>crm:P107_is_current_member_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ProviderInstitute</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E40_Legal_Body</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">organization</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenDescription</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../SpecimenNotes/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenDescription</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">string-join((text()," (Specimen notes: ",../SpecimenNotes/text(),")"),'')</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenDescription</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <or>
+                                        <if>
+                                            <not>
+                                                <if>
+                                                    <exists>../SpecimenNotes/text()</exists>                                            
+                                                </if>
+                                            </not>                                            
+                                        </if>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </or>
+                                </if>                                
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenDescription</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>SpecimenNotes</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../SpecimenNotes/text()</equals>   
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <exists>../SpecimenDescription/text()</exists>                                            
+                                        </if>
+                                    </not>
+                                </if>                                
+                            </and>
+                        </if>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>SpecimenNotes</source_node>
+                    <target_node>
+                        <entity>
+                            <type>rdfs:Literal</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Material</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:LC16_is_composed_of</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Material</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC51_Physical_Object</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_material</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>ScientificName</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:LC10_belongs_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>ScientificName</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BT27_Species</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">species</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>Size_mm</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>crm:P43_has_dimension</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>Size_mm</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E54_Dimension</type>
+                            <instance_generator name="LocalTermURI-uuid">
+                                <arg name="hierarchy" type="constant">specimen</arg>
+                                <arg name="term" type="constant">dimension</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="constant">specimen size</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">dimension_type</arg>
+                                        <arg name="term" type="constant">size</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">size</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P91_has_unit</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="constant">mm</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                            <additional>
+                                <relationship>crm:P90_has_value</relationship>
+                                <entity>
+                                    <type>rdfs:Literal</type>
+                                    <instance_generator name="Literal">
+                                        <arg name="text" type="xpath">text()</arg>
+                                    </instance_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>FixationType</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:LC12_was_attributed_by</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>FixationType</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC45_Observation</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_fixation</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">specimen_status</arg>
+                                        <arg name="term" type="constant">fixation</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">fixation</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>FixationNotes</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../FixationType/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../FixationType/text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                        </if>
+                        <relationship>tlo:LC12_was_attributed_by</relationship>
+                        <entity>
+                            <type>tlo:BC45_Observation</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_fixation</arg>
+                                <arg name="term" type="xpath">../FixationType/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>crm:P3_has_note</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>FixationNotes</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E55_Type</type>
+                            <instance_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </instance_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>PreservationMedium</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>
+                                                                
+                        </if>
+                        <relationship>tlo:LC12_was_attributed_by</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>PreservationMedium</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BC45_Observation</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">specimen_preservation</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">specimen_status</arg>
+                                        <arg name="term" type="constant">preservation_medium</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">preservation medium</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>StoragePlace</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>     
+                        </if>
+                        <relationship>tlo:LC27_has_section</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>StoragePlace</source_node>
+                    <target_node>
+                        <entity>
+                            <type>crm:E53_Place</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">storage_place</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+            <link>
+                <path>
+                    <source_relation>
+                        <relation>TaxonomicGroup</relation>
+                    </source_relation>
+                    <target_relation>
+                        <if>
+                            <and>
+                                <if>
+                                    <exists>text()</exists>                                    
+                                </if>
+                                <if>
+                                    <exists>../ScientificName/text()</exists>                                    
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="NULL">../ScientificName/text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
+                            </and>     
+                        </if>
+                        <relationship>tlo:LC10_belongs_to</relationship>
+                        <entity>
+                            <type>tlo:BT27_Species</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">species</arg>
+                                <arg name="term" type="xpath">../ScientificName/text()</arg>
+                            </instance_generator>
+                        </entity>
+                        <relationship>tlo:LC10_belongs_to</relationship>
+                    </target_relation>
+                </path>
+                <range>
+                    <source_node>TaxonomicGroup</source_node>
+                    <target_node>
+                        <entity>
+                            <type>tlo:BT10_Biotic_Element_Type</type>
+                            <instance_generator name="LocalTermURI-hashed">
+                                <arg name="hierarchy" type="constant">taxonomic_group</arg>
+                                <arg name="term" type="xpath">text()</arg>
+                            </instance_generator>
+                            <label_generator name="Literal">
+                                <arg name="text" type="xpath">text()</arg>
+                            </label_generator>
+                            <additional>
+                                <relationship>crm:P2_has_type</relationship>
+                                <entity>
+                                    <type>crm:E55_Type</type>
+                                    <instance_generator name="LocalTermURI">
+                                        <arg name="hierarchy" type="constant">biotioc_element_type</arg>
+                                        <arg name="term" type="constant">taxonomic_group</arg>
+                                    </instance_generator>
+                                    <label_generator name="Literal">
+                                        <arg name="text" type="constant">taxonomic group</arg>
+                                    </label_generator>
+                                </entity>
+                            </additional>
+                        </entity>
+                    </target_node>
+                </range>
+            </link>
+        </mapping>
+    </mappings>
+</x3ml>
