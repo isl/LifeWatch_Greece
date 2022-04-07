@@ -12,10 +12,30 @@
         </bean>
 
         <bean id="virtuosoRepoManager" class="eu.lifewatch.core.impl.VirtuosoRepositoryManager">
-            <constructor-arg index="0" value="http://62.217.127.124/"/>
+            <constructor-arg index="0" value="http://1.2.3.4/"/>
             <constructor-arg index="1" value="1111"/>
-            <constructor-arg index="2" value="dba"/>
-            <constructor-arg index="3" value="dba"/>
+            <constructor-arg index="2" value="user"/>
+            <constructor-arg index="3" value="pass"/>
+        </bean>
+
+        <bean id="ipt-medobis-root-folder" class="java.lang.String">
+            <constructor-arg index="0" value="D:/temp/ipt/resources_from_hcmr"/>
+        </bean>
+
+        <bean id="microct-specimens-path" class="java.lang.String">
+            <constructor-arg index="0" value="Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Specimens (10).csv"/>
+        </bean>
+
+        <bean id="microct-scanning-path" class="java.lang.String">
+            <constructor-arg index="0" value="Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Prep_Scan (9).csv"/>
+        </bean>
+
+        <bean id="directory-service-namedgraph" class="java.lang.String">
+            <constructor-arg index="0" value="http://www.ics.forth.gr/isl/lifewatch/directory"/>
+        </bean>
+
+        <bean id="metadata-repository-namedgraph" class="java.lang.String">
+            <constructor-arg index="0" value="http://www.ics.forth.gr/isl/lifewatch/metadata"/>
         </bean>
 
     </beans>
