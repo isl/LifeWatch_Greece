@@ -1046,7 +1046,7 @@
                             <additional>
                                 <relationship>crm:P91_has_unit</relationship>
                                 <entity>
-                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <type>crm:E58_Measurement_Unit</type>
                                     <instance_generator name="LocalTermURI">
                                         <arg name="hierarchy" type="constant">unit</arg>
                                         <arg name="term" type="constant">kv</arg>
@@ -1120,7 +1120,7 @@
                             <additional>
                                 <relationship>crm:P91_has_unit</relationship>
                                 <entity>
-                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <type>crm:E58_Measurement_Unit</type>
                                     <instance_generator name="LocalTermURI">
                                         <arg name="hierarchy" type="constant">unit</arg>
                                         <arg name="term" type="constant">ua</arg>
@@ -1255,7 +1255,7 @@
                             <additional>
                                 <relationship>crm:P91_has_unit</relationship>
                                 <entity>
-                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <type>crm:E58_Measurement_Unit</type>
                                     <instance_generator name="LocalTermURI">
                                         <arg name="hierarchy" type="constant">unit</arg>
                                         <arg name="term" type="constant">um</arg>
@@ -1573,7 +1573,7 @@
                             <additional>
                                 <relationship>crm:P91_has_unit</relationship>
                                 <entity>
-                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <type>crm:E58_Measurement_Unit</type>
                                     <instance_generator name="LocalTermURI">
                                         <arg name="hierarchy" type="constant">unit</arg>
                                         <arg name="term" type="constant">ms</arg>
@@ -1647,7 +1647,7 @@
                             <additional>
                                 <relationship>crm:P91_has_unit</relationship>
                                 <entity>
-                                    <type>rdfs:E58_Measurement_Unit</type>
+                                    <type>crm:E58_Measurement_Unit</type>
                                     <instance_generator name="LocalTermURI">
                                         <arg name="hierarchy" type="constant">unit</arg>
                                         <arg name="term" type="constant">part</arg>
