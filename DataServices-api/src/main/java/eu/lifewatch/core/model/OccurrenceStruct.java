@@ -647,12 +647,12 @@ public class OccurrenceStruct {
                     retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+minDimensionUuid+">. "
                                +"<"+minDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
                                +"<"+minDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Minimum depth in meters: "+minimumDepth+"\". "
-                               +"<"+minDimensionUuid+"> <"+Resources.typeLabel+"> <"+minDepthTypeUri+">. "
+                               +"<"+minDimensionUuid+"> <"+Resources.hasType+"> <"+minDepthTypeUri+">. "
                                +"<"+minDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
                                +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+minDepthTypeValue+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementUnitLabel+">. "
                                +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
                 if(!maximumDepth.isEmpty()){
@@ -660,12 +660,12 @@ public class OccurrenceStruct {
                     retTriples+="<"+measurementEvent+"> <"+Resources.observedDimension+"> <"+maxDimensionUuid+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
                                +"<"+maxDimensionUuid+"> <"+Resources.rdfsLabel+"> \"Maximum depth in meters: "+maximumDepth+"\". "
-                               +"<"+maxDimensionUuid+"> <"+Resources.typeLabel+"> <"+maxDepthTypeUri+">. "
+                               +"<"+maxDimensionUuid+"> <"+Resources.hasType+"> <"+maxDepthTypeUri+">. "
                                +"<"+maxDepthTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. "
                                +"<"+maxDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementUnitLabel+">. "
                                +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
             }

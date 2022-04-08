@@ -917,7 +917,7 @@ public class OccurrenceStatsTempStruct {
                                +"<"+minDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+minDepthTypeValue+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasValue+"> \""+minimumDepth+"\". "
                                +"<"+minDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementUnitLabel+">. "
                                +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
                 if(!maximumDepth.isEmpty()){
@@ -930,7 +930,7 @@ public class OccurrenceStatsTempStruct {
                                +"<"+maxDepthTypeUri+"> <"+Resources.rdfsLabel+"> \""+maxDepthTypeValue+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasValue+"> \""+maximumDepth+"\". "
                                +"<"+maxDimensionUuid+"> <"+Resources.hasUnit+"> <"+unitMetersUri+">. "
-                               +"<"+unitMetersUri+"> <"+Resources.typeLabel+"> <"+Resources.measurementUnitLabel+">. "
+                               +"<"+unitMetersUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.measurementUnitLabel+">. "
                                +"<"+unitMetersUri+"> <"+Resources.rdfsLabel+"> \""+unitMetersValue+"\". ";
                 }
             }
