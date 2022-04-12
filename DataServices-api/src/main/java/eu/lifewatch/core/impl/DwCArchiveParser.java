@@ -90,7 +90,6 @@ public class DwCArchiveParser {
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
         }
-        System.out.println(directoryStruct);
         if(true){
             return;
         }
@@ -263,14 +262,14 @@ public class DwCArchiveParser {
             directoryStruct.withImageTitle(this.datasetTitle+" logo");
         }
         Elements geographicCoverageElements=metadataDoc.getElementsByTag(Resources.GEOGRAPHIC_COVERAGE);
-        if(geographicCoverageElements!=null){
+        if(geographicCoverageElements!=null && !geographicCoverageElements.isEmpty()){
             Elements geographicCoverageDescription=geographicCoverageElements.get(0).getElementsByTag(Resources.GEOGRAPHIC_DESCRIPTION);
             if(geographicCoverageDescription!=null){
                 directoryStruct.setGeographicCoverage(geographicCoverageDescription.get(0).text());
             }
         }
         Elements temporalCoverageElements=metadataDoc.getElementsByTag(Resources.TEMPORAL_COVERAGE);
-        if(temporalCoverageElements!=null){
+        if(temporalCoverageElements!=null && !temporalCoverageElements.isEmpty()){
             for(Element temporalCoverageElement : temporalCoverageElements){
                 Elements beginDateElements=temporalCoverageElement.getElementsByTag(Resources.BEGIN_DATE);
                 Elements endDateElements=temporalCoverageElement.getElementsByTag(Resources.END_DATE);
@@ -280,7 +279,7 @@ public class DwCArchiveParser {
             }
         }
         Elements taxonomicCoverageElements=metadataDoc.getElementsByTag(Resources.TAXONOMIC_COVERAGE);
-        if(taxonomicCoverageElements!=null){
+        if(taxonomicCoverageElements!=null && !taxonomicCoverageElements.isEmpty()){
             Elements taxonomicClassificationElements=taxonomicCoverageElements.get(0).getElementsByTag(Resources.TAXONOMIC_CLASSIFICATION);
             if(taxonomicClassificationElements!=null){
                 for(Element taxonomicClassificationElement : taxonomicClassificationElements){
@@ -290,7 +289,7 @@ public class DwCArchiveParser {
                         directoryStruct.withTaxonomicCoverage((taxonRankNameElements!=null?taxonRankNameElements.text():""), (taxonRankValueElements!=null?taxonRankValueElements.text():""));
                     }
                 }
-            }   
+            }
         }
         directoryStruct.withAccessMethodURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "access_method", "available from http://ipt.medobis.eu"));
         directoryStruct.withAccessMethod("available from http://ipt.medobis.eu");
