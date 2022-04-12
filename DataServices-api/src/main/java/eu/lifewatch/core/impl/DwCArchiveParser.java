@@ -274,7 +274,7 @@ public class DwCArchiveParser {
                 Elements beginDateElements=temporalCoverageElement.getElementsByTag(Resources.BEGIN_DATE);
                 Elements endDateElements=temporalCoverageElement.getElementsByTag(Resources.END_DATE);
                 if(beginDateElements!=null || endDateElements!=null){
-                    directoryStruct.withTemporalCoverage((beginDateElements!=null?beginDateElements.text():""), (endDateElements!=null?endDateElements.text():""));
+                    directoryStruct.withTemporalCoverage(Utils.normalizeDate(beginDateElements.text(),false), Utils.normalizeDate(endDateElements.text(),true));
                 }
             }
         }
