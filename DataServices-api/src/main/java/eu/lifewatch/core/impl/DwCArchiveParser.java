@@ -90,6 +90,10 @@ public class DwCArchiveParser {
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
         }
+        System.out.println(directoryStruct);
+        if(true){
+            return;
+        }
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
@@ -257,6 +261,36 @@ public class DwCArchiveParser {
         if(logoElements!=null){
             directoryStruct.withImageURI(logoElements.text());
             directoryStruct.withImageTitle(this.datasetTitle+" logo");
+        }
+        Elements geographicCoverageElements=metadataDoc.getElementsByTag(Resources.GEOGRAPHIC_COVERAGE);
+        if(geographicCoverageElements!=null){
+            Elements geographicCoverageDescription=geographicCoverageElements.get(0).getElementsByTag(Resources.GEOGRAPHIC_DESCRIPTION);
+            if(geographicCoverageDescription!=null){
+                directoryStruct.setGeographicCoverage(geographicCoverageDescription.get(0).text());
+            }
+        }
+        Elements temporalCoverageElements=metadataDoc.getElementsByTag(Resources.TEMPORAL_COVERAGE);
+        if(temporalCoverageElements!=null){
+            for(Element temporalCoverageElement : temporalCoverageElements){
+                Elements beginDateElements=temporalCoverageElement.getElementsByTag(Resources.BEGIN_DATE);
+                Elements endDateElements=temporalCoverageElement.getElementsByTag(Resources.END_DATE);
+                if(beginDateElements!=null || endDateElements!=null){
+                    directoryStruct.withTemporalCoverage((beginDateElements!=null?beginDateElements.text():""), (endDateElements!=null?endDateElements.text():""));
+                }
+            }
+        }
+        Elements taxonomicCoverageElements=metadataDoc.getElementsByTag(Resources.TAXONOMIC_COVERAGE);
+        if(taxonomicCoverageElements!=null){
+            Elements taxonomicClassificationElements=taxonomicCoverageElements.get(0).getElementsByTag(Resources.TAXONOMIC_CLASSIFICATION);
+            if(taxonomicClassificationElements!=null){
+                for(Element taxonomicClassificationElement : taxonomicClassificationElements){
+                    Elements taxonRankNameElements=taxonomicClassificationElement.getElementsByTag(Resources.TAXON_RANK_NAME);
+                    Elements taxonRankValueElements=taxonomicClassificationElement.getElementsByTag(Resources.TAXON_RANK_VALUE);
+                    if(taxonRankNameElements!=null || taxonRankValueElements!=null){
+                        directoryStruct.withTaxonomicCoverage((taxonRankNameElements!=null?taxonRankNameElements.text():""), (taxonRankValueElements!=null?taxonRankValueElements.text():""));
+                    }
+                }
+            }   
         }
         directoryStruct.withAccessMethodURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "access_method", "available from http://ipt.medobis.eu"));
         directoryStruct.withAccessMethod("available from http://ipt.medobis.eu");
