@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -660,6 +661,11 @@ public class DirectoryStruct {
         return this;
     }
     
+    public DirectoryStruct withGeographicCoverage(String geographicCoverage){
+        this.geographicCoverage=geographicCoverage;
+        return this;
+    }
+    
     public DirectoryStruct withTemporalCoverage(String beginDate, String endDate){
         this.temporalCoverage.add(new Pair(beginDate,endDate));
         return this;
@@ -740,7 +746,33 @@ public class DirectoryStruct {
                             + "<" + contributor.getKey() + "> <" + Resources.rdfsLabel + "> \"" + contributor.getValue() + "\".\n";
                 }
             }
-
+            if(!this.geographicCoverage.isBlank()){
+                retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> \""+this.geographicCoverage.replaceAll("\"", "'")+"\".\n";
+            }
+            if(!this.temporalCoverage.isEmpty()){
+                String tempCoverageUri=Resources.defaultNamespaceForURIs+"/temporal_coverage/"+UUID.randomUUID().toString();
+                for(Pair tempCoveragePair : this.temporalCoverage){
+                    retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_TEMPORAL_COVERAGE+"> <"+tempCoverageUri+">.\n";
+                    if(!tempCoveragePair.getKey().isBlank()){
+                        retTriples+="<"+tempCoverageUri+"> <"+Resources.beginOfTheBegin+"> \""+tempCoveragePair.getKey()+"\".\n";
+                    }
+                    if(!tempCoveragePair.getValue().isBlank()){
+                        retTriples+="<"+tempCoverageUri+"> <"+Resources.endOfTheEnd+"> \""+tempCoveragePair.getValue()+"\".\n";
+                    }
+                }
+            }
+            if(!this.taxonomicCoverage.isEmpty()){
+                for(Pair taxonomicCoveragePair : taxonomicCoverage){
+                    String taxonomicCoverageUri=Resources.defaultNamespaceForURIs+"/taxonomic_coverage/"+UUID.randomUUID().toString();
+                    retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_TAXONOMIC_COVERAGE+"> <"+taxonomicCoverageUri+">.\n";
+                    if(!taxonomicCoveragePair.getKey().isBlank()){
+                        retTriples+="<"+taxonomicCoverageUri+"> <"+Resources.hasNote+"> \""+taxonomicCoveragePair.getKey()+"\".\n";
+                    }
+                    if(!taxonomicCoveragePair.getValue().isBlank()){
+                        retTriples+="<"+taxonomicCoverageUri+"> <"+Resources.rdfsLabel+"> \""+taxonomicCoveragePair.getValue()+"\".\n";
+                    }
+                }
+            }
         }
         if (!this.ownerURI.isEmpty()) {
             retTriples += "<" + this.ownerURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> .\n";

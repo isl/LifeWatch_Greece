@@ -164,6 +164,9 @@ public class Resources {
     public static final String dimensionTypeLabel = tloNamespace + "BC_Dimension_Type";
     public static final String wasProvidedBy = tloNamespace + "P_was_provided_by";
     public static final String isUsedIn = tloNamespace + "P_is_used_in";
+    public static final String HAS_GEOGRAPHIC_COVERAGE = tloNamespace + "P_has_geographic_coverage";
+    public static final String HAS_TEMPORAL_COVERAGE = tloNamespace + "P_has_temporal_coverage";
+    public static final String HAS_TAXONOMIC_COVERAGE = tloNamespace + "P_has_taxonomic_coverage";
     public static final String hasContrastMethod = cidocCrmNamespace + "P_has_contrast_method";
     public static final String hasZoom = cidocCrmNamespace + "P_has_zoom";
     public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";
