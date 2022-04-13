@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -60,6 +61,9 @@ public class DirectoryStruct {
     private String rightsHolderURI;
     private String contactPoint;
     private String description;
+    private String geographicCoverage;
+    private List<Pair> temporalCoverage;
+    private List<Pair> taxonomicCoverage;
 
     private static final Logger logger = Logger.getLogger(DirectoryStruct.class);
 
@@ -106,6 +110,9 @@ public class DirectoryStruct {
         embargoState = "";
         imageURI = "";
         imageTitle = "";
+        this.geographicCoverage="";
+        this.temporalCoverage=new ArrayList<>();
+        this.taxonomicCoverage=new ArrayList<>();
     }
 
     public String getDatasetName() {
@@ -278,6 +285,36 @@ public class DirectoryStruct {
 
     public String getEmbargoPeriod() {
         return embargoPeriod;
+    }
+    
+    public String getGeographicCoverage(){
+        return this.geographicCoverage;
+    }
+    
+    public List<String> getTemporalCoverage(){
+        List<String> retList=new ArrayList<>();
+        for(Pair pair : this.temporalCoverage)
+            retList.add((pair.getKey()!=null?pair.getKey():"")+" - "+(pair.getValue()!=null?pair.getValue():""));
+        return retList;
+    }
+    
+    public List<String> getTaxonomicCoverage(){
+        List<String> retList=new ArrayList<>();
+        for(Pair pair : this.taxonomicCoverage)
+            retList.add((pair.getKey()!=null?pair.getKey():"")+" : "+(pair.getValue()!=null?pair.getValue():""));
+        return retList;
+    }
+    
+    public void setGeographicCoverage(String place){
+        this.geographicCoverage=place;
+    }
+    
+    public void setTemporalCoverage(String beginDate, String endDate){
+        this.temporalCoverage.add(new Pair(beginDate,endDate));
+    }
+    
+    public void setTaxonomicCoverage(String taxonRankName, String taxonRankValue){
+        this.taxonomicCoverage.add(new Pair(taxonRankName,taxonRankValue));
     }
 
     public void setDatasetName(String datasetName) {
@@ -623,6 +660,22 @@ public class DirectoryStruct {
         this.embargoPeriod = embargoPeriod;
         return this;
     }
+    
+    public DirectoryStruct withGeographicCoverage(String geographicCoverage){
+        this.geographicCoverage=geographicCoverage;
+        return this;
+    }
+    
+    public DirectoryStruct withTemporalCoverage(String beginDate, String endDate){
+        this.temporalCoverage.add(new Pair(beginDate,endDate));
+        return this;
+    }
+    
+    public DirectoryStruct withTaxonomicCoverage(String taxonRankName, String taxonRankValue){
+        this.taxonomicCoverage.add(new Pair(taxonRankName,taxonRankValue));
+        return this;
+    }
+     
 
     /**
      * Produces an NTRIPLES output so that it can be used to SPARQL queries
@@ -693,7 +746,33 @@ public class DirectoryStruct {
                             + "<" + contributor.getKey() + "> <" + Resources.rdfsLabel + "> \"" + contributor.getValue() + "\".\n";
                 }
             }
-
+            if(!this.geographicCoverage.isBlank()){
+                retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> \""+this.geographicCoverage.replaceAll("\"", "'")+"\".\n";
+            }
+            if(!this.temporalCoverage.isEmpty()){
+                String tempCoverageUri=Resources.defaultNamespaceForURIs+"/temporal_coverage/"+UUID.randomUUID().toString();
+                for(Pair tempCoveragePair : this.temporalCoverage){
+                    retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_TEMPORAL_COVERAGE+"> <"+tempCoverageUri+">.\n";
+                    if(!tempCoveragePair.getKey().isBlank()){
+                        retTriples+="<"+tempCoverageUri+"> <"+Resources.beginOfTheBegin+"> \""+tempCoveragePair.getKey()+"\".\n";
+                    }
+                    if(!tempCoveragePair.getValue().isBlank()){
+                        retTriples+="<"+tempCoverageUri+"> <"+Resources.endOfTheEnd+"> \""+tempCoveragePair.getValue()+"\".\n";
+                    }
+                }
+            }
+            if(!this.taxonomicCoverage.isEmpty()){
+                for(Pair taxonomicCoveragePair : taxonomicCoverage){
+                    String taxonomicCoverageUri=Resources.defaultNamespaceForURIs+"/taxonomic_coverage/"+UUID.randomUUID().toString();
+                    retTriples+="<"+this.datasetURI+"> <"+Resources.HAS_TAXONOMIC_COVERAGE+"> <"+taxonomicCoverageUri+">.\n";
+                    if(!taxonomicCoveragePair.getKey().isBlank()){
+                        retTriples+="<"+taxonomicCoverageUri+"> <"+Resources.hasNote+"> \""+taxonomicCoveragePair.getKey()+"\".\n";
+                    }
+                    if(!taxonomicCoveragePair.getValue().isBlank()){
+                        retTriples+="<"+taxonomicCoverageUri+"> <"+Resources.rdfsLabel+"> \""+taxonomicCoveragePair.getValue()+"\".\n";
+                    }
+                }
+            }
         }
         if (!this.ownerURI.isEmpty()) {
             retTriples += "<" + this.ownerURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> .\n";
@@ -867,7 +946,10 @@ public class DirectoryStruct {
                 + "Access method: " + this.accessMethod + "\t"
                 + "Contributors: " + this.contributors + "\t"
                 + "Contact point: " + this.contactPoint + "\t"
-                + "Parent dataset: " + this.parentDatasetName;
+                + "Parent dataset: " + this.parentDatasetName+"\t"
+                + "Geographic coverage: " + this.geographicCoverage+"\t"
+                + "Temporal coverage: " + this.temporalCoverage+"\t"
+                + "Taxonomic coverage: " + this.taxonomicCoverage;
     }
 
     @Override

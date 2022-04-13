@@ -164,6 +164,9 @@ public class Resources {
     public static final String dimensionTypeLabel = tloNamespace + "BC_Dimension_Type";
     public static final String wasProvidedBy = tloNamespace + "P_was_provided_by";
     public static final String isUsedIn = tloNamespace + "P_is_used_in";
+    public static final String HAS_GEOGRAPHIC_COVERAGE = tloNamespace + "P_has_geographic_coverage";
+    public static final String HAS_TEMPORAL_COVERAGE = tloNamespace + "P_has_temporal_coverage";
+    public static final String HAS_TAXONOMIC_COVERAGE = tloNamespace + "P_has_taxonomic_coverage";
     public static final String hasContrastMethod = cidocCrmNamespace + "P_has_contrast_method";
     public static final String hasZoom = cidocCrmNamespace + "P_has_zoom";
     public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";
@@ -216,9 +219,13 @@ public class Resources {
     public static final String ABSTRACT="abstract";
     public static final String ALTERNATE_IDENTIFIER="alternateIdentifier";
     public static final String ASSOCIATED_PARTY="associatedParty";
+    public static final String BEGIN_DATE="beginDate";
     public static final String CONTACT="contact";
     public static final String CREATOR="creator";
+    public static final String END_DATE="endDate";
     public static final String EML_VERSION="emlVersion";
+    public static final String GEOGRAPHIC_COVERAGE="geographicCoverage";
+    public static final String GEOGRAPHIC_DESCRIPTION="geographicDescription";
     public static final String INDIVIDUAL_NAME="individualName";
     public static final String INTELLECTUAL_RIGHTS="intellectualRights";
     public static final String KEYWORD="keyword";
@@ -228,6 +235,11 @@ public class Resources {
     public static final String ORGANIZATION_NAME="organizationName";
     public static final String PUB_DATE="pubDate";
     public static final String RESOURCE_LOGO_URL="resourceLogoUrl";
+    public static final String TAXON_RANK_NAME="taxonRankName";
+    public static final String TAXON_RANK_VALUE="taxonRankValue";
+    public static final String TAXONOMIC_CLASSIFICATION="taxonomicClassification";
+    public static final String TAXONOMIC_COVERAGE="taxonomicCoverage";
+    public static final String TEMPORAL_COVERAGE="temporalCoverage";
     public static final String TITLE="title";
     public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
     

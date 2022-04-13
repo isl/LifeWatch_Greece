@@ -167,8 +167,22 @@ public class Utils {
         }
     }
     
+    public static String normalizeDate(String originalDate, boolean isEndDate){
+        if(originalDate==null || originalDate.isBlank()){
+            return "";
+        }else{
+            if(originalDate.trim().length()==4){
+                if(!isEndDate){
+                    return originalDate+"-01-01";
+                }else{
+                    return originalDate+"-12-31";
+                }
+            }
+            return originalDate;
+        }
+    }
+    
     public static void main(String[] args) throws IOException{
         consolidateIptMedobisTransformedResources(new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/local"), new File("D:/Repositories/GitHub/LifeWatch_Greece/DataServices-api/consolidated"));
-        
     }
 }
