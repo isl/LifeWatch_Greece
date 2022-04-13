@@ -109,12 +109,16 @@ public class DirectoryService implements Service {
         }
     }
 
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String geographicCoverageStr, String tempCoverageBeginStr, String tempCoverageEndStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
                    +"datasetName: ["+datasetName+"], "
                    +"ownerName: ["+ownerName+"], "
                    +"datasetUri: ["+datasetURI+"], "
                    +"datasetType: ["+datasetType+"], "
+                   +"geographicCoverage: ["+geographicCoverageStr+"], "
+                   +"temporalCoverageBegin: ["+tempCoverageBeginStr+"], "
+                   +"temporalCoverageEnd: ["+tempCoverageEndStr+"], "
+                   +"taxonomicCoverage: ["+taxonomicCoverageStr+"], "
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
                    +"reposytoryGraph: ["+repositoryGraph+"], ");
@@ -125,6 +129,7 @@ public class DirectoryService implements Service {
                                            +"?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
                                            +"?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
                                            +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI "
+                                           +"?geographicCoverage ?temporalCoverageBegin ?temporalCoverageEnd ?taxonomicCoverageName ?taxonomicCoverageValue "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
@@ -138,6 +143,17 @@ public class DirectoryService implements Service {
                 +"?datasetURI <"+Resources.hasCurator+"> ?curatorURI. "
                 +"?curatorURI <"+Resources.rdfsLabel+"> ?curatorName. "
                 +"?curatorURI <"+Resources.hasContactPoint+"> ?contactPoint. "
+                +"?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.HAS_TEMPORAL_COVERAGE+"> ?temp_coverage_uri. "
+                    +"?temp_coverage_uri <"+Resources.beginOfTheBegin+"> ?temporalCoverageBegin. "
+                    +"?temp_coverage_uri <"+Resources.endOfTheEnd+"> ?temporalCoverageEnd. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.HAS_TAXONOMIC_COVERAGE+"> ?taxonomicCoverageUri. "
+                    +"?taxonomicCoverageUri <"+Resources.rdfsLabel+"> ?taxonomicCoverageValue. "
+                    +"?taxonomicCoverageUri <"+Resources.hasNote+"> ?taxonomicCoverageName. "
+                +"} "
                 +"OPTIONAL{ "
                     +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetID. "
                 +"} "
@@ -211,6 +227,18 @@ public class DirectoryService implements Service {
         if(datasetURI!=null && !datasetURI.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
         }
+        if(geographicCoverageStr!=null && !geographicCoverageStr.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
+        }
+        if(tempCoverageBeginStr!=null && !tempCoverageBeginStr.isBlank()){
+            queryString+="FILTER (?temporalCoverageBegin > \""+tempCoverageBeginStr+"\"^^xsd:dateTime). ";
+        }
+        if(tempCoverageEndStr!=null && !tempCoverageEndStr.isBlank()){
+            queryString+="FILTER (?temporalCoverageEnd < \""+tempCoverageEndStr+"\"^^xsd:dateTime). ";
+        }
+        if(taxonomicCoverageStr!=null && !taxonomicCoverageStr.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?taxonomicCoverageValue),\""+taxonomicCoverageStr.toLowerCase()+"\"). ";
+        }
         queryString+="} ";
         if(limit>0){
             queryString+=" LIMIT "+limit;
@@ -231,7 +259,8 @@ public class DirectoryService implements Service {
                         .withOwnerName(result.getValue("ownerName").stringValue())
                         .withCuratorURI(result.getValue("curatorURI").stringValue())
                         .withCuratorName(result.getValue("curatorName").stringValue())
-                        .withContactPoint(result.getValue("contactPoint").stringValue());
+                        .withContactPoint(result.getValue("contactPoint").stringValue())
+                        .withGeographicCoverage(result.getValue("geographicCoverage").stringValue());
                 if (result.getValue("datasetID") != null) {
                     struct.withDatasetID(result.getValue("datasetID").stringValue());
                 }
@@ -315,6 +344,14 @@ public class DirectoryService implements Service {
                 if (result.getValue("parentDatasetName") != null) {
                     struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
                 }
+                if(result.getValue("temporalCoverageBegin")!=null || result.getValue("temporalCoverageEnd")!=null){
+                    struct.withTemporalCoverage((result.getValue("temporalCoverageBegin")!=null?result.getValue("temporalCoverageBegin").stringValue():""), 
+                                                (result.getValue("temporalCoverageEnd")!=null?result.getValue("temporalCoverageEnd").stringValue():""));
+                }
+                if(result.getValue("taxonomicCoverageName")!=null || result.getValue("taxonomicCoverageValue")!=null ){
+                    struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
+                                                 (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
+                }
                 structsMap.put(struct.getDatasetURI(), struct);
             } else {
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
@@ -322,6 +359,14 @@ public class DirectoryService implements Service {
                     String contributorURI = result.getValue("contributorURI").stringValue();
                     String contributorName = result.getValue("contributorName").stringValue();
                     struct.withContributor(contributorURI, contributorName);
+                }
+                if(result.getValue("temporalCoverageBegin")!=null || result.getValue("temporalCoverageEnd")!=null){
+                    struct.withTemporalCoverage((result.getValue("temporalCoverageBegin")!=null?result.getValue("temporalCoverageBegin").stringValue():""), 
+                                                (result.getValue("temporalCoverageEnd")!=null?result.getValue("temporalCoverageEnd").stringValue():""));
+                }
+                if(result.getValue("taxonomicCoverageName")!=null || result.getValue("taxonomicCoverageValue")!=null ){
+                    struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
+                                                 (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
                 }
                 structsMap.put(struct.getDatasetURI(), struct);
             }
