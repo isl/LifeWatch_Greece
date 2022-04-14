@@ -1,11 +1,15 @@
 package eu.lifewatch.core.model;
 
 import eu.lifewatch.common.Resources;
+import eu.lifewatch.core.impl.Utils;
 import eu.lifewatch.exception.URIValidationException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -675,7 +679,34 @@ public class DirectoryStruct {
         this.taxonomicCoverage.add(new Pair(taxonRankName,taxonRankValue));
         return this;
     }
-     
+    
+    public boolean hasTemporalCoverage(String givenTempCoverage) throws ParseException{
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        String tempNormDate=Utils.normalizeDate(givenTempCoverage, false);
+        if(tempNormDate.length()==10){
+            Date givenDate=dateFormat.parse(tempNormDate);
+            for(Pair tempCoverPair : this.temporalCoverage){
+                if(!tempCoverPair.getKey().isBlank() && !tempCoverPair.getValue().isBlank()){
+                    Date dateInStructBegin=dateFormat.parse(tempCoverPair.getKey());
+                    Date dateInStructEnd=dateFormat.parse(tempCoverPair.getValue());
+                    if(dateInStructBegin.before(givenDate) && dateInStructEnd.after(givenDate)){
+                        return true;
+                    }
+                }else if(!tempCoverPair.getKey().isBlank() && tempCoverPair.getValue().isBlank()){
+                    Date dateInStruct=dateFormat.parse(tempCoverPair.getKey());
+                    if(dateInStruct.before(givenDate)){
+                        return true;
+                    }
+                }else if(tempCoverPair.getKey().isBlank() && !tempCoverPair.getValue().isBlank()){
+                    Date dateInStruct=dateFormat.parse(tempCoverPair.getValue());
+                    if(dateInStruct.after(givenDate)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Produces an NTRIPLES output so that it can be used to SPARQL queries
