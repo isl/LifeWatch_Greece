@@ -90,9 +90,6 @@ public class DwCArchiveParser {
             log.info("Storing locally dataset metadata");
             this.storeLocally(directoryStruct);
         }
-        if(true){
-            return;
-        }
         log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
         switch(this.dwcArchive.getCore().getRowType().simpleName()){
             case "Occurrence":
