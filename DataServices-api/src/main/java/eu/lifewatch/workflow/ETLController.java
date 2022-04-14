@@ -129,7 +129,7 @@ public class ETLController {
             }
             Timer.stop(ETLController.class.toString() + ".harvest_ipt_medobis");
 
-            log.info("Step 3/3: Harvest, Transform and ingest data from IPT Medobis");
+            log.info("Step 3/3: Harvest, Transform and ingest data from MicroCT");
             Timer.start(ETLController.class.toString() + ".transform_microct");
             MicroCTHarvester.xmlifyMicroCtResources(new File(this.getSpecimenDataPath()),
                                                     new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+".xml"),
