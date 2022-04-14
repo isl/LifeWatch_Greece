@@ -12,11 +12,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.net.URI;
 import eu.lifewatch.common.Resources;
+import eu.lifewatch.core.impl.Utils;
 import eu.lifewatch.core.model.Triple;
 import eu.lifewatch.exception.DataImportException;
 import eu.lifewatch.exception.QueryExecutionException;
 import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.api.Service;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -109,15 +111,14 @@ public class DirectoryService implements Service {
         }
     }
 
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String geographicCoverageStr, String tempCoverageBeginStr, String tempCoverageEndStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
                    +"datasetName: ["+datasetName+"], "
                    +"ownerName: ["+ownerName+"], "
                    +"datasetUri: ["+datasetURI+"], "
                    +"datasetType: ["+datasetType+"], "
                    +"geographicCoverage: ["+geographicCoverageStr+"], "
-                   +"temporalCoverageBegin: ["+tempCoverageBeginStr+"], "
-                   +"temporalCoverageEnd: ["+tempCoverageEndStr+"], "
+                   +"temporalCoverage: ["+tempCoverageStr+"], "
                    +"taxonomicCoverage: ["+taxonomicCoverageStr+"], "
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
@@ -229,12 +230,6 @@ public class DirectoryService implements Service {
         }
         if(geographicCoverageStr!=null && !geographicCoverageStr.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
-        }
-        if(tempCoverageBeginStr!=null && !tempCoverageBeginStr.isBlank()){
-            queryString+="FILTER (?temporalCoverageBegin > \""+tempCoverageBeginStr+"\"^^xsd:dateTime). ";
-        }
-        if(tempCoverageEndStr!=null && !tempCoverageEndStr.isBlank()){
-            queryString+="FILTER (?temporalCoverageEnd < \""+tempCoverageEndStr+"\"^^xsd:dateTime). ";
         }
         if(taxonomicCoverageStr!=null && !taxonomicCoverageStr.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?taxonomicCoverageValue),\""+taxonomicCoverageStr.toLowerCase()+"\"). ";
@@ -371,8 +366,23 @@ public class DirectoryService implements Service {
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
-        logger.debug("The query returned "+structsMap.values().size()+" datasets");
-        return new ArrayList<>(structsMap.values());
+        if(!tempCoverageStr.isBlank()){
+            ArrayList<DirectoryStruct> retList=new ArrayList<>();
+            for(DirectoryStruct structToCheck : structsMap.values()){
+                try{
+                    if(structToCheck.hasTemporalCoverage(tempCoverageStr)){
+                        retList.add(structToCheck);
+                    }    
+                }catch(ParseException ex){
+                    logger.error("Unable to parse date. Skipping that from the results",ex);
+                }
+            }
+            logger.debug("The query returned "+retList.size()+" datasets");
+            return retList;
+        }else{
+            logger.debug("The query returned "+structsMap.values().size()+" datasets");
+            return new ArrayList<>(structsMap.values());
+        }
     }
  
     /**
