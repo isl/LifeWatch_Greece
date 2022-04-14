@@ -18,14 +18,14 @@ public class DirectoryServiceExample {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         DirectoryService dsManager=context.getBean(DirectoryService.class);
         
-        List<DirectoryStruct> results=dsManager.searchDataset("", "", "", "","","2010-04-04","","Mollusca", -1, -1, GRAPHSPACE_DIRECTORY);
+        List<DirectoryStruct> results=dsManager.searchDataset("", "", "", "","aegean","1982","", -1, -1, GRAPHSPACE_DIRECTORY);
         System.out.println("Results: "+results.size());
         for(DirectoryStruct directoryStruct : results){
 //            System.out.println(directoryStruct);
 //            System.out.println(directoryStruct.getContributorNames());
-            System.out.println(directoryStruct.getGeographicCoverage());
+//            System.out.println(directoryStruct.getGeographicCoverage());
             System.out.println(directoryStruct.getTemporalCoverage());
-            System.out.println(directoryStruct.getTaxonomicCoverage());
+//            System.out.println(directoryStruct.getTaxonomicCoverage());
         }
     }
     

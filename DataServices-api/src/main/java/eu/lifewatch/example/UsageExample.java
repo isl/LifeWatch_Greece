@@ -122,7 +122,7 @@ public class UsageExample {
         String oName="owner 1";
         System.out.println("Searching for datasets with name \""+dName+"\" hosted by \""+oName+"\"");
         try{
-            List<DirectoryStruct> structs=this.dsManager.searchDataset(dName, oName, "", "","","","","", -1, -1, DEFAULT_GRAPHSPACE);
+            List<DirectoryStruct> structs=this.dsManager.searchDataset(dName, oName, "", "","","","", -1, -1, DEFAULT_GRAPHSPACE);
             System.out.println("Found "+structs.size()+" datasets");
             for(DirectoryStruct struct : structs){
                 System.out.println("\t"+struct.toString().replaceAll("\n", "\n\t"));
@@ -223,7 +223,7 @@ public class UsageExample {
         try{
             this.dsManager.deleteTriplesHavingProperty(Resources.wasAttributedBy, DEFAULT_GRAPHSPACE);
             System.out.println("Check that the property has been removed. The following dataset doesn't contain it");
-            List<DirectoryStruct> datasets=this.dsManager.searchDataset("dataset 1", "owner 1",NAMESPACE_PREFIX+"dataset1","dataset type 1","","","","",-1,-1,DEFAULT_GRAPHSPACE);
+            List<DirectoryStruct> datasets=this.dsManager.searchDataset("dataset 1", "owner 1",NAMESPACE_PREFIX+"dataset1","dataset type 1","","","",-1,-1,DEFAULT_GRAPHSPACE);
             System.out.println("\t"+datasets.get(0).toString().replaceAll("\n", "\n\t"));
         }catch(QueryExecutionException ex){
             System.err.println(ex);
