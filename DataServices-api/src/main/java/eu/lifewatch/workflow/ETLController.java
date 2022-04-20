@@ -40,7 +40,9 @@ public class ETLController {
     private static final String WORKSPACE_MICROCT_FOLDER=WORKSPACE_FOLDER+"/microct";
     private static final String WORKSPACE_IPT_MEDOBIS_FOLDER=WORKSPACE_FOLDER+"/ipt";
     private static final String X3ML_MAPPINGS_SPECIMEN_RESOURCE="x3ml/mappings-specimens.x3ml";
+    private static final String X3ML_MAPPINGS_SPECIMEN_DATASET_ONLY_RESOURCE="x3ml/mappings-specimens_dataset_only.x3ml";
     private static final String X3ML_MAPPINGS_SCANNING_RESOURCE="x3ml/mappings-microct-scan.x3ml";
+    private static final String X3ML_MAPPINGS_SCANNING_DATASET_ONLY_RESOURCE="x3ml/mappings-microct-scan_dataset_only.x3ml";
     private static final String X3ML_GENERATOR_POLICY_RESOURCE="x3ml/generator-policy.xml";
 
     public ETLController() throws WorkflowException{
@@ -138,6 +140,18 @@ public class ETLController {
                     new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+".xml"),
                     MicroCTHarvester.MicroCTResourceType.MicroCT_Scanning);
             X3MLEngineFactory.create()
+                    .withMappings(ETLController.class.getClassLoader().getResourceAsStream(X3ML_MAPPINGS_SPECIMEN_DATASET_ONLY_RESOURCE))
+                    .withGeneratorPolicy(ETLController.class.getClassLoader().getResourceAsStream(X3ML_GENERATOR_POLICY_RESOURCE))
+                    .withInputFiles(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+".xml"))
+                    .withOutput(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+"_dataset_only.rdf"),X3MLEngineFactory.OutputFormat.RDF_XML)
+                    .execute();
+            X3MLEngineFactory.create()
+                    .withMappings(ETLController.class.getClassLoader().getResourceAsStream(X3ML_MAPPINGS_SCANNING_DATASET_ONLY_RESOURCE))
+                    .withGeneratorPolicy(ETLController.class.getClassLoader().getResourceAsStream(X3ML_GENERATOR_POLICY_RESOURCE))
+                    .withInputFiles(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+".xml"))
+                    .withOutput(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+"_dataset_only.rdf"),X3MLEngineFactory.OutputFormat.RDF_XML)
+                    .execute();
+            X3MLEngineFactory.create()
                     .withMappings(ETLController.class.getClassLoader().getResourceAsStream(X3ML_MAPPINGS_SPECIMEN_RESOURCE))
                     .withGeneratorPolicy(ETLController.class.getClassLoader().getResourceAsStream(X3ML_GENERATOR_POLICY_RESOURCE))
                     .withInputFiles(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+".xml"))
@@ -149,6 +163,8 @@ public class ETLController {
                     .withInputFiles(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+".xml"))
                     .withOutput(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+".rdf"),X3MLEngineFactory.OutputFormat.RDF_XML)
                     .execute();
+            this.repositoryManager.importData(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+"_dataset_only.rdf"),RDFFormat.RDFXML,this.directoryServiceNamedgraph);
+            this.repositoryManager.importData(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+"_dataset_only.rdf"),RDFFormat.RDFXML,this.directoryServiceNamedgraph);
             this.repositoryManager.importData(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getSpecimenDataPath())+".rdf"),RDFFormat.RDFXML,this.metadataRepositoryNamedgraph);
             this.repositoryManager.importData(new File(WORKSPACE_MICROCT_FOLDER+"/"+FilenameUtils.getBaseName(this.getScanningDataPath())+".rdf"),RDFFormat.RDFXML,this.metadataRepositoryNamedgraph);
             Timer.stop(ETLController.class.toString() + ".transform_microct");
