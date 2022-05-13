@@ -19,7 +19,9 @@ import eu.lifewatch.exception.URIValidationException;
 import eu.lifewatch.service.api.Service;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
@@ -122,6 +124,64 @@ public class DirectoryService implements Service {
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
                    +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String selectionQueryString="SELECT DISTINCT ?datasetURI "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. ";
+                if(datasetName!=null && !datasetName.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.hasPreferredIdentifier+"> ?datasetName. "
+                                          +"FILTER CONTAINS(LCASE(?datasetName),\""+datasetName.toLowerCase()+"\"). ";
+                }
+                if(ownerName!=null && !ownerName.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.hasCurrentOwner+"> ?ownerURI. "
+                                        +"?ownerURI <"+Resources.rdfsLabel+"> ?ownerName. "
+                                        +"FILTER CONTAINS(LCASE(?ownerName),\""+ownerName.toLowerCase()+"\"). ";
+                }
+                if(datasetType!=null && !datasetType.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.hasType+"> ?datasetType. "
+                                        +"FILTER CONTAINS(LCASE(?datasetType),\""+datasetType.toLowerCase()+"\"). ";
+                }
+                if(geographicCoverageStr!=null && !geographicCoverageStr.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
+                                        +"FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
+                }
+                if(taxonomicCoverageStr!=null && !taxonomicCoverageStr.isEmpty()){
+                    selectionQueryString+="OPTIONAL{ "
+                                            +"?datasetURI <"+Resources.HAS_TAXONOMIC_COVERAGE+"> ?taxonomicCoverageUri. "
+                                            +"?taxonomicCoverageUri <"+Resources.rdfsLabel+"> ?taxonomicCoverageValue. "
+                                            +"?taxonomicCoverageUri <"+Resources.hasNote+"> ?taxonomicCoverageName. "
+                                        +"} "
+                                        +"FILTER CONTAINS(LCASE(?taxonomicCoverageValue),\""+taxonomicCoverageStr.toLowerCase()+"\"). ";
+                }
+        selectionQueryString+="}";
+//        if(limit>0){
+//            selectionQueryString+=" LIMIT "+limit;
+//        }
+//        if(offset>=0){
+//            selectionQueryString+=" OFFSET "+offset;
+//        }
+        
+        logger.debug("Submitting the URIs selection query: \"" + selectionQueryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(selectionQueryString);
+        List<String> datasetURIs=new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+            datasetURIs.add(result.getValue("datasetURI").stringValue());
+        }
+        if(datasetURIs.isEmpty()){
+            logger.debug("No dataset URIs were found");
+            new ArrayList<>();
+        }else if(datasetURIs.size()<offset){
+            logger.debug("No more dataset URIs were found");
+            new ArrayList<>();
+        }else{
+            if(datasetURIs.size()>(offset+limit)){
+                logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+limit);
+                datasetURIs=datasetURIs.subList(offset, offset+limit);
+            }else{
+                logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+datasetURIs.size());
+                datasetURIs=datasetURIs.subList(offset, datasetURIs.size());
+            }
+        }
         String queryString="SELECT DISTINCT ?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                                            +"?ownerURI ?ownerName ?keeperURI ?keeperName "
                                            +"?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
@@ -215,33 +275,15 @@ public class DirectoryService implements Service {
                     +"?datasetURI <"+Resources.formsPartOf+"> ?parentDatasetURI. "
                     +"?parentDatasetURI <"+Resources.rdfsLabel+"> ?parentDatasetName. "
                 +"} ";
-        if(datasetName!=null && !datasetName.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?datasetName),\""+datasetName.toLowerCase()+"\"). ";
+        queryString+="FILTER( ";
+        for(String datasetUri : datasetURIs){
+            queryString+="?datasetURI=<"+datasetUri+"> || ";
         }
-        if(ownerName!=null && !ownerName.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?ownerName),\""+ownerName.toLowerCase()+"\"). ";
-        }
-        if(datasetType!=null && !datasetType.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?datasetType),\""+datasetType.toLowerCase()+"\"). ";
-        }
-        if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
-        }
-        if(geographicCoverageStr!=null && !geographicCoverageStr.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
-        }
-        if(taxonomicCoverageStr!=null && !taxonomicCoverageStr.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?taxonomicCoverageValue),\""+taxonomicCoverageStr.toLowerCase()+"\"). ";
-        }
-        queryString+="} ";
-        if(limit>0){
-            queryString+=" LIMIT "+limit;
-        }
-        if(offset>=0){
-            queryString+=" OFFSET "+offset;
-        }
+        queryString=queryString.substring(0,queryString.length()-3);
+        queryString+=")}";
+        
         logger.debug("Submitting the query: \"" + queryString + "\"");
-        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        sparqlresults = this.repoManager.query(queryString);
         logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, DirectoryStruct> structsMap = new HashMap<>();
         for (BindingSet result : sparqlresults) {
