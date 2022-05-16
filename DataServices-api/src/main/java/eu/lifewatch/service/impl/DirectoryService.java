@@ -154,12 +154,6 @@ public class DirectoryService implements Service {
                                         +"FILTER CONTAINS(LCASE(?taxonomicCoverageValue),\""+taxonomicCoverageStr.toLowerCase()+"\"). ";
                 }
         selectionQueryString+="}";
-//        if(limit>0){
-//            selectionQueryString+=" LIMIT "+limit;
-//        }
-//        if(offset>=0){
-//            selectionQueryString+=" OFFSET "+offset;
-//        }
         
         logger.debug("Submitting the URIs selection query: \"" + selectionQueryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(selectionQueryString);
