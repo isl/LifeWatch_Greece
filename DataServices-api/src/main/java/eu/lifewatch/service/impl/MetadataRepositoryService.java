@@ -1781,185 +1781,284 @@ public class MetadataRepositoryService implements Service {
     }
     
 
-     public String produceText(String species, String browseURL, String repositoryGraph) throws QueryExecutionException {
-         String fullInfo = "";
+    public String produceText(String scName, String browseURL, String repositoryGraph, String datasetsGraph) throws QueryExecutionException {
+        logger.debug("Request for producing text with scientific name "+scName+" in graphs "+repositoryGraph+" and "+datasetsGraph);
          
-            List<TaxonomyStruct> TaxonomyResults = searchTaxonomy(species,"","","",
-                   "","","","",0,0,repositoryGraph);
-           
-            String TaxonomyInfo = "";
+        String scNameQuery="SELECT ?resource_uri ?resource_type ?resource_label "
+                          +"FROM <"+repositoryGraph+"> "
+                          +"WHERE{ "
+                          +"?resource_uri <"+Resources.rdfTypeLabel+"> ?resource_type. "
+                          +"?resource_uri <"+Resources.rdfsLabel+"> ?resource_label. "
+                          +"FILTER(LCASE(?resource_label)=\""+scName.toLowerCase()+"\"). "
+                          +"FILTER(?resource_type=<"+Resources.speciesLabel+"> || "
+                                +"?resource_type=<"+Resources.genusLabel+"> || "
+                                +"?resource_type=<"+Resources.familyLabel+"> || "
+                                +"?resource_type=<"+Resources.orderLabel+"> || "
+                                +"?resource_type=<"+Resources.classLabel+"> || "
+                                +"?resource_type=<"+Resources.phylumLabel+"> || "
+                                +"?resource_type=<"+Resources.kingdomLabel+">)"
+                          +"}";
+        List<BindingSet> scNameResults=this.repoManager.query(scNameQuery);
+        if(!scNameResults.isEmpty()){
+            String textMessage="";
+            BindingSet result=scNameResults.get(0);
+            String nameURI=result.getValue("resource_uri").stringValue();
+            String nameValid=result.getValue("resource_label").stringValue();
+            String nameType=result.getValue("resource_type").stringValue();
             
-            if(!TaxonomyResults.isEmpty()) {
-            String speciesURI = TaxonomyResults.get(0).getSpeciesURI();
-            
-            String genus = TaxonomyResults.get(0).getGenusName();
-            String genusURI = TaxonomyResults.get(0).getGenusURI();
-            
-            String family = TaxonomyResults.get(0).getFamilyName();
-            String familyURI = TaxonomyResults.get(0).getFamilyURI();
-                    
-            String classN = TaxonomyResults.get(0).getClassName();
-            String classURI = TaxonomyResults.get(0).getClassURI();
-            
-            String phylum= TaxonomyResults.get(0).getPhylumName();
-            String phylumURI = TaxonomyResults.get(0).getPhylumURI();
-             
-            String kingdom = TaxonomyResults.get(0).getKingdomName();
-            String kingdomURI = TaxonomyResults.get(0).getKingdomURI();
-            
-            if(!genus.isEmpty())
-                TaxonomyInfo += "The <b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> species belongs to the <b><i><a href=\""+browseURL+genusURI+"\">"+genus+"</a></i></b> genus";
-            
-            if(!family.isEmpty())
-                TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+familyURI+"\">"+family+"</a></i></b> family";
-            
-            if(!classN.isEmpty())
-                TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+classURI+"\">"+classN+"</a></i></b> class";
-            
-            if(!phylum.isEmpty())
-                TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+phylumURI+"\">"+phylum+"</a></i></b> phylum";
-            
-            if(!kingdom.isEmpty())
-                TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+kingdomURI+"\">"+kingdom+"</a></i></b> kingdom";
-            
-            TaxonomyInfo += ".";
-            }
-
-            
-            List<ScientificNamingStruct> SNameResults = searchScientificNaming("","","","",species,0,0,repositoryGraph);
-          
-            String SNameInfo = "";
-            
-            if(!SNameResults.isEmpty()) {
-            String speciesURI = SNameResults.get(0).getSpeciesURI();
-            String actor = SNameResults.get(0).getActors().get(0).getValue();
-            String actorURI = SNameResults.get(0).getActors().get(0).getKey();
-            String date = SNameResults.get(0).getTimeSpan();
-
-     
-            if(!actor.isEmpty())
-                SNameInfo += "<b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> was discovered by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
-            
-            if(!date.isEmpty())
-                SNameInfo += " on "+date;
-
-            SNameInfo += ".";
+            textMessage="The scientific name <b><i>"+nameValid+"</i></b> is of type <b>"+eu.core.utils.Utils.getUserFriendlyClassName(nameType)+"</b>.<br>";
+            String previousUri=nameURI;
+            while(true){
+                String taxonomyQuery="SELECT ?resource_uri ?resource_type ?resource_label "
+                                    +"FROM <"+repositoryGraph+"> "
+                                    +"WHERE{ "
+                                    +"<"+previousUri+"> <"+Resources.belongsTo+"> ?resource_uri. "
+                                    +"?resource_uri <"+Resources.rdfTypeLabel+"> ?resource_type. "
+                                    +"?resource_uri <"+Resources.rdfsLabel+"> ?resource_label. "
+                                    +"}";
+                logger.debug("Retrieve taxonomy query: "+taxonomyQuery);
+                List<BindingSet> taxaResults=this.repoManager.query(taxonomyQuery);
+                if(taxaResults.isEmpty()){
+                   break; 
+                }else{
+                    result=taxaResults.get(0);
+                    String resourceURI=result.getValue("resource_uri").stringValue();
+                    String resourceName=result.getValue("resource_label").stringValue();
+                    String resourceType=result.getValue("resource_type").stringValue();
+                    textMessage+="It belongs to <b><i>"+resourceName+"</i></b>(type: <b>"+eu.core.utils.Utils.getUserFriendlyClassName(resourceType)+"</b>).<br>";
+                    previousUri=resourceURI;
+                }
             }
             
-
-            List<OccurrenceStruct> OccurrenceResults = searchOccurrence(species,"","","",0,0,repositoryGraph);
+            String relatedDatasetQuery="SELECT DISTINCT ?dataset_name "
+                                          +"FROM <"+repositoryGraph+"> "
+                                          +"FROM <"+datasetsGraph+"> "
+                                          +"WHERE{ "
+                                          +"?dataset_uri <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                                          +"?dataset_uri <"+Resources.hasPreferredIdentifier+"> ?dataset_name. "
+                                          +"?dataset_uri <"+Resources.refersTo+"> <"+nameURI+">. "
+                                          +"}";
+                logger.debug("Query to retrieve related datasets: "+relatedDatasetQuery);
+                List<BindingSet> datasetResults=this.repoManager.query(relatedDatasetQuery);
+                String relatedDatasets="The scientific name is not referred from any datasets.";
+                if(!datasetResults.isEmpty()){
+                    relatedDatasets="The scientific name is referred from the following datasets: <ul>";
+                    for(BindingSet dResult : datasetResults){
+                        relatedDatasets+="<li>"+dResult.getValue("dataset_name").stringValue()+"</li>";
+                    }
+                    relatedDatasets+="</ul><br>";
+                }
+        textMessage+=relatedDatasets;
+        return textMessage;
+            
+            
+        
+        }else{
+            return "No information were found for the scientific name <b>"+scName+"</b>.";
+        }
+            
+            
+            
          
-            String OccurrenceInfo = "";
-            
-            if(!OccurrenceResults.isEmpty()) {
-            String speciesOccURI = OccurrenceResults.get(0).getSpeciesURI();
-            
-            String occActor = OccurrenceResults.get(0).getActors().get(0).getValue();
-            String occActorURI = OccurrenceResults.get(0).getActors().get(0).getKey();
-            
-            String occDate = OccurrenceResults.get(0).getTimeSpan();
-            
-            String occLocality = OccurrenceResults.get(0).getLocalityName();
-            String occLocalityURI = OccurrenceResults.get(0).getLocalityURI();    
-                    
-            String occCountry = OccurrenceResults.get(0).getCountryName();
-            String occCountryURI = OccurrenceResults.get(0).getCountryURI();  
-
-            if(!occLocality.isEmpty())
-                OccurrenceInfo += "Individuals of the <b><i><a href=\""+browseURL+speciesOccURI+"\">"+species+"</a></i></b> species have been observed in <b><i><a href=\""+browseURL+occLocalityURI+"\">"+occLocality+"</a></i></b>";
-
-            if(!occCountry.isEmpty())
-                OccurrenceInfo += ", in <b><i><a href=\""+browseURL+occCountryURI+"\">"+occCountry+"</a></i></b>";
-
-            if(!occActor.isEmpty())
-                OccurrenceInfo += " by <b><i><a href=\""+browseURL+occActorURI+"\">"+occActor+"</a></i></b>";
-
-            if(!occDate.isEmpty())
-                OccurrenceInfo += " on "+occDate;
-
-            OccurrenceInfo += ".";
-            
-            }
-            
-            
-            List<IdentificationStruct> IdentificationResults = searchIdentification(species,"","","","", "",repositoryGraph);
-           
-            String IdentificationInfo = "";
-         
-            if(!IdentificationResults.isEmpty()) {
+//         List<TaxonomyStruct> TaxonomyResults = searchTaxonomy(scName,"","","",
+//                   "","","","",0,0,repositoryGraph);
+//           
+//            String TaxonomyInfo = "";
+//            String relatedDatasets="";
+//            
+//            if(!TaxonomyResults.isEmpty()) {
+//                String speciesURI = TaxonomyResults.get(0).getSpeciesURI();
+//
+//                String genus = TaxonomyResults.get(0).getGenusName();
+//                String genusURI = TaxonomyResults.get(0).getGenusURI();
+//
+//                String family = TaxonomyResults.get(0).getFamilyName();
+//                String familyURI = TaxonomyResults.get(0).getFamilyURI();
+//
+//                String classN = TaxonomyResults.get(0).getClassName();
+//                String classURI = TaxonomyResults.get(0).getClassURI();
+//
+//                String phylum= TaxonomyResults.get(0).getPhylumName();
+//                String phylumURI = TaxonomyResults.get(0).getPhylumURI();
+//
+//                String kingdom = TaxonomyResults.get(0).getKingdomName();
+//                String kingdomURI = TaxonomyResults.get(0).getKingdomURI();
+//
+//                if(!genus.isEmpty()){
+//                    if(browseURL==null || browseURL.isEmpty()){
+//                        TaxonomyInfo += "The <b><i>"+scName+"</i></b> species belongs to the <b><i>"+genus+"</i></b> genus";
+//                    }else{
+//                        TaxonomyInfo += "The <b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> species belongs to the <b><i><a href=\""+browseURL+genusURI+"\">"+genus+"</a></i></b> genus";
+//                    }
+//                }
+//                if(!family.isEmpty()){
+//                    if(browseURL==null || browseURL.isEmpty()){
+//                        TaxonomyInfo += ", to the <b><i>"+family+"</i></b> family";
+//                    }else{
+//                        TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+familyURI+"\">"+family+"</a></i></b> family";
+//                    }
+//                }
+//                if(!classN.isEmpty()){
+//                    if(browseURL==null || browseURL.isEmpty()){
+//                        TaxonomyInfo += ", to the <b><i>"+classN+"</i></b> class";
+//                    }else{
+//                        TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+classURI+"\">"+classN+"</a></i></b> class";
+//                    }
+//                }
+//                if(!phylum.isEmpty()){
+//                    if(browseURL==null || browseURL.isEmpty()){
+//                        TaxonomyInfo += ", to the <b><i>"+phylum+"</i></b> phylum";
+//                    }else{
+//                        TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+phylumURI+"\">"+phylum+"</a></i></b> phylum";
+//                    }
+//                }
+//                if(!kingdom.isEmpty()){
+//                    if(browseURL==null || browseURL.isEmpty()){
+//                        TaxonomyInfo += ", to the <b><i>"+kingdom+"</i></b> kingdom";
+//                    }else{
+//                        TaxonomyInfo += ", to the <b><i><a href=\""+browseURL+kingdomURI+"\">"+kingdom+"</a></i></b> kingdom";                
+//                    }
+//                }
+//                TaxonomyInfo += ".<br>";
                 
-            String speciesURI = IdentificationResults.get(0).getSpeciesURI();
+//                
+//            }
             
-            String individual = IdentificationResults.get(0).getIndividualLabel();
-            String individualURI = IdentificationResults.get(0).getIndividualURI();
-            
-            String actor = IdentificationResults.get(0).getActors().get(0).getValue();
-            String actorURI = IdentificationResults.get(0).getActors().get(0).getKey();
-            
-            String date = IdentificationResults.get(0).getTimeSpan();
-            
-            String locality = IdentificationResults.get(0).getLocalityName();
-            String localityURI = IdentificationResults.get(0).getLocalityURI();    
-                    
+//            List<ScientificNamingStruct> SNameResults = searchScientificNaming("","","","",species,0,0,repositoryGraph);
+//          
+//            String SNameInfo = "";
+//            
+//            if(!SNameResults.isEmpty()) {
+//            String speciesURI = SNameResults.get(0).getSpeciesURI();
+//            String actor = SNameResults.get(0).getActors().get(0).getValue();
+//            String actorURI = SNameResults.get(0).getActors().get(0).getKey();
+//            String date = SNameResults.get(0).getTimeSpan();
+//
+//     
+//            if(!actor.isEmpty())
+//                SNameInfo += "<b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> was discovered by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
+//            
+//            if(!date.isEmpty())
+//                SNameInfo += " on "+date;
+//
+//            SNameInfo += ".";
+//            }
+//            
+//
+//            List<OccurrenceStruct> OccurrenceResults = searchOccurrence(species,"","","",0,0,repositoryGraph);
+//         
+//            String OccurrenceInfo = "";
+//            
+//            if(!OccurrenceResults.isEmpty()) {
+//            String speciesOccURI = OccurrenceResults.get(0).getSpeciesURI();
+//            
+//            String occActor = OccurrenceResults.get(0).getActors().get(0).getValue();
+//            String occActorURI = OccurrenceResults.get(0).getActors().get(0).getKey();
+//            
+//            String occDate = OccurrenceResults.get(0).getTimeSpan();
+//            
+//            String occLocality = OccurrenceResults.get(0).getLocalityName();
+//            String occLocalityURI = OccurrenceResults.get(0).getLocalityURI();    
+//                    
+//            String occCountry = OccurrenceResults.get(0).getCountryName();
+//            String occCountryURI = OccurrenceResults.get(0).getCountryURI();  
+//
+//            if(!occLocality.isEmpty())
+//                OccurrenceInfo += "Individuals of the <b><i><a href=\""+browseURL+speciesOccURI+"\">"+species+"</a></i></b> species have been observed in <b><i><a href=\""+browseURL+occLocalityURI+"\">"+occLocality+"</a></i></b>";
+//
+//            if(!occCountry.isEmpty())
+//                OccurrenceInfo += ", in <b><i><a href=\""+browseURL+occCountryURI+"\">"+occCountry+"</a></i></b>";
+//
+//            if(!occActor.isEmpty())
+//                OccurrenceInfo += " by <b><i><a href=\""+browseURL+occActorURI+"\">"+occActor+"</a></i></b>";
+//
+//            if(!occDate.isEmpty())
+//                OccurrenceInfo += " on "+occDate;
+//
+//            OccurrenceInfo += ".";
+//            
+//            }
+//            
+//            
+//            List<IdentificationStruct> IdentificationResults = searchIdentification(species,"","","","", "",repositoryGraph);
+//           
+//            String IdentificationInfo = "";
+//         
+//            if(!IdentificationResults.isEmpty()) {
+//                
+//            String speciesURI = IdentificationResults.get(0).getSpeciesURI();
+//            
+//            String individual = IdentificationResults.get(0).getIndividualLabel();
+//            String individualURI = IdentificationResults.get(0).getIndividualURI();
+//            
+//            String actor = IdentificationResults.get(0).getActors().get(0).getValue();
+//            String actorURI = IdentificationResults.get(0).getActors().get(0).getKey();
+//            
+//            String date = IdentificationResults.get(0).getTimeSpan();
+//            
+//            String locality = IdentificationResults.get(0).getLocalityName();
+//            String localityURI = IdentificationResults.get(0).getLocalityURI();    
+//                    
+//
+//            if(!individual.isEmpty())
+//                IdentificationInfo  += "Individuals of the <b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> species, such as <b><i><a href=\""+browseURL+individualURI+"\">"+individual+"</a></i></b>, have been identified";
+//
+//            if(!locality.isEmpty())
+//                IdentificationInfo += " in <b><i><a href=\""+browseURL+localityURI+"\">"+locality+"</a></i></b>";
+//
+//            if(!actor.isEmpty())
+//                IdentificationInfo += " by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
+//
+//            if(!date.isEmpty())
+//                IdentificationInfo += " on "+date;
+//
+//            IdentificationInfo += ".";
+//            
+//            }
+//            
+//            
+//            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "","",0,0,repositoryGraph);
+//           
+//            String MicroCTInfo = "";
+//         
+//            if(!MicroCTResults.isEmpty()) {
+//            
+//            String specimen = MicroCTResults.get(0).getSpecimenName();
+//            String specimenURI = MicroCTResults.get(0).getSpecimenURI();
+//            
+//            String actor = MicroCTResults.get(0).getActorName();
+//            String actorURI = MicroCTResults.get(0).getActorURI();
+//            
+//            String date = MicroCTResults.get(0).getTimespan();
+//            
+//            String device = MicroCTResults.get(0).getDeviceName();
+//            String deviceURI = MicroCTResults.get(0).getDeviceURI(); 
+//                
+//            String product = MicroCTResults.get(0).getProducts().get(0).getValue();
+//            String productURI = MicroCTResults.get(0).getProducts().get(0).getKey();
+//
+//            
+//            if(!specimen.isEmpty())
+//                MicroCTInfo  += "Specimens of the <b><i>"+species+"</i></b> species, such as <b><i><a href=\""+browseURL+specimenURI+"\">"+specimen+"</a></i></b>, have been scanned";
+//
+//            if(!actor.isEmpty())
+//                MicroCTInfo += " by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
+//
+//            if(!date.isEmpty())
+//                MicroCTInfo += " on "+date;
+//
+//            if(!device.isEmpty())
+//                MicroCTInfo += ", using a <b><i><a href=\""+browseURL+deviceURI+"\">"+device+"</a></i></b> scanner";
+//
+//            if(!device.isEmpty())
+//                MicroCTInfo += " and resulting in <b><i><a href=\""+browseURL+productURI+"\">"+product+"</a></i></b>";
+//
+//            MicroCTInfo += ".";
+//
+//            }  
 
-            if(!individual.isEmpty())
-                IdentificationInfo  += "Individuals of the <b><i><a href=\""+browseURL+speciesURI+"\">"+species+"</a></i></b> species, such as <b><i><a href=\""+browseURL+individualURI+"\">"+individual+"</a></i></b>, have been identified";
-
-            if(!locality.isEmpty())
-                IdentificationInfo += " in <b><i><a href=\""+browseURL+localityURI+"\">"+locality+"</a></i></b>";
-
-            if(!actor.isEmpty())
-                IdentificationInfo += " by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
-
-            if(!date.isEmpty())
-                IdentificationInfo += " on "+date;
-
-            IdentificationInfo += ".";
-            
-            }
-            
-            
-            List <MicroCTScanningStruct> MicroCTResults = searchMicroCTScanning("","",species,"", "","",0,0,repositoryGraph);
-           
-            String MicroCTInfo = "";
-         
-            if(!MicroCTResults.isEmpty()) {
-            
-            String specimen = MicroCTResults.get(0).getSpecimenName();
-            String specimenURI = MicroCTResults.get(0).getSpecimenURI();
-            
-            String actor = MicroCTResults.get(0).getActorName();
-            String actorURI = MicroCTResults.get(0).getActorURI();
-            
-            String date = MicroCTResults.get(0).getTimespan();
-            
-            String device = MicroCTResults.get(0).getDeviceName();
-            String deviceURI = MicroCTResults.get(0).getDeviceURI(); 
-                
-            String product = MicroCTResults.get(0).getProducts().get(0).getValue();
-            String productURI = MicroCTResults.get(0).getProducts().get(0).getKey();
-
-            
-            if(!specimen.isEmpty())
-                MicroCTInfo  += "Specimens of the <b><i>"+species+"</i></b> species, such as <b><i><a href=\""+browseURL+specimenURI+"\">"+specimen+"</a></i></b>, have been scanned";
-
-            if(!actor.isEmpty())
-                MicroCTInfo += " by <b><i><a href=\""+browseURL+actorURI+"\">"+actor+"</a></i></b>";
-
-            if(!date.isEmpty())
-                MicroCTInfo += " on "+date;
-
-            if(!device.isEmpty())
-                MicroCTInfo += ", using a <b><i><a href=\""+browseURL+deviceURI+"\">"+device+"</a></i></b> scanner";
-
-            if(!device.isEmpty())
-                MicroCTInfo += " and resulting in <b><i><a href=\""+browseURL+productURI+"\">"+product+"</a></i></b>";
-
-            MicroCTInfo += ".";
-
-            }  
-
-            return fullInfo = TaxonomyInfo+" "+SNameInfo+" "+OccurrenceInfo+" "+IdentificationInfo+" "+MicroCTInfo;
+//            return fullInfo = TaxonomyInfo+" "+SNameInfo+" "+OccurrenceInfo+" "+IdentificationInfo+" "+MicroCTInfo;
+//            return fullInfo = TaxonomyInfo+" "+relatedDatasets ;
  
     }  
       
