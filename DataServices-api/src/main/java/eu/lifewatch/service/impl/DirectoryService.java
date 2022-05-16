@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -111,6 +113,28 @@ public class DirectoryService implements Service {
             this.repoManager.importData(filesInNtriples, RDFFormat.NTRIPLES, directoryGraph);
         }
     }
+    
+    public Set<String> retrieveDatasetTypes(String repositoryGraph) throws QueryExecutionException {
+        Set<String> retList=new TreeSet<>();
+        logger.info("Request to retrieve the existing dataset types "
+                   +"reposytoryGraph: ["+repositoryGraph+"] ");
+        String queryString="SELECT DISTINCT ?dataset_type "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.hasType+"> ?dataset_type. "
+                +"} "
+                +"ORDER BY ASC(?dataset_type)";
+        logger.debug("Submitting the query: "+queryString);
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        for(BindingSet result : sparqlresults){
+            retList.add(StringUtils.capitalize(result.getValue("dataset_type").stringValue()));
+        }
+        logger.debug("Found "+retList.size()+" distinct dataset types");
+        return retList;
+    }
+                
+                
 
     public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
