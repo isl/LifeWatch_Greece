@@ -142,8 +142,33 @@ public class DirectoryService implements Service {
                                         +"FILTER CONTAINS(LCASE(?datasetType),\""+datasetType.toLowerCase()+"\"). ";
                 }
                 if(geographicCoverageStr!=null && !geographicCoverageStr.isEmpty()){
-                    selectionQueryString+="?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
-                                        +"FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
+                    List<String> conjuctiveParts=new ArrayList<>();
+                    List<String> disjunctiveParts=new ArrayList<>();
+                    if(geographicCoverageStr.contains("AND")){
+                        for(String geoString : geographicCoverageStr.split("AND")){
+                            conjuctiveParts.add(geoString.trim());
+                        }
+                    }else if(geographicCoverageStr.contains(",")){
+                        for(String geoString : geographicCoverageStr.split(",")){
+                            disjunctiveParts.add(geoString.trim());
+                        }
+                    }
+                    selectionQueryString+="?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. ";
+                    if(!conjuctiveParts.isEmpty()){
+                        selectionQueryString+="FILTER( ";
+                        for(String conjPartString : conjuctiveParts){
+                            selectionQueryString+="CONTAINS(LCASE(?geographicCoverage), \""+conjPartString+"\") && ";
+                        }
+                    selectionQueryString=selectionQueryString.substring(0,selectionQueryString.length()-3)+"). ";
+                    }else if(!disjunctiveParts.isEmpty()){
+                        selectionQueryString+="FILTER( ";
+                        for(String disjPartString : disjunctiveParts){
+                            selectionQueryString+="CONTAINS(LCASE(?geographicCoverage), \""+disjPartString+"\") || ";
+                        }
+                    selectionQueryString=selectionQueryString.substring(0,selectionQueryString.length()-3)+"). ";
+                    }else{
+                        selectionQueryString+="FILTER CONTAINS(LCASE(?geographicCoverage),\""+geographicCoverageStr.toLowerCase()+"\"). ";
+                    }
                 }
                 if(taxonomicCoverageStr!=null && !taxonomicCoverageStr.isEmpty()){
                     selectionQueryString+="OPTIONAL{ "
@@ -163,17 +188,19 @@ public class DirectoryService implements Service {
         }
         if(datasetURIs.isEmpty()){
             logger.debug("No dataset URIs were found");
-            new ArrayList<>();
+            return new ArrayList<>();
         }else if(datasetURIs.size()<offset){
             logger.debug("No more dataset URIs were found");
-            new ArrayList<>();
+            return new ArrayList<>();
         }else{
-            if(datasetURIs.size()>(offset+limit)){
-                logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+limit);
-                datasetURIs=datasetURIs.subList(offset, offset+limit);
-            }else{
-                logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+datasetURIs.size());
-                datasetURIs=datasetURIs.subList(offset, datasetURIs.size());
+            if(offset>=0 && limit>0){
+                if(datasetURIs.size()>(offset+limit)){
+                    logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+limit);
+                    datasetURIs=datasetURIs.subList(offset, offset+limit);
+                }else{
+                    logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+datasetURIs.size());
+                    datasetURIs=datasetURIs.subList(offset, datasetURIs.size());
+                }
             }
         }
         String queryString="SELECT DISTINCT ?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
