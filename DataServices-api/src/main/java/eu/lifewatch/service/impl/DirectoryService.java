@@ -197,7 +197,9 @@ public class DirectoryService implements Service {
                 +"?datasetURI <"+Resources.hasCurator+"> ?curatorURI. "
                 +"?curatorURI <"+Resources.rdfsLabel+"> ?curatorName. "
                 +"?curatorURI <"+Resources.hasContactPoint+"> ?contactPoint. "
-                +"?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
+                +"} "
                 +"OPTIONAL{ "
                     +"?datasetURI <"+Resources.HAS_TEMPORAL_COVERAGE+"> ?temp_coverage_uri. "
                     +"?temp_coverage_uri <"+Resources.beginOfTheBegin+"> ?temporalCoverageBegin. "
@@ -289,8 +291,10 @@ public class DirectoryService implements Service {
                         .withOwnerName(result.getValue("ownerName").stringValue())
                         .withCuratorURI(result.getValue("curatorURI").stringValue())
                         .withCuratorName(result.getValue("curatorName").stringValue())
-                        .withContactPoint(result.getValue("contactPoint").stringValue())
-                        .withGeographicCoverage(result.getValue("geographicCoverage").stringValue());
+                        .withContactPoint(result.getValue("contactPoint").stringValue());
+                if(result.getValue("geographicCoverage") != null){
+                    struct.withGeographicCoverage(result.getValue("geographicCoverage").stringValue());
+                }
                 if (result.getValue("datasetID") != null) {
                     struct.withDatasetID(result.getValue("datasetID").stringValue());
                 }
