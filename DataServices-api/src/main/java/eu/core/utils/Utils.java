@@ -24,6 +24,8 @@ public class Utils {
                 return "Phylum";
             case Resources.kingdomLabel:
                 return "Kingdom";
+            case Resources.bioticElementTypeLabel:
+                return "Taxonomic Group";
             default:
                 return "N/A";
         }

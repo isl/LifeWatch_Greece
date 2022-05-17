@@ -1838,17 +1838,39 @@ public class MetadataRepositoryService implements Service {
                                           +"?dataset_uri <"+Resources.hasPreferredIdentifier+"> ?dataset_name. "
                                           +"?dataset_uri <"+Resources.refersTo+"> <"+nameURI+">. "
                                           +"}";
-                logger.debug("Query to retrieve related datasets: "+relatedDatasetQuery);
-                List<BindingSet> datasetResults=this.repoManager.query(relatedDatasetQuery);
-                String relatedDatasets="The scientific name is not referred from any datasets.";
-                if(!datasetResults.isEmpty()){
-                    relatedDatasets="The scientific name is referred from the following datasets: <ul>";
-                    for(BindingSet dResult : datasetResults){
-                        relatedDatasets+="<li>"+dResult.getValue("dataset_name").stringValue()+"</li>";
-                    }
-                    relatedDatasets+="</ul><br>";
+            logger.debug("Query to retrieve related datasets: "+relatedDatasetQuery);
+            List<BindingSet> datasetResults=this.repoManager.query(relatedDatasetQuery);
+            String relatedDatasets="The scientific name is not referred from any datasets.";
+            if(!datasetResults.isEmpty()){
+                relatedDatasets="The scientific name is referred from the following datasets: <ul>";
+                for(BindingSet dResult : datasetResults){
+                    relatedDatasets+="<li>"+dResult.getValue("dataset_name").stringValue()+"</li>";
                 }
-        textMessage+=relatedDatasets;
+                relatedDatasets+="</ul><br>";
+            }
+            String relatedMicroctScannQuery="SELECT DISTINCT ?microct_scan_label "
+                                          +"FROM <"+repositoryGraph+"> "
+                                          +"WHERE{ "
+                                          +"?microct_scan_uri <"+Resources.rdfTypeLabel+"> <"+Resources.digitizationProcessLabel+">. "
+                                          +"?microct_scan_uri <"+Resources.rdfsLabel+"> ?microct_scan_label. "
+                                          +"?microct_scan_uri <"+Resources.digitized+"> ?specimen_uri. "
+                                          +"?specimen_uri <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+">. "
+                                          +"?specimen_uri <"+Resources.belongsTo+"> ?species_uri. "
+                                          +"?species_uri <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+">. "
+                                          +"FILTER(?species_uri=<"+nameURI+">) "
+                                          +"}";
+            logger.debug("Query to retrieve related microCT Scans: "+relatedMicroctScannQuery);
+            List<BindingSet> microctResults=this.repoManager.query(relatedMicroctScannQuery);
+            String relatedMicroCtScans="The scientific names does not appear in any MicroCT Scan.";
+            if(!microctResults.isEmpty()){
+                relatedMicroCtScans="The scientific names appear in the following MicroCT Scans: <ul>";
+                for(BindingSet mctResult : microctResults){
+                    relatedMicroCtScans+="<li>"+mctResult.getValue("microct_scan_label").stringValue()+"</li>";
+                }
+                relatedMicroCtScans+="</ul><br>";
+            }
+                
+        textMessage+=relatedDatasets+relatedMicroCtScans;
         return textMessage;
             
             
