@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Data
 @Log4j
@@ -124,10 +125,10 @@ public class ETLController {
 
             log.info("Step 2/3: Harvest, Transform and ingest data from IPT Medobis");
             Timer.start(ETLController.class.toString() + ".harvest_ipt_medobis");
-            Collection<File> archiveFiles = new DwCAHarvester(this.iptMedobisRootFolderPath).locateDwCaArchives();
+            Collection<Pair<File,String>> archiveFiles = new DwCAHarvester(this.iptMedobisRootFolderPath).locateDwCaArchives();
             log.debug("Found " + archiveFiles.size() + " DwCA archives from IPT Medobis root folder");
-            for (File archive : archiveFiles) {
-                new DwCArchiveParser(archive, true, true,this.directoryServiceNamedgraph,this.metadataRepositoryNamedgraph).parseData();
+            for (Pair<File,String> archive : archiveFiles) {
+                new DwCArchiveParser(archive.getLeft(), archive.getRight(), true, true,this.directoryServiceNamedgraph,this.metadataRepositoryNamedgraph).parseData();
             }
             Timer.stop(ETLController.class.toString() + ".harvest_ipt_medobis");
 
