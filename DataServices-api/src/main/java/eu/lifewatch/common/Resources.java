@@ -221,6 +221,7 @@ public class Resources {
     public static final String ASSOCIATED_PARTY="associatedParty";
     public static final String BEGIN_DATE="beginDate";
     public static final String CONTACT="contact";
+    public static final String CORE_TYPE="coreType";
     public static final String CREATOR="creator";
     public static final String END_DATE="endDate";
     public static final String EML_VERSION="emlVersion";
@@ -232,9 +233,13 @@ public class Resources {
     public static final String KEYWORD_SET="keywordSet";
     public static final String KEYWORD_THESAURUS="keywordThesaurus";
     public static final String METADATA_PROVIDER="metadataProvider";
+    public static final String OCCURRENCE_UPPERCASE="OCCURRENCE";
+    public static final String OCCURRENCE_CAMELCASE="Occurrence";
     public static final String ORGANIZATION_NAME="organizationName";
     public static final String PUB_DATE="pubDate";
     public static final String RESOURCE_LOGO_URL="resourceLogoUrl";
+    public static final String SAMPLINGEVENT="SAMPLINGEVENT";
+    public static final String SAMPLING_EVENT="Sampling Event";
     public static final String TAXON_RANK_NAME="taxonRankName";
     public static final String TAXON_RANK_VALUE="taxonRankValue";
     public static final String TAXONOMIC_CLASSIFICATION="taxonomicClassification";

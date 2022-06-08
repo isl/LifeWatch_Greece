@@ -50,6 +50,7 @@ public class DwCArchiveParser {
     private Archive dwcArchive;
     private String datasetURI;
     private String datasetTitle;
+    private String datasetType;
     private String archiveFolderName;
        
     private static String GRAPHSPACE_DIRECTORY;
@@ -57,7 +58,7 @@ public class DwCArchiveParser {
     private static final String HCMR_LABEL="Hellenic Center for Marine Research";
 
 
-    public DwCArchiveParser(File archive, boolean importInTriplestore, boolean storeLocally,String directoryNamedgraph,String metadataNamedgraph) throws IOException{
+    public DwCArchiveParser(File archive, String datasetType, boolean importInTriplestore, boolean storeLocally,String directoryNamedgraph,String metadataNamedgraph) throws IOException{
         log.info("Parsing archive found in path "+archive.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         this.dsManager=context.getBean(DirectoryService.class);
@@ -68,6 +69,7 @@ public class DwCArchiveParser {
         this.dwcArchive = DwcFiles.fromCompressed(myArchiveFile, extractToFolder);
         this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
         this.dwcArchive.getCore().setEncoding("UTF-8");
+        this.datasetType=datasetType;
         this.importDatasets=importInTriplestore;
         this.storeLocally=storeLocally;
         this.archiveFolderName=archive.getParentFile().getName();
@@ -187,6 +189,7 @@ public class DwCArchiveParser {
                 directoryStruct.setDatasetURI(this.datasetURI);
             }
         }
+        directoryStruct.setDatasetType(this.datasetType);
         Elements titleElements=metadataDoc.getElementsByTag(Resources.TITLE);
         if(titleElements!=null){
             this.datasetTitle=titleElements.get(0).text();
@@ -245,14 +248,14 @@ public class DwCArchiveParser {
             directoryStruct.setRightsHolderURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"rights_holder",HCMR_LABEL));
             directoryStruct.setRightsHolderName(HCMR_LABEL);
         }
-        Elements keywordSets=metadataDoc.getElementsByTag(Resources.KEYWORD_SET);
-        if(keywordSets!=null){
-            for(Element keywordSet : keywordSets){
-                if(keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS)!=null && keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS).text().contains(Resources.GBIF_THESAURUS_KEYWORD)){
-                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text()+" Dataset");
-                }
-            }
-        }
+//        Elements keywordSets=metadataDoc.getElementsByTag(Resources.KEYWORD_SET);
+//        if(keywordSets!=null){
+//            for(Element keywordSet : keywordSets){
+//                if(keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS)!=null && keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS).text().contains(Resources.GBIF_THESAURUS_KEYWORD)){
+//                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text()+" Dataset");
+//                }
+//            }
+//        }
         Elements logoElements=metadataDoc.getElementsByTag(Resources.RESOURCE_LOGO_URL);
         if(logoElements!=null){
             directoryStruct.withImageURI(logoElements.text());
@@ -714,7 +717,7 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"),
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"), "Sampling Event",
                 false,
                 true,
                 "http://www.ics.forth.gr/isl/lifewatch/directory",
