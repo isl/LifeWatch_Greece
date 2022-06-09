@@ -66,8 +66,8 @@ public class DirectoryStruct {
     private String contactPoint;
     private String description;
     private String geographicCoverage;
-    private List<Pair> temporalCoverage;
-    private List<Pair> taxonomicCoverage;
+    private Set<Pair> temporalCoverage;
+    private Set<Pair> taxonomicCoverage;
 
     private static final Logger logger = Logger.getLogger(DirectoryStruct.class);
 
@@ -115,8 +115,8 @@ public class DirectoryStruct {
         imageURI = "";
         imageTitle = "";
         this.geographicCoverage="";
-        this.temporalCoverage=new ArrayList<>();
-        this.taxonomicCoverage=new ArrayList<>();
+        this.temporalCoverage=new HashSet<>();
+        this.taxonomicCoverage=new HashSet<>();
     }
 
     public String getDatasetName() {
@@ -305,7 +305,7 @@ public class DirectoryStruct {
     public List<String> getTaxonomicCoverage(){
         List<String> retList=new ArrayList<>();
         for(Pair pair : this.taxonomicCoverage)
-            retList.add((pair.getKey()!=null?pair.getKey():"")+" : "+(pair.getValue()!=null?pair.getValue():""));
+            retList.add((pair.getValue()!=null?pair.getValue():"")+" ("+(pair.getKey()!=null?pair.getKey():"N/A")+")");
         return retList;
     }
     
