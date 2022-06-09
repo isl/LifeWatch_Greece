@@ -20,11 +20,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_v8";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         MetadataRepositoryService mrManager=context.getBean(MetadataRepositoryService.class);
+        
+        String text=mrManager.produceText("Manzonia crassa", null, GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
+        System.out.println(text);
         
 //        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "", "Balanidae", "", "", "", "", "", GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
@@ -66,11 +70,11 @@ public class MetadataCatalogExample {
 //        for(OccurrenceStruct struct : results){
 //            System.out.println(struct);
 //        }                
-        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
-        System.out.println("Results: "+results.size());
-        for(MeasurementStruct struct : results){
-            System.out.println(struct);
-        }                
+//        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(MeasurementStruct struct : results){
+//            System.out.println(struct);
+//        }                
     }
     
 
