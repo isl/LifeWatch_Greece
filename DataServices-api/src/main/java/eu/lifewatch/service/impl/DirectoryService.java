@@ -136,11 +136,11 @@ public class DirectoryService implements Service {
                 
                 
 
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String datasetURI, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String creator, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
                    +"datasetName: ["+datasetName+"], "
                    +"ownerName: ["+ownerName+"], "
-                   +"datasetUri: ["+datasetURI+"], "
+                   +"creator: ["+creator+"], "
                    +"datasetType: ["+datasetType+"], "
                    +"geographicCoverage: ["+geographicCoverageStr+"], "
                    +"temporalCoverage: ["+tempCoverageStr+"], "
@@ -160,6 +160,13 @@ public class DirectoryService implements Service {
                     selectionQueryString+="?datasetURI <"+Resources.hasCurrentOwner+"> ?ownerURI. "
                                         +"?ownerURI <"+Resources.rdfsLabel+"> ?ownerName. "
                                         +"FILTER CONTAINS(LCASE(?ownerName),\""+ownerName.toLowerCase()+"\"). ";
+                }
+                if(creator!=null && !creator.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.wasCreatedBy+"> ?creationEventURI. "
+                                        +"?creationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.creationEventLabel+">. "
+                                        +"?creationEventURI <"+Resources.carriedOutBy+"> ?creatorURI. "
+                                        +"?creatorURI <"+Resources.rdfsLabel+"> ?creatorName. "
+                                        +"FILTER CONTAINS(LCASE(?creatorName),\""+creator.toLowerCase()+"\"). ";
                 }
                 if(datasetType!=null && !datasetType.isEmpty()){
                     selectionQueryString+="?datasetURI <"+Resources.hasType+"> ?datasetType. "
