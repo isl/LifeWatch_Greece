@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
@@ -60,6 +61,7 @@ public class MicroCTScanningStruct {
     private String preparationTimestampStart;
     private String preparationTimestampEnd;
     private String scopeOfScan;
+    private Set<MicroCTSpecimenStruct> specimens;
     
     private static final Logger logger=Logger.getLogger(MicroCTScanningStruct.class);
     
@@ -106,6 +108,7 @@ public class MicroCTScanningStruct {
         preparationTimestampStart="";
         preparationTimestampEnd="";
         scopeOfScan="";
+        specimens=new HashSet<>();
     }
     
     public String getSpecimenURI() {
@@ -224,6 +227,10 @@ public class MicroCTScanningStruct {
         return this.scopeOfScan;
     }
      
+    public Set<MicroCTSpecimenStruct> getSpecimens() {
+        return this.specimens;
+    }
+     
      public void setSpecimenURI(String specimenURI) {
         this.specimenURI = specimenURI;
     }
@@ -322,6 +329,11 @@ public class MicroCTScanningStruct {
 
     public void setScopeOfScan(String scope) {
         this.scopeOfScan = scope;
+    }
+       
+    public MicroCTScanningStruct withSpecimen(MicroCTSpecimenStruct specimenStruct) {
+        this.specimens.add(specimenStruct);
+        return this;
     }
        
     public MicroCTScanningStruct withSpecimenURI(String specimenURI) {
@@ -646,10 +658,10 @@ public class MicroCTScanningStruct {
 
         return "ScanningURI: "+this.scanningURI+"\t"
               +"ScanningLabel: "+this.scanningLabel+"\t"
-              +"DatasetURI: "+this.datasetURI+"\t"
-              +"DatasetTitle: "+this.datasetName+"\t"
-              +"SpecimenURI: "+this.specimenURI+"\t"
-              +"SpecimenName: "+this.specimenName+"\t"
+//              +"DatasetURI: "+this.datasetURI+"\t"
+//              +"DatasetTitle: "+this.datasetName+"\t"
+//              +"SpecimenURI: "+this.specimenURI+"\t"
+//              +"SpecimenName: "+this.specimenName+"\t"
               +"ContrastEnhancementMethod: "+this.contrastMethod+"\t"
               +"Protocol: "+this.protocol+"\t"
               +"BeginOfPreparationTimestamp: "+this.preparationTimestampStart+"\t"
@@ -659,13 +671,13 @@ public class MicroCTScanningStruct {
               +"SampleHolder: "+this.sampleHolder+"\t"
               +"ScanningMedium: "+this.scanningMedium+"\t"
               +"ScannedPart: "+this.scannedPart+"\t"
-              +"ActorURI: "+this.actorURI+"\t"
+//              +"ActorURI: "+this.actorURI+"\t"
               +"ActorName: "+this.actorName+"\t"
               +"ScanDate: "+this.scanDate+"\t"
               +"ScanDuration: "+this.scanningDuration+"\t"
-              +"DeviceURI: "+this.deviceURI+"\t"
+//              +"DeviceURI: "+this.deviceURI+"\t"
               +"DeviceName: "+this.deviceName+"\t"
-              +"DeviceType: "+this.deviceType+"\t"
+//              +"DeviceType: "+this.deviceType+"\t"
               +"Voltage_kV: "+this.voltage+"\t"
               +"Current_uA: "+this.current+"\t"
               +"Filter: "+this.filter+"\t"
@@ -677,8 +689,10 @@ public class MicroCTScanningStruct {
               +"ExposureTime_ms: "+this.exposureTime+"\t"
               +"OversizeSettings: "+this.oversizeSettings+"\t"
               +"FileLocation: "+this.fileLocation+"\t"
-              +"Products: "+this.products+"\t"
-              +"ProductStatus: "+this.productStatus;
+              +"Specimens: "+this.specimens
+//              +"Products: "+this.products+"\t"
+//              +"ProductStatus: "+this.productStatus
+                ;
     }
     
     @Override

@@ -21,14 +21,14 @@ public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_2";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         MetadataRepositoryService mrManager=context.getBean(MetadataRepositoryService.class);
         
-        String text=mrManager.produceText("Manzonia crassa", null, GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
-        System.out.println(text);
+//        String text=mrManager.produceText("Manzonia crassa", null, GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
+//        System.out.println(text);
         
 //        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "", "Balanidae", "", "", "", "", "", GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
@@ -42,11 +42,12 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }       
 //
-//        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "25.1.3.1667", "", "", "", "", GRAPHSPACE_METADATA);
-//        System.out.println("Results: "+results.size());
-//        for(MicroCTScanningStruct struct : results){
-//            System.out.println(struct);
-//        }        
+        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Syllis alternata", "", "", -1, -1, GRAPHSPACE_METADATA);
+//        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Agelas", "", "", -1, -1, GRAPHSPACE_METADATA);
+        System.out.println("Results: "+results.size());
+        for(MicroCTScanningStruct struct : results){
+            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimens());
+        }        
 
 //        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());

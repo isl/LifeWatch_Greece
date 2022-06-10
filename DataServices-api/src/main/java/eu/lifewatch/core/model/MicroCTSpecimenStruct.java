@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 public class MicroCTSpecimenStruct {
 
     private String specimenName;
+    private String specimenID;
     private String specimenURI;
     private String description;
     private String collectionURI;
@@ -49,6 +50,7 @@ public class MicroCTSpecimenStruct {
         providerName="";
         providerURI="";
         specimenName="";
+        specimenID="";
         specimenURI="";
         datasetName="";
         datasetURI="";
@@ -263,6 +265,11 @@ public class MicroCTSpecimenStruct {
     
     public void setStoragePlace(String storagePlace) {
         this.storagePlace = storagePlace;
+    }
+    
+    public MicroCTSpecimenStruct withSpecimenID(String specimenId) {
+        this.specimenID = specimenId;
+        return this;
     }
     
     public MicroCTSpecimenStruct withSpeciesURI(String speciesURI) {
@@ -507,29 +514,33 @@ public class MicroCTSpecimenStruct {
     @Override
     public String toString(){
 
-        return "CollectionURI: "+collectionURI+"\t"
-              +"CollectionName: "+collectionName+"\t"
-              +"ProviderURI: "+providerURI+"\t"
+        return "SpecimenURI: "+specimenURI+"\t"
+               +"SpecimenID: "+specimenID+"\t"
+               +"SpecimenName: "+specimenName+"\t"
+              
+//                "CollectionURI: "+collectionURI+"\t"
+//              +"CollectionName: "+collectionName+"\t"
+//              +"ProviderURI: "+providerURI+"\t"
               +"ProviderName: "+providerName+"\t"
-              +"SpecimenName: "+specimenName+"\t"
-              +"SpecimenURI: "+specimenURI+"\t"
-              +"DatasetURI: "+datasetURI+"\t"
-              +"DatasetName: "+datasetName+"\t"
+
+//              +"DatasetURI: "+datasetURI+"\t"
+//              +"DatasetName: "+datasetName+"\t"
               +"Material: "+material+"\t"
-              +"SpeciesURI: "+speciesURI+"\t"
+//              +"SpeciesURI: "+speciesURI+"\t"
               +"SpeciesName: "+speciesName+"\t"
               +"Description: "+description+"\t"
-              +"DimensionURI: "+dimensionURI+"\t"
-              +"DimensionTypeURI: "+dimensionTypeURI+"\t"
-              +"DimensionName: "+dimensionName+"\t"
+//              +"DimensionURI: "+dimensionURI+"\t"
+//              +"DimensionTypeURI: "+dimensionTypeURI+"\t"
+//              +"DimensionName: "+dimensionName+"\t"
               +"DimensionValue: "+dimensionValue+"\t"
-              +"DimensionUnit: "+dimensionUnit+"\t"
-              +"InstitutionURI: "+institutionURI+"\t"
+//              +"DimensionUnit: "+dimensionUnit+"\t"
+//              +"InstitutionURI: "+institutionURI+"\t"
               +"InstitutionName: "+institutionName+"\t"
               +"FixationType: "+fixationType+"\t"
               +"PreservationType: "+preservationType+"\t"
               +"StoragePlace: "+storagePlace+"\t"
-              +"TaxonomicGroup: "+taxonomicGroup;
+              +"TaxonomicGroup: "+taxonomicGroup
+                ;
     }
     
     @Override
