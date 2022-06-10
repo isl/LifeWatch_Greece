@@ -67,6 +67,19 @@
 							<arg name="hierarchy" type="constant">specimen</arg>
                             <arg name="term">SpecimenID/text()</arg>
 						</instance_generator>
+                        <additional>
+                            <relationship>crm:P1_is_identified_by</relationship>
+                            <entity>
+                                <type>crm:E42_Identifier</type>
+                                <instance_generator name="LocalTermURI">
+                                    <arg name="hierarchy" type="constant">identifier</arg>
+                                    <arg name="term">SpecimenID/text()</arg>
+                                </instance_generator>
+                                <label_generator name="Literal">
+                                    <arg name="text" type="xpath">SpecimenID/text()</arg>
+                                </label_generator>
+                            </entity>
+                        </additional>
                     </entity>
                 </target_node>
             </domain>
