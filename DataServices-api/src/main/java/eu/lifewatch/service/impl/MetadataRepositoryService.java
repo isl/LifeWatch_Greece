@@ -3638,10 +3638,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                                 +"?specimen_uri <"+Resources.hasDimension+"> ?size_uri. "
                                 +"?size_uri <"+Resources.hasValue+"> ?size. "
                            +"} "
-                           +"?specimen_uri <"+Resources.LC12_wasAttributedBy+"> ?fixation_uri. "
-                           +"?fixation_uri <"+Resources.rdfsLabel+"> ?fixation. "
-                           +"?fixation_uri <"+Resources.hasType+"> ?fixation_type_uri. "
-                           +"?fixation_type_uri <"+Resources.rdfsLabel+"> \"fixation\". "
+                           +"OPTIONAL{ "
+                                +"?specimen_uri <"+Resources.LC12_wasAttributedBy+"> ?fixation_uri. "
+                                +"?fixation_uri <"+Resources.rdfsLabel+"> ?fixation. "
+                                +"?fixation_uri <"+Resources.hasType+"> ?fixation_type_uri. "
+                                +"?fixation_type_uri <"+Resources.rdfsLabel+"> \"fixation\". "
+                           +"} "
                            +"OPTIONAL{ "
                                 +"?specimen_uri <"+Resources.LC12_wasAttributedBy+"> ?preservation_medium_uri. "
                                 +"?preservation_medium_uri <"+Resources.rdfsLabel+"> ?preservation_medium. "
@@ -3697,7 +3699,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 if(result.getValue("size")!=null){
                     specimenStruct.withDimensionValue(result.getValue("size").stringValue());
                 }
-                specimenStruct.withFixationType(result.getValue("fixation").stringValue());
+                if(result.getValue("fixation")!=null){
+                    specimenStruct.withFixationType(result.getValue("fixation").stringValue());
+                }
                 if(result.getValue("preservation_medium")!=null){
                     specimenStruct.withPreservationType(result.getValue("preservation_medium").stringValue());
                 }
