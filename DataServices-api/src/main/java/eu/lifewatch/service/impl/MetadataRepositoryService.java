@@ -3412,14 +3412,28 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         logger.debug("microct URI selection query: "+queryString);
         List<BindingSet> sparqlresults = this.repoManager.query(queryString); 
         logger.debug("microct URI selection query returned "+sparqlresults.size()+" results");
-        if(sparqlresults.isEmpty()){
+        List<String> microctUris=new ArrayList<>();
+        for(BindingSet result : sparqlresults) {
+            microctUris.add(result.getValue("microct_scan_uri").stringValue());
+        }
+        if(microctUris.isEmpty()){
+            logger.debug("No MicroCT URIs were found");
             return new ArrayList<>();
+        }else if(microctUris.size()<offset){
+            logger.debug("No more MicroCT URIs were found");
+            return new ArrayList<>();
+        }else{
+            if(offset>=0 && limit>0){
+                if(microctUris.size()>(offset+limit)){
+                    logger.debug("Retrieve information for MicroCT URIs with OFFSET/LIMIT "+offset+"/"+limit);
+                    microctUris=microctUris.subList(offset, offset+limit);
+                }else{
+                    logger.debug("Retrieve information for MicroCT URIs with OFFSET/LIMIT "+offset+"/"+microctUris.size());
+                    microctUris=microctUris.subList(offset, microctUris.size());
+                }
+            }
         }
-        Set<String> microctUrisSet=new HashSet<>();
-        for (BindingSet result : sparqlresults) {
-            microctUrisSet.add(result.getValue("microct_scan_uri").stringValue());
-        }
-        
+       
         String microctQuery="SELECT ?microct_scan_uri ?scan_id ?contrast_method ?protocol ?preparation_timespan_begin ?preparation_timespan_end ?notes "
                                   +"?scan_scope ?sample_holder ?scanning_medium ?scanned_part ?person ?scan_date ?scan_duration ?device ?voltage ?current "
                                   +"?filter ?zoom ?camera_resolution ?frame_averaging ?random_movement ?scan_degrees ?exposure_time ?oversize_settings "
@@ -3460,11 +3474,13 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                             +"?scan_date_uri <"+Resources.atSomeTimeWithin+"> ?scan_date. "
                             +"?scan_date_uri <"+Resources.hasType+"> ?scan_date_type_uri. "
                             +"?scan_date_type_uri <"+Resources.rdfsLabel+"> \"scanning\". "
-                            +"?microct_scan_uri <"+Resources.hasTimespan+"> ?scan_duration_timespan_uri. "
-                            +"?scan_duration_timespan_uri <"+Resources.hadAtMostDuration+"> ?scan_duration_uri. "
-                            +"?scan_duration_uri <"+Resources.rdfsLabel+"> ?scan_duration. "
-                            +"?scan_duration_timespan_uri <"+Resources.hasType+"> ?scan_duration_type_uri. "
-                            +"?scan_duration_type_uri <"+Resources.rdfsLabel+"> \"scanning duration\". "
+                            +"OPTIONAL{ "
+                                +"?microct_scan_uri <"+Resources.hasTimespan+"> ?scan_duration_timespan_uri. "
+                                +"?scan_duration_timespan_uri <"+Resources.hadAtMostDuration+"> ?scan_duration_uri. "
+                                +"?scan_duration_uri <"+Resources.rdfsLabel+"> ?scan_duration. "
+                                +"?scan_duration_timespan_uri <"+Resources.hasType+"> ?scan_duration_type_uri. "
+                                +"?scan_duration_type_uri <"+Resources.rdfsLabel+"> \"scanning duration\". "
+                            +"} "
                             +"?microct_scan_uri <"+Resources.happenedOnDevice+"> ?device_uri. "
                             +"?device_uri <"+Resources.rdfsLabel+"> ?device. "
                             +"?microct_scan_uri <"+Resources.observedDimension+"> ?voltage_dimension_uri. "
@@ -3487,10 +3503,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                             +"?camera_resolution_dimension_uri <"+Resources.hasValue+"> ?camera_resolution. "
                             +"?camera_resolution_dimension_uri <"+Resources.hasType+"> ?camera_resolution_dimension_type_uri. "
                             +"?camera_resolution_dimension_type_uri <"+Resources.rdfsLabel+"> \"camera resolution\". "
-                            +"?microct_scan_uri <"+Resources.observedDimension+"> ?frame_averaging_dimension_uri. "
-                            +"?frame_averaging_dimension_uri <"+Resources.hasValue+"> ?frame_averaging. "
-                            +"?frame_averaging_dimension_uri <"+Resources.hasType+"> ?frame_averaging_dimension_type_uri. "
-                            +"?frame_averaging_dimension_type_uri <"+Resources.rdfsLabel+"> \"frame averaging\". "
+                            +"OPTIONAL{ "
+                                +"?microct_scan_uri <"+Resources.observedDimension+"> ?frame_averaging_dimension_uri. "
+                                +"?frame_averaging_dimension_uri <"+Resources.hasValue+"> ?frame_averaging. "
+                                +"?frame_averaging_dimension_uri <"+Resources.hasType+"> ?frame_averaging_dimension_type_uri. "
+                                +"?frame_averaging_dimension_type_uri <"+Resources.rdfsLabel+"> \"frame averaging\". "
+                            +"} "
                             +"?microct_scan_uri <"+Resources.observedDimension+"> ?random_movement_dimension_uri. "
                             +"?random_movement_dimension_uri <"+Resources.hasValue+"> ?random_movement. "
                             +"?random_movement_dimension_uri <"+Resources.hasType+"> ?random_movement_dimension_type_uri. "
@@ -3499,10 +3517,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                             +"?scan_degrees_dimension_uri <"+Resources.hasValue+"> ?scan_degrees. "
                             +"?scan_degrees_dimension_uri <"+Resources.hasType+"> ?scan_degrees_dimension_type_uri. "
                             +"?scan_degrees_dimension_type_uri <"+Resources.rdfsLabel+"> \"scan degrees\". "
-                            +"?microct_scan_uri <"+Resources.observedDimension+"> ?exposure_time_dimension_uri. "
-                            +"?exposure_time_dimension_uri <"+Resources.hasValue+"> ?exposure_time. "
-                            +"?exposure_time_dimension_uri <"+Resources.hasType+"> ?exposure_time_dimension_type_uri. "
-                            +"?exposure_time_dimension_type_uri <"+Resources.rdfsLabel+"> \"exposure time\". "
+                            +"OPTIONAL{ "
+                                +"?microct_scan_uri <"+Resources.observedDimension+"> ?exposure_time_dimension_uri. "
+                                +"?exposure_time_dimension_uri <"+Resources.hasValue+"> ?exposure_time. "
+                                +"?exposure_time_dimension_uri <"+Resources.hasType+"> ?exposure_time_dimension_type_uri. "
+                                +"?exposure_time_dimension_type_uri <"+Resources.rdfsLabel+"> \"exposure time\". "
+                            +"} "
                             +"OPTIONAL{ "
                                 +"?microct_scan_uri <"+Resources.observedDimension+"> ?oversize_settings_dimension_uri. "
                                 +"?oversize_settings_dimension_uri <"+Resources.hasValue+"> ?oversize_settings. "
@@ -3515,7 +3535,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                                 +"?file_location_uri <"+Resources.rdfsLabel+"> ?file_location. "
                             +"} ";
         microctQuery+="FILTER( ";
-        for(String microctURI : microctUrisSet){
+        for(String microctURI : microctUris){
             microctQuery+="?microct_scan_uri=<"+microctURI+"> || ";
         }
         microctQuery=microctQuery.substring(0, microctQuery.length()-3);
@@ -3551,17 +3571,23 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 }
                 microctStruct.withActorName(result.getValue("person").stringValue());
                 microctStruct.withScanDate(result.getValue("scan_date").stringValue());
-                microctStruct.withScanningDuration(result.getValue("scan_duration").stringValue());
+                if(result.getValue("scan_duration")!=null){
+                    microctStruct.withScanningDuration(result.getValue("scan_duration").stringValue());
+                }
                 microctStruct.withDeviceName(result.getValue("device").stringValue());
                 microctStruct.withVoltage(result.getValue("voltage").stringValue());
                 microctStruct.withCurrent(result.getValue("current").stringValue());
                 microctStruct.withFilter(result.getValue("filter").stringValue());
                 microctStruct.withZoom(result.getValue("zoom").stringValue());
                 microctStruct.withCameraResolution(result.getValue("camera_resolution").stringValue());
-                microctStruct.withAveraging(result.getValue("frame_averaging").stringValue());
+                if(result.getValue("frame_averaging")!=null){
+                    microctStruct.withAveraging(result.getValue("frame_averaging").stringValue());
+                }
                 microctStruct.withRandomMovement(result.getValue("random_movement").stringValue());
                 microctStruct.withScanDegrees(result.getValue("scan_degrees").stringValue());
-                microctStruct.withExposureTime(result.getValue("exposure_time").stringValue());
+                if(result.getValue("exposure_time")!=null){
+                    microctStruct.withExposureTime(result.getValue("exposure_time").stringValue());
+                }
                 if(result.getValue("oversize_settings")!=null){
                     microctStruct.withOversizeSettings(result.getValue("oversize_settings").stringValue());
                 }
