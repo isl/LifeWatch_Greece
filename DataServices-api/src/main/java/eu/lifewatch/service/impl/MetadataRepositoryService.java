@@ -3219,7 +3219,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
                    +"reposytoryGraph: ["+repositoryGraph+"], ");
-        String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?collectionName ?collectionURI ?providerName ?providerURI "
+        String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?specimen_id ?collectionName ?collectionURI ?providerName ?providerURI "
                                             +"?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                                             +"?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
                                             +"?material ?taxonomic_group "
@@ -3227,6 +3227,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"WHERE{ "
                 +"?specimenURI <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+">. "
                 +"?specimenURI <"+Resources.rdfsLabel+"> ?specimenName. "
+                +"?specimenURI <"+Resources.isIdentifiedBy+"> ?specimen_id_uri. "
+                +"?specimen_id_uri <"+Resources.rdfsLabel+"> ?specimen_id. "
                 +"?specimenURI <"+Resources.hasNote+"> ?description. "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
                 +"?datasetURI <"+Resources.refersTo+"> ?specimenURI. "
@@ -3306,6 +3308,7 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         for (BindingSet result : sparqlresults) {
             MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
                     .withSpecimenName(result.getValue("specimenName").stringValue())
+                    .withSpecimenID(result.getValue("specimen_id").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetName(result.getValue("datasetName").stringValue());
             if(result.getValue("speciesURI")!=null){
