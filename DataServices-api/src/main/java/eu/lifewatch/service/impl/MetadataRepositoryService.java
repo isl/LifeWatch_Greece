@@ -3512,10 +3512,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                                 +"?frame_averaging_dimension_uri <"+Resources.hasType+"> ?frame_averaging_dimension_type_uri. "
                                 +"?frame_averaging_dimension_type_uri <"+Resources.rdfsLabel+"> \"frame averaging\". "
                             +"} "
-                            +"?microct_scan_uri <"+Resources.observedDimension+"> ?random_movement_dimension_uri. "
-                            +"?random_movement_dimension_uri <"+Resources.hasValue+"> ?random_movement. "
-                            +"?random_movement_dimension_uri <"+Resources.hasType+"> ?random_movement_dimension_type_uri. "
-                            +"?random_movement_dimension_type_uri <"+Resources.rdfsLabel+"> \"random movement\". "
+                            +"OPTIONAL{ "
+                                +"?microct_scan_uri <"+Resources.observedDimension+"> ?random_movement_dimension_uri. "
+                                +"?random_movement_dimension_uri <"+Resources.hasValue+"> ?random_movement. "
+                                +"?random_movement_dimension_uri <"+Resources.hasType+"> ?random_movement_dimension_type_uri. "
+                                +"?random_movement_dimension_type_uri <"+Resources.rdfsLabel+"> \"random movement\". "
+                            +"} "
                             +"?microct_scan_uri <"+Resources.observedDimension+"> ?scan_degrees_dimension_uri. "
                             +"?scan_degrees_dimension_uri <"+Resources.hasValue+"> ?scan_degrees. "
                             +"?scan_degrees_dimension_uri <"+Resources.hasType+"> ?scan_degrees_dimension_type_uri. "
@@ -3586,7 +3588,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 if(result.getValue("frame_averaging")!=null){
                     microctStruct.withAveraging(result.getValue("frame_averaging").stringValue());
                 }
-                microctStruct.withRandomMovement(result.getValue("random_movement").stringValue());
+                if(result.getValue("random_movement")!=null){
+                    microctStruct.withRandomMovement(result.getValue("random_movement").stringValue());
+                }
                 microctStruct.withScanDegrees(result.getValue("scan_degrees").stringValue());
                 if(result.getValue("exposure_time")!=null){
                     microctStruct.withExposureTime(result.getValue("exposure_time").stringValue());

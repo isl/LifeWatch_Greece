@@ -123,14 +123,14 @@ public class MicroCTHarvester {
     
     private static Element createElementWithText(Document document, String elementName, String text){
         Element element=document.createElement(elementName);
-        if(!text.isEmpty()){
+        if(!text.isEmpty() && !text.equalsIgnoreCase("NULL")){
             element.setTextContent(text);
         }
         return element;
     }
     
     public static void main(String[] args) throws UnsupportedEncodingException, IOException, ParserConfigurationException, TransformerException{
-        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Specimens (10).csv"), new File("specimens.xml"),MicroCTResourceType.MicroCT_Specimens);
-        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Prep_Scan (9).csv"), new File("scanning.xml"),MicroCTResourceType.MicroCT_Scanning);
+        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Specimens (13).csv"), new File("specimens.xml"),MicroCTResourceType.MicroCT_Specimens);
+        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Prep_Scan (12).csv"), new File("scanning.xml"),MicroCTResourceType.MicroCT_Scanning);
     }
 }
