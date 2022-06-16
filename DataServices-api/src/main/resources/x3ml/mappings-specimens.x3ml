@@ -814,6 +814,13 @@
                                         </if>
                                     </not>
                                 </if>
+                                <if>
+                                    <not>
+                                        <if>
+                                            <equals value="0">text()</equals>                                            
+                                        </if>
+                                    </not>
+                                </if>
                             </and>     
                         </if>
                         <relationship>tlo:LC10_belongs_to</relationship>
