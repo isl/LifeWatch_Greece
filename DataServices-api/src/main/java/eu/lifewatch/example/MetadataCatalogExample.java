@@ -21,7 +21,7 @@ public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
     private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_2";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -42,7 +42,7 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }       
 //
-        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Syllis alternata", "", "", -1, -1, GRAPHSPACE_METADATA);
+        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "", "", 0, 10, GRAPHSPACE_METADATA);
 //        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Agelas", "", "", -1, -1, GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
         for(MicroCTScanningStruct struct : results){
