@@ -46,7 +46,7 @@ public class MetadataCatalogExample {
 //        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Agelas", "", "", -1, -1, GRAPHSPACE_METADATA);
         System.out.println("Results: "+results.size());
         for(MicroCTScanningStruct struct : results){
-            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimens());
+            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimen());
         }        
 
 //        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);

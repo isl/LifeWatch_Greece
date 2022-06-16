@@ -20,15 +20,15 @@ public class DirectoryServiceExample {
         DirectoryService dsManager=context.getBean(DirectoryService.class);
         
 //        List<DirectoryStruct> results=dsManager.searchDataset("", "", "arvani", "","saronicos , aegean","","", -1, -1, GRAPHSPACE_DIRECTORY);
-        List<DirectoryStruct> results=dsManager.searchDataset("", "", "Legaki", "","Egypt","","", -1, -1, GRAPHSPACE_DIRECTORY);
+//        List<DirectoryStruct> results=dsManager.searchDataset("", "", "Legaki", "","Egypt","","", -1, -1, GRAPHSPACE_DIRECTORY);
+        List<DirectoryStruct> results=dsManager.searchDataset("http://www.lifewatchgreece.eu/entity/dataset/2aa6f6ad-515b-4aac-87cb-d3a60321b9f4","", "", "", "","","","", -1, -1, GRAPHSPACE_DIRECTORY);
         for(DirectoryStruct directoryStruct : results){
-//            System.out.println(directoryStruct.getGeographicCoverage()+"\t"+directoryStruct.getDatasetName());
-            
+            System.out.println(directoryStruct.getGeographicCoverage()+"\t"+directoryStruct.getDatasetName());
 
-//            System.out.println(directoryStruct.getContributorNames());
-            System.out.println(directoryStruct.getGeographicCoverage());
-            System.out.println(directoryStruct.getTemporalCoverage());
-            System.out.println(directoryStruct.getTaxonomicCoverage());
+////            System.out.println(directoryStruct.getContributorNames());
+//            System.out.println(directoryStruct.getGeographicCoverage());
+//            System.out.println(directoryStruct.getTemporalCoverage());
+//            System.out.println(directoryStruct.getTaxonomicCoverage());
         }
 //        Set<String> results=dsManager.retrieveDatasetTypes(GRAPHSPACE_DIRECTORY);
 //        System.out.println(results.size());

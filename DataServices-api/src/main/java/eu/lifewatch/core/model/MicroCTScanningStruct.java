@@ -61,7 +61,7 @@ public class MicroCTScanningStruct {
     private String preparationTimestampStart;
     private String preparationTimestampEnd;
     private String scopeOfScan;
-    private Set<MicroCTSpecimenStruct> specimens;
+    private MicroCTSpecimenStruct specimen;
     
     private static final Logger logger=Logger.getLogger(MicroCTScanningStruct.class);
     
@@ -108,7 +108,7 @@ public class MicroCTScanningStruct {
         preparationTimestampStart="";
         preparationTimestampEnd="";
         scopeOfScan="";
-        specimens=new HashSet<>();
+        specimen=null;
     }
     
     public String getSpecimenURI() {
@@ -199,6 +199,14 @@ public class MicroCTScanningStruct {
         return filter;
     }
     
+    public String getProtocol() {
+        return protocol;
+    }
+    
+    public String getPreparationDateTime() {
+        return preparationTimestampStart+" - "+preparationTimestampEnd;
+    }
+    
     public String getZoom() {
         return zoom;
     }
@@ -226,9 +234,57 @@ public class MicroCTScanningStruct {
     public String getScopeOfScan() {
         return this.scopeOfScan;
     }
+    
+    public String getSampleHolder() {
+        return this.sampleHolder;
+    }
+    
+    public String getScanningMedium() {
+        return this.scanningMedium;
+    }
+    
+    public String getScannedPart() {
+        return this.scannedPart;
+    }
+    
+    public String getScanDate() {
+        return this.scanDate;
+    }
+    
+    public String getScanningDuration() {
+        return this.scanningDuration;
+    }
+    
+    public String getCurrent(){
+        return this.current;
+    }
+    
+    public String getCameraResolution(){
+        return this.cameraResolution;
+    }
+    
+    public String getAveraging(){
+        return this.averaging;
+    }
+    
+    public String getRandomMovement(){
+        return this.randomMovement;
+    }
+    
+    public String getScanDegrees(){
+        return this.scanDegrees;
+    }
+    
+    public String getOversizeSettings(){
+        return this.oversizeSettings;
+    }
+    
+    public String getFileLocation(){
+        return this.fileLocation;
+    }
      
-    public Set<MicroCTSpecimenStruct> getSpecimens() {
-        return this.specimens;
+    public MicroCTSpecimenStruct getSpecimen() {
+        return this.specimen;
     }
      
      public void setSpecimenURI(String specimenURI) {
@@ -332,7 +388,7 @@ public class MicroCTScanningStruct {
     }
        
     public MicroCTScanningStruct withSpecimen(MicroCTSpecimenStruct specimenStruct) {
-        this.specimens.add(specimenStruct);
+        this.specimen=specimenStruct;
         return this;
     }
        
@@ -689,7 +745,7 @@ public class MicroCTScanningStruct {
               +"ExposureTime_ms: "+this.exposureTime+"\t"
               +"OversizeSettings: "+this.oversizeSettings+"\t"
               +"FileLocation: "+this.fileLocation+"\t"
-              +"Specimens: "+this.specimens
+              +"Specimen: "+this.specimen
 //              +"Products: "+this.products+"\t"
 //              +"ProductStatus: "+this.productStatus
                 ;

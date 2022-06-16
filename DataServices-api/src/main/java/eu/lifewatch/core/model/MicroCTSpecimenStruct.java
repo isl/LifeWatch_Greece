@@ -95,6 +95,10 @@ public class MicroCTSpecimenStruct {
         return specimenName;
     }
     
+    public String getSpecimenID() {
+        return specimenID;
+    }
+    
     public String getSpecimenURI() {
         return specimenURI;
     }

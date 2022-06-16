@@ -136,8 +136,9 @@ public class DirectoryService implements Service {
                 
                 
 
-    public List<DirectoryStruct> searchDataset(String datasetName, String ownerName, String creator, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetURI, String datasetName, String ownerName, String creator, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
+                   +"datasetURI: ["+datasetURI+"], "
                    +"datasetName: ["+datasetName+"], "
                    +"ownerName: ["+ownerName+"], "
                    +"creator: ["+creator+"], "
@@ -152,6 +153,10 @@ public class DirectoryService implements Service {
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. ";
+                if(datasetURI!=null && !datasetURI.isEmpty()){
+                    selectionQueryString+="?datasetURI <"+Resources.hasPreferredIdentifier+"> ?datasetName. "
+                                          +"FILTER (?datasetURI=<"+datasetURI+">). ";
+                }
                 if(datasetName!=null && !datasetName.isEmpty()){
                     selectionQueryString+="?datasetURI <"+Resources.hasPreferredIdentifier+"> ?datasetName. "
                                           +"FILTER CONTAINS(LCASE(?datasetName),\""+datasetName.toLowerCase()+"\"). ";
