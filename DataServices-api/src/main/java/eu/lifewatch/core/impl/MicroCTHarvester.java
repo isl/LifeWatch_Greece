@@ -27,58 +27,56 @@ public class MicroCTHarvester {
     private static Map<Integer,String> specimenColumnsMappings;
     static{
         specimenColumnsMappings=new HashMap<>();
-        specimenColumnsMappings.put(0, "RowID");
-        specimenColumnsMappings.put(1, "SpecimenID");
-        specimenColumnsMappings.put(2, "SpecimenLabel");
-        specimenColumnsMappings.put(3, "CollectionCode");
-        specimenColumnsMappings.put(4, "SpecimenProvider");
-        specimenColumnsMappings.put(5, "ProviderInstitute");
-        specimenColumnsMappings.put(6, "SpecimenDescription");
-        specimenColumnsMappings.put(7, "Material");
-        specimenColumnsMappings.put(8, "ScientificName");
-        specimenColumnsMappings.put(9, "Size_mm");
-        specimenColumnsMappings.put(10, "FixationType");
-        specimenColumnsMappings.put(11, "FixationNotes");
-        specimenColumnsMappings.put(12, "PreservationMedium");
-        specimenColumnsMappings.put(13, "SpecimenNotes");
-        specimenColumnsMappings.put(14, "StoragePlace");
-        specimenColumnsMappings.put(15, "TaxonomicGroup");
+        specimenColumnsMappings.put(0, "SpecimenID");
+        specimenColumnsMappings.put(1, "SpecimenLabel");
+        specimenColumnsMappings.put(2, "CollectionCode");
+        specimenColumnsMappings.put(3, "SpecimenProvider");
+        specimenColumnsMappings.put(4, "ProviderInstitute");
+        specimenColumnsMappings.put(5, "SpecimenDescription");
+        specimenColumnsMappings.put(6, "Material");
+        specimenColumnsMappings.put(7, "ScientificName");
+        specimenColumnsMappings.put(8, "Size_mm");
+        specimenColumnsMappings.put(9, "FixationType");
+        specimenColumnsMappings.put(10, "FixationNotes");
+        specimenColumnsMappings.put(11, "PreservationMedium");
+        specimenColumnsMappings.put(12, "SpecimenNotes");
+        specimenColumnsMappings.put(13, "StoragePlace");
+        specimenColumnsMappings.put(14, "TaxonomicGroup");
     }
     
     private static Map<Integer,String> scanningColumnsMappings;
     static{
         scanningColumnsMappings=new HashMap<>();
-        scanningColumnsMappings.put(0, "RowID");
-        scanningColumnsMappings.put(1, "SpecimenID");
-        scanningColumnsMappings.put(2, "ScanID");
-        scanningColumnsMappings.put(3, "ContrastEnhancementMethod");
-        scanningColumnsMappings.put(4, "Protocol");
-        scanningColumnsMappings.put(5, "BeginOfPreparationDate");
-        scanningColumnsMappings.put(6, "BeginOfPreparationTime");
-        scanningColumnsMappings.put(7, "EndOfPreparationDate");
-        scanningColumnsMappings.put(8, "EndOfPreparationTime");
-        scanningColumnsMappings.put(9, "PreparationNotes");
-        scanningColumnsMappings.put(10, "ScopeOfScan");
-        scanningColumnsMappings.put(11, "SampleHolder");
-        scanningColumnsMappings.put(12, "ScanningMedium");
-        scanningColumnsMappings.put(13, "ScannedPart");
-        scanningColumnsMappings.put(14, "ScannedBy");
-        scanningColumnsMappings.put(15, "ScanDate");
-        scanningColumnsMappings.put(16, "ScanningDuration");
-        scanningColumnsMappings.put(17, "Instrument");
-        scanningColumnsMappings.put(18, "Voltage_kV");
-        scanningColumnsMappings.put(19, "Current_uA");
-        scanningColumnsMappings.put(20, "Filter");
-        scanningColumnsMappings.put(21, "Zoom_um");
-        scanningColumnsMappings.put(22, "CameraResolution");
-        scanningColumnsMappings.put(23, "Averaging");
-        scanningColumnsMappings.put(24, "RandomMovement");
-        scanningColumnsMappings.put(25, "Scan360or180");
-        scanningColumnsMappings.put(26, "ExposureTime_ms");
-        scanningColumnsMappings.put(27, "OversizeSettings");
-        scanningColumnsMappings.put(28, "ScanNotes");
-        scanningColumnsMappings.put(29, "FileLocation");
-        scanningColumnsMappings.put(30, "ScanFileStatus");
+        scanningColumnsMappings.put(0, "SpecimenID");
+        scanningColumnsMappings.put(1, "ScanID");
+        scanningColumnsMappings.put(2, "ContrastEnhancementMethod");
+        scanningColumnsMappings.put(3, "Protocol");
+        scanningColumnsMappings.put(4, "BeginOfPreparationDate");
+        scanningColumnsMappings.put(5, "BeginOfPreparationTime");
+        scanningColumnsMappings.put(6, "EndOfPreparationDate");
+        scanningColumnsMappings.put(7, "EndOfPreparationTime");
+        scanningColumnsMappings.put(8, "PreparationNotes");
+        scanningColumnsMappings.put(9, "ScopeOfScan");
+        scanningColumnsMappings.put(10, "SampleHolder");
+        scanningColumnsMappings.put(11, "ScanningMedium");
+        scanningColumnsMappings.put(12, "ScannedPart");
+        scanningColumnsMappings.put(13, "ScannedBy");
+        scanningColumnsMappings.put(14, "ScanDate");
+        scanningColumnsMappings.put(15, "ScanningDuration");
+        scanningColumnsMappings.put(16, "Instrument");
+        scanningColumnsMappings.put(17, "Voltage_kV");
+        scanningColumnsMappings.put(18, "Current_uA");
+        scanningColumnsMappings.put(19, "Filter");
+        scanningColumnsMappings.put(20, "Zoom_um");
+        scanningColumnsMappings.put(21, "CameraResolution");
+        scanningColumnsMappings.put(22, "Averaging");
+        scanningColumnsMappings.put(23, "RandomMovement");
+        scanningColumnsMappings.put(24, "Scan360or180");
+        scanningColumnsMappings.put(25, "ExposureTime_ms");
+        scanningColumnsMappings.put(26, "OversizeSettings");
+        scanningColumnsMappings.put(27, "ScanNotes");
+        scanningColumnsMappings.put(28, "FileLocation");
+        scanningColumnsMappings.put(29, "ScanFileStatus");
     }
     
     public enum MicroCTResourceType {
@@ -130,7 +128,7 @@ public class MicroCTHarvester {
     }
     
     public static void main(String[] args) throws UnsupportedEncodingException, IOException, ParserConfigurationException, TransformerException{
-        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Specimens (13).csv"), new File("specimens.xml"),MicroCTResourceType.MicroCT_Specimens);
-        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Prep_Scan (12).csv"), new File("scanning.xml"),MicroCTResourceType.MicroCT_Scanning);
+        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Specimen _metadata.csv"), new File("specimens.xml"),MicroCTResourceType.MicroCT_Specimens);
+        xmlifyMicroCtResources(new File("Y:/Projects/Lifewatch-eric/ENVRI-FAIR/Data/MicroCT/1. Originally Received/Scanning_metadata.csv"), new File("scanning.xml"),MicroCTResourceType.MicroCT_Scanning);
     }
 }
