@@ -111,7 +111,7 @@ public class MicroCTHarvester {
                 
         for(CSVRecord record : csvParser){
             Element rowElement=document.createElement("row");
-            for(int i=1;i<mappingColumnsMap.keySet().size();i++){
+            for(int i=0;i<mappingColumnsMap.keySet().size();i++){
                 rowElement.appendChild(createElementWithText(document, mappingColumnsMap.get(i), record.get(i)));
             }
             rootElement.appendChild(rowElement);
