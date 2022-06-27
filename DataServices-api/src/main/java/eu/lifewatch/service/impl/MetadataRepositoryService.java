@@ -3404,11 +3404,11 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                         +"?filter_dimension_uri <"+Resources.hasType+"> ?filter_dimension_type_uri. "
                         +"?filter_dimension_uri <"+Resources.hasValue+"> ?filter. "
                         +"?filter_dimension_type_uri <"+Resources.rdfsLabel+"> \"filter\". "
-                        +"FILTER CONTAINS(LCASE(?filter),\""+filter.toLowerCase()+"\"). ";
+                        +"FILTER (LCASE(?filter)=\""+filter.toLowerCase()+"\"). ";
         }
         if(contrastMethod!=null && !contrastMethod.isBlank()){
             queryString+="?microct_scan_uri <"+Resources.hasContrastMethod+"> ?contrast_method. "
-                        +"FILTER CONTAINS(LCASE(?contrast_method),\""+contrastMethod.toLowerCase()+"\"). ";
+                        +"FILTER (LCASE(?contrast_method)=\""+contrastMethod.toLowerCase()+"\"). ";
         }
         queryString+="}";
         
