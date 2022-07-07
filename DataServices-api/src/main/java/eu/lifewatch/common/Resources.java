@@ -220,6 +220,7 @@ public class Resources {
     public static final String ALTERNATE_IDENTIFIER="alternateIdentifier";
     public static final String ASSOCIATED_PARTY="associatedParty";
     public static final String BEGIN_DATE="beginDate";
+    public static final String CITATION="citation";
     public static final String CONTACT="contact";
     public static final String CORE_TYPE="coreType";
     public static final String CREATOR="creator";

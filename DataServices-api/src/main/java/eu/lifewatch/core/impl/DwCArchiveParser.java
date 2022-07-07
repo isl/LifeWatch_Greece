@@ -84,44 +84,46 @@ public class DwCArchiveParser {
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         log.debug("Core dataset metadata: "+directoryStruct);
-        if(this.importDatasets){
-            log.info("Importing dataset metadata");
-            this.importDatasetInfo(directoryStruct);
-        }
-        if(this.storeLocally){
-            log.info("Storing locally dataset metadata");
-            this.storeLocally(directoryStruct);
-        }
-        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
-        switch(this.dwcArchive.getCore().getRowType().simpleName()){
-            case "Occurrence":
-                parseOccurrenceArchive(this.dwcArchive, null);
-                break;
-            case "ExtendedMeasurementOrFact":
-                parseMeasurementArchive(this.dwcArchive, null);
-                break;
-            case "Event":
-                parseOccurrenceTemporaryAggregate(this.dwcArchive, null);
-                break;
-            default:
-                log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
-        }
-        
-        for(ArchiveFile archiveFile : this.dwcArchive.getExtensions()){
-            switch(archiveFile.getRowType().simpleName()){
-            case "Occurrence":
-                parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
-                break;
-            case "ExtendedMeasurementOrFact":
-                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
-                break;
-            case "Event":
-                parseOccurrenceTemporaryAggregate(this.dwcArchive, archiveFile.getRowType());
-                break;
-            default:
-                log.error("No parser for "+archiveFile.getRowType().simpleName());     
-            }
-        }
+        System.out.println(directoryStruct.getCitation());
+        System.out.println(directoryStruct.getKeywordsUserFriendly());
+//        if(this.importDatasets){
+//            log.info("Importing dataset metadata");
+//            this.importDatasetInfo(directoryStruct);
+//        }
+//        if(this.storeLocally){
+//            log.info("Storing locally dataset metadata");
+//            this.storeLocally(directoryStruct);
+//        }
+//        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
+//        switch(this.dwcArchive.getCore().getRowType().simpleName()){
+//            case "Occurrence":
+//                parseOccurrenceArchive(this.dwcArchive, null);
+//                break;
+//            case "ExtendedMeasurementOrFact":
+//                parseMeasurementArchive(this.dwcArchive, null);
+//                break;
+//            case "Event":
+//                parseOccurrenceTemporaryAggregate(this.dwcArchive, null);
+//                break;
+//            default:
+//                log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
+//        }
+//        
+//        for(ArchiveFile archiveFile : this.dwcArchive.getExtensions()){
+//            switch(archiveFile.getRowType().simpleName()){
+//            case "Occurrence":
+//                parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
+//                break;
+//            case "ExtendedMeasurementOrFact":
+//                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
+//                break;
+//            case "Event":
+//                parseOccurrenceTemporaryAggregate(this.dwcArchive, archiveFile.getRowType());
+//                break;
+//            default:
+//                log.error("No parser for "+archiveFile.getRowType().simpleName());     
+//            }
+//        }
     }
     
     private void importDatasetInfo(DirectoryStruct directoryStruct) throws URIValidationException, QueryExecutionException{
@@ -248,14 +250,16 @@ public class DwCArchiveParser {
             directoryStruct.setRightsHolderURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"rights_holder",HCMR_LABEL));
             directoryStruct.setRightsHolderName(HCMR_LABEL);
         }
-//        Elements keywordSets=metadataDoc.getElementsByTag(Resources.KEYWORD_SET);
-//        if(keywordSets!=null){
-//            for(Element keywordSet : keywordSets){
-//                if(keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS)!=null && keywordSet.getElementsByTag(Resources.KEYWORD_THESAURUS).text().contains(Resources.GBIF_THESAURUS_KEYWORD)){
-//                    directoryStruct.setDatasetType(keywordSet.getElementsByTag(Resources.KEYWORD).text()+" Dataset");
-//                }
-//            }
-//        }
+        Elements keywordElements=metadataDoc.getElementsByTag(Resources.KEYWORD);
+        if(keywordElements!=null){
+            for(Element keywordElement : keywordElements){
+                directoryStruct.withKeyword(keywordElement.text());
+            }
+        }
+        Elements citationElements=metadataDoc.getElementsByTag(Resources.CITATION);
+        if(citationElements!=null){
+            directoryStruct.setCitation(citationElements.text());
+        }
         Elements logoElements=metadataDoc.getElementsByTag(Resources.RESOURCE_LOGO_URL);
         if(logoElements!=null){
             directoryStruct.withImageURI(logoElements.text());
@@ -717,7 +721,7 @@ public class DwCArchiveParser {
     public static void main(String[] args) throws IOException, MetadataException, URIValidationException, QueryExecutionException{
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/zoobenthos_in_amvrakikos_wetlands/dwca-1.17.zip"), "Sampling Event",
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
                 false,
                 true,
                 "http://www.ics.forth.gr/isl/lifewatch/directory",

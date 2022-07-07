@@ -65,9 +65,11 @@ public class DirectoryStruct {
     private String rightsHolderURI;
     private String contactPoint;
     private String description;
+    private String citation;
     private String geographicCoverage;
     private Set<Pair> temporalCoverage;
     private Set<Pair> taxonomicCoverage;
+    private Set<String> keywords;
 
     private static final Logger logger = Logger.getLogger(DirectoryStruct.class);
 
@@ -114,9 +116,11 @@ public class DirectoryStruct {
         embargoState = "";
         imageURI = "";
         imageTitle = "";
+        citation="";
         this.geographicCoverage="";
         this.temporalCoverage=new HashSet<>();
         this.taxonomicCoverage=new HashSet<>();
+        this.keywords=new HashSet<>();
     }
 
     public String getDatasetName() {
@@ -309,6 +313,26 @@ public class DirectoryStruct {
         return retList;
     }
     
+    public String getCitation(){
+        return this.citation;
+    }
+    
+    public Set<String> getKeywords(){
+        return this.keywords;
+    }
+    
+    public String getKeywordsUserFriendly(){
+        if(this.keywords.isEmpty()){
+            return "";
+        }else{
+            StringBuilder keywordsBuilder=new StringBuilder();
+            for(String keyword : this.getKeywords()){
+                keywordsBuilder.append(keyword).append("; ");
+            }
+            return keywordsBuilder.substring(0, keywordsBuilder.length()-2);
+        }
+    }
+    
     public void setGeographicCoverage(String place){
         this.geographicCoverage=place;
     }
@@ -471,6 +495,10 @@ public class DirectoryStruct {
 
     public void setEmbargoPeriod(String embargoPeriod) {
         this.embargoPeriod = embargoPeriod;
+    }
+    
+    public void setCitation(String citationString) {
+        this.citation = citationString;
     }
 
     public DirectoryStruct withDatasetURI(String datasetURI) {
@@ -677,6 +705,11 @@ public class DirectoryStruct {
     
     public DirectoryStruct withTaxonomicCoverage(String taxonRankName, String taxonRankValue){
         this.taxonomicCoverage.add(new Pair(taxonRankName,taxonRankValue));
+        return this;
+    }
+    
+    public DirectoryStruct withKeyword(String keyword){
+        this.keywords.add(keyword);
         return this;
     }
     
