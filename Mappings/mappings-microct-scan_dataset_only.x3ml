@@ -10,6 +10,7 @@
         <namespace prefix="rdfs" uri="http://www.w3.org/2000/01/rdf-schema#"/>
         <namespace prefix="tlo" uri="http://www.ics.forth.gr/isl/ontology/MarineTLO/"/>
         <namespace prefix="crmdig" uri="http://www.ics.forth.gr/isl/CRMdig/"/>
+        <namespace prefix="frbr" uri="http://www.ics.forth.gr/isl/FRBR/"/>
         <namespace prefix="ent" uri="http://www.lifewatchgreece.eu/entity/"/>
     </namespaces>
     <mappings>
@@ -121,6 +122,25 @@
                                 </label_generator>
                             </entity>
                         </additional>
+                        <additional>
+                            <relationship>crm:P94_was_created_by</relationship>
+                            <entity>
+                                <type>frbr:F30_Publication</type>
+                                <instance_generator name="LocalTermURI-hashed">
+                                    <arg name="hierarchy" type="constant">publication</arg>
+                                    <arg name="term" type="constant">microct_scan</arg>
+                                </instance_generator>
+                                <additional>
+                                    <relationship>crm:P4_has_timespan</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="xpath">format-date(current-date(), "[Y0001]-[M01]-[D01]")</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                            </entity>
+                        </additional> 
                     </entity>
                 </target_node>
             </domain>
