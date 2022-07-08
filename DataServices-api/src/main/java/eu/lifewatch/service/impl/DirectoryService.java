@@ -247,6 +247,7 @@ public class DirectoryService implements Service {
                                            +"?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
                                            +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI "
                                            +"?geographicCoverage ?temporalCoverageBegin ?temporalCoverageEnd ?taxonomicCoverageName ?taxonomicCoverageValue "
+                                           +"?keyword ?citation "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
@@ -333,6 +334,18 @@ public class DirectoryService implements Service {
                 +"OPTIONAL{ "
                     +"?datasetURI <"+Resources.formsPartOf+"> ?parentDatasetURI. "
                     +"?parentDatasetURI <"+Resources.rdfsLabel+"> ?parentDatasetName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.IS_SUBJECT_OF+"> ?keyword_uri. "
+                    +"?keyword_uri <"+Resources.hasType+"> ?keyword_type_uri. "
+                    +"?keyword_type_uri <"+Resources.rdfsLabel+"> \"keyword\". "
+                    +"?keyword_uri <"+Resources.rdfsLabel+"> ?keyword. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?datasetURI <"+Resources.IS_SUBJECT_OF+"> ?citation_uri. "
+                    +"?citation_uri <"+Resources.hasType+"> ?citation_type_uri. "
+                    +"?citation_type_uri <"+Resources.rdfsLabel+"> \"citation\". "
+                    +"?citation_uri <"+Resources.rdfsLabel+"> ?citation. "
                 +"} ";
         queryString+="FILTER( ";
         for(String datasetUri : datasetURIs){
@@ -449,6 +462,12 @@ public class DirectoryService implements Service {
                     struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
                                                  (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
                 }
+                if (result.getValue("keyword") != null) {
+                    struct.withKeyword(result.getValue("keyword").stringValue());
+                }
+                if (result.getValue("citation") != null) {
+                    struct.setCitation(result.getValue("citation").stringValue());
+                }
                 structsMap.put(struct.getDatasetURI(), struct);
             } else {
                 DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
@@ -464,6 +483,9 @@ public class DirectoryService implements Service {
                 if(result.getValue("taxonomicCoverageName")!=null || result.getValue("taxonomicCoverageValue")!=null ){
                     struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
                                                  (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
+                }
+                if (result.getValue("keyword") != null) {
+                    struct.withKeyword(result.getValue("keyword").stringValue());
                 }
                 structsMap.put(struct.getDatasetURI(), struct);
             }
