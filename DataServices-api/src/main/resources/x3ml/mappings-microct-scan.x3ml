@@ -2,7 +2,7 @@
 <x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     source_type="xpath"
     version="1.0"
-    mappings_version="2022-04-20"
+    mappings_version="2022-07-08"
     xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
     <namespaces>
         <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
@@ -21,10 +21,10 @@
                         <type>tlo:BC21_Dataset</type>
                         <instance_generator name="LocalTermURI-hashed">
                             <arg name="hierarchy" type="constant">dataset</arg>
-                            <arg name="term" type="constant">Micro-CT Scanning Dataset</arg>
+                            <arg name="term" type="constant">Micro-CT Scanning</arg>
                         </instance_generator>
                         <label_generator name="Literal">
-                            <arg name="text" type="constant">Micro-CT Scanning Dataset</arg>
+                            <arg name="text" type="constant">Micro-CT Scanning</arg>
                         </label_generator>
                     </entity>
                 </target_node>
