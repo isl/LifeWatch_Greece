@@ -84,46 +84,44 @@ public class DwCArchiveParser {
         log.debug("Parsing dataset metadata");
         DirectoryStruct directoryStruct=this.parseDatasetMetadata(this.dwcArchive.getMetadata());
         log.debug("Core dataset metadata: "+directoryStruct);
-        System.out.println(directoryStruct.getCitation());
-        System.out.println(directoryStruct.getKeywordsUserFriendly());
-//        if(this.importDatasets){
-//            log.info("Importing dataset metadata");
-//            this.importDatasetInfo(directoryStruct);
-//        }
-//        if(this.storeLocally){
-//            log.info("Storing locally dataset metadata");
-//            this.storeLocally(directoryStruct);
-//        }
-//        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
-//        switch(this.dwcArchive.getCore().getRowType().simpleName()){
-//            case "Occurrence":
-//                parseOccurrenceArchive(this.dwcArchive, null);
-//                break;
-//            case "ExtendedMeasurementOrFact":
-//                parseMeasurementArchive(this.dwcArchive, null);
-//                break;
-//            case "Event":
-//                parseOccurrenceTemporaryAggregate(this.dwcArchive, null);
-//                break;
-//            default:
-//                log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
-//        }
-//        
-//        for(ArchiveFile archiveFile : this.dwcArchive.getExtensions()){
-//            switch(archiveFile.getRowType().simpleName()){
-//            case "Occurrence":
-//                parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
-//                break;
-//            case "ExtendedMeasurementOrFact":
-//                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
-//                break;
-//            case "Event":
-//                parseOccurrenceTemporaryAggregate(this.dwcArchive, archiveFile.getRowType());
-//                break;
-//            default:
-//                log.error("No parser for "+archiveFile.getRowType().simpleName());     
-//            }
-//        }
+        if(this.importDatasets){
+            log.info("Importing dataset metadata");
+            this.importDatasetInfo(directoryStruct);
+        }
+        if(this.storeLocally){
+            log.info("Storing locally dataset metadata");
+            this.storeLocally(directoryStruct);
+        }
+        log.info("Archive rowtype: " + this.dwcArchive.getCore().getRowType() + ", "+ this.dwcArchive.getExtensions().size() + " extension(s)");
+        switch(this.dwcArchive.getCore().getRowType().simpleName()){
+            case "Occurrence":
+                parseOccurrenceArchive(this.dwcArchive, null);
+                break;
+            case "ExtendedMeasurementOrFact":
+                parseMeasurementArchive(this.dwcArchive, null);
+                break;
+            case "Event":
+                parseOccurrenceTemporaryAggregate(this.dwcArchive, null);
+                break;
+            default:
+                log.error("No parser for "+this.dwcArchive.getCore().getRowType());     
+        }
+        
+        for(ArchiveFile archiveFile : this.dwcArchive.getExtensions()){
+            switch(archiveFile.getRowType().simpleName()){
+            case "Occurrence":
+                parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
+            case "ExtendedMeasurementOrFact":
+                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
+            case "Event":
+                parseOccurrenceTemporaryAggregate(this.dwcArchive, archiveFile.getRowType());
+                break;
+            default:
+                log.error("No parser for "+archiveFile.getRowType().simpleName());     
+            }
+        }
     }
     
     private void importDatasetInfo(DirectoryStruct directoryStruct) throws URIValidationException, QueryExecutionException{
