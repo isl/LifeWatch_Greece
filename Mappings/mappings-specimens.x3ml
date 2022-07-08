@@ -20,10 +20,10 @@
                         <type>tlo:BC21_Dataset</type>
                         <instance_generator name="LocalTermURI-hashed">
                             <arg name="hierarchy" type="constant">dataset</arg>
-                            <arg name="term" type="constant">Micro-CT Specimens Dataset</arg>
+                            <arg name="term" type="constant">Micro-CT Specimens Description</arg>
                         </instance_generator>
                         <label_generator name="Literal">
-                            <arg name="text" type="constant">Micro-CT Specimens Dataset</arg>
+                            <arg name="text" type="constant">Micro-CT Specimens Description</arg>
                         </label_generator>
                     </entity>
                 </target_node>

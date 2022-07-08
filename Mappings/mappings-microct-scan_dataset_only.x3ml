@@ -21,14 +21,14 @@
                         <type>tlo:BC21_Dataset</type>
                         <instance_generator name="LocalTermURI-hashed">
                             <arg name="hierarchy" type="constant">dataset</arg>
-                            <arg name="term" type="constant">Micro-CT Scanning Dataset</arg>
+                            <arg name="term" type="constant">Micro-CT Scanning</arg>
                         </instance_generator>
                         <additional>
                             <relationship>tlo:P48_has_preferred_identifier</relationship>
                             <entity>
                                 <type>rdfs:Literal</type>
                                 <instance_generator name="Literal">
-                                    <arg name="text" type="constant">Micro-CT Scanning Dataset</arg>
+                                    <arg name="text" type="constant">Micro-CT Scanning</arg>
                                 </instance_generator>
                             </entity>
                         </additional>
@@ -37,7 +37,7 @@
                             <entity>
                                 <type>rdfs:Literal</type>
                                 <instance_generator name="Literal">
-                                    <arg name="text" type="constant">MicroCT Dataset</arg>
+                                    <arg name="text" type="constant">MicroCT</arg>
                                 </instance_generator>
                             </entity>
                         </additional>

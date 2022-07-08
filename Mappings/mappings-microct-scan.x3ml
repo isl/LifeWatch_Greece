@@ -21,10 +21,10 @@
                         <type>tlo:BC21_Dataset</type>
                         <instance_generator name="LocalTermURI-hashed">
                             <arg name="hierarchy" type="constant">dataset</arg>
-                            <arg name="term" type="constant">Micro-CT Scanning Dataset</arg>
+                            <arg name="term" type="constant">Micro-CT Scanning</arg>
                         </instance_generator>
                         <label_generator name="Literal">
-                            <arg name="text" type="constant">Micro-CT Scanning Dataset</arg>
+                            <arg name="text" type="constant">Micro-CT Scanning</arg>
                         </label_generator>
                     </entity>
                 </target_node>
