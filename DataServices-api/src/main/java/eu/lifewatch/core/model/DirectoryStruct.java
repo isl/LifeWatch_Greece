@@ -65,9 +65,11 @@ public class DirectoryStruct {
     private String rightsHolderURI;
     private String contactPoint;
     private String description;
+    private String citation;
     private String geographicCoverage;
     private Set<Pair> temporalCoverage;
     private Set<Pair> taxonomicCoverage;
+    private Set<String> keywords;
 
     private static final Logger logger = Logger.getLogger(DirectoryStruct.class);
 
@@ -114,9 +116,11 @@ public class DirectoryStruct {
         embargoState = "";
         imageURI = "";
         imageTitle = "";
+        citation="";
         this.geographicCoverage="";
         this.temporalCoverage=new HashSet<>();
         this.taxonomicCoverage=new HashSet<>();
+        this.keywords=new HashSet<>();
     }
 
     public String getDatasetName() {
@@ -309,6 +313,26 @@ public class DirectoryStruct {
         return retList;
     }
     
+    public String getCitation(){
+        return this.citation;
+    }
+    
+    public Set<String> getKeywords(){
+        return this.keywords;
+    }
+    
+    public String getKeywordsUserFriendly(){
+        if(this.keywords.isEmpty()){
+            return "";
+        }else{
+            StringBuilder keywordsBuilder=new StringBuilder();
+            for(String keyword : this.getKeywords()){
+                keywordsBuilder.append(keyword).append("; ");
+            }
+            return keywordsBuilder.substring(0, keywordsBuilder.length()-2);
+        }
+    }
+    
     public void setGeographicCoverage(String place){
         this.geographicCoverage=place;
     }
@@ -471,6 +495,10 @@ public class DirectoryStruct {
 
     public void setEmbargoPeriod(String embargoPeriod) {
         this.embargoPeriod = embargoPeriod;
+    }
+    
+    public void setCitation(String citationString) {
+        this.citation = citationString;
     }
 
     public DirectoryStruct withDatasetURI(String datasetURI) {
@@ -680,6 +708,11 @@ public class DirectoryStruct {
         return this;
     }
     
+    public DirectoryStruct withKeyword(String keyword){
+        this.keywords.add(keyword);
+        return this;
+    }
+    
     public boolean hasTemporalCoverage(String givenTempCoverage) throws ParseException{
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
         String tempNormDate=Utils.normalizeDate(givenTempCoverage, false);
@@ -803,6 +836,26 @@ public class DirectoryStruct {
                         retTriples+="<"+taxonomicCoverageUri+"> <"+Resources.rdfsLabel+"> \""+taxonomicCoveragePair.getValue()+"\".\n";
                     }
                 }
+            }
+            for(String keyword : this.getKeywords()){
+                String keywordUri=Resources.defaultNamespaceForURIs+"/keyword/"+UUID.nameUUIDFromBytes(keyword.getBytes()).toString();
+                String keywordTypeUri=Resources.defaultNamespaceForURIs+"/resource_type/keyword";
+                retTriples+="<"+this.datasetURI+"> <"+Resources.IS_SUBJECT_OF+"> <"+keywordUri+">.\n "
+                           +"<"+keywordUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.INFORMATION_OBJECT+">.\n "
+                           +"<"+keywordUri+"> <"+Resources.rdfsLabel+"> \""+keyword+"\".\n "
+                           +"<"+keywordUri+"> <"+Resources.hasType+"> <"+keywordTypeUri+">.\n "
+                           +"<"+keywordTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">.\n "
+                           +"<"+keywordTypeUri+"> <"+Resources.rdfsLabel+"> \"keyword\".\n ";
+            }
+            if(!this.getCitation().isBlank()){
+                String citationUri=Resources.defaultNamespaceForURIs+"/citation/"+UUID.nameUUIDFromBytes(this.getCitation().getBytes()).toString();
+                String citationTypeUri=Resources.defaultNamespaceForURIs+"/resource_type/citation";
+                retTriples+="<"+this.datasetURI+"> <"+Resources.IS_SUBJECT_OF+"> <"+citationUri+">.\n "
+                           +"<"+citationUri+"> <"+Resources.typeLabel+"> <"+Resources.PROPOSITIONAL_OBJECT+">.\n "
+                           +"<"+citationUri+"> <"+Resources.rdfsLabel+"> \""+this.getCitation().replaceAll("\"", "'")+"\".\n "
+                           +"<"+citationUri+"> <"+Resources.hasType+"> <"+citationTypeUri+">.\n "
+                           +"<"+citationTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">.\n "
+                           +"<"+citationTypeUri+"> <"+Resources.rdfsLabel+"> \"citation\".\n ";
             }
         }
         if (!this.ownerURI.isEmpty()) {
