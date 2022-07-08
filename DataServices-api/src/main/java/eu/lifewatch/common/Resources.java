@@ -46,6 +46,8 @@ public class Resources {
     public static final String conditionStateLabel = cidocCrmNamespace + "E3_Condition_State";
     public static final String conceptualObjectLabel = cidocCrmNamespace + "E28_ConceptualObject";
     public static final String timespanLabel = cidocCrmNamespace + "E52_Time-Span";
+    public static final String PROPOSITIONAL_OBJECT = cidocCrmNamespace + "E89_Propositional_Object";
+    public static final String INFORMATION_OBJECT = cidocCrmNamespace + "E73_Information_Object";
 
     public static final String hasLanguage = cidocCrmNamespace + "P72_has_language";
     public static final String hasNote = cidocCrmNamespace + "P3_has_note";
@@ -167,6 +169,7 @@ public class Resources {
     public static final String HAS_GEOGRAPHIC_COVERAGE = tloNamespace + "P_has_geographic_coverage";
     public static final String HAS_TEMPORAL_COVERAGE = tloNamespace + "P_has_temporal_coverage";
     public static final String HAS_TAXONOMIC_COVERAGE = tloNamespace + "P_has_taxonomic_coverage";
+    public static final String IS_SUBJECT_OF = cidocCrmNamespace + "P129i_is_subject_of";
     public static final String hasContrastMethod = cidocCrmNamespace + "P_has_contrast_method";
     public static final String hasZoom = cidocCrmNamespace + "P_has_zoom";
     public static final String hasVoltage = cidocCrmNamespace + "P_has_voltage";

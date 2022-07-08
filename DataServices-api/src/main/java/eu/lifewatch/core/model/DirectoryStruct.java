@@ -837,6 +837,26 @@ public class DirectoryStruct {
                     }
                 }
             }
+            for(String keyword : this.getKeywords()){
+                String keywordUri=Resources.defaultNamespaceForURIs+"/keyword/"+UUID.nameUUIDFromBytes(keyword.getBytes()).toString();
+                String keywordTypeUri=Resources.defaultNamespaceForURIs+"/resource_type/keyword";
+                retTriples+="<"+this.datasetURI+"> <"+Resources.IS_SUBJECT_OF+"> <"+keywordUri+">.\n "
+                           +"<"+keywordUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.INFORMATION_OBJECT+">.\n "
+                           +"<"+keywordUri+"> <"+Resources.rdfsLabel+"> \""+keyword+"\".\n "
+                           +"<"+keywordUri+"> <"+Resources.hasType+"> <"+keywordTypeUri+">.\n "
+                           +"<"+keywordTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">.\n "
+                           +"<"+keywordTypeUri+"> <"+Resources.rdfsLabel+"> \"keyword\".\n ";
+            }
+            if(!this.getCitation().isBlank()){
+                String citationUri=Resources.defaultNamespaceForURIs+"/citation/"+UUID.nameUUIDFromBytes(this.getCitation().getBytes()).toString();
+                String citationTypeUri=Resources.defaultNamespaceForURIs+"/resource_type/citation";
+                retTriples+="<"+this.datasetURI+"> <"+Resources.IS_SUBJECT_OF+"> <"+citationUri+">.\n "
+                           +"<"+citationUri+"> <"+Resources.typeLabel+"> <"+Resources.PROPOSITIONAL_OBJECT+">.\n "
+                           +"<"+citationUri+"> <"+Resources.rdfsLabel+"> \""+this.getCitation().replaceAll("\"", "'")+"\".\n "
+                           +"<"+citationUri+"> <"+Resources.hasType+"> <"+citationTypeUri+">.\n "
+                           +"<"+citationTypeUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">.\n "
+                           +"<"+citationTypeUri+"> <"+Resources.rdfsLabel+"> \"citation\".\n ";
+            }
         }
         if (!this.ownerURI.isEmpty()) {
             retTriples += "<" + this.ownerURI + "> <" + Resources.rdfTypeLabel + "> <" + Resources.actorLabel + "> .\n";
