@@ -136,7 +136,7 @@ public class DirectoryService implements Service {
                 
                 
 
-    public List<DirectoryStruct> searchDataset(String datasetURI, String datasetName, String ownerName, String creator, String datasetType, String geographicCoverageStr, String tempCoverageStr, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
+    public List<DirectoryStruct> searchDataset(String datasetURI, String datasetName, String ownerName, String creator, String datasetType, String geographicCoverageStr, String tempCoverageStrFrom, String tempCoverageStrTo, String taxonomicCoverageStr, int limit, int offset, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for dataset search with parameters "
                    +"datasetURI: ["+datasetURI+"], "
                    +"datasetName: ["+datasetName+"], "
@@ -144,7 +144,8 @@ public class DirectoryService implements Service {
                    +"creator: ["+creator+"], "
                    +"datasetType: ["+datasetType+"], "
                    +"geographicCoverage: ["+geographicCoverageStr+"], "
-                   +"temporalCoverage: ["+tempCoverageStr+"], "
+                   +"temporalCoverageFrom: ["+tempCoverageStrFrom+"], "
+                   +"temporalCoverageTo: ["+tempCoverageStrTo+"], "
                    +"taxonomicCoverage: ["+taxonomicCoverageStr+"], "
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
@@ -490,11 +491,11 @@ public class DirectoryService implements Service {
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
-        if(!tempCoverageStr.isBlank()){
+        if(!tempCoverageStrFrom.isBlank() || !tempCoverageStrTo.isBlank()){
             ArrayList<DirectoryStruct> retList=new ArrayList<>();
             for(DirectoryStruct structToCheck : structsMap.values()){
                 try{
-                    if(structToCheck.hasTemporalCoverage(tempCoverageStr)){
+                    if(structToCheck.hasTemporalCoverage(tempCoverageStrFrom, tempCoverageStrTo)){
                         retList.add(structToCheck);
                     }    
                 }catch(ParseException ex){

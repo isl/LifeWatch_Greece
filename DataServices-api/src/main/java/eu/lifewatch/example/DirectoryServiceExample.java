@@ -21,9 +21,9 @@ public class DirectoryServiceExample {
         
 //        List<DirectoryStruct> results=dsManager.searchDataset("", "", "arvani", "","saronicos , aegean","","", -1, -1, GRAPHSPACE_DIRECTORY);
 //        List<DirectoryStruct> results=dsManager.searchDataset("", "", "Legaki", "","Egypt","","", -1, -1, GRAPHSPACE_DIRECTORY);
-        List<DirectoryStruct> results=dsManager.searchDataset("http://www.lifewatchgreece.eu/entity/dataset/2aa6f6ad-515b-4aac-87cb-d3a60321b9f4","", "", "", "","","","", -1, -1, GRAPHSPACE_DIRECTORY);
+        List<DirectoryStruct> results=dsManager.searchDataset("","", "", "", "","","2005","2006","", -1, -1, GRAPHSPACE_DIRECTORY);
         for(DirectoryStruct directoryStruct : results){
-            System.out.println(directoryStruct.getGeographicCoverage()+"\t"+directoryStruct.getDatasetName());
+            System.out.println(directoryStruct.getDatasetID()+"\t"+directoryStruct.getTemporalCoverage());
 
 ////            System.out.println(directoryStruct.getContributorNames());
 //            System.out.println(directoryStruct.getGeographicCoverage());

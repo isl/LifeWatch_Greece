@@ -713,31 +713,57 @@ public class DirectoryStruct {
         return this;
     }
     
-    public boolean hasTemporalCoverage(String givenTempCoverage) throws ParseException{
+    public boolean hasTemporalCoverage(String from, String to) throws ParseException{
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        String tempNormDate=Utils.normalizeDate(givenTempCoverage, false);
-        if(tempNormDate.length()==10){
-            Date givenDate=dateFormat.parse(tempNormDate);
+        String tempNormFromDate=Utils.normalizeDate(from, false);
+        String tempNormToDate=Utils.normalizeDate(to, true);
+        if(tempNormFromDate.length()==10 && tempNormToDate.length()==10){
+            Date fromDate=dateFormat.parse(tempNormFromDate);
+            Date toDate=dateFormat.parse(tempNormToDate);
             for(Pair tempCoverPair : this.temporalCoverage){
-                if(!tempCoverPair.getKey().isBlank() && !tempCoverPair.getValue().isBlank()){
-                    Date dateInStructBegin=dateFormat.parse(tempCoverPair.getKey());
-                    Date dateInStructEnd=dateFormat.parse(tempCoverPair.getValue());
-                    if(dateInStructBegin.before(givenDate) && dateInStructEnd.after(givenDate)){
+                if(!tempCoverPair.getValue().isBlank() && !tempCoverPair.getKey().isBlank()){
+                    if(fromDate.before(dateFormat.parse(tempCoverPair.getValue())) && toDate.after(dateFormat.parse(tempCoverPair.getKey()))){
                         return true;
                     }
-                }else if(!tempCoverPair.getKey().isBlank() && tempCoverPair.getValue().isBlank()){
-                    Date dateInStruct=dateFormat.parse(tempCoverPair.getKey());
-                    if(dateInStruct.before(givenDate)){
+                }else if(!tempCoverPair.getValue().isBlank() && tempCoverPair.getKey().isBlank()){
+                    if(fromDate.before(dateFormat.parse(tempCoverPair.getValue()))){
                         return true;
                     }
-                }else if(tempCoverPair.getKey().isBlank() && !tempCoverPair.getValue().isBlank()){
-                    Date dateInStruct=dateFormat.parse(tempCoverPair.getValue());
-                    if(dateInStruct.after(givenDate)){
+                }else if(tempCoverPair.getValue().isBlank() && !tempCoverPair.getKey().isBlank()){
+                    if(toDate.after(dateFormat.parse(tempCoverPair.getKey()))){
+                        return true;
+                    }
+                }
+            }
+        }else if(tempNormFromDate.length()==10){
+            Date fromDate=dateFormat.parse(tempNormFromDate);
+            for(Pair tempCoverPair : this.temporalCoverage){
+                if(!tempCoverPair.getValue().isBlank()){
+                    if(fromDate.before(dateFormat.parse(tempCoverPair.getValue()))){
+                        return true;
+                    }
+                }
+            }
+        }else if(tempNormToDate.length()==10){
+            Date toDate=dateFormat.parse(tempNormToDate);
+            for(Pair tempCoverPair : this.temporalCoverage){
+                if(!tempCoverPair.getKey().isBlank()){
+                    if(toDate.after(dateFormat.parse(tempCoverPair.getKey()))){
                         return true;
                     }
                 }
             }
         }
+//        if(tempNormToDate.length()==10){
+//            Date toDate=dateFormat.parse(tempNormToDate);
+//            for(Pair tempCoverPair : this.temporalCoverage){
+//                if(!tempCoverPair.getValue().isBlank()){
+//                    if(dateFormat.parse(tempCoverPair.getValue()).before(toDate)){
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
         return false;
     }
 
