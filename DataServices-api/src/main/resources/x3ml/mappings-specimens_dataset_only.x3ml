@@ -2,7 +2,7 @@
 <x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     source_type="xpath"
     version="1.0"
-    mappings_version="2022-07-08"
+    mappings_version="2022-07-11"
     xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
     <namespaces>
         <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
@@ -138,7 +138,16 @@
                                     </entity>
                                 </additional>
                             </entity>
-                        </additional> 
+                        </additional>
+                        <additional>
+                            <relationship>crm:P3_has_note</relationship>
+                            <entity>
+                                <type>rdfs:Literal</type>
+                                <instance_generator name="Literal">
+                                    <arg name="text" type="constant">This is a description of the MicroCT specimen dataset (to be udpated ...)</arg>
+                                </instance_generator>
+                            </entity>
+                        </additional>
                     </entity>
                 </target_node>
             </domain>
