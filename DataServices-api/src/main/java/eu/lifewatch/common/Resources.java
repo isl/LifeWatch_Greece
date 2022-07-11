@@ -252,6 +252,9 @@ public class Resources {
     public static final String TITLE="title";
     public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
     
+    public static final String BIODIVERSITY_DATA="Biodiversity Data";
+    public static final String ENVIRONMENTAL_DATA="Environmental Data";
+    
     public static final String MEDOBIS_FILE_RESOURCE_XML="resource.xml";
     public static final String DWCA_FILENAME_PREFIX="dwca-";
     public static final String DWCA_FILE_EXTENSION=".zip";

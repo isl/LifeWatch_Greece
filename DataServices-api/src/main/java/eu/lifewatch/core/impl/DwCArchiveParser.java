@@ -189,7 +189,17 @@ public class DwCArchiveParser {
                 directoryStruct.setDatasetURI(this.datasetURI);
             }
         }
-        directoryStruct.setDatasetType(this.datasetType);
+        switch(this.datasetType){
+            case Resources.SAMPLING_EVENT:
+                directoryStruct.setDatasetType(Resources.ENVIRONMENTAL_DATA);
+                break;
+            case Resources.OCCURRENCE_CAMELCASE:
+                directoryStruct.setDatasetType(Resources.BIODIVERSITY_DATA);
+                break;
+            default: 
+                directoryStruct.setDatasetType(this.datasetType);
+                break;
+        }
         Elements titleElements=metadataDoc.getElementsByTag(Resources.TITLE);
         if(titleElements!=null){
             this.datasetTitle=titleElements.get(0).text();
