@@ -437,6 +437,7 @@ public class TaxonomyStruct {
               +"DatasetName: "+datasetName+"\t"
               +"SpeciesURI: "+speciesURI+"\t"
               +"SpeciesName: "+speciesName+"\t"
+              +"scNameId: "+this.scNameId+"\t"
               +"PhylumURI: "+phylumURI+"\t"
               +"PhylumName: "+phylumName+"\t"
               +"GenusURI: "+genusURI+"\t"
@@ -448,7 +449,7 @@ public class TaxonomyStruct {
               +"ClassURI: "+classURI+"\t"
               +"ClassName: "+className+"\t"
               +"KingdomURI: "+kingdomURI+"\t"
-              +"KingdomName: "+kingdomName;       
+              +"KingdomName: "+kingdomName;
     }
     
     @Override
