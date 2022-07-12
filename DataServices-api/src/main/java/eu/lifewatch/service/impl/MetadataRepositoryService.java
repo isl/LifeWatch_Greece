@@ -69,10 +69,12 @@ import org.openrdf.rio.RDFFormat;
 public class MetadataRepositoryService implements Service {
 
     private final RepositoryManager repoManager;
+    private final DirectoryService directoryService;
     private static final Logger logger = Logger.getLogger(MetadataRepositoryService.class);
 
     public MetadataRepositoryService(RepositoryManager repositoryManager) {
         this.repoManager = repositoryManager;
+        this.directoryService=new DirectoryService(repositoryManager);
     }
 
     /**
@@ -351,6 +353,63 @@ public class MetadataRepositoryService implements Service {
         }
         logger.debug("The query returned "+map.values().size()+" occurrence objects");
         return new ArrayList<>(map.values());
+    }
+    
+    public List<DirectoryStruct> searchOccurrenceDatasets(String speciesName, String place, String date, String datasetURI, int offset, int limit, String repositoryGraph, String directoryGraph) throws QueryExecutionException {
+        logger.info("Request for occurrence search with parameters "
+                   +"speciesName: ["+speciesName+"], "
+                   +"place(locality OR country OR waterarea): ["+place+"], "
+                   +"date: ["+date+"], "
+                   +"datasetURI: ["+datasetURI+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString="SELECT DISTINCT ?dataset_uri  "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?dataset_uri <"+Resources.refersTo+"> ?occurrence_event_uri. "
+                +"?occurrence_event_uri <"+Resources.rdfTypeLabel+"> <"+Resources.encounterEventLabel+">. "
+                +"?occurrence_event_uri <"+Resources.hasFoundObject+"> ?biotic_element_uri. "
+                +"?biotic_element_uri <"+Resources.rdfTypeLabel+"> <"+Resources.bioticElementLabel+">. "
+                +"?biotic_element_uri <"+Resources.belongsTo+"> ?species_uri."
+                +"?species_uri <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+">. "
+                +"?species_uri <"+Resources.rdfsLabel+"> ?species_name. "
+                
+                +"?occurrence_event_uri <"+Resources.hasFoundAt+"> ?location_uri. "
+                +"?location_uri <"+Resources.rdfsLabel+"> ?location. "
+                
+                +"?occurrence_event_uri <"+Resources.hasTimespan+"> ?timespan_uri. "
+                +"?timespan_uri <"+Resources.rdfTypeLabel+"> <"+Resources.timespanLabel+">. "
+                +"?timespan_uri <"+Resources.rdfsLabel+"> ?timespan. ";
+                
+        if(date!=null && !date.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?timespan),\""+date.toLowerCase()+"\"). ";
+        }
+        if(speciesName!=null && !speciesName.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?species_name),\""+speciesName.toLowerCase()+"\"). ";
+        }
+        if(place!=null && !place.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?location),\""+place.toLowerCase()+"\") ";
+        }
+        if(datasetURI!=null && !datasetURI.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
+        
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
+        List<String> datasetUris=new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+            datasetUris.add(result.getValue("dataset_uri").stringValue());
+        }
+        if(datasetUris.isEmpty()){
+            return new ArrayList<>();
+        }else{
+            logger.debug("Retrieve datasets with the following URIs "+datasetUris);
+            Map<String,DirectoryStruct> datasetsMap=this.directoryService.searchDatasets(datasetUris, directoryGraph);
+            return new ArrayList<>(datasetsMap.values());
+        }
     }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {

@@ -1,5 +1,6 @@
 package eu.lifewatch.example;
 
+import eu.lifewatch.core.model.DirectoryStruct;
 import eu.lifewatch.core.model.MeasurementStruct;
 import eu.lifewatch.core.model.MicroCTScanningStruct;
 import eu.lifewatch.core.model.MicroCTSpecimenStruct;
@@ -30,7 +31,7 @@ public class MetadataCatalogExample {
 //        String text=mrManager.produceText("Manzonia crassa", null, GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
 //        System.out.println(text);
         
-//        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "", "Balanidae", "", "", "", "", "", GRAPHSPACE_METADATA);
+//        List<TaxonomyStruct> results=mrManager.searchTaxonomy("Paradoneis ilvana", "", "", "", "", "", "", "", -1 , -1, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(TaxonomyStruct struct : results){
 //            System.out.println(struct);
@@ -42,18 +43,12 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }       
 //
-        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "", "", 0, 10, GRAPHSPACE_METADATA);
-//        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Agelas", "", "", -1, -1, GRAPHSPACE_METADATA);
-        System.out.println("Results: "+results.size());
-        for(MicroCTScanningStruct struct : results){
-            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimen());
-        }        
-
-//        List<OccurrenceStatsTempStruct> results=mrManager.searchOccurenceStatsTemp("", "Elounda", "", "5", "", 0,5, GRAPHSPACE_METADATA);
+//        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("", "", "", 0, 10, GRAPHSPACE_METADATA);
+////        List<MicroCTScanningStruct> results=mrManager.searchMicroCTScanning("Agelas", "", "", -1, -1, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
-//        for(OccurrenceStatsTempStruct struct : results){
-//            System.out.println(struct);
-//        }                
+//        for(MicroCTScanningStruct struct : results){
+//            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimen());
+//        }        
 
 //        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "Myrianida", "", "", "", "animalia", "", "", 0, 0, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
@@ -61,16 +56,16 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }                
 
-//        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1982", "", "", "", 0, 0, GRAPHSPACE_METADATA);
+//        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1959", "", "", "", 0, 0, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(ScientificNamingStruct struct : results){
 //            System.out.println(struct);
 //        }                
-//        List<OccurrenceStruct> results=mrManager.searchOccurrence("Syllis garciai", "", "", "", 0, 0,GRAPHSPACE_METADATA);
-//        System.out.println("Results: "+results.size());
-//        for(OccurrenceStruct struct : results){
-//            System.out.println(struct);
-//        }                
+        List<DirectoryStruct> results=mrManager.searchOccurrenceDatasets("", "", "1910", "", 0, 0,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
+        System.out.println("Results: "+results.size());
+        for(DirectoryStruct struct : results){
+            System.out.println(struct);
+        }                
 //        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(MeasurementStruct struct : results){
