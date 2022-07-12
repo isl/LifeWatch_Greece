@@ -290,8 +290,35 @@ public class TaxonomyStruct {
             if(!speciesName.isEmpty()){
                 retTriples+= "<"+speciesURI+"> <"+Resources.rdfsLabel+"> \""+speciesName+"\" .\n";
             }
-            if(!genusName.isEmpty()){
-                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+genusURI+"> .\n";
+            if(!genusURI.isEmpty() && !genusName.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+genusURI+"> .\n"
+                            +"<"+genusURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.genusLabel+"> .\n"
+                            +"<"+genusURI+"> <"+Resources.rdfsLabel+"> \""+genusName+"\" .\n";
+            }
+            if(!familyURI.isEmpty() && !familyName.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+familyURI+"> .\n"
+                            +"<"+familyURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.familyLabel+"> .\n"
+                            +"<"+familyURI+"> <"+Resources.rdfsLabel+"> \""+familyName+"\" .\n";
+            }
+            if(!orderURI.isEmpty() && !orderName.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+orderURI+"> .\n"
+                            +"<"+orderURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.orderLabel+"> .\n"
+                            +"<"+orderURI+"> <"+Resources.rdfsLabel+"> \""+orderName+"\" .\n";
+            }
+            if(!classURI.isEmpty() && !className.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+classURI+"> .\n"
+                            +"<"+classURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.classLabel+"> .\n"
+                            +"<"+classURI+"> <"+Resources.rdfsLabel+"> \""+className+"\" .\n";
+            }
+            if(!phylumURI.isEmpty() && !phylumName.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+phylumURI+"> .\n"
+                            +"<"+phylumURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+"> .\n"
+                            +"<"+phylumURI+"> <"+Resources.rdfsLabel+"> \""+phylumName+"\" .\n";
+            }
+            if(!kingdomURI.isEmpty() && !kingdomName.isEmpty()){
+                retTriples+= "<"+speciesURI+"> <"+Resources.belongsTo+"> <"+kingdomURI+"> .\n"
+                            +"<"+kingdomURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+"> .\n"
+                            +"<"+kingdomURI+"> <"+Resources.rdfsLabel+"> \""+kingdomName+"\" .\n";
             }
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+speciesURI+"> . \n";
@@ -302,56 +329,57 @@ public class TaxonomyStruct {
                            +"<"+scNameIdUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.identifierLabel+">. \n"
                            +"<"+scNameIdUri+"> <"+Resources.rdfsLabel+"> \""+this.scNameId+"\". \n";
             }
+            
         }
-        if(!genusURI.isEmpty()){
-            retTriples+= "<"+genusURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.genusLabel+"> .\n";
-            if(!genusName.isEmpty()){
-                retTriples+= "<"+genusURI+"> <"+Resources.rdfsLabel+"> \""+genusName+"\" .\n";
-            }
-            if(!familyName.isEmpty()){
-                retTriples+= "<"+genusURI+"> <"+Resources.belongsTo+"> <"+familyURI+"> .\n";
-            }
-        }
-        if(!familyURI.isEmpty()){
-            retTriples+= "<"+familyURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.familyLabel+"> .\n";
-            if(!familyName.isEmpty()){
-                retTriples+= "<"+familyURI+"> <"+Resources.rdfsLabel+"> \""+familyName+"\" .\n";
-            }
-            if(!orderName.isEmpty()){
-                retTriples+= "<"+familyURI+"> <"+Resources.belongsTo+"> <"+orderURI+"> .\n";
-            }
-        }
-        if(!orderURI.isEmpty()){
-            retTriples+= "<"+orderURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.orderLabel+"> .\n";
-            if(!orderName.isEmpty()){
-                retTriples+= "<"+orderURI+"> <"+Resources.rdfsLabel+"> \""+orderName+"\" .\n";
-            }
-            if(!className.isEmpty()){
-                retTriples+= "<"+orderURI+"> <"+Resources.belongsTo+"> <"+classURI+"> .\n";
-            }
-        }
-        if(!classURI.isEmpty()){
-            retTriples+= "<"+classURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.classLabel+"> .\n";
-            if(!className.isEmpty()){
-                retTriples+= "<"+classURI+"> <"+Resources.rdfsLabel+"> \""+className+"\" .\n";
-            }
-            if(!phylumName.isEmpty()){
-                retTriples+= "<"+classURI+"> <"+Resources.belongsTo+"> <"+phylumURI+"> .\n";
-            }
-        }
-        if(!phylumURI.isEmpty()){
-            retTriples+= "<"+phylumURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+"> .\n";
-            if(!phylumName.isEmpty()){
-                retTriples+= "<"+phylumURI+"> <"+Resources.rdfsLabel+"> \""+phylumName+"\" .\n";
-            }
-        }   
-        if(!kingdomName.isEmpty()){
-            if(!phylumURI.isEmpty()){
-                retTriples+= "<"+phylumURI+"> <"+Resources.belongsTo+"> <"+kingdomURI+"> .\n";
-            }
-            retTriples+= "<"+kingdomURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+"> .\n";
-            retTriples+= "<"+kingdomURI+"> <"+Resources.rdfsLabel+"> \""+kingdomName+"\" .\n";
-        }
+//        if(!genusURI.isEmpty()){
+//            retTriples+= "<"+genusURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.genusLabel+"> .\n";
+//            if(!genusName.isEmpty()){
+//                retTriples+= "<"+genusURI+"> <"+Resources.rdfsLabel+"> \""+genusName+"\" .\n";
+//            }
+//            if(!familyName.isEmpty()){
+//                retTriples+= "<"+genusURI+"> <"+Resources.belongsTo+"> <"+familyURI+"> .\n";
+//            }
+//        }
+//        if(!familyURI.isEmpty()){
+//            retTriples+= "<"+familyURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.familyLabel+"> .\n";
+//            if(!familyName.isEmpty()){
+//                retTriples+= "<"+familyURI+"> <"+Resources.rdfsLabel+"> \""+familyName+"\" .\n";
+//            }
+//            if(!orderName.isEmpty()){
+//                retTriples+= "<"+familyURI+"> <"+Resources.belongsTo+"> <"+orderURI+"> .\n";
+//            }
+//        }
+//        if(!orderURI.isEmpty()){
+//            retTriples+= "<"+orderURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.orderLabel+"> .\n";
+//            if(!orderName.isEmpty()){
+//                retTriples+= "<"+orderURI+"> <"+Resources.rdfsLabel+"> \""+orderName+"\" .\n";
+//            }
+//            if(!className.isEmpty()){
+//                retTriples+= "<"+orderURI+"> <"+Resources.belongsTo+"> <"+classURI+"> .\n";
+//            }
+//        }
+//        if(!classURI.isEmpty()){
+//            retTriples+= "<"+classURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.classLabel+"> .\n";
+//            if(!className.isEmpty()){
+//                retTriples+= "<"+classURI+"> <"+Resources.rdfsLabel+"> \""+className+"\" .\n";
+//            }
+//            if(!phylumName.isEmpty()){
+//                retTriples+= "<"+classURI+"> <"+Resources.belongsTo+"> <"+phylumURI+"> .\n";
+//            }
+//        }
+//        if(!phylumURI.isEmpty()){
+//            retTriples+= "<"+phylumURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+"> .\n";
+//            if(!phylumName.isEmpty()){
+//                retTriples+= "<"+phylumURI+"> <"+Resources.rdfsLabel+"> \""+phylumName+"\" .\n";
+//            }
+//        }   
+//        if(!kingdomName.isEmpty()){
+//            if(!phylumURI.isEmpty()){
+//                retTriples+= "<"+phylumURI+"> <"+Resources.belongsTo+"> <"+kingdomURI+"> .\n";
+//            }
+//            retTriples+= "<"+kingdomURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+"> .\n";
+//            retTriples+= "<"+kingdomURI+"> <"+Resources.rdfsLabel+"> \""+kingdomName+"\" .\n";
+//        }
         if(!datasetURI.isEmpty()){
             retTriples+= "<"+datasetURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+"> .\n";
             if(!datasetName.isEmpty()){
