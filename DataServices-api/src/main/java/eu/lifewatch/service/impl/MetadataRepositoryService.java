@@ -1572,32 +1572,49 @@ public class MetadataRepositoryService implements Service {
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
                    +"reposytoryGraph: ["+repositoryGraph+"], ");
         String queryString = "SELECT DISTINCT ?speciesURI ?speciesName ?genusName ?familyName ?orderName ?className ?kingdomName ?phylumName "
-                                            +"?genusURI ?familyURI ?orderURI ?classURI ?kingdomURI ?phylumURI ?datasetURI ?datasetName "
+                                            +"?genusURI ?familyURI ?orderURI ?classURI ?kingdomURI ?phylumURI ?datasetURI ?datasetName ?scNameIdentifier "
                 +"FROM <" + repositoryGraph + "> "
                 +"WHERE{ "
                 +"?speciesURI <"+Resources.rdfTypeLabel+"> <"+Resources.speciesLabel+">. "
                 +"?speciesURI <"+Resources.rdfsLabel+"> ?speciesName. "
-                +"?speciesURI <"+Resources.belongsTo+"> ?genusURI. "
                 +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
                 +"?datasetURI <"+Resources.refersTo+"> ?speciesURI. "
                 +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
-                +"?genusURI <"+ Resources.rdfTypeLabel+"> <"+Resources.genusLabel+">. "
-                +"?genusURI <"+ Resources.rdfsLabel+"> ?genusName. "
-                +"?genusURI <"+ Resources.belongsTo+"> ?familyURI. "
-                +"?familyURI <"+ Resources.rdfTypeLabel+"> <"+Resources.familyLabel+">. "
-                +"?familyURI <"+ Resources.rdfsLabel+"> ?familyName. "
-                +"?familyURI <"+ Resources.belongsTo+"> ?orderURI. "
-                +"?orderURI <"+ Resources.rdfTypeLabel+"> <"+Resources.orderLabel+">. "
-                +"?orderURI <"+ Resources.rdfsLabel+"> ?orderName. "
-                +"?orderURI <"+ Resources.belongsTo+"> ?classURI. "
-                +"?classURI <"+ Resources.rdfTypeLabel+"> <"+Resources.classLabel+">. "
-                +"?classURI <"+ Resources.rdfsLabel+"> ?className. "
-                +"?classURI <"+ Resources.belongsTo+"> ?phylumURI. "
-                +"?phylumURI <"+ Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+">. "
-                +"?phylumURI <"+ Resources.rdfsLabel+"> ?phylumName. "
-                +"?phylumURI <"+ Resources.belongsTo+"> ?kingdomURI. "
-                +"?kingdomURI <"+ Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+">. "
-                +"?kingdomURI <"+ Resources.rdfsLabel+"> ?kingdomName. ";
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+Resources.belongsTo+"> ?genusURI. "
+                    +"?genusURI <"+ Resources.rdfTypeLabel+"> <"+Resources.genusLabel+">. "
+                    +"?genusURI <"+ Resources.rdfsLabel+"> ?genusName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.belongsTo+"> ?familyURI. "
+                    +"?familyURI <"+ Resources.rdfTypeLabel+"> <"+Resources.familyLabel+">. "
+                    +"?familyURI <"+ Resources.rdfsLabel+"> ?familyName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.belongsTo+"> ?orderURI. "
+                    +"?orderURI <"+ Resources.rdfTypeLabel+"> <"+Resources.orderLabel+">. "
+                    +"?orderURI <"+ Resources.rdfsLabel+"> ?orderName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.belongsTo+"> ?classURI. "
+                    +"?classURI <"+ Resources.rdfTypeLabel+"> <"+Resources.classLabel+">. "
+                    +"?classURI <"+ Resources.rdfsLabel+"> ?className. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.belongsTo+"> ?phylumURI. "
+                    +"?phylumURI <"+ Resources.rdfTypeLabel+"> <"+Resources.phylumLabel+">. "
+                    +"?phylumURI <"+ Resources.rdfsLabel+"> ?phylumName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.belongsTo+"> ?kingdomURI. "
+                    +"?kingdomURI <"+ Resources.rdfTypeLabel+"> <"+Resources.kingdomLabel+">. "
+                    +"?kingdomURI <"+ Resources.rdfsLabel+"> ?kingdomName. "
+                +"} "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+ Resources.isIdentifiedBy+"> ?scNameIdentifierUri. "
+                    +"?scNameIdentifierUri <"+ Resources.rdfTypeLabel+"> <"+Resources.identifierLabel+">. "
+                    +"?scNameIdentifierUri <"+ Resources.rdfsLabel+"> ?scNameIdentifier. "
+                +"} ";
         
         if(species!=null && !species.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
@@ -1637,20 +1654,35 @@ public class MetadataRepositoryService implements Service {
             TaxonomyStruct struct = new TaxonomyStruct()
                     .withSpeciesName(result.getValue("speciesName").stringValue())
                     .withSpeciesURI(result.getValue("speciesURI").stringValue())
-                    .withGenusName(result.getValue("genusName").stringValue())
-                    .withGenusURI(result.getValue("genusURI").stringValue())
-                    .withFamilyName(result.getValue("familyName").stringValue())
-                    .withFamilyURI(result.getValue("familyURI").stringValue())
-                    .withOrderName(result.getValue("orderName").stringValue())
-                    .withOrderURI(result.getValue("orderURI").stringValue())
                     .withDatasetName(result.getValue("datasetName").stringValue())
-                    .withDatasetURI(result.getValue("datasetURI").stringValue())
-                    .withClassName(result.getValue("className").stringValue())
-                    .withClassURI(result.getValue("classURI").stringValue())
-                    .withPhylumName(result.getValue("phylumName").stringValue())
-                    .withPhylumURI(result.getValue("phylumURI").stringValue())
-                    .withKingdomName(result.getValue("kingdomName").stringValue())
-                    .withKingdomURI(result.getValue("kingdomURI").stringValue());
+                    .withDatasetURI(result.getValue("datasetURI").stringValue());
+            if(result.getValue("genusURI")!=null && result.getValue("genusName")!=null){
+                struct.withGenusName(result.getValue("genusName").stringValue())
+                      .withGenusURI(result.getValue("genusURI").stringValue());
+            }
+            if(result.getValue("familyURI")!=null && result.getValue("familyName")!=null){
+                struct.withFamilyName(result.getValue("familyName").stringValue())
+                      .withFamilyURI(result.getValue("familyURI").stringValue());
+            }
+            if(result.getValue("orderURI")!=null && result.getValue("orderName")!=null){
+                struct.withOrderName(result.getValue("orderName").stringValue())
+                      .withOrderURI(result.getValue("orderURI").stringValue());
+            }
+            if(result.getValue("classURI")!=null && result.getValue("className")!=null){
+                struct.withClassName(result.getValue("className").stringValue())
+                      .withClassURI(result.getValue("classURI").stringValue());
+            }
+            if(result.getValue("phylumURI")!=null && result.getValue("phylumName")!=null){
+                struct.withPhylumName(result.getValue("phylumName").stringValue())
+                      .withPhylumURI(result.getValue("phylumURI").stringValue());
+            }
+            if(result.getValue("kingdomName")!=null && result.getValue("kingdomURI")!=null){
+                struct.withKingdomName(result.getValue("kingdomName").stringValue())
+                      .withKingdomURI(result.getValue("kingdomURI").stringValue());
+            }
+            if(result.getValue("scNameIdentifier")!=null){
+                struct.withScNameId(result.getValue("scNameIdentifier").stringValue());
+            }
             results.add(struct);
         }
         logger.debug("The query returned "+results.size()+" taxonomy objects");
