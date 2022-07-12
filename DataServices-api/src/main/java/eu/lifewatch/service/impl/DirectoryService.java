@@ -240,6 +240,278 @@ public class DirectoryService implements Service {
                 }
             }
         }
+//        String queryString="SELECT DISTINCT ?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
+//                                           +"?ownerURI ?ownerName ?keeperURI ?keeperName "
+//                                           +"?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
+//                                           +"?attributeAssignmentEventURI ?attributeAssignmentEventLabel ?embargoState ?embargoPeriod "
+//                                           +"?curatorURI ?curatorName ?rightsHolderURI ?rightsHolderName ?accessRightsURI ?accessRights "
+//                                           +"?contactPoint ?creationEventURI ?creationEventLabel ?creatorURI ?creatorName ?creationDate ?accessMethodURI ?accessMethod ?locationURL "
+//                                           +"?description ?contributorURI ?contributorName ?imageTitle ?imageURI "
+//                                           +"?geographicCoverage ?temporalCoverageBegin ?temporalCoverageEnd ?taxonomicCoverageName ?taxonomicCoverageValue "
+//                                           +"?keyword ?citation "
+//                +"FROM <"+repositoryGraph+"> "
+//                +"WHERE{ "
+//                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+//                +"?datasetURI <"+Resources.hasPreferredIdentifier+"> ?datasetName. "
+//                +"?datasetURI <"+Resources.hasCurrentOwner+"> ?ownerURI. "
+//                +"?datasetURI <"+Resources.hasType+"> ?datasetType. "
+//                +"?datasetURI <"+Resources.isReferredToBy+"> ?accessMethodURI. "
+//                +"?accessMethodURI <"+Resources.rdfTypeLabel+"> <"+Resources.procedureLabel+">. "
+//                +"?accessMethodURI <"+Resources.hasNote+"> ?accessMethod. "
+//                +"?ownerURI <"+Resources.rdfsLabel+"> ?ownerName. "
+//                +"?datasetURI <"+Resources.hasCurator+"> ?curatorURI. "
+//                +"?curatorURI <"+Resources.rdfsLabel+"> ?curatorName. "
+//                +"?curatorURI <"+Resources.hasContactPoint+"> ?contactPoint. "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.HAS_GEOGRAPHIC_COVERAGE+"> ?geographicCoverage. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.HAS_TEMPORAL_COVERAGE+"> ?temp_coverage_uri. "
+//                    +"?temp_coverage_uri <"+Resources.beginOfTheBegin+"> ?temporalCoverageBegin. "
+//                    +"?temp_coverage_uri <"+Resources.endOfTheEnd+"> ?temporalCoverageEnd. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.HAS_TAXONOMIC_COVERAGE+"> ?taxonomicCoverageUri. "
+//                    +"?taxonomicCoverageUri <"+Resources.rdfsLabel+"> ?taxonomicCoverageValue. "
+//                    +"?taxonomicCoverageUri <"+Resources.hasNote+"> ?taxonomicCoverageName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetID. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.isDepictedBy+"> ?imageURI. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.hasCurrentKeeper+"> ?keeperURI. "
+//                    +"?keeperURI <"+Resources.rdfsLabel+"> ?keeperName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?publicationEventURI. "
+//                    +"?publicationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.publicationEventLabel+">. "
+//                    +"?publicationEventURI <"+Resources.hasTimespan+"> ?publicationDate. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?publicationEventURI. "
+//                    +"?publicationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.publicationEventLabel+">. "
+//                    +"?publicationEventURI <"+Resources.carriedOutBy+"> ?publisherURI. "
+//                    +"?publisherURI <"+Resources.rdfsLabel+ "> ?publisherName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.hasContributor+"> ?contributorURI. "
+//                    +"?contributorURI <"+Resources.rdfsLabel+"> ?contributorName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?creationEventURI. "
+//                    +"?creationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.creationEventLabel+">. "
+//                    +"?creationEventURI <"+Resources.carriedOutBy+"> ?creatorURI. "
+//                    +"?creationEventURI <"+Resources.rdfsLabel+"> ?creationEventLabel.  "
+//                    +"?creatorURI <"+Resources.rdfsLabel+"> ?creatorName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.wasCreatedBy+"> ?creationEventURI. "
+//                    +"?creationEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.creationEventLabel+">. "
+//                    +"?creationEventURI <"+Resources.hasTimespan+"> ?creationDate. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.wasAttributedBy+"> ?attributeAssignmentEventURI. "
+//                    +"?attributeAssignmentEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.attributeAssignmentEventLabel+">. "
+//                    +"?attributeAssignmentEventURI <"+Resources.hasTimespan+"> ?embargoPeriod. "
+//                    +"?attributeAssignmentEventURI <"+Resources.rdfsLabel+"> ?attributeAssignmentEventLabel. "
+//                    +"?attributeAssignmentEventURI <"+Resources.assigned+"> ?embargoState. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.isSubjectTo+"> ?accessRightsURI. "
+//                    +"?accessRightsURI <"+Resources.rdfsLabel+"> ?accessRights. "
+//                    +"?datasetURI <"+Resources.isPossessedBy+"> ?rightsHolderURI. "
+//                    +"?rightsHolderURI <"+Resources.rdfsLabel+"> ?rightsHolderName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.hasNote+"> ?description. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.isLocatedAt+"> ?locationURL. "
+//                    +"?locationURL <"+Resources.hasType+"> \"URL\". "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.formsPartOf+"> ?parentDatasetURI. "
+//                    +"?parentDatasetURI <"+Resources.rdfsLabel+"> ?parentDatasetName. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.IS_SUBJECT_OF+"> ?keyword_uri. "
+//                    +"?keyword_uri <"+Resources.hasType+"> ?keyword_type_uri. "
+//                    +"?keyword_type_uri <"+Resources.rdfsLabel+"> \"keyword\". "
+//                    +"?keyword_uri <"+Resources.rdfsLabel+"> ?keyword. "
+//                +"} "
+//                +"OPTIONAL{ "
+//                    +"?datasetURI <"+Resources.IS_SUBJECT_OF+"> ?citation_uri. "
+//                    +"?citation_uri <"+Resources.hasType+"> ?citation_type_uri. "
+//                    +"?citation_type_uri <"+Resources.rdfsLabel+"> \"citation\". "
+//                    +"?citation_uri <"+Resources.rdfsLabel+"> ?citation. "
+//                +"} ";
+//        queryString+="FILTER( ";
+//        for(String datasetUri : datasetURIs){
+//            queryString+="?datasetURI=<"+datasetUri+"> || ";
+//        }
+//        queryString=queryString.substring(0,queryString.length()-3);
+//        queryString+=")}";
+//        
+//        logger.debug("Submitting the query: \"" + queryString + "\"");
+//        sparqlresults = this.repoManager.query(queryString);
+//        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
+//        Map<String, DirectoryStruct> structsMap = new HashMap<>();
+//        for (BindingSet result : sparqlresults) {
+//            if (!structsMap.containsKey(result.getValue("datasetURI").stringValue())) {
+//                DirectoryStruct struct = new DirectoryStruct().withDatasetURI(result.getValue("datasetURI").stringValue())
+//                        .withDatasetName(result.getValue("datasetName").stringValue())
+//                        .withDatasetType(result.getValue("datasetType").stringValue())
+//                        .withOwnerURI(result.getValue("ownerURI").stringValue())
+//                        .withOwnerName(result.getValue("ownerName").stringValue())
+//                        .withCuratorURI(result.getValue("curatorURI").stringValue())
+//                        .withCuratorName(result.getValue("curatorName").stringValue())
+//                        .withContactPoint(result.getValue("contactPoint").stringValue());
+//                if(result.getValue("geographicCoverage") != null){
+//                    struct.withGeographicCoverage(result.getValue("geographicCoverage").stringValue());
+//                }
+//                if (result.getValue("datasetID") != null) {
+//                    struct.withDatasetID(result.getValue("datasetID").stringValue());
+//                }
+//                if (result.getValue("imageURI") != null) {
+//                    struct.withImageURI(result.getValue("imageURI").stringValue());
+//                }
+//                if (result.getValue("keeperURI") != null) {
+//                    struct.withKeeperURI(result.getValue("keeperURI").stringValue());
+//                }
+//                if (result.getValue("keeperName") != null) {
+//                    struct.withKeeperName(result.getValue("keeperName").stringValue());
+//                }
+//                if (result.getValue("publisherURI") != null) {
+//                    struct.withPublisherURI(result.getValue("publisherURI").stringValue());
+//                }
+//                if (result.getValue("publisherName") != null) {
+//                    struct.withPublisherName(result.getValue("publisherName").stringValue());
+//                }
+//                if (result.getValue("publicationDate") != null) {
+//                    struct.withPublicationDate(result.getValue("publicationDate").stringValue());
+//                }
+//                if (result.getValue("publicationEventLabel") != null) {
+//                    struct.withPublicationEventURI(result.getValue("publicationEventURI").stringValue());
+//                    struct.withPublicationEvent(result.getValue("publicationEventLabel").stringValue());
+//                }
+//                if (result.getValue("attributeAssignmentEventURI") != null) {
+//                    struct.withAttributeAssignmentEventURI(result.getValue("attributeAssignmentEventURI").stringValue());
+//                    struct.withAttributeAssignmentEvent(result.getValue("attributeAssignmentEventLabel").stringValue());
+//                }
+//                if (result.getValue("embargoState") != null) {
+//                    struct.withEmbargoState(result.getValue("embargoState").stringValue());
+//                }
+//                if (result.getValue("embargoPeriod") != null) {
+//                    struct.withEmbargoPeriod(result.getValue("embargoPeriod").stringValue());
+//                }
+//                if (result.getValue("contributorURI") != null) {
+//                    String contributorURI = result.getValue("contributorURI").stringValue();
+//                    String contributorName = result.getValue("contributorName").stringValue();
+//                    struct.withContributor(contributorURI, contributorName);
+//                }
+//                if (result.getValue("rightsHolderURI") != null) {
+//                    struct.withRightsHolderURI(result.getValue("rightsHolderURI").stringValue());
+//                }
+//                if (result.getValue("rightsHolderName") != null) {
+//                    struct.withRightsHolderName(result.getValue("rightsHolderName").stringValue());
+//                }
+//                if (result.getValue("creatorURI") != null) {
+//                    struct.withCreatorURI(result.getValue("creatorURI").stringValue());
+//                }
+//                if (result.getValue("creatorName") != null) {
+//                    struct.withCreatorName(result.getValue("creatorName").stringValue());
+//                }
+//                if (result.getValue("accessRightsURI") != null) {
+//                    struct.withAccessRightsURI(result.getValue("accessRightsURI").stringValue());
+//                }
+//                if (result.getValue("accessRights") != null) {
+//                    struct.withAccessRights(result.getValue("accessRights").stringValue());
+//                }
+//                if (result.getValue("creationEventURI") != null) {
+//                    struct.withCreationEventURI(result.getValue("creationEventURI").stringValue());
+//                    struct.withCreationEvent(result.getValue("creationEventLabel").stringValue());
+//                }
+//                if (result.getValue("creationDate") != null) {
+//                    struct.withCreationDate(result.getValue("creationDate").stringValue());
+//                }
+//                if (result.getValue("accessMethod") != null) {
+//                    struct.withAccessMethod(result.getValue("accessMethod").stringValue());
+//                }
+//                if (result.getValue("accessMethodURI") != null) {
+//                    struct.withAccessMethodURI(result.getValue("accessMethodURI").stringValue());
+//                }
+//                if (result.getValue("description") != null) {
+//                    struct.withDescription(result.getValue("description").stringValue());
+//                }
+//                if (result.getValue("locationURL") != null) {
+//                    struct.withLocationURL(result.getValue("locationURL").stringValue());
+//                }
+//                if (result.getValue("parentDatasetURI") != null) {
+//                    struct.withParentDatasetURI(result.getValue("parentDatasetURI").stringValue());
+//                }
+//                if (result.getValue("parentDatasetName") != null) {
+//                    struct.withParentDatasetName(result.getValue("parentDatasetName").stringValue());
+//                }
+//                if(result.getValue("temporalCoverageBegin")!=null || result.getValue("temporalCoverageEnd")!=null){
+//                    struct.withTemporalCoverage((result.getValue("temporalCoverageBegin")!=null?result.getValue("temporalCoverageBegin").stringValue():""), 
+//                                                (result.getValue("temporalCoverageEnd")!=null?result.getValue("temporalCoverageEnd").stringValue():""));
+//                }
+//                if(result.getValue("taxonomicCoverageName")!=null || result.getValue("taxonomicCoverageValue")!=null ){
+//                    struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
+//                                                 (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
+//                }
+//                if (result.getValue("keyword") != null) {
+//                    struct.withKeyword(result.getValue("keyword").stringValue());
+//                }
+//                if (result.getValue("citation") != null) {
+//                    struct.setCitation(result.getValue("citation").stringValue());
+//                }
+//                structsMap.put(struct.getDatasetURI(), struct);
+//            } else {
+//                DirectoryStruct struct = structsMap.get(result.getValue("datasetURI").stringValue());
+//                if (result.getValue("contributorURI") != null) {
+//                    String contributorURI = result.getValue("contributorURI").stringValue();
+//                    String contributorName = result.getValue("contributorName").stringValue();
+//                    struct.withContributor(contributorURI, contributorName);
+//                }
+//                if(result.getValue("temporalCoverageBegin")!=null || result.getValue("temporalCoverageEnd")!=null){
+//                    struct.withTemporalCoverage((result.getValue("temporalCoverageBegin")!=null?result.getValue("temporalCoverageBegin").stringValue():""), 
+//                                                (result.getValue("temporalCoverageEnd")!=null?result.getValue("temporalCoverageEnd").stringValue():""));
+//                }
+//                if(result.getValue("taxonomicCoverageName")!=null || result.getValue("taxonomicCoverageValue")!=null ){
+//                    struct.withTaxonomicCoverage((result.getValue("taxonomicCoverageName")!=null?result.getValue("taxonomicCoverageName").stringValue():""), 
+//                                                 (result.getValue("taxonomicCoverageValue")!=null?result.getValue("taxonomicCoverageValue").stringValue():""));
+//                }
+//                if (result.getValue("keyword") != null) {
+//                    struct.withKeyword(result.getValue("keyword").stringValue());
+//                }
+//                structsMap.put(struct.getDatasetURI(), struct);
+//            }
+//        }
+        Map<String, DirectoryStruct> structsMap=this.searchDatasets(datasetURIs, repositoryGraph);
+        if(!tempCoverageStrFrom.isBlank() || !tempCoverageStrTo.isBlank()){
+            ArrayList<DirectoryStruct> retList=new ArrayList<>();
+            for(DirectoryStruct structToCheck : structsMap.values()){
+                try{
+                    if(structToCheck.hasTemporalCoverage(tempCoverageStrFrom, tempCoverageStrTo)){
+                        retList.add(structToCheck);
+                    }    
+                }catch(ParseException ex){
+                    logger.error("Unable to parse date. Skipping that from the results",ex);
+                }
+            }
+            logger.debug("The query returned "+retList.size()+" datasets");
+            return retList;
+        }else{
+            logger.debug("The query returned "+structsMap.values().size()+" datasets");
+            return new ArrayList<>(structsMap.values());
+        }
+    }
+    
+    public Map<String,DirectoryStruct> searchDatasets(List<String> datasetURIs, String repositoryGraph) throws QueryExecutionException{
         String queryString="SELECT DISTINCT ?datasetURI ?datasetName ?parentDatasetURI ?parentDatasetName ?datasetType ?datasetID "
                                            +"?ownerURI ?ownerName ?keeperURI ?keeperName "
                                            +"?publicationEventURI ?publicationEventLabel ?publisherURI ?publisherName ?publicationDate "
@@ -356,7 +628,7 @@ public class DirectoryService implements Service {
         queryString+=")}";
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
-        sparqlresults = this.repoManager.query(queryString);
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
         logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
         Map<String, DirectoryStruct> structsMap = new HashMap<>();
         for (BindingSet result : sparqlresults) {
@@ -491,23 +763,7 @@ public class DirectoryService implements Service {
                 structsMap.put(struct.getDatasetURI(), struct);
             }
         }
-        if(!tempCoverageStrFrom.isBlank() || !tempCoverageStrTo.isBlank()){
-            ArrayList<DirectoryStruct> retList=new ArrayList<>();
-            for(DirectoryStruct structToCheck : structsMap.values()){
-                try{
-                    if(structToCheck.hasTemporalCoverage(tempCoverageStrFrom, tempCoverageStrTo)){
-                        retList.add(structToCheck);
-                    }    
-                }catch(ParseException ex){
-                    logger.error("Unable to parse date. Skipping that from the results",ex);
-                }
-            }
-            logger.debug("The query returned "+retList.size()+" datasets");
-            return retList;
-        }else{
-            logger.debug("The query returned "+structsMap.values().size()+" datasets");
-            return new ArrayList<>(structsMap.values());
-        }
+        return structsMap;
     }
  
     /**
