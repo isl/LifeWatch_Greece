@@ -482,6 +482,9 @@ public class DwCArchiveParser {
                 taxonomyStruct.withGenusURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "genus", rec.value(DwcTerm.genus)))
                               .withGenusName(rec.value(DwcTerm.genus));
             }
+            if(rec.value(DwcTerm.scientificNameID)!=null){
+                taxonomyStruct.withScNameId(rec.value(DwcTerm.scientificNameID));
+            }
             return taxonomyStruct;
     }
     
@@ -730,7 +733,7 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-1.22.zip"),false).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
         new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-                false,
+                true,
                 true,
                 "http://www.ics.forth.gr/isl/lifewatch/directory",
                 "http://www.ics.forth.gr/isl/lifewatch/metadata").parseData();
