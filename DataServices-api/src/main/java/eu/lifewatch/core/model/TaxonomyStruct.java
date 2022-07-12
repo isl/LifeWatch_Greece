@@ -5,6 +5,7 @@ import eu.lifewatch.exception.URIValidationException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -32,6 +33,7 @@ public class TaxonomyStruct {
     private String kingdomURI; 
     private String phylumName;
     private String phylumURI;
+    private String scNameId;
     
     private static final Logger logger=Logger.getLogger(TaxonomyStruct.class);
     
@@ -54,6 +56,7 @@ public class TaxonomyStruct {
         classURI="";
         kingdomName="";
         kingdomURI="";
+        scNameId="";
     }
     
     public String getSpeciesName() {
@@ -118,6 +121,14 @@ public class TaxonomyStruct {
     
     public String getKingdomURI() {
         return kingdomURI;
+    }
+    
+    public String getScNameId() {
+        return scNameId;
+    }
+    
+    public void setScNameId(String id) {
+        this.scNameId = id;
     }
     
     public void setSpeciesName(String speciesName) {
@@ -263,6 +274,11 @@ public class TaxonomyStruct {
         this.kingdomName= kingdomName;
         return this;
     }
+    
+    public TaxonomyStruct withScNameId(String id) {
+        this.scNameId= id;
+        return this;
+    }
      
     /**Produces an NTRIPLES output so that it can be used to SPARQL queries
      * 
@@ -280,6 +296,12 @@ public class TaxonomyStruct {
             if(!datasetURI.isEmpty()){
                 retTriples+= "<"+datasetURI+"> <"+Resources.refersTo+"> <"+speciesURI+"> . \n";
             }   
+            if(!scNameId.isEmpty()){
+                String scNameIdUri=Resources.defaultNamespaceForURIs+"/"+Resources.SPECIES_IDENTIFIER+"/"+this.scNameId;
+                retTriples+="<"+speciesURI+"> <"+Resources.isIdentifiedBy+"> <"+scNameIdUri+">. \n"
+                           +"<"+scNameIdUri+"> <"+Resources.rdfTypeLabel+"> <"+Resources.identifierLabel+">. \n"
+                           +"<"+scNameIdUri+"> <"+Resources.rdfsLabel+"> \""+this.scNameId+"\". \n";
+            }
         }
         if(!genusURI.isEmpty()){
             retTriples+= "<"+genusURI+"> <"+Resources.rdfTypeLabel+"> <"+Resources.genusLabel+"> .\n";

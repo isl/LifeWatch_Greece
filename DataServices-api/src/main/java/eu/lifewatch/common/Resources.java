@@ -193,6 +193,9 @@ public class Resources {
 
     /*A default namespace to be used*/
     public static final String defaultNamespaceForURIs = "http://www.lifewatchgreece.eu/entity";
+    
+    /* Various labels used for URIs */
+    public static final String SPECIES_IDENTIFIER="species_identifier";
 
     /*the folder containing the fundamental queries*/
     public static final String fundamentalQueriesFolder = "FundamentalQueries";
