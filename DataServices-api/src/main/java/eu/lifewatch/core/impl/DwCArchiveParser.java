@@ -97,9 +97,9 @@ public class DwCArchiveParser {
             case "Occurrence":
                 parseOccurrenceArchive(this.dwcArchive, null);
                 break;
-//            case "ExtendedMeasurementOrFact":
-//                parseMeasurementArchive(this.dwcArchive, null);
-//                break;
+            case "ExtendedMeasurementOrFact":
+                parseMeasurementArchive(this.dwcArchive, null);
+                break;
             case "Event":
                 parseEventArchive(this.dwcArchive, null);
                 break;
@@ -112,9 +112,9 @@ public class DwCArchiveParser {
             case "Occurrence":
                 parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
                 break;
-//            case "ExtendedMeasurementOrFact":
-//                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
-//                break;
+            case "ExtendedMeasurementOrFact":
+                parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
+                break;
             case "Event":
                 parseEventArchive(this.dwcArchive, archiveFile.getRowType());
                 break;
@@ -374,15 +374,17 @@ public class DwCArchiveParser {
     private void parseMeasurementArchive(Archive dwcArchive, Term term) throws QueryExecutionException, URIValidationException, UnsupportedEncodingException, IOException{
         if(term!=null){
             for(Record rec : dwcArchive.getExtension(term)){
-                MeasurementStruct measurementStruct=this.retrieveMeasurement(rec);
-                log.debug("Measurement struct: "+measurementStruct);
+//                MeasurementStruct measurementStruct=this.retrieveMeasurement(rec);
+//                log.debug("Measurement struct: "+measurementStruct);
+                EnvironmentalStruct environmentalStruct=this.retrieveEnvironmental(rec);
+                log.debug("Environmental struct: "+environmentalStruct);
                 if(this.importDatasets){
-                    log.info("Importing measurement struct");
-                    this.mrManager.insertStruct(measurementStruct, GRAPHSPACE_METADATA);
+                    log.info("Importing environmental struct");
+                    this.mrManager.insertStruct(environmentalStruct, GRAPHSPACE_METADATA);
                 }
                 if(this.storeLocally){
                     log.info("Storing locally metadata");
-                    this.storeLocally(measurementStruct);
+                    this.storeLocally(environmentalStruct);
                 }
             }
         }else{
@@ -689,6 +691,29 @@ public class DwCArchiveParser {
         return measurementStruct;
     }
     
+    private EnvironmentalStruct retrieveEnvironmental(Record rec) throws UnsupportedEncodingException{
+        EnvironmentalStruct environmentalStruct=new EnvironmentalStruct()
+                                                    .withDatasetName(this.datasetTitle)
+                                                    .withDatasetURI(this.datasetURI);    
+        
+        if(rec.id()!=null){
+            environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.id()));
+            environmentalStruct.withMeasurementEvent(rec.id());
+            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", rec.id()));
+        }
+        if(rec.value(DwcTerm.measurementType)!=null){
+            environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"dimension_type", rec.value(DwcTerm.measurementType)));
+            environmentalStruct.withDimensionName(rec.value(DwcTerm.measurementType));
+        }
+        if(rec.value(DwcTerm.measurementValue)!=null){
+            environmentalStruct.withDimensionValue(rec.value(DwcTerm.measurementValue));
+        }
+        if(rec.value(DwcTerm.measurementUnit)!=null){
+            environmentalStruct.withDimensionUnit(rec.value(DwcTerm.measurementUnit));
+        }
+        return environmentalStruct;
+    }
+    
     private MeasurementStruct retrieveMeasurementEvent(Record rec) throws UnsupportedEncodingException{
         MeasurementStruct measurementStruct=new MeasurementStruct()
                     .withDatasetName(this.datasetTitle)
@@ -733,10 +758,10 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/fish_invertebrates_israelimediterraneansea/dwca-1.0.zip"), "Occurrence",
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/1898all/dwca-1.18.zip"), "Occurrence",
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/egyptexpeditionamphipoda/dwca-1.21.zip"), "Occurrence",
                 true,
                 false,
-                "http://www.ics.forth.gr/isl/lifewatch/directory",
-                "http://www.ics.forth.gr/isl/lifewatch/metadata").parseData();
+                "http://www.ics.forth.gr/isl/lifewatch/directory_2",
+                "http://www.ics.forth.gr/isl/lifewatch/metadata_2").parseData();
     }   
 }

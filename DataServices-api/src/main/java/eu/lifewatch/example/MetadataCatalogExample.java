@@ -21,8 +21,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MetadataCatalogExample {
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
 //    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_mct";
-    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory";
-    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata";
+    private static final String GRAPHSPACE_DIRECTORY="http://www.ics.forth.gr/isl/lifewatch/directory_2";
+    private static final String GRAPHSPACE_METADATA="http://www.ics.forth.gr/isl/lifewatch/metadata_2";
     
     public static void main(String[] args) throws QueryExecutionException{
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -67,17 +67,22 @@ public class MetadataCatalogExample {
 //        for(ScientificNamingStruct struct : results){
 //            System.out.println(struct);
 //        }                
-        
-        List<ScientificNamingStruct> results=mrManager.searchScientificNamingCollated("", "", "", "", 0, 20, GRAPHSPACE_METADATA);
-        System.out.println("Results: "+results.size());
-        for(ScientificNamingStruct struct : results){
-            System.out.println(struct);
-        }                
+//        
+//        List<ScientificNamingStruct> results=mrManager.searchScientificNamingCollated("", "", "", "", 0, 20, GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(ScientificNamingStruct struct : results){
+//            System.out.println(struct);
+//        }                
 //        List<DirectoryStruct> results=mrManager.searchOccurrenceDatasets("", "", "", "", 40, 20,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
 //        System.out.println("Results: "+results.size());
 //        for(DirectoryStruct struct : results){
 //            System.out.println(struct);
 //        }                
+        List<DirectoryStruct> results=mrManager.searchEnvironmentalDatasets("", "", "", 0, 0,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
+        System.out.println("Results: "+results.size());
+        for(DirectoryStruct struct : results){
+            System.out.println(struct);
+        }                
 //        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(MeasurementStruct struct : results){

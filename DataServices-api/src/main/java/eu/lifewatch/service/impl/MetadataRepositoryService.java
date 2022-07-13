@@ -423,6 +423,65 @@ public class MetadataRepositoryService implements Service {
         Map<String,DirectoryStruct> datasetsMap=this.directoryService.searchDatasets(datasetUris, directoryGraph);
         return new ArrayList<>(datasetsMap.values());
     }
+    
+    public List<DirectoryStruct> searchEnvironmentalDatasets(String place, String date, String measurementType, int offset, int limit, String repositoryGraph, String directoryGraph) throws QueryExecutionException {
+        logger.info("Request for environmental search with parameters "
+                   +"place: ["+place+"], "
+                   +"date: ["+date+"], "
+                   +"measurement type: ["+measurementType+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString="SELECT DISTINCT ?dataset_uri  "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?dataset_uri <"+Resources.refersTo+"> ?event_uri. "
+                +"?event_uri <"+Resources.rdfTypeLabel+"> <"+Resources.measurementEventLabel+">. "
+                +"?event_uri <"+Resources.hasFoundAt+"> ?location_uri. "
+                +"?location_uri <"+Resources.rdfsLabel+"> ?location. "
+                +"?event_uri <"+Resources.hasTimespan+"> ?timespan_uri. "
+                +"?timespan_uri <"+Resources.rdfsLabel+"> ?timespan. "
+                +"?event_uri <"+Resources.observedDimension+"> ?dimension_uri. "
+                +"?dimension_uri <"+Resources.hasType+"> ?dimension_type_uri. "
+                +"?dimension_type_uri <"+Resources.rdfsLabel+"> ?dimension_type. ";
+        if(place!=null && !place.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?location),\""+place.toLowerCase()+"\") ";
+        }
+        if(date!=null && !date.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?timespan),\""+date.toLowerCase()+"\") ";
+        }
+        if(measurementType!=null && !measurementType.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?dimension_type),\""+measurementType.toLowerCase()+"\") ";
+        }        
+        queryString+="} ";
+        
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
+        List<String> datasetUris=new ArrayList<>();
+        for (BindingSet result : sparqlresults) {
+            datasetUris.add(result.getValue("dataset_uri").stringValue());
+        }
+        if(datasetUris.isEmpty()){
+            logger.debug("No dataset URIs were found");
+            return new ArrayList<>();
+        }else if(datasetUris.size()<offset){
+            logger.debug("No more dataset URIs were found");
+            return new ArrayList<>();
+        }else{
+            if(offset>=0 && limit>0){
+		if(datasetUris.size()>(offset+limit)){
+			logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+limit);
+			datasetUris=datasetUris.subList(offset, offset+limit);
+		}else{
+			logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+datasetUris.size());
+			datasetUris=datasetUris.subList(offset, datasetUris.size());
+		}
+            }
+        }
+        Map<String,DirectoryStruct> datasetsMap=this.directoryService.searchDatasets(datasetUris, directoryGraph);
+        return new ArrayList<>(datasetsMap.values());
+    }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for occurrenceStatsTemp search with parameters "
