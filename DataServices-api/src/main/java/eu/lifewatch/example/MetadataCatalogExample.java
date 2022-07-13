@@ -50,22 +50,28 @@ public class MetadataCatalogExample {
 //            System.out.println(struct.getScanningLabel() +"\t"+struct.getSpecimen());
 //        }        
 
-//        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "Myrianida", "", "", "", "animalia", "", "", 0, 0, GRAPHSPACE_METADATA);
+//        List<TaxonomyStruct> results=mrManager.searchTaxonomy("", "Syllis", "", "", "", "", "", "", 0, 0, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(TaxonomyStruct struct : results){
 //            System.out.println(struct);
 //        }                
+        
+        List<TaxonomyStruct> results=mrManager.searchTaxonomyCollated("", "Syllis", "", "", "", "", "", "", 100, 20, GRAPHSPACE_METADATA);
+        System.out.println("Results: "+results.size());
+        for(TaxonomyStruct struct : results){
+            System.out.println(struct);
+        }                
 
 //        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1959", "", "", "", 0, 0, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(ScientificNamingStruct struct : results){
 //            System.out.println(struct);
 //        }                
-        List<DirectoryStruct> results=mrManager.searchOccurrenceDatasets("", "", "1910", "", 0, 0,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
-        System.out.println("Results: "+results.size());
-        for(DirectoryStruct struct : results){
-            System.out.println(struct);
-        }                
+//        List<DirectoryStruct> results=mrManager.searchOccurrenceDatasets("", "", "", "", 40, 20,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
+//        System.out.println("Results: "+results.size());
+//        for(DirectoryStruct struct : results){
+//            System.out.println(struct);
+//        }                
 //        List<MeasurementStruct> results=mrManager.searchMeasurement("", "Chaetoceros danicus", "", "", GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(MeasurementStruct struct : results){

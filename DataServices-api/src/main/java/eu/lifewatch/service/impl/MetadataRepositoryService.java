@@ -1846,10 +1846,6 @@ public class MetadataRepositoryService implements Service {
             queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
         }
         queryString+="} ";
-        if(limit>0 && offset>=0){
-            queryString+="LIMIT "+limit+" "
-                        +"OFFSET "+offset;
-        }
         
         logger.debug("Submitting the query: \"" + queryString + "\"");
         List<BindingSet> sparqlresults = this.repoManager.query(queryString);
@@ -1896,8 +1892,27 @@ public class MetadataRepositoryService implements Service {
                 results.put(speciesUri, struct);
             }
         }
-        logger.debug("The query returned "+results.size()+" taxonomy objects");
-        return new ArrayList<>(results.values());
+        List<TaxonomyStruct> retList=new ArrayList<>(results.values());
+        logger.debug("The query returned "+retList.size()+" taxonomy objects");
+        
+        if(retList.isEmpty()){
+            logger.debug("No taxonomy structs were found");
+            return new ArrayList<>();
+        }else if(retList.size()<offset){
+            logger.debug("No more taxonomy structs were found");
+            return new ArrayList<>();
+        }else{
+            if(offset>=0 && limit>0){
+                if(retList.size()>(offset+limit)){
+                    logger.debug("Return information for taxonomy structs with OFFSET/LIMIT "+offset+"/"+limit);
+                    retList=retList.subList(offset, offset+limit);
+                }else{
+                    logger.debug("Return information for taxonomy structs with OFFSET/LIMIT "+offset+"/"+retList.size());
+                    retList=retList.subList(offset, retList.size());
+                }
+            }
+        }
+        return retList;
     }
     
      public List<OutgoingNodeStruct> selectOutgoing(String resourceURI) throws QueryExecutionException {
