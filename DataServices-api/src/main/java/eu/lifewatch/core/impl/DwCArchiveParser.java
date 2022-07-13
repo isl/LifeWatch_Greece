@@ -699,7 +699,7 @@ public class DwCArchiveParser {
         if(rec.id()!=null){
             environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.id()));
             environmentalStruct.withMeasurementEvent(rec.id());
-            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", rec.id()));
+            environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", UUID.randomUUID().toString()));
         }
         if(rec.value(DwcTerm.measurementType)!=null){
             environmentalStruct.withDimensionTypeURI(Utils.hashUri(Resources.defaultNamespaceForURIs,"dimension_type", rec.value(DwcTerm.measurementType)));
@@ -758,7 +758,7 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/fish_invertebrates_israelimediterraneansea/dwca-1.0.zip"), "Occurrence",
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/egyptexpeditionamphipoda/dwca-1.21.zip"), "Occurrence",
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/fishspecies-arta/dwca-1.17.zip"), "Occurrence",
                 true,
                 false,
                 "http://www.ics.forth.gr/isl/lifewatch/directory_2",
