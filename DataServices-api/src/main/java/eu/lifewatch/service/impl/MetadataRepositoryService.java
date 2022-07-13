@@ -404,12 +404,24 @@ public class MetadataRepositoryService implements Service {
             datasetUris.add(result.getValue("dataset_uri").stringValue());
         }
         if(datasetUris.isEmpty()){
+            logger.debug("No dataset URIs were found");
+            return new ArrayList<>();
+        }else if(datasetUris.size()<offset){
+            logger.debug("No more dataset URIs were found");
             return new ArrayList<>();
         }else{
-            logger.debug("Retrieve datasets with the following URIs "+datasetUris);
-            Map<String,DirectoryStruct> datasetsMap=this.directoryService.searchDatasets(datasetUris, directoryGraph);
-            return new ArrayList<>(datasetsMap.values());
+            if(offset>=0 && limit>0){
+		if(datasetUris.size()>(offset+limit)){
+			logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+limit);
+			datasetUris=datasetUris.subList(offset, offset+limit);
+		}else{
+			logger.debug("Retrieve information for dataset URIs with OFFSET/LIMIT "+offset+"/"+datasetUris.size());
+			datasetUris=datasetUris.subList(offset, datasetUris.size());
+		}
+            }
         }
+        Map<String,DirectoryStruct> datasetsMap=this.directoryService.searchDatasets(datasetUris, directoryGraph);
+        return new ArrayList<>(datasetsMap.values());
     }
 
     public List<OccurrenceStatsTempStruct> searchOccurenceStatsTemp(String speciesName, String place, String date, String numberOfParts, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
