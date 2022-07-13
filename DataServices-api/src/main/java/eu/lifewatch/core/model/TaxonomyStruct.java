@@ -4,8 +4,9 @@ import eu.lifewatch.common.Resources;
 import eu.lifewatch.exception.URIValidationException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,6 +35,7 @@ public class TaxonomyStruct {
     private String phylumName;
     private String phylumURI;
     private String scNameId;
+    private Map<String,String> datasetsInvolved;    //used only for the *collated methods (that group all datasets for each struct)
     
     private static final Logger logger=Logger.getLogger(TaxonomyStruct.class);
     
@@ -57,6 +59,15 @@ public class TaxonomyStruct {
         kingdomName="";
         kingdomURI="";
         scNameId="";
+        this.datasetsInvolved=new HashMap<>();
+    }
+    
+    public Map<String,String> getDatasetsInvolved(){
+        return this.datasetsInvolved;
+    }
+    
+    public String getDatasetName(String datasetUri){
+        return this.datasetsInvolved.get(datasetUri);
     }
     
     public String getSpeciesName() {
@@ -194,7 +205,16 @@ public class TaxonomyStruct {
     public void setPhylumURI(String phylumURI) {
         this.phylumURI = phylumURI;
     }
-   
+    
+    public void addDatasetInvolved(String datasetUri,String datasetName){
+        this.datasetsInvolved.put(datasetUri, datasetName);
+    }
+    
+    public TaxonomyStruct withDatasetInvolved(String datasetUri,String datasetName) {
+        this.datasetsInvolved.put(datasetUri, datasetName);
+        return this;
+    }
+    
     public TaxonomyStruct withSpeciesURI(String speciesURI) {
         this.speciesURI = speciesURI;
         return this;
@@ -433,9 +453,7 @@ public class TaxonomyStruct {
     
     @Override
     public String toString(){
-        return "DatasetURI: "+datasetURI+"\t"
-              +"DatasetName: "+datasetName+"\t"
-              +"SpeciesURI: "+speciesURI+"\t"
+        return "SpeciesURI: "+speciesURI+"\t"
               +"SpeciesName: "+speciesName+"\t"
               +"scNameId: "+this.scNameId+"\t"
               +"PhylumURI: "+phylumURI+"\t"
@@ -449,7 +467,10 @@ public class TaxonomyStruct {
               +"ClassURI: "+classURI+"\t"
               +"ClassName: "+className+"\t"
               +"KingdomURI: "+kingdomURI+"\t"
-              +"KingdomName: "+kingdomName;
+              +"KingdomName: "+kingdomName+"\t"
+              +"DatasetURI: "+datasetURI+"\t"
+              +"DatasetName: "+datasetName+"\t"
+              +"DatasetsInvolved: "+datasetsInvolved;
     }
     
     @Override
