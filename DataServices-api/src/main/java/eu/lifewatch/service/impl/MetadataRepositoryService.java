@@ -2461,6 +2461,114 @@ public class MetadataRepositoryService implements Service {
         logger.debug("The query returned "+results.size()+" scientific naming objects");
         return results;
     }
+    
+    /* This method works in a similar manner with searchScientificNaming but instead of associating each struct with its own dataset, 
+            it collates all the involved datasets per struct */
+    public List<ScientificNamingStruct> searchScientificNamingCollated(String scientificNameId, String speciesName, String date, String authority, int offset, int limit, String repositoryGraph)throws QueryExecutionException {
+        logger.info("Request for scientificNaming search with parameters "
+                   +"scientific name ID: ["+scientificNameId+"], "
+                   +"species name: ["+speciesName+"], "
+                   +"date: ["+date+"], "
+                   +"authority: ["+authority+"], "
+                   +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
+                   +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
+                   +"reposytoryGraph: ["+repositoryGraph+"], ");
+        String queryString="SELECT DISTINCT ?scientificNameAssignmentEventURI ?scientificNameAssignmentEventLabel ?speciesURI ?actorURI ?actorName "
+                                          +"?date ?ncodeURI ?ncodeName ?datasetURI ?datasetName ?sname ?snameURI ?scNameId "
+                +"FROM <"+repositoryGraph+"> "
+                +"WHERE{ "
+                +"?scientificNameAssignmentEventURI <"+Resources.rdfTypeLabel+"> <"+Resources.scientificNameAssignmentEventLabel+">.  "
+                +"?scientificNameAssignmentEventURI <"+Resources.assignedAttributeTo+"> ?speciesURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.assigned+"> ?snameURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.carriedOutBy+"> ?actorURI. "
+                +"?scientificNameAssignmentEventURI <"+Resources.rdfsLabel+"> ?scientificNameAssignmentEventLabel. "
+                +"?datasetURI <"+Resources.rdfTypeLabel+"> <"+Resources.datasetLabel+">. "
+                +"?datasetURI <"+Resources.refersTo+"> ?scientificNameAssignmentEventURI. "
+                +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
+                +"?snameURI <"+Resources.rdfsLabel+"> ?sname. "
+                +"?snameURI <"+Resources.rdfTypeLabel+"> <"+Resources.appellationLabel+">.  "
+                +"?actorURI <"+Resources.rdfsLabel+"> ?actorName. "
+                +"OPTIONAL{ "
+                    +"?speciesURI <"+Resources.isIdentifiedBy+"> ?scNameIdUri. "
+                    +"?scNameIdUri <"+Resources.rdfsLabel+"> ?scNameId. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?scientificNameAssignmentEventURI <"+Resources.hasTimespan+"> ?date. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?scientificNameAssignmentEventURI <"+Resources.usedSpecificTechnique+"> ?ncodeURI. "
+                    +"?ncodeURI <"+Resources.rdfsLabel+"> ?ncodeName. "
+                +"} ";
+        if(scientificNameId!=null && !scientificNameId.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?scNameId),\""+scientificNameId.toLowerCase()+"\"). ";
+        }
+        if(speciesName!=null && !speciesName.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?sname),\""+speciesName.toLowerCase()+"\"). ";
+        }
+        if(date!=null && !date.isEmpty()){
+            queryString+="FILTER (?date=\""+date+"\"). ";
+        }
+        if(authority!=null && !authority.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?actorName),\""+authority.toLowerCase()+"\"). ";
+        }
+        queryString+="} ";
+        
+        logger.debug("Submitting the query: \"" + queryString + "\"");
+        List<BindingSet> sparqlresults = this.repoManager.query(queryString);
+        logger.debug("The SPARQL query returned " + sparqlresults.size() + " results (RAW SPARQL results)");
+        Map<String,ScientificNamingStruct> results = new HashMap<>();
+        for (BindingSet result : sparqlresults) {
+            String scNameAssignmentUri=result.getValue("scientificNameAssignmentEventURI").stringValue();
+            if(!results.containsKey(scNameAssignmentUri)){
+                    ScientificNamingStruct struct = new ScientificNamingStruct().withScientificNameAssignmentEventURI(result.getValue("scientificNameAssignmentEventURI").stringValue())
+                            .withScientificNameAssignmentEvent(result.getValue("scientificNameAssignmentEventLabel").stringValue())
+                            .withActor(result.getValue("actorURI").stringValue(), result.getValue("actorName").stringValue())
+                            .withAppellation(result.getValue("sname").stringValue())
+                            .withAppellationURI(result.getValue("snameURI").stringValue())
+                            .withSpeciesURI(result.getValue("speciesURI").stringValue())
+                            .withSpeciesName(result.getValue("sname").stringValue())
+                            .withDatasetInvolved(result.getValue("datasetURI").stringValue(), result.getValue("datasetName").stringValue());
+                    if (result.getValue("date") != null) {
+                        struct.withTimeSpan(result.getValue("date").stringValue());
+                    }
+                    if (result.getValue("ncodeURI") != null) {
+                        struct.withNomenclaturalCodeURI(result.getValue("ncodeURI").stringValue());
+                    }
+                    if (result.getValue("ncodeName") != null) {
+                        struct.withNomenclaturalCodeName(result.getValue("ncodeName").stringValue());
+                    }
+                    if(result.getValue("scNameId")!=null){
+                        struct.withScNameId(result.getValue("scNameId").stringValue());
+                    }
+                    results.put(scNameAssignmentUri,struct);
+            }else{
+                ScientificNamingStruct struct=results.get(scNameAssignmentUri);
+                struct.withDatasetInvolved(result.getValue("datasetURI").stringValue(), result.getValue("datasetName").stringValue());
+                results.put(scNameAssignmentUri, struct);
+            }
+        }
+        List<ScientificNamingStruct> retList=new ArrayList<>(results.values());
+        logger.debug("The query returned "+retList.size()+" scientific name objects");
+        
+        if(retList.isEmpty()){
+            logger.debug("No scientific name structs were found");
+            return new ArrayList<>();
+        }else if(retList.size()<offset){
+            logger.debug("No more scientific name structs were found");
+            return new ArrayList<>();
+        }else{
+            if(offset>=0 && limit>0){
+                if(retList.size()>(offset+limit)){
+                    logger.debug("Return information for scientific name structs with OFFSET/LIMIT "+offset+"/"+limit);
+                    retList=retList.subList(offset, offset+limit);
+                }else{
+                    logger.debug("Return information for scientific name structs with OFFSET/LIMIT "+offset+"/"+retList.size());
+                    retList=retList.subList(offset, retList.size());
+                }
+            }
+        }
+        return retList;
+    }
 
     public List<CommonNameStruct> searchCommonName(String species, String commonName, String place, String language, String datasetURI, String repositoryGraph)
             throws QueryExecutionException {

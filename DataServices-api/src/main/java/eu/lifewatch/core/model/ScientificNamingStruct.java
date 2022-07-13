@@ -6,8 +6,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import org.apache.log4j.Logger;
 
@@ -31,6 +33,8 @@ public class ScientificNamingStruct {
     private String speciesURI;
     private String datasetURI;
     private String datasetName;
+    private String scNameId;
+    private Map<String,String> datasetsInvolved;    //used only for the *collated methods (that group all datasets for each struct)
     
     private static final Logger logger=Logger.getLogger(ScientificNamingStruct.class);
     
@@ -49,6 +53,16 @@ public class ScientificNamingStruct {
         datasetURI="";
         appellation="";
         appellationURI="";
+        scNameId="";
+        this.datasetsInvolved=new HashMap<>();
+    }
+    
+    public Map<String,String> getDatasetsInvolved(){
+        return this.datasetsInvolved;
+    }
+    
+    public String getDatasetName(String datasetUri){
+        return this.datasetsInvolved.get(datasetUri);
     }
     
     public String getScientificNameAssignmentEventURI() {
@@ -106,6 +120,10 @@ public class ScientificNamingStruct {
     public String getDatasetURI() {
         return datasetURI;
     }
+    
+    public String getScNameId() {
+        return scNameId;
+    }
 
     public String getNomenclaturalCodeName() {   
         return nomenclaturalCodeName;
@@ -161,6 +179,15 @@ public class ScientificNamingStruct {
 
     public void setDatasetName(String datasetName) {
         this.datasetName = datasetName;
+    }
+    
+    public void addDatasetInvolved(String datasetUri,String datasetName){
+        this.datasetsInvolved.put(datasetUri, datasetName);
+    }
+    
+    public ScientificNamingStruct withDatasetInvolved(String datasetUri,String datasetName) {
+        this.datasetsInvolved.put(datasetUri, datasetName);
+        return this;
     }
     
     public ScientificNamingStruct withScientificNameAssignmentEventURI(String scientificNameAssignmentEventURI) {
@@ -220,10 +247,14 @@ public class ScientificNamingStruct {
         this.datasetURI = datasetURI;
         return this;
     }
-
     
-     public ScientificNamingStruct withDatasetName(String datasetName) {
+    public ScientificNamingStruct withDatasetName(String datasetName) {
         this.datasetName= datasetName;
+        return this;
+    }
+    
+    public ScientificNamingStruct withScNameId(String scNameId) {
+        this.scNameId= scNameId;
         return this;
     }
 
@@ -322,6 +353,7 @@ public class ScientificNamingStruct {
     @Override
     public String toString(){
         return "ScientificNameAssignmentURI: "+this.scientificNameAssignmentEventURI+"\t"
+              +"ScNameId: "+this.scNameId+"\t"
               +"Actors: "+this.actors+"\t"
               +"Timespan: "+this.timeSpan+"\t"
               +"SpeciesURI: "+this.speciesURI+"\t"
@@ -331,7 +363,8 @@ public class ScientificNamingStruct {
               +"NomenclaturalCodeURI: "+this.nomenclaturalCodeURI+"\t"
               +"NomenclaturalCodeName: "+this.nomenclaturalCodeName+"\t"
               +"AppellationURI: "+this.appellationURI+"\t"
-              +"AppellationName: "+this.appellation;
+              +"AppellationName: "+this.appellation+"\t"
+              +"Involved datasets: "+this.datasetsInvolved;
     }
     
     @Override

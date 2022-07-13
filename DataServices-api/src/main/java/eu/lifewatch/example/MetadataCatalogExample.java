@@ -56,17 +56,23 @@ public class MetadataCatalogExample {
 //            System.out.println(struct);
 //        }                
         
-        List<TaxonomyStruct> results=mrManager.searchTaxonomyCollated("", "Syllis", "", "", "", "", "", "", 100, 20, GRAPHSPACE_METADATA);
-        System.out.println("Results: "+results.size());
-        for(TaxonomyStruct struct : results){
-            System.out.println(struct);
-        }                
+//        List<TaxonomyStruct> results=mrManager.searchTaxonomyCollated("", "Syllis", "", "", "", "", "", "", 100, 20, GRAPHSPACE_METADATA);
+//        System.out.println("Results: "+results.size());
+//        for(TaxonomyStruct struct : results){
+//            System.out.println(struct);
+//        }                
 
 //        List<ScientificNamingStruct> results=mrManager.searchScientificNaming("", "1959", "", "", "", 0, 0, GRAPHSPACE_METADATA);
 //        System.out.println("Results: "+results.size());
 //        for(ScientificNamingStruct struct : results){
 //            System.out.println(struct);
 //        }                
+        
+        List<ScientificNamingStruct> results=mrManager.searchScientificNamingCollated("", "", "", "", 0, 20, GRAPHSPACE_METADATA);
+        System.out.println("Results: "+results.size());
+        for(ScientificNamingStruct struct : results){
+            System.out.println(struct);
+        }                
 //        List<DirectoryStruct> results=mrManager.searchOccurrenceDatasets("", "", "", "", 40, 20,GRAPHSPACE_METADATA, GRAPHSPACE_DIRECTORY);
 //        System.out.println("Results: "+results.size());
 //        for(DirectoryStruct struct : results){
