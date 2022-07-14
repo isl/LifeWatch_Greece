@@ -38,7 +38,7 @@
                             <entity>
                                 <type>rdfs:Literal</type>
                                 <instance_generator name="Literal">
-                                    <arg name="text" type="constant">MicroCT</arg>
+                                    <arg name="text" type="constant">Micro-CT</arg>
                                 </instance_generator>
                             </entity>
                         </additional>
