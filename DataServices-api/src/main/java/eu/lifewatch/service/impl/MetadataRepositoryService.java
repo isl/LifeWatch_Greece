@@ -3634,20 +3634,19 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         return results;
     }    
      
-    public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimen, String collection, String species, String provider, String datasetURI, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
+    public List<MicroCTSpecimenStruct> searchMicroCTSpecimen(String specimenID, String species, String collection, String provider, int offset, int limit, String repositoryGraph) throws QueryExecutionException {
         logger.info("Request for MicroCT specimen search with parameters "
-                   +"specimen: ["+specimen+"], "
-                   +"collection: ["+collection+"], "
+                   +"specimenID: ["+specimenID+"], "
                    +"species: ["+species+"], "
                    +"provider: ["+provider+"], "
-                   +"datasetURI: ["+datasetURI+"], "
+                   +"collection: ["+collection+"], "
                    +"limit: ["+(limit<0?"N/A":String.valueOf(limit))+"], "
                    +"offset: ["+(offset<0?"N/A":String.valueOf(offset))+"], "
                    +"reposytoryGraph: ["+repositoryGraph+"], ");
         String queryString = "SELECT DISTINCT ?specimenName ?specimenURI ?specimen_id ?collectionName ?collectionURI ?providerName ?providerURI "
                                             +"?speciesName ?speciesURI ?dimensionTypeURI ?dimensionName ?dimensionURI ?dimensionValue ?dimensionUnit "
                                             +"?institutionURI ?institutionName ?datasetURI ?datasetName ?description ?fixation ?preservationMedium ?storagePlace "
-                                            +"?material ?taxonomic_group "
+                                            +"?material ?taxonomic_group ?fixation_notes ?specimen_notes "
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?specimenURI <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+">. "
@@ -3704,6 +3703,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"OPTIONAL { "
                     +"?providerURI <"+Resources.isCurrentMemberOf+"> ?institutionURI. "
                     +"?institutionURI <"+Resources.rdfsLabel+"> ?institutionName. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?fixationUri <"+Resources.hasNote+"> ?fixation_notes. "
                 +"} ";
         if(collection!=null && !collection.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?collectionName),\""+collection.toLowerCase()+"\"). ";
@@ -3711,11 +3713,8 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         if(provider!=null && !provider.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?providerName),\""+provider.toLowerCase()+"\"). ";
         }
-        if(specimen!=null && !specimen.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(?specimenName),\""+specimen.toLowerCase()+"\"). ";
-        }
-        if(datasetURI!=null && !datasetURI.isEmpty()){
-            queryString+="FILTER CONTAINS(LCASE(STR(?datasetURI)),\""+datasetURI.toLowerCase()+"\"). ";
+        if(specimenID!=null && !specimenID.isEmpty()){
+            queryString+="FILTER CONTAINS(LCASE(?specimen_id),\""+specimenID.toLowerCase()+"\"). ";
         }
         if(species!=null && !species.isEmpty()){
             queryString+="FILTER CONTAINS(LCASE(?speciesName),\""+species.toLowerCase()+"\"). ";
@@ -3799,6 +3798,9 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
             }
             if (result.getValue("taxonomic_group") != null) {
                 struct.withTaxonomicGroup(result.getValue("taxonomic_group").stringValue());
+            }
+            if (result.getValue("fixation_notes") != null) {
+                struct.setFixationNotes(result.getValue("fixation_notes").stringValue());
             }
             results.add(struct);
         }

@@ -24,7 +24,6 @@ public class MicroCTSpecimenStruct {
     private String providerName;
     private String providerURI;
     private String specimenType;
-    private String specimenNotes;
     private String speciesURI;
     private String speciesName;
     private String taxonomicGroup;
@@ -52,7 +51,6 @@ public class MicroCTSpecimenStruct {
         providerName="";
         providerURI="";
         specimenName="";
-        specimenNotes="";
         specimenID="";
         specimenURI="";
         datasetName="";
@@ -77,10 +75,6 @@ public class MicroCTSpecimenStruct {
 
     public String getFixationNotes() {
         return fixationNotes;
-    }
-    
-    public String getSpecimenNotes() {
-        return specimenNotes;
     }
     
     public String getCollectionURI() {
@@ -185,10 +179,6 @@ public class MicroCTSpecimenStruct {
      
     public void setFixationNotes(String notes) {
         this.fixationNotes= notes;
-    }
-    
-    public void setSpecimenNotes(String notes) {
-        this.specimenNotes= notes;
     }
     
     public void setTaxonomicGroup(String taxonomicGroup) {
@@ -541,8 +531,6 @@ public class MicroCTSpecimenStruct {
         return "SpecimenURI: "+specimenURI+"\t"
                +"SpecimenID: "+specimenID+"\t"
                +"SpecimenName: "+specimenName+"\t"
-               +"SpecimenNotes: "+specimenNotes+"\t"
-              
 //                "CollectionURI: "+collectionURI+"\t"
 //              +"CollectionName: "+collectionName+"\t"
 //              +"ProviderURI: "+providerURI+"\t"
