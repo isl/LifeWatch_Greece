@@ -24,10 +24,12 @@ public class MicroCTSpecimenStruct {
     private String providerName;
     private String providerURI;
     private String specimenType;
+    private String specimenNotes;
     private String speciesURI;
     private String speciesName;
     private String taxonomicGroup;
     private String fixationType;
+    private String fixationNotes;
     private String material;
     private String preservationType;
     private String dimensionUnit;
@@ -50,6 +52,7 @@ public class MicroCTSpecimenStruct {
         providerName="";
         providerURI="";
         specimenName="";
+        specimenNotes="";
         specimenID="";
         specimenURI="";
         datasetName="";
@@ -65,12 +68,21 @@ public class MicroCTSpecimenStruct {
         institutionURI="";
         institutionName="";
         fixationType="";
+        fixationNotes="";
         preservationType="";
         storagePlace="";
         material="";
         taxonomicGroup="";
     }
 
+    public String getFixationNotes() {
+        return fixationNotes;
+    }
+    
+    public String getSpecimenNotes() {
+        return specimenNotes;
+    }
+    
     public String getCollectionURI() {
         return collectionURI;
     }
@@ -171,6 +183,14 @@ public class MicroCTSpecimenStruct {
         return material;
     }
      
+    public void setFixationNotes(String notes) {
+        this.fixationNotes= notes;
+    }
+    
+    public void setSpecimenNotes(String notes) {
+        this.specimenNotes= notes;
+    }
+    
     public void setTaxonomicGroup(String taxonomicGroup) {
         this.taxonomicGroup = taxonomicGroup;
     }
@@ -521,6 +541,7 @@ public class MicroCTSpecimenStruct {
         return "SpecimenURI: "+specimenURI+"\t"
                +"SpecimenID: "+specimenID+"\t"
                +"SpecimenName: "+specimenName+"\t"
+               +"SpecimenNotes: "+specimenNotes+"\t"
               
 //                "CollectionURI: "+collectionURI+"\t"
 //              +"CollectionName: "+collectionName+"\t"
@@ -541,6 +562,7 @@ public class MicroCTSpecimenStruct {
 //              +"InstitutionURI: "+institutionURI+"\t"
               +"InstitutionName: "+institutionName+"\t"
               +"FixationType: "+fixationType+"\t"
+              +"FixationNotes: "+fixationNotes+"\t"
               +"PreservationType: "+preservationType+"\t"
               +"StoragePlace: "+storagePlace+"\t"
               +"TaxonomicGroup: "+taxonomicGroup
