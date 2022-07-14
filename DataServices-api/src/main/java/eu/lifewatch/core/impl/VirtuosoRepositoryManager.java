@@ -70,8 +70,8 @@ public class VirtuosoRepositoryManager implements RepositoryManager{
         try{
             RepositoryConnection repoConn=this.repo.getConnection();
             URI graph=this.repo.getValueFactory().createURI(graphspace);
-            InputStreamReader in=new InputStreamReader(new FileInputStream(file), "UTF8");
-            repoConn.add(file, graphspace, format, graph);
+            InputStreamReader in=new InputStreamReader(new FileInputStream(file), "UTF-8");
+            repoConn.add(in, graphspace, format, graph);
             repoConn.close();
         }catch(IOException | RDFParseException | RepositoryException ex){
             throw new DataImportException("An error occured while importing data",ex);
