@@ -2,7 +2,7 @@
 <x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     source_type="xpath"
     version="1.0"
-    mappings_version="2022-07-11"
+    mappings_version="2022-07-14"
     xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
     <namespaces>
         <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
@@ -146,8 +146,142 @@
                             <entity>
                                 <type>rdfs:Literal</type>
                                 <instance_generator name="Literal">
-                                    <arg name="text" type="constant">This is a description of the MicroCT scan dataset (to be udpated ...)</arg>
+                                    <arg name="text" type="constant">Metadata related to the preparation and scanning procedure for a micro-CT specimen</arg>
                                 </instance_generator>
+                            </entity>
+                        </additional>
+                        <additional>
+                            <relationship>tlo:P_has_taxonomic_coverage</relationship>
+                            <entity>
+                                <type>tlo:BC38_Biotic_Element</type>
+                                <instance_generator name="LocalUri-uuid">
+                                    <arg name="hierarchy" type="constant">taxonomic_coverage</arg>
+                                </instance_generator>
+                                <additional>
+                                    <relationship>rdfs:label</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">Polychaeta</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                                <additional>
+                                    <relationship>crm:P3_has_note</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">class</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                            </entity>
+                        </additional>
+                        <additional>
+                            <relationship>tlo:P_has_taxonomic_coverage</relationship>
+                            <entity>
+                                <type>tlo:BC38_Biotic_Element</type>
+                                <instance_generator name="LocalUri-uuid">
+                                    <arg name="hierarchy" type="constant">taxonomic_coverage</arg>
+                                </instance_generator>
+                                <additional>
+                                    <relationship>rdfs:label</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">Mollusca</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                                <additional>
+                                    <relationship>crm:P3_has_note</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">phylum</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                            </entity>
+                        </additional>
+                        <additional>
+                            <relationship>tlo:P_has_taxonomic_coverage</relationship>
+                            <entity>
+                                <type>tlo:BC38_Biotic_Element</type>
+                                <instance_generator name="LocalUri-uuid">
+                                    <arg name="hierarchy" type="constant">taxonomic_coverage</arg>
+                                </instance_generator>
+                                <additional>
+                                    <relationship>rdfs:label</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">Crustacea</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                                <additional>
+                                    <relationship>crm:P3_has_note</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">class</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                            </entity>
+                        </additional>
+                        <additional>
+                            <relationship>tlo:P_has_taxonomic_coverage</relationship>
+                            <entity>
+                                <type>tlo:BC38_Biotic_Element</type>
+                                <instance_generator name="LocalUri-uuid">
+                                    <arg name="hierarchy" type="constant">taxonomic_coverage</arg>
+                                </instance_generator>
+                                <additional>
+                                    <relationship>rdfs:label</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">Actinopteri</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                                <additional>
+                                    <relationship>crm:P3_has_note</relationship>
+                                    <entity>
+                                        <type>rdfs:Literal</type>
+                                        <instance_generator name="Literal">
+                                            <arg name="text" type="constant">class</arg>
+                                        </instance_generator>
+                                    </entity>
+                                </additional>
+                            </entity>
+                        </additional>
+                        <additional>
+                            <relationship>crm:P129i_is_subject_of</relationship>
+                            <entity>
+                                <type>crm:E89_Propositional_Object</type>
+                                <instance_generator name="LocalTermURI-hashed">
+                                    <arg name="hierarchy" type="constant">citation</arg>
+                                    <arg name="term" type="constant">Please communicate with the contact point</arg>
+                                </instance_generator>
+                                <label_generator name="Literal">
+                                    <arg name="text" type="constant">Please communicate with the contact point</arg>
+                                </label_generator>
+                                <additional>
+                                    <relationship>crm:P2_has_type</relationship>
+                                    <entity>
+                                        <type>crm:E55_Type</type>
+                                        <instance_generator name="LocalTermURI">
+                                            <arg name="hierarchy" type="constant">resource_type</arg>
+                                            <arg name="term" type="constant">citation</arg>
+                                        </instance_generator>
+                                        <label_generator name="Literal">
+                                            <arg name="text" type="constant">citation</arg>
+                                        </label_generator>
+                                    </entity>
+                                </additional>
                             </entity>
                         </additional>
                     </entity>
