@@ -522,10 +522,10 @@ public class DwCArchiveParser {
                     .withDatasetTitle(this.datasetTitle)
                     .withDatasetURI(this.datasetURI);
         if(rec.value(DwcTerm.eventID)!=null){
-            occurrenceStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.value(DwcTerm.eventID)));
+            occurrenceStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", this.datasetURI+rec.value(DwcTerm.eventID)));
             occurrenceStruct.withOccurrenceEvent(rec.value(DwcTerm.eventID));
         }else if(rec.id()!=null){
-            occurrenceStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.id()));
+            occurrenceStruct.withOccurrenceEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", this.datasetURI+rec.id()));
             occurrenceStruct.withOccurrenceEvent(rec.id());
         }
         if(rec.value(DwcTerm.eventDate)!=null){
@@ -697,7 +697,7 @@ public class DwCArchiveParser {
                                                     .withDatasetURI(this.datasetURI);    
         
         if(rec.id()!=null){
-            environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", rec.id()));
+            environmentalStruct.withMeasurementEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "encounter_event", this.datasetURI+rec.id()));
             environmentalStruct.withMeasurementEvent(rec.id());
             environmentalStruct.withDimensionURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "dimension", UUID.randomUUID().toString()));
         }
