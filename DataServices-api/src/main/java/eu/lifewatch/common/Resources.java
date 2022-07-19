@@ -261,6 +261,8 @@ public class Resources {
     public static final String MEDOBIS_FILE_RESOURCE_XML="resource.xml";
     public static final String DWCA_FILENAME_PREFIX="dwca-";
     public static final String DWCA_FILE_EXTENSION=".zip";
+    public static final String EML_FILENAME_PREFIX="eml";
+    public static final String EML_FILE_EXTENSION=".xml";
     
     public static final String LOCAL_DATASET_INSTANCES="workspace/ipt";
     public static final String DIRECTORY_N3_FILENAME="directory.n3";

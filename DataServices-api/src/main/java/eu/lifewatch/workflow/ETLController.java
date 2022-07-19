@@ -130,6 +130,11 @@ public class ETLController {
             for (Pair<File,String> archive : archiveFiles) {
                 new DwCArchiveParser(archive.getLeft(), archive.getRight(), true, true,this.directoryServiceNamedgraph,this.metadataRepositoryNamedgraph).parseData();
             }
+            Collection<Pair<File,String>> metadataOnlyFiles = new DwCAHarvester(this.iptMedobisRootFolderPath).locateDwCaMetadata();
+            log.debug("Found " + metadataOnlyFiles.size() + " metadata only files from IPT Medobis root folder");
+            for (Pair<File,String> metadataFile : metadataOnlyFiles) {
+                new DwCArchiveParser(metadataFile.getLeft(), metadataFile.getRight(), true, true,this.directoryServiceNamedgraph).parseOnlyMetadata();
+            }
             Timer.stop(ETLController.class.toString() + ".harvest_ipt_medobis");
 
             log.info("Step 3/3: Harvest, Transform and ingest data from MicroCT");

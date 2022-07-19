@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -48,6 +49,7 @@ public class DwCArchiveParser {
     private final boolean importDatasets;
     private final boolean storeLocally;
     private Archive dwcArchive;
+    private File emlResourceFile;
     private String datasetURI;
     private String datasetTitle;
     private String datasetType;
@@ -75,6 +77,24 @@ public class DwCArchiveParser {
         this.archiveFolderName=archive.getParentFile().getName();
         this.GRAPHSPACE_DIRECTORY=directoryNamedgraph;
         this.GRAPHSPACE_METADATA=metadataNamedgraph;
+        if(storeLocally){
+            this.createLocalFolder();
+        }
+    } 
+    
+    public DwCArchiveParser(File emlResource, String datasetType, boolean importInTriplestore, boolean storeLocally,String directoryNamedgraph) throws IOException{
+        log.info("Parsing EML resource found in path "+emlResource.getAbsolutePath()+". Importing in triplestore: "+importInTriplestore);
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        this.dsManager=context.getBean(DirectoryService.class);
+        this.mrManager=context.getBean(MetadataRepositoryService.class);
+        
+        this.emlResourceFile = emlResource;
+        this.datasetURI=Resources.defaultNamespaceForURIs+"/dataset/"+UUID.randomUUID().toString();
+        this.datasetType=datasetType;
+        this.importDatasets=importInTriplestore;
+        this.storeLocally=storeLocally;
+        this.archiveFolderName=emlResource.getParentFile().getName();
+        this.GRAPHSPACE_DIRECTORY=directoryNamedgraph;
         if(storeLocally){
             this.createLocalFolder();
         }
@@ -121,6 +141,20 @@ public class DwCArchiveParser {
             default:
                 log.error("No parser for "+archiveFile.getRowType().simpleName());     
             }
+        }
+    }
+    
+    public void parseOnlyMetadata() throws IOException, MetadataException, URIValidationException, QueryExecutionException{
+        log.debug("Parsing dataset metadata");
+        DirectoryStruct directoryStruct=this.parseDatasetMetadata(FileUtils.readFileToString(this.emlResourceFile, Charset.defaultCharset()));
+        log.debug("Core dataset metadata: "+directoryStruct);
+        if(this.importDatasets){
+            log.info("Importing dataset metadata");
+            this.importDatasetInfo(directoryStruct);
+        }
+        if(this.storeLocally){
+            log.info("Storing locally dataset metadata");
+            this.storeLocally(directoryStruct);
         }
     }
     
@@ -213,21 +247,23 @@ public class DwCArchiveParser {
             directoryStruct.withDescription(abstractElements.text());
         }
         Elements creatorElements=metadataDoc.getElementsByTag(Resources.CREATOR);
-        if(creatorElements!=null){
-            Elements creatorNameElements=creatorElements.get(0).getElementsByTag(Resources.INDIVIDUAL_NAME);
-            if(creatorNameElements!=null){
-                directoryStruct.setCreationEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "creation", this.datasetURI));
-                directoryStruct.setCreationEvent("Dataset creation");
-                directoryStruct.setCreatorName(creatorNameElements.get(0).text());
-                directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
-                directoryStruct.setKeeperName(creatorNameElements.get(0).text());
-                directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
-                directoryStruct.setCuratorName(creatorNameElements.get(0).text());
-                directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
-                Elements organizationNameElements=creatorElements.get(0).getElementsByTag(Resources.ORGANIZATION_NAME);
-                if(organizationNameElements!=null){
-                    directoryStruct.setOwnerName(organizationNameElements.get(0).text());
-                    directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", organizationNameElements.get(0).text()));
+        for(Element creatorElement : creatorElements){
+            if(directoryStruct.getCreatorURI()!=null){
+                Elements creatorNameElements=creatorElement.getElementsByTag(Resources.INDIVIDUAL_NAME);
+                if(creatorNameElements!=null && !creatorNameElements.isEmpty()){
+                    directoryStruct.setCreationEventURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "creation", this.datasetURI));
+                    directoryStruct.setCreationEvent("Dataset creation");
+                    directoryStruct.setCreatorName(creatorNameElements.get(0).text());
+                    directoryStruct.setCreatorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
+                    directoryStruct.setKeeperName(creatorNameElements.get(0).text());
+                    directoryStruct.setKeeperURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
+                    directoryStruct.setCuratorName(creatorNameElements.get(0).text());
+                    directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
+                    Elements organizationNameElements=creatorElement.getElementsByTag(Resources.ORGANIZATION_NAME);
+                    if(organizationNameElements!=null){
+                        directoryStruct.setOwnerName(organizationNameElements.get(0).text());
+                        directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", organizationNameElements.get(0).text()));
+                    }
                 }
             }
         }
@@ -758,8 +794,8 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/fish_invertebrates_israelimediterraneansea/dwca-1.0.zip"), "Occurrence",
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/fishspecies-arta/dwca-1.17.zip"), "Occurrence",
-                true,
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-2.0.zip"), "Occurrence",
+                false,
                 false,
                 "http://www.ics.forth.gr/isl/lifewatch/directory_2",
                 "http://www.ics.forth.gr/isl/lifewatch/metadata_2").parseData();
