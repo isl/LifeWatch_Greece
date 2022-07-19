@@ -226,17 +226,7 @@ public class DwCArchiveParser {
         if(directoryStruct.getDatasetURI().isEmpty()){
             directoryStruct.setDatasetURI(this.datasetURI);
         }
-        switch(this.datasetType){
-            case Resources.SAMPLING_EVENT:
-                directoryStruct.setDatasetType(Resources.ENVIRONMENTAL_DATA);
-                break;
-            case Resources.OCCURRENCE_CAMELCASE:
-                directoryStruct.setDatasetType(Resources.BIODIVERSITY_DATA);
-                break;
-            default: 
-                directoryStruct.setDatasetType(this.datasetType);
-                break;
-        }
+        directoryStruct.setDatasetType(this.datasetType);
         Elements titleElements=metadataDoc.getElementsByTag(Resources.TITLE);
         if(titleElements!=null){
             this.datasetTitle=titleElements.get(0).text();
@@ -794,7 +784,7 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/fish_invertebrates_israelimediterraneansea/dwca-1.0.zip"), "Occurrence",
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/biomaerl/dwca-2.0.zip"), "Occurrence",
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/egyptexpeditionascidiacea/dwca-1.15.zip"), "Occurrence",
                 false,
                 false,
                 "http://www.ics.forth.gr/isl/lifewatch/directory_2",
