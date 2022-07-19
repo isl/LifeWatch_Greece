@@ -118,6 +118,7 @@ public class DwCArchiveParser {
                 parseOccurrenceArchive(this.dwcArchive, null);
                 break;
             case "ExtendedMeasurementOrFact":
+            case "MeasurementOrFact":
                 parseMeasurementArchive(this.dwcArchive, null);
                 break;
             case "Event":
@@ -133,6 +134,7 @@ public class DwCArchiveParser {
                 parseOccurrenceArchive(this.dwcArchive, archiveFile.getRowType());
                 break;
             case "ExtendedMeasurementOrFact":
+            case "MeasurementOrFact":
                 parseMeasurementArchive(this.dwcArchive, archiveFile.getRowType());
                 break;
             case "Event":
@@ -784,7 +786,7 @@ public class DwCArchiveParser {
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources_from_hcmr/easternmedsyllids/dwca-1.15.zip"),true,true).parseData();
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/fish_invertebrates_israelimediterraneansea/dwca-1.0.zip"), "Occurrence",
 //        new DwCArchiveParser(new File("D:/temp/ipt/resources/aegeanpolychaetes/dwca-1.16.zip"), "Occurrence",
-        new DwCArchiveParser(new File("D:/temp/ipt/resources/egyptexpeditionascidiacea/dwca-1.15.zip"), "Occurrence",
+        new DwCArchiveParser(new File("D:/temp/ipt/resources/mapmed_ports/dwca-1.26.zip"), "Occurrence",
                 false,
                 false,
                 "http://www.ics.forth.gr/isl/lifewatch/directory_2",
