@@ -2143,12 +2143,13 @@ public class MetadataRepositoryService implements Service {
                 if(taxaResults.isEmpty()){
                    break; 
                 }else{
-                    result=taxaResults.get(0);
-                    String resourceURI=result.getValue("resource_uri").stringValue();
-                    String resourceName=result.getValue("resource_label").stringValue();
-                    String resourceType=result.getValue("resource_type").stringValue();
-                    textMessage+="It belongs to <b><i>"+resourceName+"</i></b>(type: <b>"+eu.core.utils.Utils.getUserFriendlyClassName(resourceType)+"</b>).<br>";
-                    previousUri=resourceURI;
+                    for(BindingSet taxaResult : taxaResults){
+                        String resourceURI=taxaResult.getValue("resource_uri").stringValue();
+                        String resourceName=taxaResult.getValue("resource_label").stringValue();
+                        String resourceType=taxaResult.getValue("resource_type").stringValue();
+                        textMessage+="It belongs to <b><i>"+resourceName+"</i></b>(type: <b>"+eu.core.utils.Utils.getUserFriendlyClassName(resourceType)+"</b>).<br>";
+                        previousUri=resourceURI;
+                    }
                 }
             }
             
