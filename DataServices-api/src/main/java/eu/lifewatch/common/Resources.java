@@ -243,10 +243,12 @@ public class Resources {
     public static final String OCCURRENCE_UPPERCASE="OCCURRENCE";
     public static final String OCCURRENCE_CAMELCASE="Occurrence";
     public static final String ORGANIZATION_NAME="organizationName";
+    public static final String PRIVATE="private";
     public static final String PUB_DATE="pubDate";
     public static final String RESOURCE_LOGO_URL="resourceLogoUrl";
     public static final String SAMPLINGEVENT="SAMPLINGEVENT";
     public static final String SAMPLING_EVENT="Sampling Event";
+    public static final String STATUS="status";
     public static final String TAXON_RANK_NAME="taxonRankName";
     public static final String TAXON_RANK_VALUE="taxonRankValue";
     public static final String TAXONOMIC_CLASSIFICATION="taxonomicClassification";
@@ -254,6 +256,8 @@ public class Resources {
     public static final String TEMPORAL_COVERAGE="temporalCoverage";
     public static final String TITLE="title";
     public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
+    public static final String METADATA="metadata";
+    public static final String METADATA_ONLY="Metadata Only";
     
     public static final String BIODIVERSITY_DATA="Biodiversity Data";
     public static final String ENVIRONMENTAL_DATA="Environmental Data";
