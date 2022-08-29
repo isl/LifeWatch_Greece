@@ -113,6 +113,8 @@ public class DwCAHarvester {
                     return Resources.SAMPLING_EVENT;
                 case Resources.OCCURRENCE_UPPERCASE:
                     return Resources.OCCURRENCE_CAMELCASE;
+                case Resources.METADATA:
+                    return Resources.METADATA_ONLY;
                 default:
                     return typeRaw;
             }
@@ -128,11 +130,11 @@ public class DwCAHarvester {
         log.info("Found "+metadataOnly.size()+" metadata only datasets");
         for(Pair<File,String> filePair : archives){
             log.info("Parsing archive: "+filePair.getRight()+"\t"+filePair.getLeft().getAbsolutePath());
-            new DwCArchiveParser(filePair.getLeft(), filePair.getRight(), false , false,"http://www.ics.forth.gr/isl/lifewatch/directory","http://www.ics.forth.gr/isl/lifewatch/metadata").parseData();
+            new DwCArchiveParser(filePair.getLeft(), filePair.getRight(), false , false,"http://www.ics.forth.gr/isl/lifewatch/directory_2","http://www.ics.forth.gr/isl/lifewatch/metadata_2").parseData();
         }
         for(Pair<File,String> filePair : metadataOnly){
             log.info("Parsing metadata only dataset: "+filePair.getRight()+"\t"+filePair.getLeft().getAbsolutePath());
-            new DwCArchiveParser(filePair.getLeft(), filePair.getRight(),  false , false, "http://www.ics.forth.gr/isl/lifewatch/directory").parseOnlyMetadata();
+            new DwCArchiveParser(filePair.getLeft(), filePair.getRight(),  false , false, "http://www.ics.forth.gr/isl/lifewatch/directory_2").parseOnlyMetadata();
         }
     }
 }

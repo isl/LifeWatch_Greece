@@ -254,6 +254,8 @@ public class Resources {
     public static final String TEMPORAL_COVERAGE="temporalCoverage";
     public static final String TITLE="title";
     public static final String GBIF_THESAURUS_KEYWORD="GBIF Dataset Type Vocabulary";
+    public static final String METADATA="metadata";
+    public static final String METADATA_ONLY="Metadata Only";
     
     public static final String BIODIVERSITY_DATA="Biodiversity Data";
     public static final String ENVIRONMENTAL_DATA="Environmental Data";
