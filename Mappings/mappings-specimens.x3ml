@@ -122,42 +122,6 @@
             <link>
                 <path>
                     <source_relation>
-                        <relation>SpecimenID</relation>
-                    </source_relation>
-                    <target_relation>
-                        <if>
-                            <or>
-                                <if>
-                                    <not>
-                                        <if>
-                                            <exists>../SpecimenLabel/text()</exists>                                    
-                                        </if>
-                                    </not>
-                                </if>
-                                <if>
-                                    <equals value="NULL">../SpecimenLabel/text()</equals>
-                                </if>
-                            </or>
-                            
-                        </if>
-                        <relationship>rdfs:label</relationship>
-                    </target_relation>
-                </path>
-                <range>
-                    <source_node>SpecimenID</source_node>
-                    <target_node>
-                        <entity>
-                            <type>rdfs:Literal</type>
-                            <instance_generator name="Literal">
-								<arg name="text">text()</arg>
-							</instance_generator>
-                        </entity>
-                    </target_node>
-                </range>
-            </link>
-            <link>
-                <path>
-                    <source_relation>
                         <relation>CollectionCode</relation>
                     </source_relation>
                     <target_relation>

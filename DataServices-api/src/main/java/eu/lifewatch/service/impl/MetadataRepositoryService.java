@@ -3651,7 +3651,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"FROM <"+repositoryGraph+"> "
                 +"WHERE{ "
                 +"?specimenURI <"+Resources.rdfTypeLabel+"> <"+Resources.specimenLabel+">. "
-                +"?specimenURI <"+Resources.rdfsLabel+"> ?specimenName. "
                 +"?specimenURI <"+Resources.isIdentifiedBy+"> ?specimen_id_uri. "
                 +"?specimen_id_uri <"+Resources.rdfsLabel+"> ?specimen_id. "
                 +"?specimenURI <"+Resources.hasNote+"> ?description. "
@@ -3660,12 +3659,6 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"?datasetURI <"+Resources.rdfsLabel+"> ?datasetName. "
                 +"?specimenURI <"+Resources.wasProvidedBy+"> ?providerURI. "
                 +"?providerURI <"+Resources.rdfsLabel+"> ?providerName. "
-                +"?specimenURI <"+Resources.hasDimension+"> ?dimensionURI. "
-                +"?dimensionURI <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
-                +"?dimensionURI <"+Resources.hasType+"> ?dimensionTypeURI. "
-                +"?dimensionTypeURI <"+Resources.rdfsLabel+"> ?dimensionName.  "
-                +"?dimensionURI <"+Resources.hasValue+"> ?dimensionValue. "
-                +"?dimensionURI <"+Resources.hasUnit+"> ?dimensionUnit. "
                 +"?specimenURI <"+Resources.LC12_wasAttributedBy+"> ?fixationUri. "
                 +"?fixationUri <"+Resources.hasType+"> ?fixationTypeUri. "
                 +"?fixationUri <"+Resources.rdfsLabel+"> ?fixation. "
@@ -3676,6 +3669,17 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
                 +"?preservationMediumUri <"+Resources.rdfsLabel+"> ?preservationMedium. "
                 +"?preservationMediumTypeUri <"+Resources.rdfTypeLabel+"> <"+Resources.typeLabel+">. " 
                 +"?preservationMediumTypeUri <"+Resources.rdfsLabel+"> \""+Resources.preservationMediumLabel+"\". "
+                +"OPTIONAL{ "
+                    +"?specimenURI <"+Resources.hasDimension+"> ?dimensionURI. "
+                    +"?dimensionURI <"+Resources.rdfTypeLabel+"> <"+Resources.dimensionLabel+">. "
+                    +"?dimensionURI <"+Resources.hasType+"> ?dimensionTypeURI. "
+                    +"?dimensionTypeURI <"+Resources.rdfsLabel+"> ?dimensionName.  "
+                    +"?dimensionURI <"+Resources.hasValue+"> ?dimensionValue. "
+                    +"?dimensionURI <"+Resources.hasUnit+"> ?dimensionUnit. "
+                +"} "
+                +"OPTIONAL { "
+                    +"?specimenURI <"+Resources.rdfsLabel+"> ?specimenName. "
+                +"} "
                 +"OPTIONAL { "
                     +"?specimenURI <"+Resources.LC16_isComposedOf+"> ?material_uri. "
                     +"?material_uri <"+Resources.rdfsLabel+"> ?material. "
@@ -3732,10 +3736,12 @@ public List<CommonNameStruct> searchCommonName(String species, String commonName
         List<MicroCTSpecimenStruct> results = new ArrayList<>();
         for (BindingSet result : sparqlresults) {
             MicroCTSpecimenStruct struct = new MicroCTSpecimenStruct().withSpecimenURI(result.getValue("specimenURI").stringValue())
-                    .withSpecimenName(result.getValue("specimenName").stringValue())
                     .withSpecimenID(result.getValue("specimen_id").stringValue())
                     .withDatasetURI(result.getValue("datasetURI").stringValue())
                     .withDatasetName(result.getValue("datasetName").stringValue());
+            if(result.getValue("specimenName")!=null){
+                struct.withSpecimenName(result.getValue("specimenName").stringValue());
+            }
             if(result.getValue("speciesURI")!=null){
                 struct.withSpeciesURI(result.getValue("speciesURI").stringValue())
                       .withSpeciesName(result.getValue("speciesName").stringValue());
