@@ -2,7 +2,7 @@
 <x3ml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     source_type="xpath"
     version="1.0"
-    mappings_version="2022-07-14"
+    mappings_version="2022-09-23"
     xsi:noNamespaceSchemaLocation="https://isl.ics.forth.gr/x3ml/schema/x3ml.xsd">
     <namespaces>
         <namespace prefix="crm" uri="http://www.cidoc-crm.org/cidoc-crm/"/>
@@ -23,6 +23,9 @@
                             <arg name="hierarchy" type="constant">dataset</arg>
                             <arg name="term" type="constant">Micro-CT Specimens Description</arg>
                         </instance_generator>
+                        <label_generator name="Literal">
+                            <arg name="text" type="constant">../dataset/specimen_metadata.csv</arg>
+                        </label_generator>
                         <additional>
                             <relationship>tlo:P48_has_preferred_identifier</relationship>
                             <entity>
