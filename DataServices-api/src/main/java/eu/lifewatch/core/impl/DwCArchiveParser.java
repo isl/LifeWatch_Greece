@@ -252,7 +252,7 @@ public class DwCArchiveParser {
                     directoryStruct.setCuratorName(creatorNameElements.get(0).text());
                     directoryStruct.setCuratorURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "person", creatorNameElements.get(0).text()));
                     Elements organizationNameElements=creatorElement.getElementsByTag(Resources.ORGANIZATION_NAME);
-                    if(organizationNameElements!=null){
+                    if(organizationNameElements!=null && !organizationNameElements.isEmpty()){
                         directoryStruct.setOwnerName(organizationNameElements.get(0).text());
                         directoryStruct.setOwnerURI(Utils.hashUri(Resources.defaultNamespaceForURIs, "actor", organizationNameElements.get(0).text()));
                     }
